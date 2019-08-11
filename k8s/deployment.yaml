@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqmgr-vue
+  labels:
+    app: sqmgr-vue
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: sqmgr-vue
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: sqmgr-vue
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: weters/sqmgr-vue:latest
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /
