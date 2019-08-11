@@ -49,6 +49,7 @@ limitations under the License.
     import sqmgrClient from "@/models/sqmgrClient";
     import ModalController from "@/controllers/ModalController";
     import ResponseError from "@/models/ResponseError";
+    import bus from "@/utils/bus";
 
     export default {
         name: "PoolJoin",
@@ -80,6 +81,8 @@ limitations under the License.
                 accessTokenManager.getAccessToken(true)
                     .then(() => sqmgrClient.joinPool(this.token, passwordOrJWT, isJWT))
                     .then(() => {
+                        bus.$emit('guestJoin')
+
                         if (this.$route.query.target) {
                             this.$router.push(this.$route.query.target)
                             return

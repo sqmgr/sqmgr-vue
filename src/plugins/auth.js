@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import authService from '@/models/authService'
+import bus from '@/utils/bus'
 
 export default {
     install(Vue) {
@@ -25,11 +26,19 @@ export default {
                 if (this.handleLoginEvent) {
                     authService.addListener('loginEvent', this.handleLoginEvent)
                 }
+
+                if (this.handleGuestJoinEvent) {
+                    bus.$on('guestJoin', this.handleGuestJoinEvent)
+                }
             },
 
             destroyed() {
                 if (this.handleLoginEvent) {
                     authService.removeListener('loginEvent', this.handleLoginEvent)
+                }
+
+                if (this.handleGuestJoinEvent) {
+                    bus.$off('guestJoin', this.handleGuestJoinEvent)
                 }
             }
         })

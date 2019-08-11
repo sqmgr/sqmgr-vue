@@ -107,6 +107,9 @@ limitations under the License.
             handleLoginEvent(data) {
                 this.isAuthenticated = data.loggedIn
                 this.profile = data.profile
+            },
+            handleGuestJoinEvent() {
+                this.isGuest = true
             }
         }
     }
