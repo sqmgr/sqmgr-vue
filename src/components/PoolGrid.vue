@@ -212,7 +212,7 @@ limitations under the License.
                 return locks.getFullYear() > 1 ? locks : null
             },
             locksFormatted() {
-                return this.locks ? this.locks.toLocaleDateString('default', Common.DateTimeOptions) : null
+                return this.locks ? this.locks.toLocaleDateString(undefined, Common.DateTimeOptions) : null
             },
             isLocked() {
                 return this.locks && this.locks.getTime() < new Date().getTime()

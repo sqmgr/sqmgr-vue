@@ -88,7 +88,7 @@ limitations under the License.
                 })
             },
             datetime(dt) {
-                return new Date(dt).toLocaleDateString('default', Common.DateTimeOptions)
+                return new Date(dt).toLocaleDateString(undefined, Common.DateTimeOptions)
             }
         }
     }

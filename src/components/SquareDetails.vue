@@ -57,7 +57,7 @@ limitations under the License.
             </tr>
             <tr>
                 <td>Last Modified</td>
-                <td class="modified">{{new Date(square.modified).toLocaleDateString('default',
+                <td class="modified">{{new Date(square.modified).toLocaleDateString(undefined,
                     Common.DateTimeOptions)}}
                 </td>
             </tr>

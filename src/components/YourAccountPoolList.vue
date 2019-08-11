@@ -96,7 +96,7 @@ limitations under the License.
                 this.$emit('page', page)
             },
             date(datetime) {
-                return common.NewDateWithoutTimezone(datetime).toLocaleString('default', common.DateTimeOptions)
+                return common.NewDateWithoutTimezone(datetime).toLocaleString(undefined, common.DateTimeOptions)
             },
             archivePool(pool) {
                 sqmgrClient.archivePool(pool.token)
