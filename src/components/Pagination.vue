@@ -18,7 +18,7 @@ limitations under the License.
     <nav class="pagination">
         <ul>
             <template v-if="currentPage === 1">
-                <li class="prev"><span class="current"><span>Previous</span></span></li>
+                <li class="prev"><span class="current"><i class="fas fa-angle-left"></i><span>Previous</span></span></li>
             </template>
             <template v-else>
                 <li class="prev"><a href="#" @click.prevent="$emit('page', prevPage)"><span>Previous</span></a></li>
@@ -35,7 +35,7 @@ limitations under the License.
             </template>
 
             <template v-if="currentPage === numPages">
-                <li class="next"><span class="current"><span>Next</span></span></li>
+                <li class="next"><span class="current"><span>Next</span> <i class="fas fa-angle-right"></i></span></li>
             </template>
             <template v-else>
                 <li class="next"><a href="#" @click.prevent="$emit('page', nextPage)"><span>Next</span></a></li>
@@ -215,15 +215,5 @@ limitations under the License.
     nav.pagination li.prev span.current span,
     nav.pagination li.next span.current span {
         display: none;
-    }
-    nav.pagination li.next span.current::before,
-    nav.pagination li.next a::before {
-        display: inline-block;
-        content: '\2771';
-    }
-    nav.pagination li.prev span.current::before,
-    nav.pagination li.prev a::before {
-        display: inline-block;
-        content: '\2770';
     }
 </style>

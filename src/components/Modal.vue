@@ -24,7 +24,7 @@ limitations under the License.
                         <h2 v-if="component.header === 'Error'" class="error">Error</h2>
                         <h2 v-else>{{component.header}}</h2>
 
-                        <a class="close" href="#" @click.prevent="close"><span>Close</span></a>
+                        <a class="close" href="#" @click.prevent="close"><i class="fas fa-times"></i><span>Close</span></a>
                         <div class="content">
                             <component :is="component.component" v-bind="component.props"
                                        v-on="component.on"></component>
@@ -155,10 +155,6 @@ limitations under the License.
 
             span {
                 display: none;
-            }
-
-            &::after {
-                content: '\2716';
             }
         }
 

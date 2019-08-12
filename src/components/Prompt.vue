@@ -20,7 +20,7 @@ limitations under the License.
 
         <template v-if="warning">
             <div class="warning">
-                <p><strong>Warning!</strong><br>{{ warning }}</p>
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Warning!</strong><br>{{ warning }}</p>
             </div>
         </template>
 
@@ -62,6 +62,7 @@ limitations under the License.
 </script>
 
 <style lang="scss" scoped>
+    @import '../variables.scss';
     div.warning {
         background-color: var(--warning);
         padding: var(--minimal-spacing);
@@ -69,9 +70,9 @@ limitations under the License.
 
         p {
             margin: 0;
-            &::before {
-                content: '\26a0';
-                padding-right: var(--minimal-spacing);
+
+            i {
+                margin-right: $minimal-spacing;
             }
         }
     }
