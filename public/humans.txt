@@ -1,0 +1,24 @@
+/* TEAM */
+
+    Developer: Thomas Peters
+    Contact: peters.thomas.a [at] gmail.com
+    Twitter: @weters
+
+/* SITE */
+
+    Language: English
+    Standards: HTML5, CSS
+    Tech stack:
+        Frontend: Vue.js, SCSS
+        Backend: Go, PostgreSQL, Liquibase
+        Deployment: Docker, Kubernetes
+    Software: GoLand, WebStorm, Docker for Mac, Adobe Photoshop, Git
+    Third-party Services: Auth0 (Identity Management), GitHub
+
+/* NOTE */
+
+SqMGR is an open-source project. We'd love to see your contributions.
+
+    Overview: https://github.com/sqmgr/sqmgr
+    Frontend: https://github.com/weters/sqmgr-vue
+    Backend: https://github.com/weters/sqmgr-api
