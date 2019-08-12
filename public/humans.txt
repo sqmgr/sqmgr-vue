@@ -7,7 +7,7 @@
 /* SITE */
 
     Language: English
-    Standards: HTML5, CSS
+    Standards: HTML5, CSS3
     Tech stack:
         Frontend: Vue.js, SCSS
         Backend: Go, PostgreSQL, Liquibase
