@@ -75,7 +75,7 @@ class sqmgrClient {
         return this.request(`/pool/${token}`)
     }
 
-    getPoolGridsByToken(token, offset = 0, limit = 10) {
+    getPoolGridsByToken(token, offset = 0, limit = 50) {
         return this.request(`/pool/${token}/grid`, {offset, limit})
     }
 

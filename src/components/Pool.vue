@@ -54,7 +54,7 @@ limitations under the License.
                     </div>
 
                     <div class="buttons" v-if="pool.isAdmin">
-                        <button type="button" @click.prevent="createGrid">Add Game</button>
+                        <button :disabled="!canAddGame" type="button" @click.prevent="createGrid">Add Game</button>
                     </div>
                 </div>
 
@@ -183,6 +183,9 @@ limitations under the License.
                 grids: [],
                 inviteToken: null,
                 showCopiedMessage: false,
+
+                // maximum number of grids per pool
+                maxAllowed: 0,
             }
         },
         beforeRouteUpdate(to, from, next) {
@@ -191,7 +194,10 @@ limitations under the License.
         beforeMount() {
             document.title = `${this.pool.name} - SqMGR`
             sqmgrClient.getPoolGridsByToken(this.token)
-                .then(data => this.grids = data.grids)
+                .then(data => {
+                    this.grids = data.grids
+                    this.maxAllowed = data.maxAllowed
+                })
                 .catch(err => ModalController.showError(err))
 
             if (this.pool.isAdmin) {
@@ -202,6 +208,9 @@ limitations under the License.
             isLocked() {
                 const locks = new Date(this.pool.locks)
                 return locks.getFullYear() > 1 && locks.getTime() < new Date().getTime()
+            },
+            canAddGame() {
+                return this.maxAllowed > this.grids.length
             }
         },
         watch: {
