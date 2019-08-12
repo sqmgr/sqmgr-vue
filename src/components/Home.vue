@@ -35,6 +35,13 @@ limitations under the License.
             <p>Want to setup a pool for an entire season or the playoffs? You can re-use the same claimed squares with
                 new numbers drawn for each week!</p>
         </div>
+        <div class="grid-image">
+            <img srcset="../assets/grid.png,
+                         ../assets/grid@2x.png 2x,
+                         ../assets/grid@3x.png 3x"
+                 src="../assets/grid.png"
+                 alt="" />
+        </div>
     </section>
 </template>
 
@@ -53,12 +60,25 @@ limitations under the License.
 
     section.index {
         display:               grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         grid-gap:              $standard-spacing;
         max-width:             1200px;
         position:              relative;
         left:                  50%;
         transform:             translateX(-50%);
+
+        & > * { grid-column: span 2; }
+
+        div.grid-image {
+            grid-column: 2 / span 4;
+            max-width: 800px;
+            perspective: 1000px;
+
+            img {
+                width: 100%;
+                transform: rotateY(-8deg);
+            }
+        }
     }
 
     @media(max-width: 800px) {
