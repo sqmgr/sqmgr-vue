@@ -31,9 +31,11 @@ limitations under the License.
 
                         <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isAdmin"
                                    handle=".handle" @change="change">
-                            <div class="grid-row" v-for="grid in grids" :key="grid.id">
+                            <div class="grid-row" v-for="(grid, i) in grids" :key="grid.id">
                                 <span v-if="pool.isAdmin" class="handle"><i
                                         class="fas fa-bars"></i> <span>=</span></span>
+
+                                <span class="index">{{ i + 1 }}</span>
 
                                 <router-link :to="`/pool/${token}/game/${grid.id}`">{{grid.name}}</router-link>
 
@@ -405,8 +407,9 @@ limitations under the License.
     div.grid-row {
         align-items:           center;
         display:               grid;
-        grid-template-columns: 1fr 100px;
-        padding:               calc(2 * var(--minimal-spacing));
+        grid-template-columns: 30px 1fr 100px;
+        grid-gap:              calc(2 * #{ $minimal-spacing });
+        padding:               calc(2 * #{ $minimal-spacing });
 
         &:not(.header) {
             border-bottom: 1px solid var(--border-color);
@@ -425,6 +428,12 @@ limitations under the License.
                 justify-self: stretch;
             }
 
+            & > *:first-child {
+                grid-column: 2;
+            }
+            & > *:nth-child(2){
+                grid-column: 3;
+            }
         }
 
         span.unknown {
@@ -434,7 +443,7 @@ limitations under the License.
 
     .admin {
         div.grid-row {
-            grid-template-columns: 40px 1fr 100px 130px;
+            grid-template-columns: 40px 30px 1fr 100px 130px;
 
             & > :first-child {
                 justify-self: center;
@@ -458,21 +467,18 @@ limitations under the License.
                 }
 
                 & > :first-child {
-                    grid-column: 2 / 3;
+                    grid-column: 3 / 4;
                 }
 
                 & > :nth-child(2) {
-                    grid-column: 3 / 5;
+                    grid-column: 4 / 6;
                 }
             }
 
             @media(max-width: 600px) {
-                grid-template-columns: 40px 1fr 100px 90px;
+                grid-template-columns: 40px 30px 1fr 100px;
 
-                & > :nth-child(2) {
-                    grid-column: span 2;
-                }
-                & > :nth-child(4) {
+                & > :nth-child(5) {
                     grid-column: 1 / 5;
                     padding-top: var(--minimal-spacing);
                     text-align:  right;
@@ -555,5 +561,13 @@ limitations under the License.
     input.pool-name {
         margin-left: calc(-1 * #{$minimal-spacing});
         width:       calc(100% + #{$minimal-spacing});
+    }
+
+    span.index {
+        text-align:  right;
+
+        &::after {
+            content: '.';
+        }
     }
 </style>
