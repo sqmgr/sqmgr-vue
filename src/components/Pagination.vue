@@ -21,7 +21,7 @@ limitations under the License.
                 <li class="prev"><span class="current"><i class="fas fa-angle-left"></i><span>Previous</span></span></li>
             </template>
             <template v-else>
-                <li class="prev"><a href="#" @click.prevent="$emit('page', prevPage)"><span>Previous</span></a></li>
+                <li class="prev"><a href="#" @click.prevent="$emit('page', prevPage)"><i class="fas fa-angle-left"></i><span>Previous</span></a></li>
             </template>
 
             <template v-for="page in pages">
@@ -38,7 +38,7 @@ limitations under the License.
                 <li class="next"><span class="current"><span>Next</span> <i class="fas fa-angle-right"></i></span></li>
             </template>
             <template v-else>
-                <li class="next"><a href="#" @click.prevent="$emit('page', nextPage)"><span>Next</span></a></li>
+                <li class="next"><a href="#" @click.prevent="$emit('page', nextPage)"><span>Next</span> <i class="fas fa-angle-right"></i></a></li>
             </template>
         </ul>
 
