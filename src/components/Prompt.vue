@@ -19,9 +19,7 @@ limitations under the License.
         <p>{{description}}</p>
 
         <template v-if="warning">
-            <div class="warning">
-                <p><i class="fas fa-exclamation-triangle"></i> <strong>Warning!</strong><br>{{ warning }}</p>
-            </div>
+            <warning-box :warning="warning" />
         </template>
 
         <div class="buttons">
@@ -38,9 +36,11 @@ limitations under the License.
 
 <script>
     import ModalController from '@/controllers/ModalController'
+    import WarningBox from "@/components/WarningBox";
 
     export default {
         name: "Prompt.vue",
+        components: {WarningBox},
         props: {
             description: {
                 type: String,
@@ -62,18 +62,5 @@ limitations under the License.
 </script>
 
 <style lang="scss" scoped>
-    @import '../variables.scss';
-    div.warning {
-        background-color: var(--warning);
-        padding: var(--minimal-spacing);
-        margin-bottom: var(--spacing);
 
-        p {
-            margin: 0;
-
-            i {
-                margin-right: $minimal-spacing;
-            }
-        }
-    }
 </style>

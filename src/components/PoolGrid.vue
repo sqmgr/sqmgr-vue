@@ -28,7 +28,8 @@ limitations under the License.
                     <button type="button" @click.prevent="customizeWasClicked">Customize</button>
 
                     <template v-if="!numbersAreDrawn">
-                        <button type="button" @click.prevent="drawNumbersWasClicked">Draw Numbers</button>
+                        <button type="button" @click.prevent="randomlyDrawNumbersWasClicked">Randomly Draw Numbers</button>
+                        <button type="button" @click.prevent="manuallyDrawNumbersWasClicked">Manually Draw Numbers</button>
                     </template>
                 </nav>
             </template>
@@ -66,6 +67,14 @@ limitations under the License.
                         <td>State</td>
                         <td v-if="isLocked"><i class="fas fa-lock"></i> Squares are locked</td>
                         <td v-else><i class="fas fa-lock-open"></i> Squares are open</td>
+                    </tr>
+                    <tr>
+                        <td>Draw Type</td>
+                        <td>
+                            <span v-if="!grid.homeNumbers && !grid.awayNumbers">TBD</span>
+                            <span v-else-if="grid.manualDraw">Manual Input</span>
+                            <span v-else>Random</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -125,7 +134,8 @@ limitations under the License.
     import sqmgrClient from "@/models/sqmgrClient";
     import EventBus from "@/models/EventBus";
     import Pagination from "@/components/Pagination";
-    import '@/models/sqmgrConfig' // load this right away
+    import '@/models/sqmgrConfig'
+    import ManualDraw from "@/components/ManualDraw"; // load this right away
 
     export default {
         name: "PoolGrid",
@@ -286,7 +296,7 @@ limitations under the License.
                     })
                     .catch(err => ModalController.showError(err))
             },
-            drawNumbersWasClicked() {
+            checkAllSquaresClaimed() {
                 let allClaimed = true
                 for (const key of Object.keys(this.squares)) {
                     const square = this.squares[key]
@@ -296,7 +306,26 @@ limitations under the License.
                     }
                 }
 
-                const description = 'Do you want to draw the numbers for this game? This action cannot be undone.'
+                return allClaimed
+            },
+            manuallyDrawNumbersWasClicked() {
+                ModalController.show('Manually Draw Numbers', ManualDraw, {
+                    allSquaresClaimed: this.checkAllSquaresClaimed(),
+                    grid: this.grid,
+                }, {
+                    submit: nums => {
+                        sqmgrClient.drawManualNumbers(this.token, this.grid.id, nums.homeNumbers, nums.awayNumbers)
+                            .then(grid => {
+                                this.grid = grid
+                                ModalController.hide()
+                            })
+                            .catch(err => ModalController.showError(err))
+                    }
+                })
+            },
+            randomlyDrawNumbersWasClicked() {
+                const allClaimed = this.checkAllSquaresClaimed()
+                const description = 'Do you want to randomly draw the numbers for this game? This action cannot be undone.'
                 const warning = !allClaimed && 'Not all squares have been claimed yet'
 
                 ModalController.showPrompt('Draw the Numbers', description, {

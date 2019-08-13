@@ -147,6 +147,22 @@ class sqmgrClient {
         })
     }
 
+    drawManualNumbers(token, gridId, homeTeamNumbers, awayTeamNumbers) {
+        return this.request(`/pool/${token}/grid/${gridId}`, null, true, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'drawManualNumbers',
+                data: {
+                    homeTeamNumbers,
+                    awayTeamNumbers,
+                }
+            })
+        })
+    }
+
     saveGrid(token, gridId, data) {
         return this.request(`/pool/${token}/grid/${gridId}`, null, true, {
             method: 'POST',
