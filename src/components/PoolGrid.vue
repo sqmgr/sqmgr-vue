@@ -80,7 +80,7 @@ limitations under the License.
                 </table>
             </div>
 
-            <p v-if="gridType === 'std25'" class="expand-grid">
+            <p class="expand-grid">
                 <a v-if="expandedGrid" href="#" @click.prevent="expandedGrid = false"><i
                         class="fas fa-compress-arrows-alt"></i> Shrink</a>
                 <a v-else href="#" @click.prevent="expandedGrid = true"><i class="fas fa-expand-arrows-alt"></i> Expand</a>
@@ -194,6 +194,7 @@ limitations under the License.
                 this.userId = values[0].id
                 this.grid = values[1]
                 this.squares = values[2]
+                this.expandedGrid = this.pool.gridType === 'std100'
             })
 
             this.fetchLogs()
@@ -697,11 +698,6 @@ limitations under the License.
         div#grid-container {
             overflow: auto;
             width:    100%;
-        }
-
-        div.std100.squares {
-            height: $expand-size;
-            width:  $expand-size;
         }
 
         div.team {
