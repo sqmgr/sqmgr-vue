@@ -64,13 +64,13 @@ limitations under the License.
             this.$el.querySelectorAll('input').forEach(input => {
                 input.onfocus = ev => {
                     ev.target.select()
-                    ev.target.setSelectRange(0, 99999)
+                    ev.target.setSelectionRange(0, 99999)
                 }
 
                 input.onkeyup = ev => {
                     if (ev.key === 'Backspace' && input.previousElementSibling) {
                         input.previousElementSibling.select()
-                        input.previousElementSibling.setSelectRange(0, 99999)
+                        input.previousElementSibling.setSelectionRange(0, 99999)
                         ev.preventDefault()
                     }
                 }
@@ -82,10 +82,10 @@ limitations under the License.
 
                     if (input.nextElementSibling && input.nextElementSibling.tagName === 'INPUT') {
                         input.nextElementSibling.select()
-                        input.nextElementSibling.setSelectRange(0, 99999)
+                        input.nextElementSibling.setSelectionRange(0, 99999)
                     } else {
                         input.select()
-                        input.setSelectRange(0, 99999)
+                        input.setSelectionRange(0, 99999)
                     }
                 }
             })
