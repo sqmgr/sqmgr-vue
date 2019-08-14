@@ -38,7 +38,10 @@ class AuthService extends EventEmitter {
     accessToken = null
     accessTokenExpiry = null
 
-    login(appState) {
+    login(appState = {}) {
+        if (!appState.target) {
+            appState.target = '/account'
+        }
         webAuth.authorize({appState})
     }
 
