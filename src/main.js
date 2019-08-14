@@ -37,6 +37,7 @@ import PoolJoin from "@/components/PoolJoin";
 import CookiesPolicy from "@/components/CookiesPolicy";
 import GuestAccount from "@/components/GuestAccount";
 import ManualDraw from "@/components/ManualDraw";
+import loadingBar from "@/utils/loadingBar.ts";
 
 Vue.config.productionTip = false
 
@@ -73,9 +74,17 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     routes,
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })
 
 router.beforeEach(async (to, from, next) => {
+    loadingBar.start()
     if (to.meta.title) {
         document.title = `${to.meta.title} - SqMGR`
     } else {
@@ -114,6 +123,10 @@ router.beforeEach(async (to, from, next) => {
     }
 
     return next()
+})
+
+router.afterEach(() => {
+   loadingBar.stop()
 })
 
 new Vue({
