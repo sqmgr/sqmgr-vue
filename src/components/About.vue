@@ -18,7 +18,7 @@ limitations under the License.
     <section class="about">
         <h1>About SqMGR</h1>
 
-        <p>SqMGR is a site for managing your squares pools. This site was born out of frustration of having to manage paper-based pools and easily keep track of who paid and who didn't.</p>
+        <p>SqMGR is a service for managing your football squares. This site was born out of frustration of having to manage paper-based pools and having to manually keep track of who paid and who didn't.</p>
 
         <h2>Project Goals</h2>
 
