@@ -19,6 +19,7 @@ limitations under the License.
         <nav>
             <ul>
                 <li><router-link to="/about">About</router-link></li>
+                <li><router-link to="/donate">Donate</router-link></li>
                 <li><router-link to="/terms">Terms of Service</router-link></li>
                 <li><router-link to="/privacy">Privacy Policy</router-link></li>
                 <li><router-link to="/cookies">Cookies Policy</router-link></li>
