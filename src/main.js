@@ -88,7 +88,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.title) {
         document.title = `${to.meta.title} - SqMGR`
     } else {
-        document.title = 'SqMGR'
+        document.title = 'SqMGR - The Football Squares Pool Manager'
     }
 
     if (to.meta.description) {
