@@ -418,13 +418,8 @@ limitations under the License.
             margin:    var(--spacing) 0;
         }
 
-        footer p.version {
-            position:   static;
-            margin:     0;
-            text-align: center;
-        }
-    }
 
+    }
 
     a.btn {
         border-radius:    8px;
