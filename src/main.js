@@ -36,7 +36,6 @@ import sqmgrClient from "@/models/sqmgrClient";
 import PoolJoin from "@/components/PoolJoin";
 import CookiesPolicy from "@/components/CookiesPolicy";
 import GuestAccount from "@/components/GuestAccount";
-import ManualDraw from "@/components/ManualDraw";
 import loadingBar from "@/utils/loadingBar.ts";
 
 Vue.config.productionTip = false
@@ -68,7 +67,6 @@ const routes = [
     {path: '/pool/:token', component: Pool, props: true, meta: { requirePoolMembership: true}},
     {path: '/pool/:token/join', component: PoolJoin, props: true},
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: { requirePoolMembership: true }},
-    {path: '/manual', component: ManualDraw, props: true},
 ]
 
 const router = new VueRouter({

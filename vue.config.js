@@ -14,9 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+const SitemapWebpackPlugin = require('sitemap-webpack-plugin').default
+
 module.exports = {
     configureWebpack: {
-        devtool: 'eval-source-map'
+        devtool: 'eval-source-map',
+        plugins: [
+            new SitemapWebpackPlugin('https://sqmgr.com', [
+                {
+                    path: '/',
+                    priority: 0.9,
+                },
+                {
+                    path: '/about',
+                    priority: 0.8,
+                },
+                '/terms',
+                '/private',
+                '/cookies',
+                '/donate',
+                '/login'
+            ], {
+                lastMod: true,
+                changeFreq: 'hourly',
+            })
+        ]
     },
     devServer: {
         disableHostCheck: true
