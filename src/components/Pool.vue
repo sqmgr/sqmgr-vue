@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 <template>
-    <section class="pool" :class="{ admin: this.pool.isAdmin }">
+    <section class="pool" :class="{ admin: this.pool.isAdmin, rollover }">
         <template v-if="pool">
             <h1>Squares Pool - {{ this.pool.name }}</h1>
 
@@ -25,8 +25,9 @@ limitations under the License.
 
                     <div class="grids">
                         <div class="grid-row header">
-                            <div>Game</div>
-                            <div>Event Date</div>
+                            <div class="game">Game</div>
+                            <div class="rollover" v-if="rollover">Rollover</div>
+                            <div class="event-date">Event Date</div>
                         </div>
 
                         <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isAdmin"
@@ -37,7 +38,13 @@ limitations under the License.
 
                                 <span class="index">{{ i + 1 }}</span>
 
-                                <router-link :to="`/pool/${token}/game/${grid.id}`">{{grid.name}}</router-link>
+                                <router-link class="game" :to="`/pool/${token}/game/${grid.id}`">
+                                    {{grid.name}}
+                                </router-link>
+
+                                <div class="rollover" v-if="rollover">
+                                    <span class="fas fa-dice" v-if="grid.rollover"></span>
+                                </div>
 
                                 <div class="event-date">
                                     <span v-if="ymd(grid.eventDate)">{{ ymd(grid.eventDate) }}</span>
@@ -213,6 +220,9 @@ limitations under the License.
             },
             canAddGame() {
                 return this.maxAllowed > this.grids.length
+            },
+            rollover() {
+                return this.pool.gridType === 'roll100'
             }
         },
         watch: {
@@ -276,7 +286,10 @@ limitations under the License.
                 setTimeout(() => this.showCopiedMessage = false, 1000)
             },
             createGrid() {
-                ModalController.show('Customize Grid', GridCustomize, {token: this.token}, {
+                ModalController.show('Customize Grid', GridCustomize, {
+                    token: this.token,
+                    pool: this.pool,
+                }, {
                     'saved': grid => {
                         ModalController.hide()
                         this.grids.push(grid)
@@ -286,7 +299,11 @@ limitations under the License.
             customizeGrid(grid) {
                 sqmgrClient.getPoolGridByTokenAndGridId(this.token, grid.id)
                     .then(grid => {
-                        ModalController.show('Customize Grid', GridCustomize, {grid, token: this.token}, {
+                        ModalController.show('Customize Grid', GridCustomize, {
+                            grid,
+                            token: this.token,
+                            pool: this.pool,
+                        }, {
                             'saved': grid => {
                                 ModalController.hide()
                                 let index = -1
@@ -407,9 +424,14 @@ limitations under the License.
     div.grid-row {
         align-items:           center;
         display:               grid;
+        /* handle | game |date */
         grid-template-columns: 30px 1fr 100px;
         grid-gap:              calc(2 * #{ $minimal-spacing });
         padding:               calc(2 * #{ $minimal-spacing });
+
+        div.rollover {
+            text-align: center;
+        }
 
         &:not(.header) {
             border-bottom: 1px solid var(--border-color);
@@ -428,11 +450,8 @@ limitations under the License.
                 justify-self: stretch;
             }
 
-            & > *:first-child {
-                grid-column: 2;
-            }
-            & > *:nth-child(2){
-                grid-column: 3;
+            div.game {
+                grid-column: 1 / span 2;
             }
         }
 
@@ -443,6 +462,7 @@ limitations under the License.
 
     .admin {
         div.grid-row {
+            /* Handle | Number | Game | Date | Buttons */
             grid-template-columns: 40px 30px 1fr 100px 130px;
 
             & > :first-child {
@@ -466,32 +486,45 @@ limitations under the License.
                     justify-self: stretch;
                 }
 
-                & > :first-child {
-                    grid-column: 3 / 4;
-                }
-
-                & > :nth-child(2) {
-                    grid-column: 4 / 6;
+                div.game {
+                    grid-column: 2 / span 2;
                 }
             }
 
             @media(max-width: 600px) {
-                grid-template-columns: 40px 30px 1fr 100px;
-
-                & > :nth-child(5) {
-                    grid-column: 1 / 5;
-                    padding-top: var(--minimal-spacing);
-                    text-align:  right;
-                }
+                display: block;
+                position: relative;
 
                 &.header {
-                    & > :first-child {
-                        grid-column: 2 / span 2;
+                    & > * {
+                       display: none;
                     }
 
-                    & > :nth-child(2) {
-                        grid-column: 4 / span 1;
+                    & > div.game {
+                        display: block;
                     }
+                }
+
+                & > .index {
+                    margin-left: var(--spacing);
+                }
+
+                & > .index {
+                    text-align: left;
+                }
+
+                & > .event-date {
+                    text-align: right;
+                }
+
+                & > .rollover {
+                    position: absolute;
+                    bottom: var(--minimal-spacing);
+                    left: var(--minimal-spacing);
+                }
+
+                & > .actions {
+                    margin-top: var(--spacing);
                 }
             }
         }
@@ -568,6 +601,20 @@ limitations under the License.
 
         &::after {
             content: '.';
+        }
+    }
+
+    section.rollover {
+        div.grid-row {
+            /* number | game | rollover | date */
+            grid-template-columns: 30px 1fr 100px 100px;
+        }
+
+        &.admin {
+            div.grid-row {
+                /* Handle | Number | Game | Rollover | Date | Buttons */
+                grid-template-columns: 40px 30px 1fr 100px 100px 130px;
+            }
         }
     }
 </style>

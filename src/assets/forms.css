@@ -61,8 +61,13 @@ label.optional::after {
     font-size: 0.8em;
 }
 
+input[type="radio"] {
+    width: auto;
+}
+
 input[type="radio"] + label {
     display: inline-block;
+    margin-left: 5px;
 }
 
 input,

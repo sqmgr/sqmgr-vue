@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 <template>
-    <div>
+    <div :class="divClasses">
         <template v-if="grid">
             <h1>{{ grid.name }}</h1>
 
@@ -184,6 +184,9 @@ limitations under the License.
             EventBus.$off('grid-updated', this.gridUpdated)
         },
         beforeMount() {
+            // ensure store is fresh
+            this.$store.commit('primarySquare', null)
+
             Promise.all(
                 [
                     sqmgrClient.getUser(),
@@ -206,6 +209,7 @@ limitations under the License.
                     isLocked: this.isLocked,
                     isAdmin: this.isAdmin,
                     userId: this.userId,
+                    gridType: this.pool.gridType,
                 }
             },
             gridIdNum() {
@@ -239,6 +243,16 @@ limitations under the License.
             },
             gridType() {
                 return this.pool.gridType
+            },
+            rollover() {
+                return this.grid && this.grid.rollover && this.pool.gridType === 'roll100'
+            },
+            divClasses() {
+                const classes = {}
+                classes[`grid-type-${this.gridType}`] = true
+                classes.rollover = this.rollover
+
+                return classes
             }
         },
         watch: {
@@ -606,7 +620,6 @@ limitations under the License.
         }
 
         &.paid-partial {
-            color: var(--gray);
         }
 
         &.paid-partial::after {
@@ -622,7 +635,6 @@ limitations under the License.
         }
 
         &.claimed {
-            color: var(--gray);
         }
 
         &.claimed::after {
@@ -639,6 +651,20 @@ limitations under the License.
 
         &.unclaimed {
             background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f7f7f7 5px, #f7f7f7 10px);
+        }
+
+        &.unclaimed.held {
+            border-color: var(--primary);
+        }
+
+        &.highlighted {
+            box-shadow: 0 0 1px 1px var(--primary);
+        }
+
+        @at-root .rollover &.secondary {
+            & > * {
+                opacity: 0.2;
+            }
         }
 
         span.square-id {

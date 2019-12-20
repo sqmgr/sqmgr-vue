@@ -42,7 +42,20 @@ limitations under the License.
                     </template>
                 </td>
             </tr>
-            <tr>
+            <tr v-if="poolConfig.gridType === 'roll100'">
+                <td>Type</td>
+                <td v-if="isSecondary">Secondary</td>
+                <td v-else>Primary</td>
+            </tr>
+            <tr v-if="poolConfig.gridType === 'roll100'">
+                <td>Linked Squares</td>
+                <td>
+                    <template v-for="square in linkedSquares">
+                        <a :key="square" href="#" @click.prevent="showSquare(square)">{{ square }}</a>
+                    </template>
+                </td>
+            </tr>
+            <tr v-if="poolConfig.gridType !== 'roll100' || !isSecondary">
                 <td>State</td>
                 <td class="state">
                     <template v-if="!poolConfig.isAdmin || square.state === 'unclaimed'">
@@ -93,11 +106,11 @@ limitations under the License.
     import ModalController from '@/controllers/ModalController'
     import sqmgrClient from "@/models/sqmgrClient";
     import sqmgrConfig from "@/models/sqmgrConfig";
-    import Modal from "@/components/Modal";
+    import SquareDetails from '@/components/SquareDetails'
 
     export default {
         name: "SquareDetails",
-        components: {Logs},
+        components: {Logs, SquareDetails},
         props: {
             data: {
                 type: Object,
@@ -129,17 +142,43 @@ limitations under the License.
             square() {
                 return this.loadedData || this.data
             },
+            isSecondary() {
+                return this.square.parentSquareId > 0
+            },
             canClaim() {
                 return this.square.state === 'unclaimed' && ( !this.poolConfig.isLocked || this.poolConfig.isAdmin )
             },
             canUnclaim() {
                 if (this.square.state !== 'claimed') return false
                 if (this.poolConfig.isLocked) return false
+                if (this.isSecondary) return false
                 return this.square.userId === this.poolConfig.userId
+            },
+            linkedSquares() {
+                let ids = []
+                if (this.square.parentSquareId > 0) {
+                    ids.push(this.square.parentSquareId)
+                }
+
+                if (this.square.childSquareIds) {
+                    this.square.childSquareIds.forEach(s => ids.push(s))
+                }
+
+                return ids.sort((a,b) => a < b ? -1 : a > b ? 1 : 0)
             }
         },
         methods: {
             claimSquare() {
+                if (this.poolConfig.gridType === 'roll100') {
+                    const pSq = this.$store.state.primarySquare
+                    if (pSq) {
+                        this.$store.commit('primarySquare', null)
+                        sqmgrClient.claimSquareWithSecondary(this.poolConfig.token, pSq.squareId, this.square.squareId, pSq.name)
+                            .then(() => ModalController.hideAll())
+                            .catch(err => ModalController.showError(err))
+                    }
+                }
+
                 ModalController.show('Claim Square', Claim, {
                     poolConfig: this.poolConfig,
                     squareId: this.square.squareId
@@ -184,6 +223,18 @@ limitations under the License.
                         .catch(err => ModalController.showError(err))
                 }
             },
+            showSquare(squareId) {
+                ModalController.hide()
+                setTimeout(() => {
+                    sqmgrClient.getSquareByTokenAndSquareId(this.poolConfig.token, squareId)
+                        .then(data => {
+                            ModalController.show('Square Details', SquareDetails, {
+                                data,
+                                poolConfig: this.poolConfig,
+                            })
+                        })
+                }, 200)
+            }
         },
         watch: {
             editClaimant(newVal) {

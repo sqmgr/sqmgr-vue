@@ -76,6 +76,21 @@ limitations under the License.
                     localStorage.setItem('claimant-name', this.name)
                 }
 
+                // first click will be primary, second click will be to lock it in
+                if (this.poolConfig.gridType === 'roll100') {
+                    this.$store.commit('primarySquare', {
+                        squareId: this.squareId,
+                        name: this.name,
+                    })
+
+                    ModalController.hideAll()
+                    ModalController.showPrompt('Primary Selected', 'Your primary square has been selected. This square will be used for all games. Please now select your secondary square which will only be used for non-rollover games.', {
+                        dismissButton: 'OK',
+                    })
+
+                    return
+                }
+
                 sqmgrClient.claimSquare(this.poolConfig.token, this.squareId, this.name)
                     .then(() => ModalController.hideAll())
                     .catch(err => ModalController.showError(err))

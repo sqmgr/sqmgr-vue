@@ -44,6 +44,12 @@ limitations under the License.
                     <input type="date" id="event-date" name="event-date" v-model="form.eventDate">
                 </div>
 
+                <div class="field radio" v-if="pool.gridType === 'roll100'">
+                    <label>Rollover?</label>
+                    <label><input type="radio" v-model="form.rollover" :value="false"> No</label>
+                    <label><input type="radio" v-model="form.rollover" :value="true"> Yes</label>
+                </div>
+
                 <div class="field">
                     <label for="notes" class="optional">Notes</label>
                     <textarea id="notes" :maxlength="notesMaxLength" name="notes" placeholder="Notes"
@@ -79,6 +85,10 @@ limitations under the License.
                 type: String,
                 required: true,
             },
+            pool: {
+                type: Object,
+                required: true,
+            },
             grid: {
                 type: Object,
                 required: false,
@@ -92,6 +102,7 @@ limitations under the License.
                 form: {
                     eventDate: '0000-00-00',
                     notes: '',
+                    rollover: false,
                     awayTeam: {
                         name: '',
                         color1: '',
@@ -115,6 +126,7 @@ limitations under the License.
                 const date = this.grid.eventDate.substr(0, 10)
                 this.form.eventDate = date === '0001-01-01' ? '' : date
                 this.form.notes = this.grid.settings.notes
+                this.form.rollover = this.grid.rollover
                 this.form.awayTeam.name = this.grid.awayTeamName
                 this.form.awayTeam.color1 = this.grid.settings.awayTeamColor1
                 this.form.awayTeam.color2 = this.grid.settings.awayTeamColor2
@@ -128,7 +140,7 @@ limitations under the License.
                 this.errors = null
 
                 const id = this.grid ? this.grid.id : 0
-                sqmgrClient.saveGrid(this.token, id, {
+                const data = {
                     eventDate: this.form.eventDate,
                     notes: this.form.notes,
                     homeTeamName: this.form.homeTeam.name,
@@ -137,7 +149,11 @@ limitations under the License.
                     awayTeamName: this.form.awayTeam.name,
                     awayTeamColor1: this.form.awayTeam.color1,
                     awayTeamColor2: this.form.awayTeam.color2,
-                })
+                }
+
+                if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
+
+                sqmgrClient.saveGrid(this.token, id, data)
                     .then(grid => {
                         this.$emit('saved', grid)
                     })

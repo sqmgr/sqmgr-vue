@@ -37,11 +37,29 @@ import PoolJoin from "@/components/PoolJoin";
 import CookiesPolicy from "@/components/CookiesPolicy";
 import GuestAccount from "@/components/GuestAccount";
 import loadingBar from "@/utils/loadingBar.ts";
+import Vuex from 'vuex'
 
 Vue.config.productionTip = false
 
 Vue.use(AuthPlugin)
 Vue.use(VueRouter)
+Vue.use(Vuex)
+
+let x = 0
+const store = new Vuex.Store({
+    state: {
+        primarySquare: null,
+        highlightSquares: {},
+    },
+    mutations: {
+        primarySquare(state, data) {
+            state.primarySquare = data
+        },
+        highlightSquares(state, data) {
+            state.highlightSquares = { ...data }
+        }
+    }
+})
 
 const routes = [
     {
@@ -129,6 +147,7 @@ router.afterEach(() => {
 
 new Vue({
     router,
+    store,
     render: h => h(App),
 }).$mount('#app')
 

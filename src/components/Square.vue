@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 <template>
-    <div :class="`square ${squareData.state}`" @click.prevent="didClickSquare">
+    <div :class="divClasses" @click.prevent="didClickSquare" @mouseenter="enter" @mouseleave="leave">
         <span class="square-id">{{ sqId }}</span>
         <span class="name">{{ squareData.claimant }}</span>
 
@@ -50,8 +50,62 @@ limitations under the License.
                 required: true,
             },
         },
+        computed: {
+            isHeld() {
+                const primarySquare = this.$store.state.primarySquare
+                if (!primarySquare) {
+                    return
+                }
+
+                return primarySquare.squareId === this.sqId
+            },
+            isSecondary() {
+                return this.squareData.parentSquareId > 0
+            },
+            isHighlighted() {
+                return this.$store.state.highlightSquares[this.sqId]
+            },
+            divClasses() {
+                const obj = {
+                    square: true,
+                    held: this.isHeld,
+                    secondary: this.isSecondary,
+                    highlighted: this.isHighlighted,
+                }
+
+                if (this.poolConfig.gridType !== 'roll100' || !this.isSecondary) {
+                    obj[this.squareData.state] = true
+                }
+
+                return obj
+            }
+        },
         methods: {
+            highlightSquares(highlight) {
+                const highlightSquares = this.$store.state.highlightSquares
+                const { parentSquareId, childSquareIds } = this.squareData
+                if (parentSquareId > 0) {
+                    highlightSquares[parentSquareId] = highlight
+                }
+
+                if (childSquareIds) {
+                    childSquareIds.forEach(id => highlightSquares[id] = highlight)
+                }
+
+                this.$store.commit('highlightSquares', highlightSquares)
+            },
+            enter() {
+                this.highlightSquares(true)
+            },
+            leave() {
+                this.highlightSquares(false)
+            },
             didClickSquare() {
+                if (this.isHeld) {
+                    this.$store.commit('primarySquare', null)
+                    return
+                }
+
                 sqmgrClient.getSquareByTokenAndSquareId(this.poolConfig.token, this.sqId)
                     .then(data => {
                         ModalController.show('Square Details', SquareDetails, {

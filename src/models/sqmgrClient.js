@@ -202,6 +202,10 @@ class sqmgrClient {
         return this.updateSquare(token, squareId, {claimant})
     }
 
+    claimSquareWithSecondary(token, squareId, secondarySquareId, claimant) {
+        return this.updateSquare(token, squareId, {claimant, secondarySquareId})
+    }
+
     unclaimSquare(token, squareId) {
         return this.updateSquare(token, squareId, {unclaim: true})
     }
