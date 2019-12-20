@@ -299,7 +299,11 @@ limitations under the License.
             customizeWasClicked() {
                 sqmgrClient.getPoolGridByTokenAndGridId(this.token, this.grid.id)
                     .then(grid => {
-                        ModalController.show('Customize Grid', GridCustomize, {grid, token: this.token}, {
+                        ModalController.show('Customize Grid', GridCustomize, {
+                            grid,
+                            token: this.token,
+                            pool: this.pool,
+                        }, {
                             saved() {
                                 ModalController.hide()
                                 ModalController.showPrompt('Changes Saved', 'Changes saved successfully.', {
