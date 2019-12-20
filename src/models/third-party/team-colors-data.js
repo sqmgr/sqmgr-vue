@@ -18,6 +18,20 @@ limitations under the License.
 
 export default [
     {
+        "name": "AFC",
+        "league": "nfl",
+        "colors": {
+            "hex": ["ce1126"]
+        }
+    },
+    {
+        "name": "NFC",
+        "league": "nfl",
+        "colors": {
+            "hex": ["003b66"]
+        }
+    },
+    {
         "name": "AFC Bournemouth",
         "league": "epl",
         "colors": {
