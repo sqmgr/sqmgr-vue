@@ -754,6 +754,10 @@ limitations under the License.
             width:  7in;
             height: 7in;
         }
+        div.roll100.squares {
+            width:  7in;
+            height: 7in;
+        }
 
         div.team {
             background: transparent;
