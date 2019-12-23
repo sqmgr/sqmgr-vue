@@ -38,6 +38,7 @@ import CookiesPolicy from "@/components/CookiesPolicy";
 import GuestAccount from "@/components/GuestAccount";
 import loadingBar from "@/utils/loadingBar.ts";
 import Vuex from 'vuex'
+import PoolGridAll from "@/components/PoolGridAll";
 
 Vue.config.productionTip = false
 
@@ -84,6 +85,7 @@ const routes = [
     {path: '/create', component: CreatePool, meta: { requireLogin: true , title: 'Create Squares Pool'}},
     {path: '/pool/:token', component: Pool, props: true, meta: { requirePoolMembership: true}},
     {path: '/pool/:token/join', component: PoolJoin, props: true},
+    {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: { requirePoolMembership: true }},
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: { requirePoolMembership: true }},
 ]
 
