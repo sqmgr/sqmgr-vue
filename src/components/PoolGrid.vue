@@ -251,6 +251,7 @@ limitations under the License.
                 const classes = {}
                 classes[`grid-type-${this.gridType}`] = true
                 classes.rollover = this.rollover
+                classes['is-locked'] = this.isLocked
 
                 return classes
             }
@@ -668,6 +669,11 @@ limitations under the License.
         @at-root .rollover &.secondary {
             & > * {
                 opacity: 0.2;
+            }
+        }
+        @at-root .is-locked.rollover &.secondary {
+            & > * {
+                opacity: 0;
             }
         }
 
