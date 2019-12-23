@@ -16,7 +16,7 @@ limitations under the License.
 
 <template>
     <div class="pool-grid-all">
-        <pool-grid v-for="grid in grids" :token="token" :grid-id="`${grid.id}`" :initial-pool="initialPool" />
+        <pool-grid v-for="grid in grids" :key="grid.id" :token="token" :grid-id="`${grid.id}`" :initial-pool="initialPool" />
     </div>
 </template>
 
@@ -51,6 +51,14 @@ limitations under the License.
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+div.pool-grid-all {
+    & > div {
+        page-break-before: always;
 
+        &:first-child {
+            page-break-before: auto;
+        }
+    }
+}
 </style>
