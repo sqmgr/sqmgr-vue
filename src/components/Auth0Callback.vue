@@ -23,6 +23,7 @@ limitations under the License.
 <script>
     import accessTokenManager from "@/models/accessTokenManager";
     import sqmgrClient from "@/models/sqmgrClient";
+    import ModalController from "@/controllers/ModalController";
 
     export default {
         name: "Auth0Callback",
@@ -41,7 +42,7 @@ limitations under the License.
 
                     sqmgrClient.mergeWithGuestUser(jwt)
                         .then(() => accessTokenManager.deleteGuestAccessToken())
-                        .catch(err => console.warn("could not merge with guest user:", err)) // no-op
+                        .catch(err => ModalController.showError(err))
                 })
         }
     }

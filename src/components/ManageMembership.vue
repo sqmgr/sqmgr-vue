@@ -45,7 +45,6 @@ limitations under the License.
     import sqmgrClient from "@/models/sqmgrClient";
     import ResponseError from "@/models/ResponseError";
     import ValidationErrors from "@/components/ValidationErrors";
-    import Modal from "@/components/Modal";
 
     export default {
         name: "ManageMembership",
