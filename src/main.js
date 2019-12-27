@@ -46,7 +46,6 @@ Vue.use(AuthPlugin)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
-let x = 0
 const store = new Vuex.Store({
     state: {
         primarySquare: null,

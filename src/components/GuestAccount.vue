@@ -18,7 +18,7 @@ limitations under the License.
     <section class="guest-account">
         <h1>Guest Account</h1>
 
-        <p>You have currently joined one or more pools using a guest account. Guest accounts only persist for your current browsing session. You can easily save them by registering an account <a href="#" @click.prevent="register">here</a>.</p>
+        <p>You have currently joined one or more pools using a guest account. Guest accounts only persist for your current browsing session. You can easily save them by registering an account <a href="#" @click.prevent="register">here</a>.</p>
 
         <h2>Pools You Joined</h2>
 

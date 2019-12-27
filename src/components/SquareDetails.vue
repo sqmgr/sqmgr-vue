@@ -110,7 +110,7 @@ limitations under the License.
 
     export default {
         name: "SquareDetails",
-        components: {Logs, SquareDetails},
+        components: {Logs},
         props: {
             data: {
                 type: Object,
