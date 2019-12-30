@@ -40,6 +40,11 @@ limitations under the License.
                 <legend>General Settings</legend>
 
                 <div class="field">
+                    <label for="label" class="optional">Label</label>
+                    <input type="text" id="label" name="label" v-model="form.label">
+                </div>
+
+                <div class="field">
                     <label for="event-date" class="optional">Event Date</label>
                     <input type="date" id="event-date" name="event-date" v-model="form.eventDate">
                 </div>
@@ -103,6 +108,7 @@ limitations under the License.
                     eventDate: '0000-00-00',
                     notes: '',
                     rollover: false,
+                    label: '',
                     awayTeam: {
                         name: '',
                         color1: '',
@@ -127,6 +133,7 @@ limitations under the License.
                 this.form.eventDate = date === '0001-01-01' ? '' : date
                 this.form.notes = this.grid.settings.notes
                 this.form.rollover = this.grid.rollover
+                this.form.label = this.grid.label
                 this.form.awayTeam.name = this.grid.awayTeamName
                 this.form.awayTeam.color1 = this.grid.settings.awayTeamColor1
                 this.form.awayTeam.color2 = this.grid.settings.awayTeamColor2
@@ -143,6 +150,7 @@ limitations under the License.
                 const data = {
                     eventDate: this.form.eventDate,
                     notes: this.form.notes,
+                    label: this.form.label,
                     homeTeamName: this.form.homeTeam.name,
                     homeTeamColor1: this.form.homeTeam.color1,
                     homeTeamColor2: this.form.homeTeam.color2,
