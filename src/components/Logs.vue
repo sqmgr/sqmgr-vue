@@ -16,7 +16,7 @@ limitations under the License.
 
 <template>
     <section class="audit-log">
-        <h2>Audit Log</h2>
+        <h3>Audit Log</h3>
 
         <template v-if="showAddNote">
             <p class="add-note"><a href="#" class="add-note" @click.prevent="addNote">Add Note</a></p>

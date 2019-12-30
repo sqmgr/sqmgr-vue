@@ -17,13 +17,15 @@ limitations under the License.
 <template>
     <div :class="divClasses">
         <template v-if="grid">
-            <h1>{{ grid.name }}</h1>
+            <h1 class="pool-name">Squares Pool - {{ pool.name }}</h1>
 
-            <p class="pool-name">Squares Pool - {{ pool.name }}</p>
+            <h2>{{ grid.name }}</h2>
+
+            <p v-if="hasEventDate" class="event-date">{{ eventDate }}</p>
 
             <template v-if="isAdmin">
                 <nav class="admin-menu">
-                    <h2>Admin Menu</h2>
+                    <h3>Admin Menu</h3>
 
                     <button type="button" @click.prevent="customizeWasClicked">Customize</button>
 
@@ -214,6 +216,9 @@ limitations under the License.
             },
             gridIdNum() {
                 return parseInt(this.gridId, 10)
+            },
+            hasEventDate() {
+                return new Date(this.grid.eventDate).getFullYear() > 0
             },
             eventDate() {
                 if (new Date(this.grid.eventDate).getFullYear() === 0) {
@@ -420,14 +425,6 @@ limitations under the License.
                 }
             }
         }
-    }
-
-    h1 {
-        margin-bottom: 0;
-    }
-
-    p.pool-name {
-        color: var(--gray);
     }
 </style>
 <style lang="scss">
@@ -741,7 +738,15 @@ limitations under the License.
         }
     }
 
+    p.event-date {
+        display: none;
+    }
+
     @media print {
+        h1 { font-size: 1.0em; font-weight: normal; margin-bottom: 0; }
+        h2 { font-size: 1.4em; margin-bottom: 0; }
+        p.event-date { display: block; margin-bottom: 0; font-size: 0.7em; color: var(--gray); }
+        .squares-container { margin-top: var(--spacing); }
         header { display: none; }
         footer { display: none; }
         div.content { padding: 0; }
