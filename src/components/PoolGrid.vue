@@ -112,6 +112,7 @@ limitations under the License.
                                 :pool-config="poolConfig"
                                 :sq-id="n"
                                 :square-data="squares[n] || {}"
+                                :annotation="annotationBySquareId(n)"
                         />
                     </template>
                 </div>
@@ -388,6 +389,13 @@ limitations under the License.
                     })
                 }
             },
+            annotationBySquareId(squareId) {
+                if (!this.grid) {
+                    return
+                }
+
+                return this.grid.annotations[squareId]
+            }
         }
     }
 </script>
@@ -428,6 +436,7 @@ limitations under the License.
     }
 </style>
 <style lang="scss">
+    @import '../variables';
     @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Alfa+Slab+One');
 
     $expand-size: 8in;
@@ -661,6 +670,10 @@ limitations under the License.
 
         &.highlighted {
             box-shadow: 0 0 1px 1px var(--primary);
+        }
+
+        &.annotated {
+            background: $yellow;
         }
 
         @at-root .rollover &.secondary {

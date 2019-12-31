@@ -89,6 +89,24 @@ class sqmgrClient {
         })
     }
 
+    setPoolGridSquareAnnotation(token, gridId, squareId, annotation) {
+        return this.request(`/pool/${token}/grid/${gridId}/square/${squareId}/annotation`, null, true, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                annotation,
+            })
+        })
+    }
+
+    deletePoolGridSquareAnnotation(token, gridId, squareId) {
+        return this.request(`/pool/${token}/grid/${gridId}/square/${squareId}/annotation`, null, true, {
+            method: 'DELETE'
+        })
+    }
+
     updatePool(token, data) {
         return this.request(`/pool/${token}`, null, true, {
             method: 'POST',

@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -77,16 +77,20 @@ limitations under the License.
             </tbody>
         </table>
 
-        <template v-if="canClaim">
-            <div class="buttons">
-                <button type="button" @click.prevent="claimSquare">Claim</button>
-            </div>
-        </template>
-        <template v-if="canUnclaim">
-            <div class="buttons">
-                <button type="button" class="destructive" @click.prevent="unclaimSquare">Relinquish Claim</button>
-            </div>
-        </template>
+        <div class="annotation" v-if="computedAnnotation">
+            {{ computedAnnotation.annotation }}
+
+            <a class="delete-annotation" href="#" @click.prevent="deleteAnnotation" v-if="poolConfig.isAdmin"><i
+                    class="fas fa-times"></i><span>Delete</span></a>
+        </div>
+
+        <div class="buttons" v-if="canClaim || canUnclaim || poolConfig.isAdmin">
+            <button type="button" @click.prevent="annotate" v-if="poolConfig.isAdmin">Annotate</button>
+            <button type="button" @click.prevent="claimSquare" v-if="canClaim">Claim</button>
+            <button type="button" class="destructive" @click.prevent="unclaimSquare" v-if="canUnclaim">Relinquish
+                Claim
+            </button>
+        </div>
 
         <template v-if="poolConfig.isAdmin">
             <Logs @note-added="reloadData"
@@ -107,6 +111,8 @@ limitations under the License.
     import sqmgrClient from "@/models/sqmgrClient";
     import sqmgrConfig from "@/models/sqmgrConfig";
     import SquareDetails from '@/components/SquareDetails'
+    import EventBus from "@/models/EventBus";
+    import Annotate from "@/components/Annotate";
 
     export default {
         name: "SquareDetails",
@@ -120,10 +126,18 @@ limitations under the License.
                 type: Object,
                 required: true,
             },
+            gridId: {
+                type: Number,
+                required: true,
+            },
+            annotation: {
+                type: Object,
+            }
         },
         data() {
             return {
                 Common,
+                localAnnotation: undefined,
                 editClaimant: false,
                 newClaimant: null,
                 loadedData: null,
@@ -146,7 +160,7 @@ limitations under the License.
                 return this.square.parentSquareId > 0
             },
             canClaim() {
-                return this.square.state === 'unclaimed' && ( !this.poolConfig.isLocked || this.poolConfig.isAdmin )
+                return this.square.state === 'unclaimed' && (!this.poolConfig.isLocked || this.poolConfig.isAdmin)
             },
             canUnclaim() {
                 if (this.square.state !== 'claimed') return false
@@ -164,7 +178,10 @@ limitations under the License.
                     this.square.childSquareIds.forEach(s => ids.push(s))
                 }
 
-                return ids.sort((a,b) => a < b ? -1 : a > b ? 1 : 0)
+                return ids.sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
+            },
+            computedAnnotation() {
+                return typeof(this.localAnnotation) !== 'undefined' ? this.localAnnotation : this.annotation
             }
         },
         methods: {
@@ -219,7 +236,10 @@ limitations under the License.
 
                 if (this.newClaimant.match(/\w/)) {
                     sqmgrClient.renameSquare(this.poolConfig.token, this.square.squareId, this.newClaimant)
-                        .then(res => { this.loadedData = res; this.editClaimant = false })
+                        .then(res => {
+                            this.loadedData = res;
+                            this.editClaimant = false
+                        })
                         .catch(err => ModalController.showError(err))
                 }
             },
@@ -234,6 +254,41 @@ limitations under the License.
                             })
                         })
                 }, 200)
+            },
+            annotate() {
+                ModalController.show('Annotate Square', Annotate, {
+                    annotation: this.computedAnnotation,
+                }, {
+                    submit: annotation => {
+                        if (!annotation) {
+                            ModalController.hide()
+                            return
+                        }
+
+                        sqmgrClient.setPoolGridSquareAnnotation(this.poolConfig.token, this.gridId, this.square.squareId, annotation)
+                            .then(res => {
+                                this.localAnnotation = res
+                                EventBus.$emit('grid-updated')
+                                ModalController.hide()
+                            })
+                        .catch(err => ModalController.showError(err))
+                    }
+                })
+            },
+            deleteAnnotation() {
+                ModalController.showPrompt('Delete Annotation?', 'Do you want to delete the annotation?', {
+                    actionButton: 'Delete',
+                    isDestructive: true,
+                    action: () => {
+                        sqmgrClient.deletePoolGridSquareAnnotation(this.poolConfig.token, this.gridId, this.square.squareId)
+                            .then(() => {
+                                this.localAnnotation = null
+                                EventBus.$emit('grid-updated')
+                                ModalController.hide()
+                            })
+                            .catch(err => ModalController.showError(err))
+                    },
+                })
             }
         },
         watch: {
@@ -251,17 +306,38 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
+    @import '../variables.scss';
+
     table {
         width: 100%;
 
         td:last-child {
             font-weight: bold;
-            text-align: right;
+            text-align:  right;
         }
     }
 
     div.buttons {
-        margin-top: var(--spacing);
+        margin-top: $standard-spacing;
         text-align: left;
+    }
+
+    div.annotation {
+        border-radius:    3px;
+        margin-top:       $standard-spacing;
+        background-color: $yellow;
+        padding:          $minimal-spacing;
+        position:         relative;
+
+        a.delete-annotation {
+            color:    $red;
+            position: absolute;
+            top:      $minimal-spacing;
+            right:    $minimal-spacing;
+
+            span {
+                display: none;
+            }
+        }
     }
 </style>

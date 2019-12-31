@@ -49,6 +49,9 @@ limitations under the License.
                 type: Object,
                 required: true,
             },
+            annotation: {
+                type: Object,
+            }
         },
         computed: {
             isHeld() {
@@ -71,6 +74,7 @@ limitations under the License.
                     held: this.isHeld,
                     secondary: this.isSecondary,
                     highlighted: this.isHighlighted,
+                    annotated: this.annotation,
                 }
 
                 if (this.poolConfig.gridType !== 'roll100' || !this.isSecondary) {
@@ -110,6 +114,8 @@ limitations under the License.
                     .then(data => {
                         ModalController.show('Square Details', SquareDetails, {
                             data,
+                            annotation: this.annotation,
+                            gridId: this.gridId,
                             poolConfig: this.poolConfig,
                         })
                     })
