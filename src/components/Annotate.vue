@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,10 +15,19 @@ limitations under the License.
 */
 
 <template>
-    <form class="add-annotation" @submit.prevent="$emit('submit', form.annotation)">
+    <form class="add-annotation" @submit.prevent="$emit('submit', form)">
         <div class="field">
             <label for="annotation">Annotation</label>
-            <input type="text" id="annotation" name="annotation" v-model="form.annotation" ref="name" placeholder="Annotation">
+            <input type="text" id="annotation" name="annotation" v-model="form.annotation" ref="name"
+                   placeholder="Annotation">
+        </div>
+
+        <div class="field">
+            <label>Icon</label>
+            <label v-for="key in gridAnnotationIconsKeys" :key="key">
+                <input type="radio" v-model="form.icon" :value="key">
+                <i :class="`fas fa-${gridAnnotationIcons[key].name}`"></i>
+            </label>
         </div>
 
         <div class="buttons">
@@ -30,6 +39,8 @@ limitations under the License.
 
 <script>
     import ModalController from '@/controllers/ModalController'
+    import sqmgrConfig from "@/models/sqmgrConfig";
+
     export default {
         name: "Annotate.vue",
         props: {
@@ -42,11 +53,32 @@ limitations under the License.
                 ModalController,
                 form: {
                     annotation: this.annotation ? this.annotation.annotation : '',
+                    icon: this.annotation ? this.annotation.icon : 0,
+                },
+                gridAnnotationIcons: null,
+            }
+        },
+        computed: {
+            gridAnnotationIconsKeys() {
+                if (!this.gridAnnotationIcons) {
+                    return []
                 }
+
+                return Object.keys(this.gridAnnotationIcons).sort( (a, b) => a < b ? -1 : a > b ? 1 : 0 )
             }
         },
         mounted() {
+            sqmgrConfig()
+                .then(res => this.gridAnnotationIcons = res.gridAnnotationIcons)
+                .catch(err => ModalController.showError(err))
+
             setTimeout(() => this.$refs.name.focus(), 1)
         }
     }
 </script>
+
+<style scoped lang="scss">
+    input[type="radio"] + i {
+        margin-left: var(--minimal-spacing);
+    }
+</style>

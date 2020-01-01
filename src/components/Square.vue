@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@ limitations under the License.
 
 <template>
     <div :class="divClasses" @click.prevent="didClickSquare" @mouseenter="enter" @mouseleave="leave">
+        <i :class="`annotation-icon fas fa-${annotationIcon}`" v-if="annotationIcon"></i>
         <span class="square-id">{{ sqId }}</span>
         <span class="name">{{ squareData.claimant }}</span>
 
@@ -29,6 +30,7 @@ limitations under the License.
     import SquareDetails from './SquareDetails.vue'
     import ModalController from '@/controllers/ModalController'
     import sqmgrClient from "@/models/sqmgrClient";
+    import sqmgrConfig from "@/models/sqmgrConfig";
 
     export default {
         name: "Square.vue",
@@ -53,7 +55,19 @@ limitations under the License.
                 type: Object,
             }
         },
+        data() {
+            return {
+                sqmgrConfig: null,
+            }
+        },
         computed: {
+            annotationIcon() {
+                if (!this.sqmgrConfig || !this.annotation) {
+                    return
+                }
+
+                return this.sqmgrConfig.gridAnnotationIcons[this.annotation.icon].name
+            },
             isHeld() {
                 const primarySquare = this.$store.state.primarySquare
                 if (!primarySquare) {
@@ -84,10 +98,15 @@ limitations under the License.
                 return obj
             }
         },
+        mounted() {
+            sqmgrConfig()
+                .then(res => this.sqmgrConfig = res)
+                .catch(err => ModalController.showError(err))
+        },
         methods: {
             highlightSquares(highlight) {
                 const highlightSquares = this.$store.state.highlightSquares
-                const { parentSquareId, childSquareIds } = this.squareData
+                const {parentSquareId, childSquareIds} = this.squareData
                 if (parentSquareId > 0) {
                     highlightSquares[parentSquareId] = highlight
                 }
@@ -125,6 +144,14 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
+    @import '../variables';
+
+    .annotation-icon {
+        position: absolute;
+        opacity: 0.75;
+        font-size: 2em;
+        color: $yellow;
+    }
     span.name {
         overflow: hidden;
     }

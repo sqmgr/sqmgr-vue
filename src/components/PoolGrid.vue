@@ -673,7 +673,6 @@ limitations under the License.
         }
 
         &.annotated {
-            background: $yellow;
         }
 
         @at-root .rollover &.secondary {

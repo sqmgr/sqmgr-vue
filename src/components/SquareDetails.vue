@@ -78,7 +78,9 @@ limitations under the License.
         </table>
 
         <div class="annotation" v-if="computedAnnotation">
-            {{ computedAnnotation.annotation }}
+            <i :class="`fas fa-${annotationIcon}`" v-if="annotationIcon"></i>
+
+            <span>{{ computedAnnotation.annotation }}</span>
 
             <a class="delete-annotation" href="#" @click.prevent="deleteAnnotation" v-if="poolConfig.isAdmin"><i
                     class="fas fa-times"></i><span>Delete</span></a>
@@ -145,14 +147,28 @@ limitations under the License.
                     state: this.loadedData ? this.loadedData.state : this.data.state,
                 },
                 states: [],
+                gridAnnotationIcons: {},
             }
         },
         created() {
             sqmgrConfig()
-                .then(config => this.states = config.poolSquareStates)
+                .then(config => {
+                    this.states = config.poolSquareStates
+                    this.gridAnnotationIcons = config.gridAnnotationIcons
+                })
                 .catch(err => ModalController.showError(err))
         },
         computed: {
+            annotationIcon() {
+                if (this.computedAnnotation) {
+                    const icon = this.gridAnnotationIcons[this.computedAnnotation.icon]
+                    if (icon) {
+                        return icon.name
+                    }
+                }
+
+                return null
+            },
             square() {
                 return this.loadedData || this.data
             },
@@ -259,13 +275,13 @@ limitations under the License.
                 ModalController.show('Annotate Square', Annotate, {
                     annotation: this.computedAnnotation,
                 }, {
-                    submit: annotation => {
+                    submit: ({ annotation, icon }) => {
                         if (!annotation) {
                             ModalController.hide()
                             return
                         }
 
-                        sqmgrClient.setPoolGridSquareAnnotation(this.poolConfig.token, this.gridId, this.square.squareId, annotation)
+                        sqmgrClient.setPoolGridSquareAnnotation(this.poolConfig.token, this.gridId, this.square.squareId, annotation, icon)
                             .then(res => {
                                 this.localAnnotation = res
                                 EventBus.$emit('grid-updated')
@@ -323,11 +339,20 @@ limitations under the License.
     }
 
     div.annotation {
-        border-radius:    3px;
         margin-top:       $standard-spacing;
-        background-color: $yellow;
-        padding:          $minimal-spacing;
         position:         relative;
+
+        & > * {
+            vertical-align: middle;
+        }
+
+        & > i {
+            border: 1px solid $border-color;
+            border-radius: 2px;
+            color: $yellow;
+            padding: 3px;
+            margin-right: $minimal-spacing;
+        }
 
         a.delete-annotation {
             color:    $red;

@@ -89,7 +89,7 @@ class sqmgrClient {
         })
     }
 
-    setPoolGridSquareAnnotation(token, gridId, squareId, annotation) {
+    setPoolGridSquareAnnotation(token, gridId, squareId, annotation, icon) {
         return this.request(`/pool/${token}/grid/${gridId}/square/${squareId}/annotation`, null, true, {
             method: 'POST',
             headers: {
@@ -97,6 +97,7 @@ class sqmgrClient {
             },
             body: JSON.stringify({
                 annotation,
+                icon: parseInt(icon, 10),
             })
         })
     }
