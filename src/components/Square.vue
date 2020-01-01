@@ -151,7 +151,7 @@ limitations under the License.
         position:  absolute;
         top:       2px;
         right:     2px;
-        font-size: 0.8em;
+        font-size: 1rem;
         z-index:   1;
     }
 
