@@ -24,10 +24,13 @@ limitations under the License.
 
         <div class="field">
             <label>Icon</label>
-            <label v-for="key in gridAnnotationIconsKeys" :key="key">
-                <input type="radio" v-model="form.icon" :value="key">
-                <i :class="`fas fa-${gridAnnotationIcons[key].name}`"></i>
-            </label>
+
+            <div class="options">
+                <label v-for="key in gridAnnotationIconsKeys" :key="key">
+                    <i :class="`fas fa-${gridAnnotationIcons[key].name}`"></i>
+                    <input type="radio" v-model="form.icon" :value="key">
+                </label>
+            </div>
         </div>
 
         <div class="buttons">
@@ -64,7 +67,7 @@ limitations under the License.
                     return []
                 }
 
-                return Object.keys(this.gridAnnotationIcons).sort( (a, b) => a < b ? -1 : a > b ? 1 : 0 )
+                return Object.keys(this.gridAnnotationIcons).sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
             }
         },
         mounted() {
@@ -78,7 +81,32 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    input[type="radio"] + i {
-        margin-left: var(--minimal-spacing);
+    @import '../variables.scss';
+
+    div.options {
+        display:               grid;
+        grid-gap:              $minimal-spacing;
+        grid-template-columns: repeat(auto-fit, 60px);
+        grid-auto-columns:     auto;
+        text-align:            center;
+
+        label {
+            background-color: white;
+            border: 1px solid $border-color;
+            padding:               $minimal-spacing;
+
+            i {
+                background-color: #fff;
+                color:            $yellow;
+                display:          inline-block;
+            }
+
+            input[type="radio"] {
+                display:    inline-block;
+                margin:     0;
+                text-align: center;
+                width:      100%;
+            }
+        }
     }
 </style>
