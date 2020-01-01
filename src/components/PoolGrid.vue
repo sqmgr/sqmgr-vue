@@ -673,15 +673,22 @@ limitations under the License.
         }
 
         &.annotated {
+            background: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.05));
+            border-color: $yellow;
+            box-shadow: 0 0 2px $yellow;
         }
 
         @at-root .rollover &.secondary {
-            & > * {
+            & > span.name,
+            & > .owned,
+            & > .square-id {
                 opacity: 0.2;
             }
         }
+
         @at-root .is-locked.rollover &.secondary {
-            & > * {
+            & > span.name,
+            & > .owned {
                 opacity: 0;
             }
         }

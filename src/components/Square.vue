@@ -17,7 +17,7 @@ limitations under the License.
 <template>
     <div :class="divClasses" @click.prevent="didClickSquare" @mouseenter="enter" @mouseleave="leave">
         <i :class="`annotation-icon fas fa-${annotationIcon}`" v-if="annotationIcon"></i>
-        <span class="square-id">{{ sqId }}</span>
+        <span class="square-id" v-else>{{ sqId }}</span>
         <span class="name">{{ squareData.claimant }}</span>
 
         <template v-if="squareData.userId === poolConfig.userId">
@@ -147,11 +147,14 @@ limitations under the License.
     @import '../variables';
 
     .annotation-icon {
-        position: absolute;
-        opacity: 0.75;
-        font-size: 2em;
-        color: $yellow;
+        color:     $yellow;
+        position:  absolute;
+        top:       2px;
+        right:     2px;
+        font-size: 0.8em;
+        z-index:   1;
     }
+
     span.name {
         overflow: hidden;
     }
