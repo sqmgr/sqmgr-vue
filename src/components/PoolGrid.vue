@@ -491,9 +491,11 @@ limitations under the License.
         grid-template-rows:    repeat(2, 0.5fr) repeat(10, 1fr);
     }
 
-    div.expanded-grid {
-        width:  $expand-size;
-        height: $expand-size;
+    @media (max-width: 8.5in) {
+        div.expanded-grid {
+            width:  $expand-size;
+            height: $expand-size;
+        }
     }
 
     div.spacer {
