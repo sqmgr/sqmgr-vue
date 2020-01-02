@@ -102,15 +102,6 @@ limitations under the License.
 
                 return obj
             },
-            claimantShort() {
-                return (
-                    this.squareData.claimant
-                        .replace(/[^a-zA-Z ]/g, '')
-                        .split(/\s+/)
-                        .map(w => w.substr(0, 4))
-                        .slice(0, 2).join(' ')
-                )
-            }
         },
         mounted() {
             sqmgrConfig()
@@ -171,9 +162,10 @@ limitations under the License.
 
     span.name {
         overflow: hidden;
+        text-overflow: '-';
         position: relative;
         background-color: rgba(white, 0.7);
-        word-wrap: break-spaces;
+        font-weight: bold;
         z-index: 2;
         text-align: center;
         text-align-left: center;
