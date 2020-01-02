@@ -339,7 +339,9 @@ limitations under the License.
     }
 
     div.annotation {
+        border-left: 5px solid $primary;
         margin-top:       $standard-spacing;
+        padding-left: $standard-spacing;
         position:         relative;
 
         & > * {
@@ -347,10 +349,10 @@ limitations under the License.
         }
 
         & > i {
-            border: 1px solid $border-color;
-            border-radius: 2px;
-            color: $yellow;
-            padding: 3px;
+            font-size: 2em;
+            display: block;
+            color: $primary;
+            margin-bottom: $minimal-spacing;
             margin-right: $minimal-spacing;
         }
 

@@ -97,15 +97,14 @@ limitations under the License.
 
             i {
                 background-color: #fff;
-                color:            $yellow;
-                display:          inline-block;
+                color:            $primary;
+                display:          block;
             }
 
             input[type="radio"] {
-                display:    inline-block;
-                margin:     0;
+                display:    block;
+                margin:     $minimal-spacing auto;
                 text-align: center;
-                width:      100%;
             }
         }
     }

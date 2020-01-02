@@ -673,9 +673,9 @@ limitations under the License.
         }
 
         &.annotated {
-            background: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.05));
-            border-color: $yellow;
-            box-shadow: 0 0 2px $yellow;
+            background: linear-gradient(rgba($primary, 0.1), rgba($primary, 0.05));
+            border-color: $primary;
+            box-shadow: 0 0 2px $primary;
         }
 
         @at-root .rollover &.secondary {

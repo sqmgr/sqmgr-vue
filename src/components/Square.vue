@@ -147,7 +147,7 @@ limitations under the License.
     @import '../variables';
 
     .annotation-icon {
-        color:     $yellow;
+        color:     $primary;
         position:  absolute;
         top:       2px;
         right:     2px;
