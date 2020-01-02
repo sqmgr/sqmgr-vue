@@ -598,7 +598,7 @@ limitations under the License.
         padding:         2px;
 
         i.owned {
-            color:     var(--midnight-gray);
+            color:     $yellow;
             font-size: 0.9em;
             position:  absolute;
             top:       2px;

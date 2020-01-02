@@ -20,7 +20,7 @@ limitations under the License.
         <span class="square-id" v-else>{{ sqId }}</span>
         <span class="name">{{ squareData.claimant }}</span>
 
-        <template v-if="squareData.userId === poolConfig.userId">
+        <template v-if="isOwned">
             <i class="fas fa-asterisk owned"></i>
         </template>
     </div>
@@ -86,6 +86,9 @@ limitations under the License.
             isHighlighted() {
                 return this.$store.state.highlightSquares[this.sqId]
             },
+            isOwned() {
+                return this.squareData.userId === this.poolConfig.userId
+            },
             divClasses() {
                 const obj = {
                     square: true,
@@ -94,6 +97,7 @@ limitations under the License.
                     highlighted: this.isHighlighted,
                     annotated: this.annotation,
                     expanded: this.isExpanded,
+                    owned: this.isOwned,
                 }
 
                 if (this.poolConfig.gridType !== 'roll100' || !this.isSecondary) {
@@ -164,16 +168,26 @@ limitations under the License.
         overflow: hidden;
         text-overflow: '-';
         position: relative;
-        background-color: rgba(white, 0.7);
-        font-weight: bold;
         z-index: 2;
         text-align: center;
-        text-align-left: center;
+        text-align-last: center;
     }
 
     @media (max-width: 600px) {
         div.square:not(.expanded) {
             font-size: 0.6em;
+
+            &::after {
+                content: none;
+            }
+
+            .square-id {
+                display: none;
+            }
+
+            .owned {
+                color: $yellow;
+            }
         }
     }
 </style>
