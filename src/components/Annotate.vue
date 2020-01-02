@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 <template>
-    <form class="add-annotation" @submit.prevent="$emit('submit', form)">
+    <form class="add-annotation" @submit.prevent="submit">
+        <validation-errors :validation-errors="errors" v-if="errors" />
+
         <div class="field">
             <label for="annotation">Annotation</label>
             <input type="text" id="annotation" name="annotation" v-model="form.annotation" ref="name"
@@ -43,9 +45,11 @@ limitations under the License.
 <script>
     import ModalController from '@/controllers/ModalController'
     import sqmgrConfig from "@/models/sqmgrConfig";
+    import ValidationErrors from "@/components/ValidationErrors";
 
     export default {
         name: "Annotate.vue",
+        components: {ValidationErrors},
         props: {
             annotation: {
                 type: Object,
@@ -54,6 +58,7 @@ limitations under the License.
         data() {
             return {
                 ModalController,
+                errors: null,
                 form: {
                     annotation: this.annotation ? this.annotation.annotation : '',
                     icon: this.annotation ? this.annotation.icon : 0,
@@ -76,6 +81,17 @@ limitations under the License.
                 .catch(err => ModalController.showError(err))
 
             setTimeout(() => this.$refs.name.focus(), 1)
+        },
+        methods: {
+            submit() {
+                if (this.form.annotation.length === 0) {
+                    this.errors = { Annotation: [ "cannot be empty" ] }
+                    return
+                }
+
+                this.errors = null
+                this.$emit('submit', this.form)
+            }
         }
     }
 </script>
