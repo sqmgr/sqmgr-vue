@@ -92,8 +92,9 @@ limitations under the License.
 
         label {
             background-color: white;
-            border: 1px solid $border-color;
-            padding:               $minimal-spacing;
+            border:           1px solid $border-color;
+            padding:          $minimal-spacing;
+            margin:           0;
 
             i {
                 background-color: #fff;
