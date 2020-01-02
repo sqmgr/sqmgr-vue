@@ -71,7 +71,7 @@ limitations under the License.
 
         div.grid-image {
             grid-column: 2 / span 4;
-            max-width: 800px;
+            max-width: 675px;
             perspective: 1000px;
 
             img {
