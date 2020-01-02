@@ -113,6 +113,7 @@ limitations under the License.
                                 :sq-id="n"
                                 :square-data="squares[n] || {}"
                                 :annotation="annotationBySquareId(n)"
+                                :is-expanded="expandedGrid"
                         />
                     </template>
                 </div>

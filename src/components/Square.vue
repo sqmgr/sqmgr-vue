@@ -53,6 +53,10 @@ limitations under the License.
             },
             annotation: {
                 type: Object,
+            },
+            isExpanded: {
+                type: Boolean,
+                required: true,
             }
         },
         data() {
@@ -89,6 +93,7 @@ limitations under the License.
                     secondary: this.isSecondary,
                     highlighted: this.isHighlighted,
                     annotated: this.annotation,
+                    expanded: this.isExpanded,
                 }
 
                 if (this.poolConfig.gridType !== 'roll100' || !this.isSecondary) {
@@ -96,6 +101,15 @@ limitations under the License.
                 }
 
                 return obj
+            },
+            claimantShort() {
+                return (
+                    this.squareData.claimant
+                        .replace(/[^a-zA-Z ]/g, '')
+                        .split(/\s+/)
+                        .map(w => w.substr(0, 4))
+                        .slice(0, 2).join(' ')
+                )
             }
         },
         mounted() {
@@ -157,5 +171,17 @@ limitations under the License.
 
     span.name {
         overflow: hidden;
+        position: relative;
+        background-color: rgba(white, 0.7);
+        word-wrap: break-spaces;
+        z-index: 2;
+        text-align: center;
+        text-align-left: center;
+    }
+
+    @media (max-width: 600px) {
+        div.square:not(.expanded) {
+            font-size: 0.6em;
+        }
     }
 </style>
