@@ -60,12 +60,6 @@ limitations under the License.
                     </fieldset>
                 </form>
                 <div class="help col-2">
-                    <div class="warning">
-                        <h3><i class="fas fa-exclamation-triangle"></i> SqMGR is in Beta</h3>
-
-                        <p>This service is current in beta.</p>
-                    </div>
-
                     <h2>Help</h2>
 
                     <p>This screen will allow you to create a new squares pool. You can create many games from a single
@@ -78,9 +72,11 @@ limitations under the License.
 
                     <h3>Grid Configuration</h3>
 
-                    <p>You can choose how you want your grid to appear. For example, there is your standard 100-square
-                        configuration (a 10x10 grid) and then there is a 25-square configuration (a 5x5 grid) where each
-                        square will be assigned two home-team numbers and two away-team numbers.</p>
+                    <ul>
+                        <li><strong>Standard, 100 squares:</strong> A 10x10 grid. This is the most common pool.</li>
+                        <li><strong>Standard, 25 squares:</strong> A 5x5 grid where each square will be assigned two home and two away numbers. This is great if you have fewer participants.</li>
+                        <li><strong>Rollover, 100 squares:</strong> A 10x10 grid but each participant will claim two squares, a primary square and a secondary square. You can designate certain games as a "rollover" game and the secondary squares will be empty. If the final score lands on that square, you roll the money over to the next game. This is great for pools that span many games (e.g., a full season or playoffs).</li>
+                    </ul>
 
                     <h3>Join Password</h3>
 
@@ -152,16 +148,4 @@ limitations under the License.
 
 <style scoped lang="scss">
     @import '../assets/forms.css';
-    @import '../variables.scss';
-
-    div.warning {
-        background-color: $yellow;
-        padding: $standard-spacing;
-        margin-bottom: $standard-spacing;
-        border-radius: 3px;
-
-        p {
-            margin: 0;
-        }
-    }
 </style>
