@@ -40,8 +40,9 @@ const obj = {
         obj.show(title, Prompt, {
             title,
             description,
-            actionButton: opts.actionButton,
             dismissButton: opts.dismissButton,
+            actionButton: opts.actionButton,
+            cancelButton: opts.cancelButton,
             warning: opts.warning,
             isDestructive: opts.isDestructive,
         }, {

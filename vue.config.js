@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 const SitemapWebpackPlugin = require('sitemap-webpack-plugin').default
+const WorkboxPlugin = require('workbox-webpack-plugin')
 
 module.exports = {
     configureWebpack: {
@@ -37,10 +38,14 @@ module.exports = {
             ], {
                 lastMod: true,
                 changeFreq: 'hourly',
-            })
+            }),
+            new WorkboxPlugin.InjectManifest({
+                swSrc: './src/sw.js',
+            }),
         ]
     },
     devServer: {
         disableHostCheck: true
-    }
+    },
+
 };

@@ -27,7 +27,7 @@ limitations under the License.
                 <button type="button" @click.prevent="ModalController.hide()">{{dismissButton}}</button>
             </template>
             <template v-else>
-                <button type="button" class="secondary" @click.prevent="$emit('cancel-was-clicked')">Cancel</button>
+                <button type="button" class="secondary" @click.prevent="$emit('cancel-was-clicked')">{{ cancelButton || 'Cancel' }}</button>
                 <button type="button" :class="{ destructive: isDestructive }" @click.prevent="$emit('action-was-clicked')">{{actionButton}}</button>
             </template>
         </div>
@@ -47,6 +47,7 @@ limitations under the License.
                 required: true,
             },
             actionButton: String,
+            cancelButton: String,
             dismissButton: String,
             warning: String,
             isDestructive: {

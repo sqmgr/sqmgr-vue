@@ -39,6 +39,7 @@ import GuestAccount from "@/components/GuestAccount";
 import loadingBar from "@/utils/loadingBar.ts";
 import Vuex from 'vuex'
 import PoolGridAll from "@/components/PoolGridAll";
+import './register-service-worker'
 
 Vue.config.productionTip = false
 
