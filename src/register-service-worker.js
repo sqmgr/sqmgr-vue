@@ -19,16 +19,22 @@ import ModalController from '@/controllers/ModalController'
 
 if ('serviceWorker' in navigator) {
     if (process.env.NODE_ENV !== 'development') {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.getRegistration()
+            .then(hasExistingServiceWorker => {
+                // ask user to reload if they have an old service worker installed
+                if (hasExistingServiceWorker) {
+                    navigator.serviceWorker.addEventListener("controllerchange", () => {
+                        ModalController.showPrompt("Update Available", "A new update is available. Do you want to reload?", {
+                            cancelButton: 'No',
+                            actionButton: 'Reload',
+                            action: () => {
+                                window.location.reload()
+                            },
+                        })
+                    })
+                }
 
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-            ModalController.showPrompt("Update Available", "A new update is available. Do you want to reload?", {
-                cancelButton: 'No',
-                actionButton: 'Reload',
-                action: () => {
-                    window.location.reload()
-                },
+                navigator.serviceWorker.register('/sw.js')
             })
-        })
     }
 }
