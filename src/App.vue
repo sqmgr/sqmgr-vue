@@ -48,6 +48,9 @@ limitations under the License.
                             <li><a href="#" @click.prevent="login">Log in / Sign up</a></li>
                             <li v-if="isGuest"><router-link to="/guest-account">Joined Pools</router-link></li>
                         </template>
+                        <li>
+                            <router-link to="/donate">Donate</router-link>
+                        </li>
                     </ul>
                 </nav>
             </div>
