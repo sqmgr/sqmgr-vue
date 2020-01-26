@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+  - host: sqmgr.com
+    http:
+      paths:
+      - backend:
+          serviceName: sqmgr-vue
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - sqmgr.com
+    secretName: tls-sqmgr
