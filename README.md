@@ -1,5 +1,7 @@
 # sqmgr-vue
 
+![.github/workflows/workflow.yaml](https://github.com/sqmgr/sqmgr-vue/workflows/.github/workflows/workflow.yaml/badge.svg?branch=master)
+
 ## Project setup
 ```
 npm install

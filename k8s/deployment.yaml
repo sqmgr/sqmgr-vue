@@ -16,9 +16,11 @@ spec:
         app: sqmgr-vue
         tier: frontend
     spec:
+      imagePullSecrets:
+      - name: github
       containers:
         - name: nginx
-          image: weters/sqmgr-vue:latest
+          image: docker.pkg.github.com/sqmgr/sqmgr-vue/sqmgr-vue:latest
           imagePullPolicy: IfNotPresent
           readinessProbe:
             httpGet:
