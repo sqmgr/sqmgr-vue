@@ -26,7 +26,7 @@ limitations under the License.
             <li>Provide easy to maintain squares pools for people who run pools.</li>
             <li>Provide an easy to use interface for people who want to buy a square.</li>
             <li>Make the site free-to-use.</li>
-            <li>Make the source code <a href="https://github.com/sqmgr/sqmgr">available</a> and <a href="https://en.wikipedia.org/wiki/Open-source_software">open source</a>.</li>
+            <li>Make the source code <a href="https://github.com/sqmgr">available</a> and <a href="https://en.wikipedia.org/wiki/Open-source_software">open source</a>.</li>
         </ul>
     </section>
 </template>

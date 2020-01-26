@@ -19,6 +19,4 @@
 
     SqMGR is an open-source project. We'd love to see your contributions.
 
-    Overview: https://github.com/sqmgr/sqmgr
-    Frontend: https://github.com/weters/sqmgr-vue
-    Backend: https://github.com/weters/sqmgr-api
+    GitHub: https://github.com/sqmgr

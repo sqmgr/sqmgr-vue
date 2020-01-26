@@ -36,7 +36,7 @@ limitations under the License.
             </ul>
         </nav>
 
-        <p class="version"><a href="https://github.com/sqmgr/sqmgr" :data-version="versionFull" :title="versionFull">{{versionShort}}</a>
+        <p class="version"><a href="https://github.com/sqmgr" :data-version="versionFull" :title="versionFull">{{versionShort}}</a>
         </p>
     </section>
 </template>
