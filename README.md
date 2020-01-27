@@ -1,6 +1,6 @@
 # sqmgr-vue
 
-![.github/workflows/workflow.yaml](https://github.com/sqmgr/sqmgr-vue/workflows/.github/workflows/workflow.yaml/badge.svg?branch=master)
+[![.github/workflows/workflow.yaml](https://github.com/sqmgr/sqmgr-vue/workflows/.github/workflows/workflow.yaml/badge.svg?branch=master)](https://github.com/sqmgr/sqmgr-vue/actions?query=workflow%3A.github%2Fworkflows%2Fworkflow.yaml)
 
 ## Project setup
 ```
