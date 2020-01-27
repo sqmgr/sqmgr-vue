@@ -18,15 +18,15 @@ limitations under the License.
     <section class="about">
         <h1>About SqMGR</h1>
 
-        <p>SqMGR is a service for managing your football squares. This site was born out of frustration of having to manage paper-based pools and having to manually keep track of who paid and who didn't.</p>
+        <p>SqMGR is a site for managing your football squares. We built this site because we were tired of managing paper pools, and other tools online were old, cost money, or just poorly maintained.</p>
 
         <h2>Project Goals</h2>
 
         <ul>
-            <li>Provide easy to maintain squares pools for people who run pools.</li>
-            <li>Provide an easy to use interface for people who want to buy a square.</li>
-            <li>Make the site free-to-use.</li>
-            <li>Make the source code <a href="https://github.com/sqmgr">available</a> and <a href="https://en.wikipedia.org/wiki/Open-source_software">open source</a>.</li>
+            <li>Make the site easier for pool administrators</li>
+            <li>Make the site even easier for pool participants</li>
+            <li>Make the service free. Don't show any ads. Don't sell user data.</li>
+            <li>Make the source code available and open source.</li>
         </ul>
     </section>
 </template>
