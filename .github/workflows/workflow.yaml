@@ -12,10 +12,9 @@ jobs:
         with:
           fetch-depth: 0
       - run: git fetch origin +refs/tags/*:refs/tags/*
-      - name: set image name
+      - name: set version
         run: echo "::set-env name=VERSION::$(git describe --always --dirty)"
       - name: docker log in
-        if: github.ref == 'refs/heads/master'
         run:  echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: docker-build
@@ -36,7 +35,6 @@ jobs:
       - name: set image name
         run: echo "::set-env name=IMAGE_TAG::$IMAGE:$(git describe --always --dirty)"
       - name: docker log in
-        if: github.ref == 'refs/heads/master'
         run:  echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: k8s-deploy
