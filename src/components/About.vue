@@ -23,8 +23,8 @@ limitations under the License.
         <h2>Project Goals</h2>
 
         <ul>
-            <li>Make the site easy for pool administrators</li>
-            <li>Make the site even easier for pool participants</li>
+            <li>Make the site easy for pool administrators.</li>
+            <li>Make the site even easier for pool participants.</li>
             <li>Make the service free. Don't show any ads. Don't sell user data.</li>
             <li>Make the source code available and open source.</li>
         </ul>
