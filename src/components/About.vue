@@ -18,12 +18,12 @@ limitations under the License.
     <section class="about">
         <h1>About SqMGR</h1>
 
-        <p>SqMGR is a site for managing your football squares. We built this site because we were tired of managing paper pools, and other tools online were old, cost money, or just poorly maintained.</p>
+        <p>SqMGR is a site for managing your football squares. We built this site because we were tired of managing paper pools. And, other online tools were old, cost money, and/or just poorly maintained.</p>
 
         <h2>Project Goals</h2>
 
         <ul>
-            <li>Make the site easier for pool administrators</li>
+            <li>Make the site easy for pool administrators</li>
             <li>Make the site even easier for pool participants</li>
             <li>Make the service free. Don't show any ads. Don't sell user data.</li>
             <li>Make the source code available and open source.</li>
