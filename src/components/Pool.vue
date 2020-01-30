@@ -134,6 +134,17 @@ limitations under the License.
                             </td>
                         </tr>
                         <tr>
+                            <td>Password Required if Locked?</td>
+                            <td>
+                                <label>
+                                    <input type="radio" v-model="pool.openAccessOnLock" :value="false"> Yes
+                                </label>
+                                <label>
+                                    <input type="radio" v-model="pool.openAccessOnLock" :value="true"> No
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Created</td>
                             <td>{{ date(pool.created, true) }}</td>
                         </tr>
@@ -223,6 +234,9 @@ limitations under the License.
             },
             rollover() {
                 return this.pool.gridType === 'roll100'
+            },
+            openAccessOnLock() {
+                return this.pool.openAccessOnLock
             }
         },
         watch: {
@@ -232,6 +246,10 @@ limitations under the License.
                     this.$nextTick()
                         .then(() => this.$refs.poolName.select())
                 }
+            },
+            openAccessOnLock(newVal) {
+                sqmgrClient.setOpenAccessOnLockForPool(this.token, newVal)
+                    .catch(err => ModalController.showError(err))
             }
         },
         methods: {
@@ -492,12 +510,12 @@ limitations under the License.
             }
 
             @media(max-width: 600px) {
-                display: block;
+                display:  block;
                 position: relative;
 
                 &.header {
                     & > * {
-                       display: none;
+                        display: none;
                     }
 
                     & > div.game {
@@ -519,8 +537,8 @@ limitations under the License.
 
                 & > .rollover {
                     position: absolute;
-                    bottom: var(--minimal-spacing);
-                    left: var(--minimal-spacing);
+                    bottom:   var(--minimal-spacing);
+                    left:     var(--minimal-spacing);
                 }
 
                 & > .actions {
@@ -597,7 +615,7 @@ limitations under the License.
     }
 
     span.index {
-        text-align:  right;
+        text-align: right;
 
         &::after {
             content: '.';

@@ -138,6 +138,10 @@ class sqmgrClient {
         return this.updatePool(token, {action: 'reorderGrids', ids})
     }
 
+    setOpenAccessOnLockForPool(token, openAccessOnLock) {
+        return this.updatePool(token, {action: 'accessOnLock', openAccessOnLock })
+    }
+
     renamePool(token, name) {
         return this.updatePool(token, {action: 'rename', name })
     }
