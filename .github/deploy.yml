@@ -1,0 +1,4 @@
+# deliverybot
+production:
+  required_contexts: [Build]
+  environment: production
