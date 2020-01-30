@@ -1,6 +1,6 @@
 name: Build
 on:
-  pull_request:
+  push:
     branches: [master]
 env:
   IMAGE: docker.pkg.github.com/sqmgr/sqmgr-vue/sqmgr-vue
