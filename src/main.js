@@ -133,7 +133,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.meta.requirePoolMembership) {
         try {
-            await accessTokenManager.getAccessToken()
+            await accessTokenManager.getAccessToken(true)
             to.params.initialPool = await sqmgrClient.getPoolByToken(to.params.token)
         } catch (e) {
             return next(`/pool/${to.params.token}/join?target=${encodeURIComponent(to.path)}`)

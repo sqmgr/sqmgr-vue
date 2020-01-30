@@ -147,6 +147,7 @@ limitations under the License.
                             poolConfig: this.poolConfig,
                         })
                     })
+                    .catch(err => ModalController.showError(err))
             }
         }
     }
@@ -165,11 +166,11 @@ limitations under the License.
     }
 
     span.name {
-        overflow: hidden;
-        text-overflow: '-';
-        position: relative;
-        z-index: 2;
-        text-align: center;
+        overflow:        hidden;
+        text-overflow:   '-';
+        position:        relative;
+        z-index:         2;
+        text-align:      center;
         text-align-last: center;
     }
 

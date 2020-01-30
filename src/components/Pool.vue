@@ -133,7 +133,7 @@ limitations under the License.
                                 </template>
                             </td>
                         </tr>
-                        <tr>
+                        <tr v-if="pool.isAdmin">
                             <td>Password Required if Locked?</td>
                             <td>
                                 <label>
