@@ -14,41 +14,51 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-workbox.core.skipWaiting()
-workbox.core.clientsClaim()
+import { clientsClaim } from 'workbox-core'
+import { cleanupOutdatedCaches, precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
+import { NetworkFirst, StaleWhileRevalidate, CacheFirst } from 'workbox-strategies'
+import { registerRoute, NavigationRoute } from 'workbox-routing'
+import { ExpirationPlugin } from 'workbox-expiration'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
-workbox.precaching.cleanupOutdatedCaches()
-workbox.precaching.precacheAndRoute(self.__precacheManifest || [])
+self.addEventListener("message", event => {
+    if (event.data && event.data === 'skipWaiting') {
+        self.skipWaiting()
+    }
+})
 
-workbox.routing.registerNavigationRoute(
-    workbox.precaching.getCacheKeyForURL('/index.html')
-);
+clientsClaim()
 
-workbox.routing.registerRoute(
+cleanupOutdatedCaches()
+precacheAndRoute(self.__WB_MANIFEST)
+
+registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')))
+
+registerRoute(
     new RegExp('^https://[^.]+.fontawesome.com/'),
-    new workbox.strategies.NetworkFirst({
+    new NetworkFirst({
         cacheName: 'font-awesome',
     }),
 )
 
 // following two are recipes from: https://developers.google.com/web/tools/workbox/guides/common-recipes
 
-workbox.routing.registerRoute(
+registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,
-    new workbox.strategies.StaleWhileRevalidate({
+    new StaleWhileRevalidate({
         cacheName: 'google-fonts-stylesheets',
     })
 )
 
-workbox.routing.registerRoute(
+registerRoute(
     /^https:\/\/fonts\.gstatic\.com/,
-    new workbox.strategies.CacheFirst({
+    new CacheFirst({
         cacheName: 'google-fonts-webfonts',
         plugins: [
-            new workbox.cacheableResponse.Plugin({
+            new CacheableResponsePlugin({
                 statuses: [0, 200],
             }),
-            new workbox.expiration.Plugin({
+            new ExpirationPlugin({
                 maxAgeSeconds: 60 * 60 * 24 * 365,
                 maxEntries: 30,
             }),

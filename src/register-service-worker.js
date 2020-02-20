@@ -17,24 +17,31 @@ limitations under the License.
 /* eslint-disable no-console */
 import ModalController from '@/controllers/ModalController'
 
-if ('serviceWorker' in navigator) {
-    if (process.env.NODE_ENV !== 'development') {
-        navigator.serviceWorker.getRegistration()
-            .then(hasExistingServiceWorker => {
-                // ask user to reload if they have an old service worker installed
-                if (hasExistingServiceWorker) {
-                    navigator.serviceWorker.addEventListener("controllerchange", () => {
-                        ModalController.showPrompt("Update Available", "A new update is available. Do you want to reload?", {
-                            cancelButton: 'No',
-                            actionButton: 'Reload',
-                            action: () => {
-                                window.location.reload()
-                            },
-                        })
-                    })
-                }
+if (process.env.NODE_ENV !== 'development') {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                registration.addEventListener("updatefound", () => {
+                    if (!navigator.serviceWorker.controller) {
+                        return
+                    }
 
-                navigator.serviceWorker.register('/sw.js')
+                    registration.installing.addEventListener("statechange", e => {
+                        if (e.target.state === 'installed') {
+                            ModalController.showPrompt("Update Available", "A new update is available. Do you want to reload?", {
+                                cancelButton: 'No',
+                                actionButton: 'Reload',
+                                action: () => {
+                                    ModalController.hide()
+
+                                    e.target.postMessage('skipWaiting')
+                                },
+                            })
+                        }
+                    })
+                })
             })
+
+        navigator.serviceWorker.addEventListener("controllerchange", () => window.location.reload())
     }
 }

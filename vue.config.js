@@ -41,11 +41,11 @@ module.exports = {
             }),
             new WorkboxPlugin.InjectManifest({
                 swSrc: './src/sw.js',
+                maximumFileSizeToCacheInBytes: 1024 * 1024 * 5, // 5 MiB
             }),
         ]
     },
     devServer: {
         disableHostCheck: true
     },
-
 };
