@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import teamColorsData from './third-party/team-colors-data'
+import teamColorsData from './data/teamcolors'
 
 export default search => {
     const reg = new RegExp(search, 'i')
-    return teamColorsData.filter(team => team.name.match(reg) && team.colors.hasOwnProperty('hex'))
+    return teamColorsData.filter(team => team.name.match(reg))
 }

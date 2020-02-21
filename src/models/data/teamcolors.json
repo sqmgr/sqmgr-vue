@@ -1,0 +1,4784 @@
+[
+  {
+    "name": "Auburn Tigers",
+    "colors": [
+      "#0C2340",
+      "#e87722"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "UNC Charlotte 49ers",
+    "colors": [
+      "#046A38",
+      "#B9975B",
+      "#27251F"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Bucknell Bison",
+    "colors": [
+      "#E87722",
+      "#003865",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Kent State Golden Flashes",
+    "colors": [
+      "#002664",
+      "#EAAB00"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Ohio State Buckeyes",
+    "colors": [
+      "#bb0000",
+      "#666666",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Fairfield Stags",
+    "colors": [
+      "#C8102E",
+      "#A2AAAD",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Canisius Golden Griffins",
+    "colors": [
+      "#0C2340",
+      "#ffba00",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Clemson Tigers",
+    "colors": [
+      "#F56600",
+      "#522d80"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Baylor Bears",
+    "colors": [
+      "#003015",
+      "#FFB800"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Alabama Crimson Tide",
+    "colors": [
+      "#9e1b32",
+      "#828a8f",
+      "#ffffff"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Arizona State Sun Devils",
+    "colors": [
+      "#8c1d40",
+      "#FFC627"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Arkansas Razorbacks",
+    "colors": [
+      "#9d2235",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Boise State Broncos",
+    "colors": [
+      "#D64309",
+      "#0033A0"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Boston College Eagles",
+    "colors": [
+      "#98002e",
+      "#BC9B6a",
+      "#726158"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Appalachian State Mountaineers",
+    "colors": [
+      "#222",
+      "#ffcc00"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Colgate Raiders",
+    "colors": [
+      "#821019"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Colorado State Rams",
+    "colors": [
+      "#1E4D2B",
+      "#C8C372"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "California Golden Bears",
+    "colors": [
+      "#003262",
+      "#3B7EA1",
+      "#fdb515",
+      "#c4820e"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "University At Albany Great Danes",
+    "colors": [
+      "#461660",
+      "#eeb211"
+    ],
+    "league": "NCAA",
+    "conference": "America East"
+  },
+  {
+    "name": "Cal Poly Mustangs",
+    "colors": [
+      "#003831",
+      "#FFE395",
+      "#B38F4F",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "Cornell Big Red",
+    "colors": [
+      "#B31B1B",
+      "#5e3920",
+      "#89572e",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Akron Zips",
+    "colors": [
+      "#041E42",
+      "#A89968",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Air Force Falcons",
+    "colors": [
+      "#003087",
+      "#8A8D8F",
+      "#B1B3B3",
+      "#FFC72C",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "Arizona Wildcats",
+    "colors": [
+      "#CC0033",
+      "#003366"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Furman Paladins",
+    "colors": [
+      "#201547",
+      "#582c83",
+      "#A7A8AA"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Louisiana Ragin’ Cajuns",
+    "colors": [
+      "#ce181e"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "Georgia Bulldogs",
+    "colors": [
+      "#ba0c2f",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Pepperdine Waves",
+    "colors": [
+      "#00205c",
+      "#ee7624"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Georgia Tech Yellow Jackets",
+    "colors": [
+      "#B3A369",
+      "#A28D5B",
+      "#003057"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "West Virginia Mountaineers",
+    "colors": [
+      "#002855",
+      "#eaaa00"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Butler Bulldogs",
+    "colors": [
+      "#13294b",
+      "#747678",
+      "#d1e0d7",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Central Michigan Chippewas",
+    "colors": [
+      "#6A0032",
+      "#FFC82E"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Denver Pioneers",
+    "colors": [
+      "#8b2332",
+      "#8b6f4b"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "BYU",
+    "colors": [
+      "#002E5D",
+      "#FFF",
+      "#0062B8"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Bradley Braves",
+    "colors": [
+      "#A50000",
+      "#999999",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Binghamton Bearcats",
+    "colors": [
+      "#005a43",
+      "#169b62",
+      "#BF0D3E",
+      "#B1B3B3"
+    ],
+    "league": "NCAA",
+    "conference": "America East"
+  },
+  {
+    "name": "Bowling Green Falcons",
+    "colors": [
+      "#FE5000",
+      "#4F2C1D",
+      "#CDA077",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Colorado Buffaloes",
+    "colors": [
+      "#CFB87C",
+      "#000000",
+      "#565A5C",
+      "#a2a4a3",
+      "#4b92db"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Buffalo Bulls",
+    "colors": [
+      "#005BBB",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "CSUB Roadrunners",
+    "colors": [
+      "#003594",
+      "#FFC72C"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Ball State Cardinals",
+    "colors": [
+      "#BA0C2F",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Iowa Hawkeyes",
+    "colors": [
+      "#ffcd00",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Kentucky Wildcats",
+    "colors": [
+      "#0033a0",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Columbia Lions",
+    "colors": [
+      "#003865",
+      "#9BCBEB",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Penn State Nittany Lions",
+    "colors": [
+      "#041E42",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Cal State Fullerton Titans",
+    "colors": [
+      "#00274C",
+      "#DC8218",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "Portland Pilots",
+    "colors": [
+      "#1e1656",
+      "#5e6A71"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Harvard University",
+    "colors": [
+      "#A41034",
+      "#000000",
+      "#808285",
+      "#B6B6B6"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Drake Bulldogs",
+    "colors": [
+      "#004477",
+      "#999999",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Chattanooga Mocs",
+    "colors": [
+      "#00386b",
+      "#e0aa0f",
+      "#adafaa"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Holy Cross Crusaders",
+    "colors": [
+      "#602d89",
+      "#FFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Oklahoma State Cowboys",
+    "colors": [
+      "#ff7300",
+      "#ff9900",
+      "#bebebe",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Penn Quakers",
+    "colors": [
+      "#990000",
+      "#011F5B",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Maryland Terrapins",
+    "colors": [
+      "#E03a3e",
+      "#ffd520",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Florida State Seminoles",
+    "colors": [
+      "#782f40",
+      "#ceb888",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Iowa State Cyclones",
+    "colors": [
+      "#c8102e",
+      "#f1be48"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Duke Blue Devils",
+    "colors": [
+      "#003087",
+      "#fff"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Oregon Ducks",
+    "colors": [
+      "#154733",
+      "#FCE122"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Kansas Jayhawks",
+    "colors": [
+      "#0051ba",
+      "#e8000d",
+      "#ffc82d",
+      "#85898a"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Gonzaga",
+    "colors": [
+      "#041E42",
+      "#C8102E",
+      "#C1C6C8"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Louisiana State (LSU) Tigers",
+    "colors": [
+      "#461D7C",
+      "#fdd023"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Lipscomb University Bisons",
+    "colors": [
+      "#331e54",
+      "#F4AA00",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "George Mason Patriots",
+    "colors": [
+      "#006633",
+      "#FFCC33",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Old Dominion Monarchs",
+    "colors": [
+      "#003057",
+      "#7C878E",
+      "#92C1E9"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Illinois Fighting Illini",
+    "colors": [
+      "#13294b",
+      "#E84A27"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Dayton Flyers",
+    "colors": [
+      "#CE1141",
+      "#004B8D",
+      "#F80228",
+      "#0200D1",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "IUPUI Jaguars",
+    "colors": [
+      "#9D2235",
+      "#DFD1A7",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Detroit Mercy Titans",
+    "colors": [
+      "#A6093D",
+      "#002D72",
+      "#D7D2CB"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Rider Broncs",
+    "colors": [
+      "#981E32",
+      "#6C6F70",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Pittsburgh Panthers",
+    "colors": [
+      "#003594",
+      "#FFB81C"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Louisiana Tech Bulldogs",
+    "colors": [
+      "#002F8B",
+      "#E31B23",
+      "#a2aaad",
+      "#111111"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Princeton Tigers",
+    "colors": [
+      "#FF671F",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Grand Canyon University  Antelopes",
+    "colors": [
+      "#522398",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Indiana State Sycamores",
+    "colors": [
+      "#0142BC",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Fordham Rams",
+    "colors": [
+      "#860038",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Tulane Green Wave",
+    "colors": [
+      "#006747",
+      "#43B02A",
+      "#418FDE",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Missouri Tigers",
+    "colors": [
+      "#000",
+      "#F1B82D"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Dartmouth Big Green",
+    "colors": [
+      "#046A38",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Cincinnati Bearcats",
+    "colors": [
+      "#E00122",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "CSUN Matadors",
+    "colors": [
+      "#CE1126",
+      "#D1CEC6",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "Hartford Hawks",
+    "colors": [
+      "#c02427",
+      "#0f0708",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "America East"
+  },
+  {
+    "name": "Brown Bears",
+    "colors": [
+      "#4E3629",
+      "#7C2529",
+      "#E4002B",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Chicago State Cougars",
+    "colors": [
+      "#006666",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Citadel Bulldogs",
+    "colors": [
+      "#3975B7",
+      "#1F3A60",
+      "#FFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Cleveland State Vikings",
+    "colors": [
+      "#006747",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "ETSU Buccaneers",
+    "colors": [
+      "#041e42",
+      "#ffc72c"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Army Black Knights codes",
+    "colors": [
+      "#FFD530",
+      "#D4BF91",
+      "#B2B4B3",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Georgetown Hoyas",
+    "colors": [
+      "#041E42",
+      "#8D817B"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Arkansas Little Rock Trojans",
+    "colors": [
+      "#6e2639",
+      "#A7A9AC"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "Idaho State Bengals",
+    "colors": [
+      "#FF671F",
+      "#000000",
+      "#F9A81A"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Fresno State Bulldogs",
+    "colors": [
+      "#db0032",
+      "#002e6d",
+      "#007934"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "Green Bay Phoenix",
+    "colors": [
+      "#006747",
+      "#9D2235",
+      "#8A8D8F"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Florida Gulf Coast Eagles",
+    "colors": [
+      "#002d72",
+      "#007749",
+      "#b9975b"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Kansas State Wildcats",
+    "colors": [
+      "#512888",
+      "#d1d1d1",
+      "#a7a7a7",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Marist Red Foxes",
+    "colors": [
+      "#C8102E",
+      "#b2b2b2",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Florida Atlantic Owls",
+    "colors": [
+      "#003366",
+      "#CC0000",
+      "#8A8D8F",
+      "#CCC"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Idaho Vandals",
+    "colors": [
+      "#B3A369",
+      "#EAAB00",
+      "#86754D",
+      "#808080",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Maine Black Bears",
+    "colors": [
+      "#003263",
+      "#b0d7ff",
+      "#AB0634",
+      "#908C89",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "America East"
+  },
+  {
+    "name": "DePaul Blue Demons",
+    "colors": [
+      "#005EB8",
+      "#E4002B"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Oral Roberts Golden Eagles",
+    "colors": [
+      "#002f60",
+      "#C5b783",
+      "#A28E2A"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "Nebraska Omaha Mavericks",
+    "colors": [
+      "#000000",
+      "#D71920",
+      "#636568"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "Providence Friars",
+    "colors": [
+      "#8a8d8f",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Loyola Marymount Lions",
+    "colors": [
+      "#b62b3a",
+      "#00447c",
+      "#617080",
+      "#231f20"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Ole Miss Rebels",
+    "colors": [
+      "#cE1126",
+      "#14213D"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Jacksonville Dolphins",
+    "colors": [
+      "#004e44",
+      "#898a8d",
+      "#bbbbbb",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Eastern Washington Eagles",
+    "colors": [
+      "#a10022",
+      "#FFF",
+      "#000",
+      "#6d6e71"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "La Salle Explorers",
+    "colors": [
+      "#ffcc00",
+      "#003366",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Oregon State Beavers",
+    "colors": [
+      "#dc4405",
+      "#000000",
+      "#ffffff"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Indiana Hoosiers",
+    "colors": [
+      "#990000",
+      "#eeedeb"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Kennesaw State Owls",
+    "colors": [
+      "#FDBB30",
+      "#0B1315",
+      "#C5C6C8"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Hawaii Warriors",
+    "colors": [
+      "#024731",
+      "#c8c8c8",
+      "#000"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "Florida International Panthers",
+    "colors": [
+      "#081E3F",
+      "#B6862C"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Eastern Michigan Eagles",
+    "colors": [
+      "#006633",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Florida Gators",
+    "colors": [
+      "#0021a5",
+      "#fa4616"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Miami Hurricanes",
+    "colors": [
+      "#F47321",
+      "#005030",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "South Carolina Gamecocks",
+    "colors": [
+      "#73000A",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Louisiana Monroe Warhawks",
+    "colors": [
+      "#800029",
+      "#BD955A",
+      "#646469",
+      "#dad8d6"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "Texas Tech Red Raiders",
+    "colors": [
+      "#cc0000",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Manhattan Jaspers",
+    "colors": [
+      "#00703C",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Duquesne Dukes",
+    "colors": [
+      "#041E42",
+      "#BA0C2F",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Iona Gaels",
+    "colors": [
+      "#6F2C3F",
+      "#F2A900"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Illinois State Redbirds",
+    "colors": [
+      "#ce1126",
+      "#F9DD16",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "East Carolina Pirates",
+    "colors": [
+      "#592A8A",
+      "#FDC82F"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "George Washington Colonials",
+    "colors": [
+      "#e2cb92",
+      "#002654",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "North Alabama Lions",
+    "colors": [
+      "#46166B",
+      "#DB9F11",
+      "#5F6062"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Southern Illinois Salukis",
+    "colors": [
+      "#720000",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Alabama Birmingham (UAB) Blazers",
+    "colors": [
+      "#006341",
+      "#CC8A00",
+      "#000000",
+      "#BF0D3E"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Portland State Vikings",
+    "colors": [
+      "#154734",
+      "#FFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Western Carolina Catamounts",
+    "colors": [
+      "#592c88",
+      "#C1A875"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Fort Wayne Mastadons",
+    "colors": [
+      "#002F6C",
+      "#000",
+      "#63666A",
+      "#97999B",
+      "#bbbcbc"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "Houston Cougars",
+    "colors": [
+      "#C8102E",
+      "#76232F",
+      "#B2B4B2"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Long Beach State 49ers",
+    "colors": [
+      "#ffc72a",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "North Florida Ospreys",
+    "colors": [
+      "#00246b",
+      "#D9D9D9",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "North Dakota State Bison",
+    "colors": [
+      "#0a5640",
+      "#ffc72a"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "NC State Wolfpack",
+    "colors": [
+      "#cc0000",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "St. John’s Red Storm",
+    "colors": [
+      "#BA0C2F",
+      "#041C2C",
+      "#A7A8AA",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Texas Longhorns",
+    "colors": [
+      "#bf5700",
+      "#333f48",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "UTEP Miners",
+    "colors": [
+      "#FF8200",
+      "#041E42",
+      "#B1B3B3"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "UC Davis Aggies",
+    "colors": [
+      "#002855",
+      "#B3A369"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "California State University, Sacramento Hornets",
+    "colors": [
+      "#043927",
+      "#c4b581"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "San Jose State Spartans",
+    "colors": [
+      "#0055A2",
+      "#e5a823",
+      "#939597"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "Missouri State Bears",
+    "colors": [
+      "#5E0009",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Villanova Wildcats",
+    "colors": [
+      "#00205b",
+      "#13b5ea",
+      "#8B634B",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Middle Tennessee State Blue Raiders",
+    "colors": [
+      "#000",
+      "#0066CC"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Texas A&M Aggies",
+    "colors": [
+      "#500000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Oklahoma Sooners",
+    "colors": [
+      "#841617",
+      "#fdf9d8"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Saint Joseph’s Hawks",
+    "colors": [
+      "#9e1b32",
+      "#6c6f70"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Western Illinois Leathernecks",
+    "colors": [
+      "#663399",
+      "#ffcc00"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "Valparaiso Crusaders",
+    "colors": [
+      "#381e0e",
+      "#613318",
+      "#ffcc00",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Utah State Aggies",
+    "colors": [
+      "#0F2439",
+      "#FFF",
+      "#9D968D",
+      "#000"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "UNLV Rebels",
+    "colors": [
+      "#CF0A2C",
+      "#CAC8C8",
+      "#000"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "UCLA Bruins",
+    "colors": [
+      "#2d68c4",
+      "#f2a900"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Miami Redhawks",
+    "colors": [
+      "#b61e2e",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Virginia Cavaliers",
+    "colors": [
+      "#232d4b",
+      "#F84C1E",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "VMI Keydets",
+    "colors": [
+      "#a71f23",
+      "#ffd520",
+      "#000",
+      "#666766"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Youngstown State Penguins",
+    "colors": [
+      "#C8102E",
+      "#F3D54E",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Central Florida Knights",
+    "colors": [
+      "#ffc904",
+      "#ba9b37",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Washington State Cougars",
+    "colors": [
+      "#981e32",
+      "#5e6a71"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Washington Huskies",
+    "colors": [
+      "#4B2e83",
+      "#b7a57a",
+      "#85754d"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Temple Owls",
+    "colors": [
+      "#9D2235",
+      "#FFCD00",
+      "#8A8D8F",
+      "#C1C6C8",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Northern Kentucky Norse",
+    "colors": [
+      "#FFC72C",
+      "#FFFFFF",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Stanford Cardinal",
+    "colors": [
+      "#8c1515",
+      "#4d4f53",
+      "#2e2d29"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "FC Cincinnati",
+    "colors": [
+      "#FE5000",
+      "#003087"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "New York Rangers",
+    "colors": [
+      "#0038A8",
+      "#CE1126",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "FC Dallas",
+    "colors": [
+      "#d11241",
+      "#003e7e",
+      "#d1d5d8"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Notre Dame Fighting Irish",
+    "colors": [
+      "#0c2340",
+      "#c99700",
+      "#ae9142",
+      "#00843d"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Syracuse Orange",
+    "colors": [
+      "#d44500",
+      "#3e3d3c",
+      "#6f777d",
+      "#adb3b8",
+      "#e8eaeb"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Memphis Tigers",
+    "colors": [
+      "#003087",
+      "#898D8D"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Niagara Purple Eagles",
+    "colors": [
+      "#582C83",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "New Mexico State Aggies",
+    "colors": [
+      "#861F41",
+      "#97999B",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Western Kentucky Hilltoppers",
+    "colors": [
+      "#c60c30",
+      "#1E1E1E",
+      "#A2A4A3"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Virginia Commonwealth Rams",
+    "colors": [
+      "#ffb300",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Philadelphia Union",
+    "colors": [
+      "#002d55",
+      "#5090cd",
+      "#b38707",
+      "#b49759"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Dallas Stars",
+    "colors": [
+      "#006847",
+      "#8F8F8C",
+      "#111111"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Carolina Hurricanes",
+    "colors": [
+      "#cc0000",
+      "#111111",
+      "#a2aaad",
+      "#76232f"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Hartford Whalers",
+    "colors": [
+      "#00205B",
+      "#046A38",
+      "#a2aaad"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Michigan State Spartans",
+    "colors": [
+      "#18453b",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "San Francisco Dons",
+    "colors": [
+      "#FDBB30",
+      "#00543C",
+      "#919194"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Samford Bulldogs",
+    "colors": [
+      "#002649",
+      "#C4161D"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Montana State Bobcats",
+    "colors": [
+      "#00205B",
+      "#B9975B"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "UC Santa Barbara Gauchos",
+    "colors": [
+      "#003660",
+      "#FEBC11"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "San Diego Toreros",
+    "colors": [
+      "#002868",
+      "#84bce8",
+      "#207bc1"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "University of Texas Rio Grande Valley Vaqueros",
+    "colors": [
+      "#FFA300",
+      "#f05023",
+      "#00843D",
+      "#0C2340"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Montana Grizzlies",
+    "colors": [
+      "#660033",
+      "#999999"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Minnesota Wild",
+    "colors": [
+      "#a6192e",
+      "#154734",
+      "#EAAA00",
+      "#DDCBA4"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Saint Louis Billikens",
+    "colors": [
+      "#003DA5",
+      "#C8C9C7",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "St. Louis Blues",
+    "colors": [
+      "#002F87",
+      "#FCB514",
+      "#041E42",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "North Carolina Tar Heels",
+    "colors": [
+      "#7BAFD4",
+      "#FFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "San Jose Sharks",
+    "colors": [
+      "#006272",
+      "#EA7200",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Nashville Predators",
+    "colors": [
+      "#FFB81C",
+      "#041E42",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Pacific Tigers",
+    "colors": [
+      "#E35205",
+      "#231f20",
+      "#D86018",
+      "#949A90"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "South Dakota State Jackrabbits",
+    "colors": [
+      "#0033A0",
+      "#FFD100"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "Marquette Golden Eagles",
+    "colors": [
+      "#003366",
+      "#ffcc00"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Toledo Rockets",
+    "colors": [
+      "#15397F",
+      "#005CB9",
+      "#FFDA00",
+      "#BEC6C3",
+      "#A0ACAA",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "UC Irvine Anteaters",
+    "colors": [
+      "#0C2340",
+      "#FFC72C"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "Southern Utah Thunderbirds",
+    "colors": [
+      "#C41425",
+      "#000",
+      "#FFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "University of Maryland – Baltimore County Retrievers",
+    "colors": [
+      "#b18906"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Utah Valley Wolverines",
+    "colors": [
+      "#275d38",
+      "#000000",
+      "#8e8c89"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Virginia Tech Hokies",
+    "colors": [
+      "#630031",
+      "#cf4420"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Ottawa Senators",
+    "colors": [
+      "#c52032",
+      "#C2912C",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Rice Owls",
+    "colors": [
+      "#00205B",
+      "#C1C6C8"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "University of Missouri-Kansas City Kangaroos",
+    "colors": [
+      "#005293",
+      "#fecb00",
+      "#000000",
+      "#dcddde"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "Detroit Red Wings",
+    "colors": [
+      "#ce1126",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Vegas Golden Knights",
+    "colors": [
+      "#B4975A",
+      "#333f42",
+      "#c8102E",
+      "#231F20",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Seattle University Redhawks",
+    "colors": [
+      "#AA0000",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "WAC"
+  },
+  {
+    "name": "New Jersey Institute of Technology Highlanders",
+    "colors": [
+      "#D22630",
+      "#071D49",
+      "#C1C6C8",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Marshall Thundering Herd",
+    "colors": [
+      "#00B140",
+      "#A2AAAD",
+      "#693F23",
+      "#AD7C59",
+      "#27251F"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Michigan Wolverines",
+    "colors": [
+      "#00274c",
+      "#ffcb05"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "D.C. United Team",
+    "colors": [
+      "#E90C30",
+      "#231f20",
+      "#FFFFFF"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Wake Forest Demon Deacons",
+    "colors": [
+      "#9E7E38",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "New York City FC",
+    "colors": [
+      "#6CACE4",
+      "#041E42",
+      "#F15524"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Rutgers Scarlet Knights",
+    "colors": [
+      "#cc0033",
+      "#5F6A72",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Georgia Southern Eagles",
+    "colors": [
+      "#011e41",
+      "#A7A9AC",
+      "#87714D"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "Quebec Nordiques",
+    "colors": [
+      "#DA291C",
+      "#005EB8"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Vanderbilt Commodores",
+    "colors": [
+      "#000000",
+      "#866d4b"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Utah Utes",
+    "colors": [
+      "#cc0000",
+      "#808080",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Minnesota Golden Gophers",
+    "colors": [
+      "#7a0019",
+      "#ffcc33"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Richmond Spiders",
+    "colors": [
+      "#000066",
+      "#990000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "UTSA Roadrunners",
+    "colors": [
+      "#f15a22",
+      "#0C2340"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Rhode Island Rams",
+    "colors": [
+      "#68abe8",
+      "#002147",
+      "#ffffff"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "South Florida Bulls",
+    "colors": [
+      "#006747",
+      "#CFC493"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Northern Arizona Lumberjacks",
+    "colors": [
+      "#003466",
+      "#FFD200"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "UNC Greensboro Spartans",
+    "colors": [
+      "#0f2044",
+      "#ffb71b",
+      "#bec0c2"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Vancouver Whitecaps FC",
+    "colors": [
+      "#04265c",
+      "#94c2e4",
+      "#84868c"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Weber State Wildcats",
+    "colors": [
+      "#4b2682",
+      "#a1a1a4",
+      "#130c0e"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Burnley Football Club",
+    "colors": [
+      "#6c1d45",
+      "#99D6EA",
+      "#EDE939",
+      "#F0B323"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "AFC Bournemouth",
+    "colors": [
+      "#DA291C",
+      "#b50e12",
+      "#000000",
+      "#EFDBB2",
+      "#A89968"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Evansville Purple Aces",
+    "colors": [
+      "#52237f",
+      "#f36f21",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "Northern Illinois Huskies",
+    "colors": [
+      "#BA0C2F",
+      "#8A8D8F",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Western Michigan Broncos",
+    "colors": [
+      "#6C4023",
+      "#B5A167",
+      "#AAA8AA",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Saint Mary’s Gaels",
+    "colors": [
+      "#D80024",
+      "#06315B"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Wright State Raiders",
+    "colors": [
+      "#026937",
+      "#CEA052",
+      "#FFE1A5",
+      "#DE6328"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Cardiff City FC",
+    "colors": [
+      "#0070b5",
+      "#d11524",
+      "#005995",
+      "#a51c22",
+      "#f2f2f2"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Arizona Coyotes",
+    "colors": [
+      "#8c2633",
+      "#e2d6b5",
+      "#111111"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "New Mexico Lobos",
+    "colors": [
+      "#BA0C2F",
+      "#a7a8aa",
+      "#63666A",
+      "#007A86",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "San Jose Earthquakes",
+    "colors": [
+      "#1f1f1f",
+      "#30457a",
+      "#a42a35"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Calgary Flames",
+    "colors": [
+      "#c8102E",
+      "#f1be48",
+      "#111111",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Seattle Sounders FC",
+    "colors": [
+      "#236192",
+      "#658D1B",
+      "#1D252D"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "RC Celta de Vigo",
+    "colors": [
+      "#8ac3ee",
+      "#e5254e",
+      "#b19221"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Brighton & Hove Albion",
+    "colors": [
+      "#0A56A3",
+      "#FFCD00"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Granada CF",
+    "colors": [
+      "#ffffff",
+      "#a61b2b"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Swansea City AFC",
+    "colors": [
+      "#121212"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Real Salt Lake",
+    "colors": [
+      "#b30838",
+      "#013A81",
+      "#F5E700"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "San Francisco Giants",
+    "colors": [
+      "#FD5A1E",
+      "#27251F",
+      "#EFD19F",
+      "#AE8F6F"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Yale Bulldogs",
+    "colors": [
+      "#00356b",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Ivy League"
+  },
+  {
+    "name": "Atlanta Thrashers",
+    "colors": [
+      "#041E42",
+      "#5c88da",
+      "#862633",
+      "#b86125",
+      "#ffa300"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Portland Timbers",
+    "colors": [
+      "#00482B",
+      "#d69a00"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "New Jersey Devils",
+    "colors": [
+      "#CE1126",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Boston Bruins",
+    "colors": [
+      "#FFB81C",
+      "#000000"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Winnipeg Jets",
+    "colors": [
+      "#041E42",
+      "#004C97",
+      "#a6192e",
+      "#7B303E",
+      "#55565A",
+      "#8E9090",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Florida Panthers",
+    "colors": [
+      "#041E42",
+      "#c8102E",
+      "#B9975B"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles FC",
+    "colors": [
+      "#000000",
+      "#c39e6d",
+      "#e31837",
+      "#55565a",
+      "#b3b2b1"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Columbus Crew SC",
+    "colors": [
+      "#fef200",
+      "#231f20"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Northern Iowa Panthers",
+    "colors": [
+      "#4B116F",
+      "#FFCC00"
+    ],
+    "league": "NCAA",
+    "conference": "Missouri Valley"
+  },
+  {
+    "name": "New Hampshire Wildcats",
+    "colors": [
+      "#041e42",
+      "#BBBCBC",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "America East"
+  },
+  {
+    "name": "Mississippi State University Bulldogs",
+    "colors": [
+      "#660000",
+      "#ffffff"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Texas Christian Horned Frogs",
+    "colors": [
+      "#4d1979",
+      "#a3a9ac",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Tottenham Hotspur",
+    "colors": [
+      "#132257"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Tulsa Golden Hurricane",
+    "colors": [
+      "#002D72",
+      "#C8102E",
+      "#C5B783",
+      "#F3D54E",
+      "#84754E"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "University of Wyoming Cowboys",
+    "colors": [
+      "#ffc425",
+      "#492f24"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "North Texas Mean Green",
+    "colors": [
+      "#00853E",
+      "#000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Northwestern Wildcats",
+    "colors": [
+      "#4e2a84",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Miami Dolphins",
+    "colors": [
+      "#008e97",
+      "#FC4C02",
+      "#005778"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Tampa Bay Lightning",
+    "colors": [
+      "#002868"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Vancouver Canucks",
+    "colors": [
+      "#00205B",
+      "#00843d",
+      "#041C2C",
+      "#99999A",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Oakland Raiders",
+    "colors": [
+      "#000000",
+      "#A5ACAF"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "SD Eibar",
+    "colors": [
+      "#0071b9",
+      "#aa093c",
+      "#0c2d69",
+      "#ffffff",
+      "#e09701"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Chicago White Sox",
+    "colors": [
+      "#27251F",
+      "#C4CED4"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Cleveland Indians",
+    "colors": [
+      "#0C2340",
+      "#E31937"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Barcelona FC",
+    "colors": [
+      "#edbb00",
+      "#004d98",
+      "#a50044",
+      "#db0030",
+      "#ffdd00",
+      "#000000"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Utah Jazz",
+    "colors": [
+      "#002B5C",
+      "#00471B",
+      "#F9A01B"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Tennessee Titans",
+    "colors": [
+      "#0c2340",
+      "#4b92db",
+      "#c8102e",
+      "#8a8d8f",
+      "#a2aaad",
+      "#54585a"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Texas Rangers",
+    "colors": [
+      "#003278",
+      "#C0111F"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Denver Nuggets",
+    "colors": [
+      "#0E2240",
+      "#FEC524",
+      "#8B2131",
+      "#1D428A"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Chicago Fire",
+    "colors": [
+      "#121f48",
+      "#b3272d",
+      "#909191"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "A.S. Roma",
+    "colors": [
+      "#f0bc42",
+      "#8e1f2f",
+      "#cacacc",
+      "#000"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "A.C. Milan",
+    "colors": [
+      "#fb090b",
+      "#000"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Xavier University Musketeers",
+    "colors": [
+      "#0C2340",
+      "#9EA2A2"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Nevada Wolfpack",
+    "colors": [
+      "#003366",
+      "#807f84"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "Anaheim Ducks",
+    "colors": [
+      "#F47A38",
+      "#B9975B",
+      "#C1C6C8",
+      "#000"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "West Ham United",
+    "colors": [
+      "#7A263A",
+      "#1bb1e7",
+      "#F3D459"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Crystal Palace FC",
+    "colors": [
+      "#1B458F",
+      "#a7a5a6",
+      "#C4122E"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Atletico Madrid",
+    "colors": [
+      "#272E61",
+      "#ffffff",
+      "#CB3524"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Washington Redskins",
+    "colors": [
+      "#773141",
+      "#FFB612"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Liverpool FC",
+    "colors": [
+      "#c8102E",
+      "#00b2a9",
+      "#F6EB61"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "New England Revolution",
+    "colors": [
+      "#e51938",
+      "#002b5c"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Cincinnati Bengals",
+    "colors": [
+      "#fb4f14",
+      "#000000"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "New York Giants",
+    "colors": [
+      "#0b2265",
+      "#a71930",
+      "#a5acaf"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Real Madrid C.F.",
+    "colors": [
+      "#febe10",
+      "#00529f",
+      "#ee324e"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Edmonton Oilers",
+    "colors": [
+      "#041E42",
+      "#FF4C00"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Athletic Bilbao",
+    "colors": [
+      "#ffffff",
+      "#ee2523",
+      "#000000"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Huddersfield Town",
+    "colors": [
+      "#0E63AD",
+      "#FFFFFF"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Atlanta United FC",
+    "colors": [
+      "#80000a",
+      "#221f1f",
+      "#a19060",
+      "#817144"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Toronto FC",
+    "colors": [
+      "#ab1e2d",
+      "#3f4743",
+      "#a3aaad"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Arizona Cardinals",
+    "colors": [
+      "#97233F",
+      "#222021",
+      "#FFB612"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Leeds United Football Club",
+    "colors": [
+      "#FFCD00",
+      "#1D428A",
+      "#Ac944D"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Villarreal CF",
+    "colors": [
+      "#005187",
+      "#ffe667",
+      "#e70005",
+      "#000000"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Levante Union Deportiva",
+    "colors": [
+      "#b4053f",
+      "#005ca5",
+      "#dca43e",
+      "#fac400",
+      "#b2b2b2"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Colorado Rapids",
+    "colors": [
+      "#862633",
+      "#8BB8E8",
+      "#8d9093"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "West Bromwich Albion",
+    "colors": [
+      "#122f67",
+      "#FFFFFF"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Kings",
+    "colors": [
+      "#111111",
+      "#A2AAAD",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Valencia C.F.",
+    "colors": [
+      "#0097d7",
+      "#ffdf1c",
+      "#ee3524",
+      "#aa2d2a",
+      "#d18816",
+      "#000000"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Houston Dynamo",
+    "colors": [
+      "#f4911e",
+      "#92c3f1",
+      "#231f20"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Clippers",
+    "colors": [
+      "#C8102E",
+      "#1d428A",
+      "#BEC0C2",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Arsenal",
+    "colors": [
+      "#EF0107",
+      "#DB0007",
+      "#063672",
+      "#9C824A",
+      "#FFFFFF"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Fulham FC",
+    "colors": [
+      "#CC0000",
+      "#000000"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Columbus Blue Jackets",
+    "colors": [
+      "#002654",
+      "#c8102E",
+      "#A4A9AD"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Dodgers",
+    "colors": [
+      "#005A9C",
+      "#EF3E42",
+      "#a5aCAF"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Buffalo Bills",
+    "colors": [
+      "#00338D",
+      "#C60C30"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Houston Oilers",
+    "colors": [
+      "#418FDE",
+      "#C8102E"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Seattle Supersonics",
+    "colors": [
+      "#00653a",
+      "#ffc200",
+      "#FFFFFF"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Everton FC",
+    "colors": [
+      "#003399",
+      "#FFFFFF"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Atlanta Braves",
+    "colors": [
+      "#CE1141",
+      "#13274F",
+      "#EAAA00"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Manchester United",
+    "colors": [
+      "#dc1f29",
+      "#FBE122"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Charlotte Hornets",
+    "colors": [
+      "#1d1160",
+      "#00788C",
+      "#A1A1A4"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Chargers",
+    "colors": [
+      "#002A5E",
+      "#ffC20E",
+      "#0080C6"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Major League Baseball Logo",
+    "colors": [
+      "#002D72",
+      "#D50032"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Toronto Raptors",
+    "colors": [
+      "#CE1141",
+      "#000000",
+      "#A1A1A4",
+      "#B4975A"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Wolverhampton Wanderers F.C.",
+    "colors": [
+      "#FDB913",
+      "#231F20"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Minnesota Vikings",
+    "colors": [
+      "#4f2683",
+      "#ffc62f"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Watford FC",
+    "colors": [
+      "#FBEE23",
+      "#ED2127",
+      "#12110C"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Cleveland Browns",
+    "colors": [
+      "#311D00",
+      "#ff3c00",
+      "#FFFFFF"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Deportivo de La Coruña",
+    "colors": [
+      "#57175e",
+      "#a38d44",
+      "#b9d9ec",
+      "#db5232"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "New York Mets",
+    "colors": [
+      "#002D72",
+      "#FF5910"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "St. Louis Cardinals",
+    "colors": [
+      "#C41E3A",
+      "#0C2340",
+      "#FEDB00"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "San Francisco 49ers",
+    "colors": [
+      "#AA0000",
+      "#B3995D"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Green Bay Packers",
+    "colors": [
+      "#203731",
+      "#FFB612"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Detroit Tigers",
+    "colors": [
+      "#0C2340",
+      "#FA4616"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Toronto Maple Leafs",
+    "colors": [
+      "#00205b",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "LA Galaxy",
+    "colors": [
+      "#0065A4",
+      "#00245D",
+      "#C4C7DC",
+      "#FFD200",
+      "#EEB111",
+      "#8C8B8C",
+      "#B3B2B3",
+      "#231F20"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Baltimore Ravens",
+    "colors": [
+      "#241773",
+      "#000000",
+      "#9e7c0c",
+      "#c60c30"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Minnesota North Stars",
+    "colors": [
+      "#CBA044",
+      "#007A33",
+      "#000000"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Dallas Cowboys",
+    "colors": [
+      "#003594"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Dallas Mavericks",
+    "colors": [
+      "#00538C",
+      "#002B5E",
+      "#B8C4CA",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Chicago Cubs",
+    "colors": [
+      "#0E3386",
+      "#CC3433"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Rams",
+    "colors": [
+      "#024",
+      "#866D4B",
+      "#FFFFFF"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Pittsburgh Penguins",
+    "colors": [
+      "#000000",
+      "#CFC493",
+      "#FCB514",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Buffalo Sabres",
+    "colors": [
+      "#002654",
+      "#FCB514",
+      "#ADAFAA",
+      "#c8102E"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Lakers",
+    "colors": [
+      "#552583",
+      "#fdb927",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "San Antonio Spurs",
+    "colors": [
+      "#c4ced4",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "New England Patriots",
+    "colors": [
+      "#002244",
+      "#C60C30",
+      "#B0B7BC"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Chicago Bears",
+    "colors": [
+      "#0B162A",
+      "#C83803"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Phoenix Suns",
+    "colors": [
+      "#1d1160",
+      "#e56020",
+      "#000000",
+      "#63727A",
+      "#F9AD1B",
+      "#B95915",
+      "#Bec0c2"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Houston Astros",
+    "colors": [
+      "#002D62",
+      "#EB6E1F",
+      "#F4911E"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Pittsburgh Pirates",
+    "colors": [
+      "#27251F",
+      "#FDB827"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Memphis Grizzlies",
+    "colors": [
+      "#5D76A9",
+      "#12173F",
+      "#F5B112",
+      "#707271"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Sporting Kansas City",
+    "colors": [
+      "#93b1d7",
+      "#002a5c",
+      "#a0a1a5"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Newcastle United FC",
+    "colors": [
+      "#241F20",
+      "#F1BE48",
+      "#41B6E6",
+      "#BBBCBC",
+      "#F9423A"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Golden State Warriors",
+    "colors": [
+      "#1d428a",
+      "#ffc72c"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Indiana Pacers",
+    "colors": [
+      "#002D62",
+      "#FDBB30",
+      "#BEC0C2"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Philadelphia Eagles",
+    "colors": [
+      "#004C54",
+      "#a5aCAF",
+      "#ACC0C6",
+      "#000000",
+      "#565A5C"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Brooklyn Nets",
+    "colors": [
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Philadelphia Flyers",
+    "colors": [
+      "#F74902",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Orlando City SC",
+    "colors": [
+      "#61259e",
+      "#ffe293"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Cleveland Cavaliers",
+    "colors": [
+      "#860038",
+      "#041e42",
+      "#fdbb30",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Miami Heat",
+    "colors": [
+      "#98002E",
+      "#F9A01B",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "New York Red Bulls",
+    "colors": [
+      "#e31351",
+      "#002f65",
+      "#ffc425"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Seattle Seahawks",
+    "colors": [
+      "#002244",
+      "#69BE28",
+      "#A5acaf"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Real Sociedad",
+    "colors": [
+      "#ffffff",
+      "#0067b1",
+      "#e4b630",
+      "#d87722",
+      "#e1061f"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Cagliari Calcio S.P.A.",
+    "colors": [
+      "#002350",
+      "#ad002a",
+      "#FFFFFF"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "ChievoVerona",
+    "colors": [
+      "#0068b0",
+      "#fed400"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Austin F.C.",
+    "colors": [
+      "#00b140",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Empoli FC",
+    "colors": [
+      "#00579c",
+      "#FFFFFF"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Leicester City Football Club",
+    "colors": [
+      "#003090",
+      "#fdbe11"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Montreal Canadiens",
+    "colors": [
+      "#aF1E2D",
+      "#192168"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Atalanta",
+    "colors": [
+      "#1e71b8",
+      "#000"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Kansas City Royals",
+    "colors": [
+      "#004687",
+      "#BD9B60"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Philadelphia Phillies",
+    "colors": [
+      "#E81828",
+      "#002d72"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Denver Broncos",
+    "colors": [
+      "#FB4F14",
+      "#024"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "San Diego Padres",
+    "colors": [
+      "#2f241d"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Boston Red Sox",
+    "colors": [
+      "#BD3039",
+      "#0C2340"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Manchester City FC",
+    "colors": [
+      "#6CABDD",
+      "#1C2C5B",
+      "#FFC659",
+      "#D4A12A",
+      "#EC3325"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "New York Yankees",
+    "colors": [
+      "#003087",
+      "#E4002C"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Baltimore Orioles",
+    "colors": [
+      "#DF4601",
+      "#000000"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Southampton FC",
+    "colors": [
+      "#d71920",
+      "#130c0e",
+      "#FFC20E",
+      "#00Aeef",
+      "#0DB14B"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Houston Texans",
+    "colors": [
+      "#03202f",
+      "#A71930"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Real Betis",
+    "colors": [
+      "#0BB363",
+      "#e7a614",
+      "#d62550"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Kansas City Chiefs",
+    "colors": [
+      "#E31837",
+      "#ffB81C"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Detroit Lions",
+    "colors": [
+      "#0076b6",
+      "#B0B7BC",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Sacramento Kings",
+    "colors": [
+      "#5a2d81",
+      "#63727A",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Colorado Avalanche",
+    "colors": [
+      "#6f263D",
+      "#236192",
+      "#A2AAAD",
+      "#000000"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Washington Wizards",
+    "colors": [
+      "#002B5C",
+      "#e31837",
+      "#C4CED4"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Pittsburgh Steelers",
+    "colors": [
+      "#FFB612",
+      "#101820",
+      "#003087",
+      "#c60c30",
+      "#a5acaf"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Orlando Magic",
+    "colors": [
+      "#0077c0",
+      "#c4ced4",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "New Orleans Saints",
+    "colors": [
+      "#d3bc8d",
+      "#101820"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Minnesota Twins",
+    "colors": [
+      "#002B5C",
+      "#D31145",
+      "#B9975B"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Deportivo Alavés",
+    "colors": [
+      "#0761af",
+      "#009ad7"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "New York Jets",
+    "colors": [
+      "#125740",
+      "#000",
+      "#fff"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Napoli",
+    "colors": [
+      "#003c82",
+      "#12a0d7",
+      "#FFFFFF"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Sevilla FC",
+    "colors": [
+      "#ffffff",
+      "#f43333",
+      "#c79100"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Washington Capitals",
+    "colors": [
+      "#041e42",
+      "#C8102E",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Fiorentina",
+    "colors": [
+      "#ec1c23",
+      "#a29160",
+      "#482e92",
+      "#FFFFFF"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Bologna FC",
+    "colors": [
+      "#1a2f48",
+      "#a21c26",
+      "#FFFFFF",
+      "#ececec"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Juventus FC",
+    "colors": [
+      "#000",
+      "#FFF"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Portland Trail Blazers",
+    "colors": [
+      "#E03A3E",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Inter Milan",
+    "colors": [
+      "#a29161",
+      "#221F20",
+      "#0068A8"
+    ],
+    "league": "Serie A",
+    "conference": null
+  },
+  {
+    "name": "Atlanta Falcons",
+    "colors": [
+      "#a71930",
+      "#000000",
+      "#a5acaf"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Inter Miami CF",
+    "colors": [
+      "#f7b5cd",
+      "#231f20"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "University of Massachusetts Minutemen",
+    "colors": [
+      "#971B2F",
+      "#572932",
+      "#B1B3B3",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Milwaukee Bucks",
+    "colors": [
+      "#00471b",
+      "#EEE1C6",
+      "#0077c0",
+      "#000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Minnesota Timberwolves",
+    "colors": [
+      "#0C2340",
+      "#236192",
+      "#9ea2a2",
+      "#78BE20"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Seattle Mariners",
+    "colors": [
+      "#0C2C56",
+      "#005C5C",
+      "#C4CED4",
+      "#D50032"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Toronto Blue Jays",
+    "colors": [
+      "#134A8E",
+      "#1D2D5C",
+      "#E8291C"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Detroit Pistons",
+    "colors": [
+      "#C8102E",
+      "#1D42BA",
+      "#bec0c2",
+      "#002D62"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "New York Knicks",
+    "colors": [
+      "#006BB6",
+      "#F58426",
+      "#BEC0C2",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Cincinnati Reds",
+    "colors": [
+      "#c6011f",
+      "#000000"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Milwaukee Brewers",
+    "colors": [
+      "#0a2351",
+      "#B6922E"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "New York Islanders",
+    "colors": [
+      "#00539b",
+      "#f47d30"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "Carolina Panthers",
+    "colors": [
+      "#0085ca",
+      "#101820",
+      "#BFC0BF"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Boston Celtics",
+    "colors": [
+      "#007A33",
+      "#BA9653",
+      "#963821",
+      "#E59E6D",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Indianapolis Colts",
+    "colors": [
+      "#002C5F",
+      "#a2aaad"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Oklahoma City Thunder",
+    "colors": [
+      "#007ac1",
+      "#ef3b24",
+      "#002D62",
+      "#fdbb30"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Tampa Bay Buccaneers",
+    "colors": [
+      "#d50a0a",
+      "#ff7900",
+      "#0a0a08",
+      "#b1babf",
+      "#34302B"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Atlanta Hawks",
+    "colors": [
+      "#e03a3e",
+      "#C1D32F",
+      "#26282A"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Houston Rockets",
+    "colors": [
+      "#CE1141",
+      "#000000",
+      "#C4CED4"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Washington Nationals",
+    "colors": [
+      "#AB0003",
+      "#14225A",
+      "#FFFFFF"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Miami Marlins",
+    "colors": [
+      "#00A3E0",
+      "#EF3340",
+      "#41748D",
+      "#000000"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Arizona Diamondbacks",
+    "colors": [
+      "#a71930",
+      "#e3d4ad",
+      "#000000",
+      "#30CED8",
+      "#ffffff"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Chicago Bulls",
+    "colors": [
+      "#CE1141",
+      "#000000"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Philadelphia 76ers",
+    "colors": [
+      "#006bb6",
+      "#ed174c",
+      "#002B5C",
+      "#c4ced4"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "USC Upstate Spartans",
+    "colors": [
+      "#00703c",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Seton Hall Pirates",
+    "colors": [
+      "#004488",
+      "#A2AAAD"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "USC Trojans",
+    "colors": [
+      "#9d2235",
+      "#ffc72c"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Colorado Rockies",
+    "colors": [
+      "#33006F",
+      "#C4CED4",
+      "#000000"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Tampa Bay Rays",
+    "colors": [
+      "#092C5C",
+      "#8FBCE6",
+      "#F5D130",
+      "#FFFFFF"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Jacksonville Jaguars",
+    "colors": [
+      "#101820",
+      "#D7A22A",
+      "#9F792C",
+      "#006778"
+    ],
+    "league": "NFL",
+    "conference": null
+  },
+  {
+    "name": "Oakland Golden Grizzlies",
+    "colors": [
+      "#B59A57",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Chicago Blackhawks",
+    "colors": [
+      "#CF0A2C",
+      "#FF671B",
+      "#00833E",
+      "#ffd100",
+      "#D18A00",
+      "#001970",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NHL",
+    "conference": null
+  },
+  {
+    "name": "New Orleans Pelicans",
+    "colors": [
+      "#0C2340",
+      "#C8102E",
+      "#85714D"
+    ],
+    "league": "NBA",
+    "conference": null
+  },
+  {
+    "name": "Mercer Bears",
+    "colors": [
+      "#f76800",
+      "#000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Santa Clara Broncos",
+    "colors": [
+      "#862633"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "UIC Flames",
+    "colors": [
+      "#ac1e2d",
+      "#041E42",
+      "#facc09"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "South Alabama Jaguars",
+    "colors": [
+      "#00205B",
+      "#BF0D3E"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "Monmouth Hawks",
+    "colors": [
+      "#041E42",
+      "#53565A",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Davidson Wildcats",
+    "colors": [
+      "#ac1a2f",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "South Dakota Coyotes",
+    "colors": [
+      "#ad0000",
+      "#b4b4b4",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Summit League"
+  },
+  {
+    "name": "Creighton Bluejays",
+    "colors": [
+      "#005ca9",
+      "#00235D",
+      "#6CADDE",
+      "#828282",
+      "#C8C8C8",
+      "#8A8D8F"
+    ],
+    "league": "NCAA",
+    "conference": "Big East"
+  },
+  {
+    "name": "Wofford Terriers",
+    "colors": [
+      "#886E4C",
+      "#000",
+      "#C7B37F"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "St. Bonaventure Bonnies",
+    "colors": [
+      "#54261a",
+      "#fdb726",
+      "#bdb6b0"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic 10"
+  },
+  {
+    "name": "Ohio Bobcats",
+    "colors": [
+      "#00694E",
+      "#CDA077",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Mid-American"
+  },
+  {
+    "name": "Louisville Cardinals",
+    "colors": [
+      "#ad0000",
+      "#000000",
+      "#fdb913",
+      "#CCCCCC"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Wisconsin Badgers",
+    "colors": [
+      "#c5050c",
+      "#9b0000",
+      "#ffffff"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Angels",
+    "colors": [
+      "#003263",
+      "#BA0021",
+      "#862633",
+      "#C4CED4",
+      "#FFFFFF"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Milwaukee Panthers",
+    "colors": [
+      "#FFBD00",
+      "#CCCCCC",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Horizon League"
+  },
+  {
+    "name": "Texas Arlington Mavericks",
+    "colors": [
+      "#f58025",
+      "#0064b1"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "UC Riverside Highlanders",
+    "colors": [
+      "#2D6CC0",
+      "#003066",
+      "#F1AB00",
+      "#7A6E67",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "Big West"
+  },
+  {
+    "name": "Purdue Boilermakers",
+    "colors": [
+      "#ceb888",
+      "#000000",
+      "#9d968d",
+      "#373A36"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Southern Mississippi Golden Eagles",
+    "colors": [
+      "#000000",
+      "#FFAB00"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Texas State Bobcats",
+    "colors": [
+      "#501214",
+      "#8d734a"
+    ],
+    "league": "NCAA",
+    "conference": "Sun Belt"
+  },
+  {
+    "name": "RCD Espanyol",
+    "colors": [
+      "#ffffff",
+      "#007fc8",
+      "#df1116",
+      "#f4cf0c"
+    ],
+    "league": "LaLiga",
+    "conference": null
+  },
+  {
+    "name": "Stetson Hatters",
+    "colors": [
+      "#006747",
+      "#B58150",
+      "#9E652E",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": "Atlantic Sun"
+  },
+  {
+    "name": "Wichita State Shockers",
+    "colors": [
+      "#FFCD00",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Saint Peter’s Peacocks",
+    "colors": [
+      "#003C71",
+      "#0072CE",
+      "#A59C94",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Northernado Bears Color",
+    "colors": [
+      "#013C65",
+      "#f6b000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Siena Saints",
+    "colors": [
+      "#FFC72C",
+      "#C8102E",
+      "#006747",
+      "#693F23",
+      "#000000"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Tennessee Volunteers",
+    "colors": [
+      "#ff8200",
+      "#58595b",
+      "#FFFFFF"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "Nebraska Cornhuskers",
+    "colors": [
+      "#c8102e",
+      "#000000",
+      "#ffffff",
+      "#fdf2d9"
+    ],
+    "league": "NCAA",
+    "conference": null
+  },
+  {
+    "name": "San Diego State Aztecs",
+    "colors": [
+      "#a6192e",
+      "#000",
+      "#FFF"
+    ],
+    "league": "NCAA",
+    "conference": "Mountain West"
+  },
+  {
+    "name": "Oakland Athletics",
+    "colors": [
+      "#003831",
+      "#EFB21E",
+      "#a2aaad"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Connecticut Huskies",
+    "colors": [
+      "#000e2f",
+      "#ffffff",
+      "#7C878E"
+    ],
+    "league": "NCAA",
+    "conference": "American Athletic"
+  },
+  {
+    "name": "Minnesota United FC",
+    "colors": [
+      "#585958",
+      "#D8DAD9",
+      "#231f20",
+      "#df2426",
+      "#9bcde4"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Minnesota Lynx",
+    "colors": [
+      "#0C2340",
+      "#236192",
+      "#78BE20",
+      "#9EA2A2"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Aston Villa FC",
+    "colors": [
+      "#95bfe5",
+      "#670e36",
+      "#fee505"
+    ],
+    "league": "Premier League",
+    "conference": null
+  },
+  {
+    "name": "Montreal Impact",
+    "colors": [
+      "#2b63ad",
+      "#28477d",
+      "#373536",
+      "#929397",
+      "#bbc3c6"
+    ],
+    "league": "MLS",
+    "conference": null
+  },
+  {
+    "name": "Montreal Expos",
+    "colors": [
+      "#003087",
+      "#e80024"
+    ],
+    "league": "MLB",
+    "conference": null
+  },
+  {
+    "name": "Chicago Sky",
+    "colors": [
+      "#FFCD00",
+      "#418FDE"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Seattle Storm",
+    "colors": [
+      "#FBE122",
+      "#2C5234",
+      "#A2AAAD"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Phoenix Mercury",
+    "colors": [
+      "#201747",
+      "#CB6015",
+      "#B1B3B3",
+      "#000000"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Indiana Fever",
+    "colors": [
+      "#C8102E",
+      "#041E42",
+      "#FFCD00"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Connecticut Sun",
+    "colors": [
+      "#a6192e",
+      "#041e42",
+      "#643335",
+      "#DC4405",
+      "#ffc72c",
+      "#FFf0d8"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "New York Liberty",
+    "colors": [
+      "#6ECEB2",
+      "#000000",
+      "#FF671F",
+      "#003DA5"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Las Vegas Aces",
+    "colors": [
+      "#BA0C2F",
+      "#000000",
+      "#85714D",
+      "#8A8D8F"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Washington Mystics",
+    "colors": [
+      "#0c2340",
+      "#c8102e",
+      "#8A8D8F"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Atlanta Dreams",
+    "colors": [
+      "#C8102E",
+      "#418FDE",
+      "#CED9E5",
+      "#0C2340"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Los Angeles Sparks",
+    "colors": [
+      "#FFC72C",
+      "#702F8A",
+      "#00B398",
+      "#000"
+    ],
+    "league": "WNBA",
+    "conference": null
+  },
+  {
+    "name": "Dallas Wings",
+    "colors": [
+      "#0c2340",
+      "#c4d600",
+      "#00a9e0"
+    ],
+    "league": "WNBA",
+    "conference": null
+  }
+]

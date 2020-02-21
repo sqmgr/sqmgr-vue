@@ -90,8 +90,8 @@ limitations under the License.
         methods: {
             selectTeam(team) {
                 this.value.name = team.name
-                this.value.color1 = '#' + team.colors.hex[0]
-                this.value.color2 = '#' + (team.colors.hex[1] || team.colors.hex[0])
+                this.value.color1 = team.colors[0]
+                this.value.color2 = team.colors[1] || team.colors[0]
                 setTimeout(() => this.suggestTeams = [], 1)
             },
             selectUp() {
