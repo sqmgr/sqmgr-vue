@@ -178,13 +178,13 @@ limitations under the License.
 </template>
 
 <script>
-    import sqmgrClient from "@/models/sqmgrClient";
+    import sqmgrClient from "@/models/sqmgrClient"
     import GridCustomize from '@/components/GridCustomize'
     import Common from '@/common'
     import draggable from 'vuedraggable'
-    import ModalController from "@/controllers/ModalController";
-    import toClipboard from "@/utils/toClipboard";
-    import ManageMembership from "@/components/ManageMembership";
+    import ModalController from "@/controllers/ModalController"
+    import toClipboard from "@/utils/toClipboard"
+    import ManageMembership from "@/components/ManageMembership"
 
     export default {
         name: "Pool",
@@ -225,10 +225,8 @@ limitations under the License.
                 })
                 .catch(err => ModalController.showError(err))
 
-            if (this.pool.isAdmin) {
-                sqmgrClient.getPoolSquares(this.token)
-                    .then(squares => this.squares = squares)
-            }
+            sqmgrClient.getPoolSquares(this.token)
+                .then(squares => this.squares = squares)
         },
         computed: {
             claimed() {
@@ -261,7 +259,7 @@ limitations under the License.
             },
             openAccessOnLock() {
                 return this.pool.openAccessOnLock
-            }
+            },
         },
         watch: {
             editPoolName(newVal) {
@@ -274,7 +272,7 @@ limitations under the License.
             openAccessOnLock(newVal) {
                 sqmgrClient.setOpenAccessOnLockForPool(this.token, newVal)
                     .catch(err => ModalController.showError(err))
-            }
+            },
         },
         methods: {
             changeJoinPassword() {
@@ -335,7 +333,7 @@ limitations under the License.
                     'saved': grid => {
                         ModalController.hide()
                         this.grids.push(grid)
-                    }
+                    },
                 })
             },
             customizeGrid(grid) {
@@ -358,7 +356,7 @@ limitations under the License.
                                 if (index >= 0) {
                                     this.grids.splice(index, 1, grid)
                                 }
-                            }
+                            },
                         })
 
                     })
@@ -376,7 +374,7 @@ limitations under the License.
                                 ModalController.hide()
                             })
                             .catch(err => ModalController.showError(err))
-                    }
+                    },
                 })
 
                 return false
@@ -406,7 +404,7 @@ limitations under the License.
                         sqmgrClient.unlockPool(this.token)
                             .then(pool => this.pool = pool)
                             .catch(err => ModalController.showError(err))
-                    }
+                    },
                 }
 
                 ModalController.showPrompt("Unlock the squares?", "Are you sure you want to open the squares back up again for users to claim?", promptOpts)
@@ -423,7 +421,7 @@ limitations under the License.
                                 sqmgrClient.lockPool(this.token)
                                     .then(pool => this.pool = pool)
                                     .catch(err => ModalController.showError(err))
-                            }
+                            },
                         }
 
                         const unclaimedSquares = Object.values(squares).filter(s => s.state === 'unclaimed')
@@ -439,8 +437,8 @@ limitations under the License.
             change() {
                 sqmgrClient.reorderGrids(this.token, this.grids.map(g => g.id))
                     .catch(err => ModalController.showError(err))
-            }
-        }
+            },
+        },
     }
 </script>
 
