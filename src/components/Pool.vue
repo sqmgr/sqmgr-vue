@@ -122,6 +122,10 @@ limitations under the License.
                             <td>{{ pool.gridType }}</td>
                         </tr>
                         <tr>
+                            <td>Claimed Squares</td>
+                            <td>{{ claimed }} of {{ total }}</td>
+                        </tr>
+                        <tr>
                             <td>State</td>
                             <td>
                                 <template v-if="isLocked">
@@ -203,6 +207,7 @@ limitations under the License.
                 grids: [],
                 inviteToken: null,
                 showCopiedMessage: false,
+                squares: null,
 
                 // maximum number of grids per pool
                 maxAllowed: 0,
@@ -221,10 +226,29 @@ limitations under the License.
                 .catch(err => ModalController.showError(err))
 
             if (this.pool.isAdmin) {
-                this.getInviteToken()
+                sqmgrClient.getPoolSquares(this.token)
+                    .then(squares => this.squares = squares)
             }
         },
         computed: {
+            claimed() {
+                const total = this.squares ? Object.values(this.squares).filter(s => s.state !== 'unclaimed').length : 0
+
+                if (this.pool.gridType === 'roll100') {
+                    return total / 2
+                }
+
+                return total
+            },
+            total() {
+                const total = this.squares ? Object.values(this.squares).length : 0
+
+                if (this.pool.gridType === 'roll100') {
+                    return total / 2
+                }
+
+                return total
+            },
             isLocked() {
                 const locks = new Date(this.pool.locks)
                 return locks.getFullYear() > 1 && locks.getTime() < new Date().getTime()
@@ -390,6 +414,7 @@ limitations under the License.
             lockSquares() {
                 sqmgrClient.getPoolSquares(this.token)
                     .then(squares => {
+                        this.squares = squares
                         const promptOpts = {
                             actionButton: "Lock Squares",
                             action: () => {
