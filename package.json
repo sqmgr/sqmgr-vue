@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.12.1",
-    "@vue/cli-service": "^4.1.2",
+    "@vue/cli-plugin-eslint": "^4.2.3",
+    "@vue/cli-service": "^4.2.3",
     "auth0-js": "^9.12.2",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
