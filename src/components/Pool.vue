@@ -227,6 +227,10 @@ limitations under the License.
 
             sqmgrClient.getPoolSquares(this.token)
                 .then(squares => this.squares = squares)
+
+            if (this.pool.isAdmin) {
+                this.getInviteToken()
+            }
         },
         computed: {
             claimed() {

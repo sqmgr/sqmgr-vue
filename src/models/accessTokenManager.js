@@ -40,10 +40,12 @@ class accessTokenManager {
     }
 
     createGuestAccessToken() {
-       return new Promise(async resolve=> {
-           const data = await sqmgrClient.createGuestUser()
-           sessionStorage.setItem(storageKey, JSON.stringify(data))
-           return resolve(data.jwt)
+       return new Promise((resolve, reject) => {
+           sqmgrClient.createGuestUser()
+               .then(data => {
+                   sessionStorage.setItem(storageKey, JSON.stringify(data))
+                   resolve(data.jwt)
+               }, reject)
        })
     }
 

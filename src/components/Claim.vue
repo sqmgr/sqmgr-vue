@@ -47,7 +47,7 @@ limitations under the License.
         },
         data() {
             let name = null
-            if (window.hasOwnProperty('localStorage')) {
+            if ('localStorage' in window) {
                 name = localStorage.getItem('claimant-name')
             }
 
@@ -72,7 +72,7 @@ limitations under the License.
                     return
                 }
 
-                if (window.hasOwnProperty('localStorage')) {
+                if ('localStorage' in window) {
                     localStorage.setItem('claimant-name', this.name)
                 }
 
