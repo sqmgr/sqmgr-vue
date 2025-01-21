@@ -21,31 +21,36 @@ module.exports = {
     configureWebpack: {
         devtool: 'eval-source-map',
         plugins: [
-            new SitemapWebpackPlugin('https://sqmgr.com', [
-                {
-                    path: '/',
-                    priority: 0.9,
+            new SitemapWebpackPlugin({
+                base: 'https://sqmgr.com',
+                paths: [
+                    {
+                        path: '/',
+                        priority: 0.9,
+                    },
+                    {
+                        path: '/about',
+                        priority: 0.8,
+                    },
+                    '/terms',
+                    '/private',
+                    '/cookies',
+                    '/donate',
+                    '/login',
+                ],
+                options: {
+                    lastMod: true,
+                    changeFreq: 'hourly',
                 },
-                {
-                    path: '/about',
-                    priority: 0.8,
-                },
-                '/terms',
-                '/private',
-                '/cookies',
-                '/donate',
-                '/login'
-            ], {
-                lastMod: true,
-                changeFreq: 'hourly',
             }),
             new WorkboxPlugin.InjectManifest({
+
                 swSrc: './src/sw.js',
                 maximumFileSizeToCacheInBytes: 1024 * 1024 * 5, // 5 MiB
             }),
-        ]
+        ],
     },
     devServer: {
-        disableHostCheck: true
+        allowedHosts: 'all',
     },
-};
+}

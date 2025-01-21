@@ -78,17 +78,22 @@ class AuthService extends EventEmitter {
 
     renewTokens() {
         return new Promise((res, rej) => {
+            console.log("RENEW")
             if (localStorage.getItem(localStorageKey) !== 'true') {
+                console.log("NOT LOGGED IN")
                 rej('not logged in')
                 return
             }
 
             webAuth.checkSession({}, (err, authResult) => {
+                console.log("FUCK YOU")
                 if (err) {
+                    console.log(err)
                     rej(err)
                     return
                 }
 
+                console.log("AUTH RESULT")
                 this.localLogin(authResult)
                 res(authResult)
             })
@@ -122,7 +127,9 @@ class AuthService extends EventEmitter {
 
     getAccessToken() {
         return new Promise(((resolve, reject) => {
+            console.log("IN getAccessToken")
             if (this.isAccessTokenValid()) {
+                console.log("IS VALID")
                 resolve(this.accessToken)
                 return
             }

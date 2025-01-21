@@ -75,7 +75,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-     /deep/ table {
+    ::v-deep table {
          margin: 0 auto;
         width: auto;
     }
