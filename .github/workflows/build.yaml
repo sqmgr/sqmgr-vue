@@ -16,7 +16,7 @@ jobs:
       - name: set version
         run: echo "VERSION=$(git describe --always)" >> $GITHUB_ENV
       - name: docker log in
-        run:  echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run:  echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: docker-build
         run: |
@@ -40,4 +40,3 @@ jobs:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
           args: rollout status deploy sqmgr-vue
-
