@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqmgr-vue-beta
+  labels:
+    app: sqmgr-vue-beta
+    tier: frontend
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: sqmgr-vue-beta
+    tier: frontend

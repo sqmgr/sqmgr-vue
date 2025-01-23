@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqmgr-vue-beta
+  labels:
+    app: sqmgr-vue-beta
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sqmgr-vue-beta
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: sqmgr-vue-beta
+        tier: frontend
+    spec:
+      imagePullSecrets:
+      - name: github
+      containers:
+        - name: nginx
+          image: ghcr.io/sqmgr/sqmgr-vue/sqmgr-vue:latest
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /
