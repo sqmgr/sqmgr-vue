@@ -1,19 +1,31 @@
 name: Build
+
 on:
   push:
     branches: [master]
+
 env:
   IMAGE: ${{ github.repository }}
   REGISTRY: ghcr.io
+
 jobs:
   build:
     name: 'Build'
     runs-on: ubuntu-latest
+
+    permissions:
+        contents: read
+        packages: write
+        attestations: write
+        id-token: write
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - run: git fetch origin +refs/tags/*:refs/tags/*
+
       - name: set version
         run: echo "VERSION=$(git describe --always)" >> $GITHUB_ENV
 
