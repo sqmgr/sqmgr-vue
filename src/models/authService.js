@@ -30,6 +30,7 @@ class Auth0Service extends EventEmitter {
             domain: authConfig.domain,
             clientId: authConfig.clientId,
             cacheLocation: 'localstorage',
+            useRefreshTokens: true,
             authorizationParams: {
                 audience: authConfig.audience,
                 redirect_uri: `${window.location.origin}/callback`,
@@ -44,10 +45,11 @@ class Auth0Service extends EventEmitter {
 
         return this.auth0Client.getUser()
             .then(res => {
+                if (!res) throw new Error('not authenticated')
+
                 this.profile = res
                 this.isAuthenticated = true
 
-                console.log("loadProfile")
                 this.emit('loginEvent', {
                     loggedIn: true,
                     profile: this.profile,
