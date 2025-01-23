@@ -68,8 +68,12 @@ class Auth0Service extends EventEmitter {
         })
     }
 
-    logout(o) {
-        return this.auth0Client.logout(o)
+    logout() {
+        return this.auth0Client.logout({
+            logoutParams: {
+                returnTo: window.location.origin,
+            }
+        })
     }
 
     getTokenSilently(o) {
