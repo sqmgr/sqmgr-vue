@@ -22,7 +22,7 @@ const storageKey = 'guestAccessToken'
 class accessTokenManager {
     async getAccessToken(createGuestToken) {
         try {
-            return await authService.getAccessToken()
+            return await authService.getTokenSilently()
         } catch (e) {
             // no-op
         }

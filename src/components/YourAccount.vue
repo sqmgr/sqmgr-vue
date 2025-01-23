@@ -145,6 +145,7 @@ limitations under the License.
                         return
                     }
 
+                    console.log("catchFetchError", err)
                     obj.error = 'Could not request data from the server. Please try your request again.'
                 }
             }

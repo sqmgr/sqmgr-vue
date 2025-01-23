@@ -29,11 +29,12 @@ limitations under the License.
         name: "Auth0Callback",
         methods: {
             handleLoginEvent(data) {
+                console.log("handleLoginEvent")
                 this.$router.push(data.state.target || "/")
             }
         },
         created() {
-            this.$auth.handleAuthentication()
+            this.$auth.handleRedirectCallback()
                 .then(() => {
                     const jwt = accessTokenManager.getGuestAccessToken()
                     if (!jwt) {

@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import authService from '@/models/authService'
 import bus from '@/utils/bus'
+import authService from "@/models/authService"
 
 export default {
     install(Vue) {
@@ -40,7 +40,7 @@ export default {
                 if (this.handleGuestJoinEvent) {
                     bus.$off('guestJoin', this.handleGuestJoinEvent)
                 }
-            }
+            },
         })
-    }
+    },
 }

@@ -36,7 +36,6 @@ limitations under the License.
     import sqmgrClient from "@/models/sqmgrClient";
     import ModalController from "@/controllers/ModalController";
     import YourAccountPoolList from "@/components/YourAccountPoolList";
-    import authService from "@/models/authService";
 
     export default {
         name: "GuestAccount",
@@ -66,7 +65,7 @@ limitations under the License.
                     .catch(err => ModalController.showError(err))
             },
             register() {
-                authService.login({
+                this.$auth.loginWithRedirect({
                     target: `/account`
                 })
             }

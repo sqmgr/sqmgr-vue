@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Tom Peters
+Copyright 2025 Tom Peters
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,131 +15,85 @@ limitations under the License.
 */
 
 import EventEmitter from 'events'
-import auth0 from 'auth0-js'
-import authConfig from '../../auth_config'
+import {createAuth0Client} from "@auth0/auth0-spa-js"
+import authConfig from "../../auth_config.json"
 
-const localStorageKey = 'loggedIn'
-const loginEvent = 'loginEvent'
+class Auth0Service extends EventEmitter {
+    auth0Client = null
+    isAuthenticated = false
+    profile = {}
+    error = null
 
-const webAuth = new auth0.WebAuth({
-    domain: authConfig.domain,
-    redirectUri: `${window.location.origin}/callback`,
-    clientID: authConfig.clientId,
-    audience: authConfig.audience,
-    responseType: 'token id_token',
-    scope: 'openid profile email',
-})
 
-class AuthService extends EventEmitter {
-    idToken = null
-    profile = null
-    tokenExpiry = null
+    async initAuth0() {
+        this.auth0Client = await createAuth0Client({
+            domain: authConfig.domain,
+            clientId: authConfig.clientId,
+            cacheLocation: 'localstorage',
+            authorizationParams: {
+                audience: authConfig.audience,
+                redirect_uri: `${window.location.origin}/callback`,
+            },
+        })
+    }
 
-    accessToken = null
-    accessTokenExpiry = null
-
-    login(appState = {}) {
-        if (!appState.target) {
-            appState.target = '/account'
+    async loadProfile() {
+        if (this.profile && this.isAuthenticated) {
+            return Promise.resolve()
         }
-        webAuth.authorize({appState})
-    }
 
-    handleAuthentication() {
-        return new Promise((res, rej) => {
-            webAuth.parseHash((err, authResult) => {
-                if (err) {
-                    rej(err)
-                    return
-                }
+        return this.auth0Client.getUser()
+            .then(res => {
+                this.profile = res
+                this.isAuthenticated = true
 
-                this.localLogin(authResult)
-                res(authResult.idToken)
+                console.log("loadProfile")
+                this.emit('loginEvent', {
+                    loggedIn: true,
+                    profile: this.profile,
+                    state: null,
+                })
             })
+    }
+
+    loginWithRedirect(o = {}) {
+        if (!o.target) {
+            o.target = '/account'
+        }
+
+        return this.auth0Client.loginWithRedirect({
+            appState: o,
         })
     }
 
-    localLogin(authResult) {
-        this.idToken = authResult.idToken
-        this.profile = authResult.idTokenPayload
-        this.tokenExpiry = new Date(this.profile.exp * 1000)
-
-        this.accessToken = authResult.accessToken
-        this.accessTokenExpiry = new Date(Date.now() + authResult.expiresIn * 1000)
-
-        localStorage.setItem(localStorageKey, 'true')
-
-        this.emit(loginEvent, {
-            loggedIn: true,
-            profile: this.profile,
-            state: authResult.appState || {},
-        })
+    logout(o) {
+        return this.auth0Client.logout(o)
     }
 
-    renewTokens() {
-        return new Promise((res, rej) => {
-            console.log("RENEW")
-            if (localStorage.getItem(localStorageKey) !== 'true') {
-                console.log("NOT LOGGED IN")
-                rej('not logged in')
-                return
+    getTokenSilently(o) {
+        return this.auth0Client.getTokenSilently(o)
+    }
+
+    async handleRedirectCallback() {
+        let appState
+        try {
+            appState = await this.auth0Client.handleRedirectCallback().then(res => res.appState)
+        } catch (e) {
+            this.error = e
+        } finally {
+            this.isAuthenticated = await this.auth0Client.isAuthenticated()
+            this.profile = this.isAuthenticated ? await this.auth0Client.getUser() : {}
+
+            if (this.isAuthenticated) {
+                console.log("handleRedirectCallback")
+                this.emit('loginEvent', {
+                    loggedIn: true,
+                    profile: this.profile,
+                    state: appState,
+                })
             }
-
-            webAuth.checkSession({}, (err, authResult) => {
-                console.log("FUCK YOU")
-                if (err) {
-                    console.log(err)
-                    rej(err)
-                    return
-                }
-
-                console.log("AUTH RESULT")
-                this.localLogin(authResult)
-                res(authResult)
-            })
-        })
-    }
-
-    logOut() {
-        localStorage.removeItem(localStorageKey)
-
-        this.idToken = null
-        this.tokenExpiry = null
-        this.profile = null
-
-        webAuth.logout({
-            returnTo: window.location.origin,
-        })
-
-        this.emit(loginEvent, {loggedIn: false})
-    }
-
-    isAuthenticated() {
-        return Date.now() < this.tokenExpiry &&
-            localStorage.getItem(localStorageKey) === 'true'
-    }
-
-    isAccessTokenValid() {
-        return this.accessToken &&
-            this.accessTokenExpiry &&
-            Date.now() < this.accessTokenExpiry
-    }
-
-    getAccessToken() {
-        return new Promise(((resolve, reject) => {
-            console.log("IN getAccessToken")
-            if (this.isAccessTokenValid()) {
-                console.log("IS VALID")
-                resolve(this.accessToken)
-                return
-            }
-
-            this.renewTokens()
-                .then(authResult => {
-                    resolve(authResult.accessToken)
-                }, reject)
-        }))
+        }
     }
 }
 
-export default new AuthService()
+export default new Auth0Service()

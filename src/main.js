@@ -18,27 +18,27 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import AuthPlugin from './plugins/auth'
-import authService from '@/models/authService'
-import Home from "@/components/Home";
-import Auth0Callback from "@/components/Auth0Callback";
-import HomeHeader from "@/components/HomeHeader";
-import About from "@/components/About";
-import TermsOfService from "@/components/TermsOfService";
-import PrivacyPolicy from "@/components/PrivacyPolicy";
-import YourAccount from "@/components/YourAccount";
-import LogIn from "@/components/LogIn";
-import Donate from "@/components/Donate";
-import Pool from "@/components/Pool";
-import PoolGrid from "@/components/PoolGrid";
-import CreatePool from "@/components/CreatePool";
-import accessTokenManager from "@/models/accessTokenManager";
-import sqmgrClient from "@/models/sqmgrClient";
-import PoolJoin from "@/components/PoolJoin";
-import CookiesPolicy from "@/components/CookiesPolicy";
-import GuestAccount from "@/components/GuestAccount";
-import loadingBar from "@/utils/loadingBar.ts";
+import Home from "@/components/Home"
+import Auth0Callback from "@/components/Auth0Callback"
+import HomeHeader from "@/components/HomeHeader"
+import About from "@/components/About"
+import TermsOfService from "@/components/TermsOfService"
+import PrivacyPolicy from "@/components/PrivacyPolicy"
+import YourAccount from "@/components/YourAccount"
+import LogIn from "@/components/LogIn"
+import Donate from "@/components/Donate"
+import Pool from "@/components/Pool"
+import PoolGrid from "@/components/PoolGrid"
+import CreatePool from "@/components/CreatePool"
+import accessTokenManager from "@/models/accessTokenManager"
+import sqmgrClient from "@/models/sqmgrClient"
+import PoolJoin from "@/components/PoolJoin"
+import CookiesPolicy from "@/components/CookiesPolicy"
+import GuestAccount from "@/components/GuestAccount"
+import loadingBar from "@/utils/loadingBar.ts"
 import Vuex from 'vuex'
-import PoolGridAll from "@/components/PoolGridAll";
+import PoolGridAll from "@/components/PoolGridAll"
+import authService from "@/models/authService"
 import './register-service-worker'
 
 Vue.config.productionTip = false
@@ -57,9 +57,9 @@ const store = new Vuex.Store({
             state.primarySquare = data
         },
         highlightSquares(state, data) {
-            state.highlightSquares = { ...data }
-        }
-    }
+            state.highlightSquares = {...data}
+        },
+    },
 })
 
 const routes = [
@@ -70,35 +70,35 @@ const routes = [
             header: HomeHeader,
         },
         meta: {
-            description: 'SqMGR is a free, online football squares pool manager.'
-        }
+            description: 'SqMGR is a free, online football squares pool manager.',
+        },
     },
     {path: '/callback', component: Auth0Callback},
-    {path: '/about', component: About, meta: { title: 'About' }},
-    {path: '/terms', component: TermsOfService, meta: { title: 'Terms of Service' } },
-    {path: '/privacy', component: PrivacyPolicy, meta: { title: 'Privacy Policy'}},
-    {path: '/cookies', component: CookiesPolicy, meta: { title: 'Cookies Policy'}},
-    {path: '/login', component: LogIn, meta: { title: 'Login'}},
-    {path: '/donate', component: Donate, meta: { title: 'Donate' }},
-    {path: '/account', component: YourAccount, meta: { requireLogin: true, title: 'Your Account' }},
-    {path: '/guest-account', component: GuestAccount, meta: { requireGuestAccount: true, title: 'Guest Account' }},
-    {path: '/create', component: CreatePool, meta: { requireLogin: true , title: 'Create Squares Pool'}},
-    {path: '/pool/:token', component: Pool, props: true, meta: { requirePoolMembership: true}},
+    {path: '/about', component: About, meta: {title: 'About'}},
+    {path: '/terms', component: TermsOfService, meta: {title: 'Terms of Service'}},
+    {path: '/privacy', component: PrivacyPolicy, meta: {title: 'Privacy Policy'}},
+    {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
+    {path: '/login', component: LogIn, meta: {title: 'Login'}},
+    {path: '/donate', component: Donate, meta: {title: 'Donate'}},
+    {path: '/account', component: YourAccount, meta: {requireLogin: true, title: 'Your Account'}},
+    {path: '/guest-account', component: GuestAccount, meta: {requireGuestAccount: true, title: 'Guest Account'}},
+    {path: '/create', component: CreatePool, meta: {requireLogin: true, title: 'Create Squares Pool'}},
+    {path: '/pool/:token', component: Pool, props: true, meta: {requirePoolMembership: true}},
     {path: '/pool/:token/join', component: PoolJoin, props: true},
-    {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: { requirePoolMembership: true }},
-    {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: { requirePoolMembership: true }},
+    {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: {requirePoolMembership: true}},
+    {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
 ]
 
 const router = new VueRouter({
     mode: 'history',
     routes,
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
-            return { x: 0, y: 0 }
+            return {x: 0, y: 0}
         }
-    }
+    },
 })
 
 router.beforeEach(async (to, from, next) => {
@@ -115,7 +115,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.meta.requireLogin) {
         try {
-            await authService.getAccessToken()
+            await authService.loadProfile()
         } catch (e) {
             return next(`/login?target=${encodeURIComponent(to.path)}`)
         }
@@ -144,12 +144,14 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach(() => {
-   loadingBar.stop()
+    loadingBar.stop()
 })
 
-new Vue({
-    router,
-    store,
-    render: h => h(App),
-}).$mount('#app')
-
+authService.initAuth0()
+    .then(() => {
+        new Vue({
+            router,
+            store,
+            render: h => h(App),
+        }).$mount('#app')
+    })
