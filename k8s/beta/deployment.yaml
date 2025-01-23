@@ -6,7 +6,7 @@ metadata:
     app: sqmgr-vue-beta
     tier: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: sqmgr-vue-beta
