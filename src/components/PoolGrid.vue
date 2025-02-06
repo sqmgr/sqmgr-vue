@@ -833,6 +833,13 @@ p.event-date {
         height: 7in;
     }
 
+    div.std100.squares,
+    div.roll100.squares {
+        span.name {
+            font-size: 0.7em;
+        }
+    }
+
     div.team {
         background:  transparent;
         text-shadow: none;
@@ -841,6 +848,10 @@ p.event-date {
         &.away-team {
             background: transparent;
         }
+    }
+
+    div.square::after {
+        display: none;
     }
 }
 </style>
