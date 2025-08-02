@@ -138,6 +138,10 @@ class sqmgrClient {
         return this.updatePool(token, {action: 'reorderGrids', ids})
     }
 
+    setPasswordRequiredForPool(token, passwordRequired) {
+        return this.updatePool(token, {action: 'passwordRequired', passwordRequired })
+    }
+
     setOpenAccessOnLockForPool(token, openAccessOnLock) {
         return this.updatePool(token, {action: 'accessOnLock', openAccessOnLock })
     }

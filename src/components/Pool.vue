@@ -138,13 +138,24 @@ limitations under the License.
                             </td>
                         </tr>
                         <tr v-if="pool.isAdmin">
+                            <td>Password Required?</td>
+                            <td>
+                                <label>
+                                    <input type="radio" v-model="pool.passwordRequired" :value="true"> Yes
+                                </label>
+                                <label>
+                                    <input type="radio" v-model="pool.passwordRequired" :value="false"> No
+                                </label>
+                            </td>
+                        </tr>
+                        <tr v-if="pool.isAdmin">
                             <td>Password Required if Locked?</td>
                             <td>
                                 <label>
-                                    <input type="radio" v-model="pool.openAccessOnLock" :value="false"> Yes
+                                    <input type="radio" v-model="pool.openAccessOnLock" :value="false" :disabled="!pool.passwordRequired"> Yes
                                 </label>
                                 <label>
-                                    <input type="radio" v-model="pool.openAccessOnLock" :value="true"> No
+                                    <input type="radio" v-model="pool.openAccessOnLock" :value="true" :disabled="!pool.passwordRequired"> No
                                 </label>
                             </td>
                         </tr>
@@ -264,6 +275,9 @@ limitations under the License.
             openAccessOnLock() {
                 return this.pool.openAccessOnLock
             },
+            passwordRequired() {
+                return this.pool.passwordRequired
+            }
         },
         watch: {
             editPoolName(newVal) {
@@ -272,6 +286,10 @@ limitations under the License.
                     this.$nextTick()
                         .then(() => this.$refs.poolName.select())
                 }
+            },
+            passwordRequired(newVal) {
+                sqmgrClient.setPasswordRequiredForPool(this.token, newVal)
+                    .catch(err => ModalController.showError(err))
             },
             openAccessOnLock(newVal) {
                 sqmgrClient.setOpenAccessOnLockForPool(this.token, newVal)
@@ -316,7 +334,7 @@ limitations under the License.
                 }
             },
             async copyInviteLink(event) {
-                const url = `${window.location.origin}/pool/${this.token}/join#${this.inviteToken}`
+                const url = this.pool.passwordRequired ? `${window.location.origin}/pool/${this.token}/join#${this.inviteToken}` : `${window.location.origin}/pool/${this.token}`
                 toClipboard(url)
 
                 this.showCopiedMessage = true
