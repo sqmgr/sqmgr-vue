@@ -18,13 +18,9 @@ limitations under the License.
     <section class="donate">
         <h1>Donate</h1>
 
-        <p>If you like this service, please consider donating some money for server costs to keep this service running free of charge. You can donate on my <a href="https://www.patreon.com/sqmgr">Patreon</a> page by clicking <a href="https://www.patreon.com/sqmgr">here</a>.</p>
+        <p>If you like this service, please consider donating to help cover server costs. This ensures I can keep this site up free of charge and without any obnoxious ads. If you're inclined to donate, my Venmo username is <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=10&note=SqMGR">thomaspeters</a>.
 
-        <p>The source code for this site is also open-source. So if donating money isn't your thing, perhaps donating some of your brain power is! See <a href="https://github.com/sqmgr/sqmgr">here</a> for the source.</p>
-
-        <h2>SqMGR Sponsors</h2>
-
-        <p>Be the first! Donate <a href="https://www.patreon.com/sqmgr">here</a> to help keep SqMGR 100% free.</p>
+        <p>The source code for this site is also open-source. So if donating money isn't your thing, perhaps donating some of your brain power is! See <a href="https://github.com/sqmgr/sqmgr">here</a> for the source code.</p>
     </section>
 </template>
 
