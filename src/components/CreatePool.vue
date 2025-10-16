@@ -74,6 +74,7 @@ limitations under the License.
 
                     <ul>
                         <li><strong>Standard, 100 squares:</strong> A 10x10 grid. This is the most common pool.</li>
+                        <li><strong>Standard, 50 squares:</strong> A 5x10 grid where each square will be assigned two home numbers and one away number.</li>
                         <li><strong>Standard, 25 squares:</strong> A 5x5 grid where each square will be assigned two home and two away numbers. This is great if you have fewer participants.</li>
                         <li><strong>Rollover, 100 squares:</strong> A 10x10 grid but each participant will claim two squares, a primary square and a secondary square. You can designate certain games as a "rollover" game and the secondary squares will be empty. If the final score lands on that square, you roll the money over to the next game. This is great for pools that span many games (e.g., a full season or playoffs).</li>
                     </ul>

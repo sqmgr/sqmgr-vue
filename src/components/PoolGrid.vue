@@ -757,6 +757,11 @@ div.std25 div.square {
     grid-column-start: span 2;
 }
 
+div.std50 div.square {
+    grid-row-start:    span 1;
+    grid-column-start: span 2;
+}
+
 div.notes::before {
     content:   'Note from organizer:';
     display:   block;
@@ -824,6 +829,7 @@ p.event-date {
         font-weight: bold;
     }
     div.std25.squares,
+    div.std50.squares,
     div.std100.squares {
         width:  7in;
         height: 7in;
