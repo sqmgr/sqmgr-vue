@@ -51,7 +51,7 @@ limitations under the License.
                             </li>
                         </template>
                         <li>
-                            <router-link to="/donate">Donate</router-link>
+                            <router-link to="/tipjar">Tip Jar</router-link>
                         </li>
                     </ul>
                 </nav>
@@ -151,7 +151,7 @@ export default {
     --primary-darker:  #43a047;
     --primary-darkest: #1b5e20;
     --success:         #2196f3;
-    --warning:         #fdd835;
+    --warning:         #ffc107;
 }
 
 html, body {

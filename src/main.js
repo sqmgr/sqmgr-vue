@@ -26,7 +26,7 @@ import TermsOfService from "@/components/TermsOfService"
 import PrivacyPolicy from "@/components/PrivacyPolicy"
 import YourAccount from "@/components/YourAccount"
 import LogIn from "@/components/LogIn"
-import Donate from "@/components/Donate"
+import TipJar from "@/components/TipJar.vue"
 import Pool from "@/components/Pool"
 import PoolGrid from "@/components/PoolGrid"
 import CreatePool from "@/components/CreatePool"
@@ -79,7 +79,7 @@ const routes = [
     {path: '/privacy', component: PrivacyPolicy, meta: {title: 'Privacy Policy'}},
     {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
     {path: '/login', component: LogIn, meta: {title: 'Login'}},
-    {path: '/donate', component: Donate, meta: {title: 'Donate'}},
+    {path: '/tipjar', component: TipJar, meta: {title: 'tipjar'}},
     {path: '/account', component: YourAccount, meta: {requireLogin: true, title: 'Your Account'}},
     {path: '/guest-account', component: GuestAccount, meta: {requireGuestAccount: true, title: 'Guest Account'}},
     {path: '/create', component: CreatePool, meta: {requireLogin: true, title: 'Create Squares Pool'}},

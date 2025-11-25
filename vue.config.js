@@ -35,7 +35,7 @@ module.exports = {
                     '/terms',
                     '/private',
                     '/cookies',
-                    '/donate',
+                    '/tipjar',
                     '/login',
                 ],
                 options: {

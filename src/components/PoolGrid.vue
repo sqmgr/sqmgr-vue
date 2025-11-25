@@ -505,7 +505,7 @@ $expand-size: 8in;
     --primary-darker:  #43a047;
     --primary-darkest: #1b5e20;
     --success:         #2196f3;
-    --warning:         #fdd835;
+    --warning:         #ffc107;
 }
 
 section.grid {

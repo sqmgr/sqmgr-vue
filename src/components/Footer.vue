@@ -22,7 +22,7 @@ limitations under the License.
                     <router-link to="/about">About</router-link>
                 </li>
                 <li>
-                    <router-link to="/donate">Donate</router-link>
+                    <router-link to="/tipjar">Tip Jar</router-link>
                 </li>
                 <li>
                     <router-link to="/terms">Terms of Service</router-link>
