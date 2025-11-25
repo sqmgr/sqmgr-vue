@@ -18,7 +18,7 @@ limitations under the License.
     <section class="about">
         <h1>About SqMGR</h1>
 
-        <p>SqMGR is a site for managing your football squares. We built this site because we were tired of managing paper pools. And, other online tools were old, cost money, and/or just poorly maintained.</p>
+        <p>SqMGR is a site for managing your football squares. I built this site because I was tired of managing paper pools. And, other online tools were old, cost money, and/or just poorly maintained.</p>
 
         <h2>Project Goals</h2>
 
@@ -38,5 +38,8 @@ limitations under the License.
 </script>
 
 <style scoped>
-
+section.about {
+    max-width: 1200px;
+    margin: 0 auto;
+}
 </style>
