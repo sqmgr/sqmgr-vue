@@ -147,6 +147,3 @@ limitations under the License.
     }
 </script>
 
-<style scoped lang="scss">
-    @use '../assets/forms.css';
-</style>

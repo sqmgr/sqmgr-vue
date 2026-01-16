@@ -40,6 +40,7 @@ import loadingBar from "@/utils/loadingBar.ts"
 import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
 import './register-service-worker'
+import './assets/forms.css'
 
 const store = createStore({
     state() {

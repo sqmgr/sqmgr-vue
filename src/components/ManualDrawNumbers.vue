@@ -123,7 +123,6 @@ limitations under the License.
 
 <style scoped lang="scss">
     @use '../variables.scss' as *;
-    @import '../assets/forms.css';
 
     div.numbers {
         display:               grid;
