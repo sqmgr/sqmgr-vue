@@ -5,9 +5,8 @@ RUN npm install
 COPY . /app/
 ARG api_url
 ARG version
-ENV VUE_APP_VERSION=$version
-RUN if [ -n "$api_url" ]; then export VUE_APP_API_URL=$api_url; fi; \
-    npm run build
+RUN if [ -n "$api_url" ]; then export VITE_API_URL=$api_url; fi; \
+    APP_VERSION=$version npm run build
 
 FROM nginx:latest
 COPY --from=build /app/dist /app
