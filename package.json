@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "./git-hooks/pre-commit"
   },
   "dependencies": {
     "mitt": "^3.0.1",
@@ -23,6 +27,7 @@
     "eslint-plugin-vue": "^10.6.2",
     "globals": "^17.0.0",
     "sass": "^1.83.4",
+    "simple-git-hooks": "^2.13.1",
     "vite": "^7.3.1",
     "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-sitemap": "^0.8.2",
