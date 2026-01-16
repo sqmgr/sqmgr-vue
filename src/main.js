@@ -75,7 +75,7 @@ const routes = [
     {path: '/privacy', component: PrivacyPolicy, meta: {title: 'Privacy Policy'}},
     {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
     {path: '/login', component: LogIn, meta: {title: 'Login'}},
-    {path: '/tipjar', component: TipJar, meta: {title: 'tipjar'}},
+    {path: '/tipjar', component: TipJar, meta: {title: 'Tip Jar'}},
     {path: '/account', component: YourAccount, meta: {requireLogin: true, title: 'Your Account'}},
     {path: '/guest-account', component: GuestAccount, meta: {requireGuestAccount: true, title: 'Guest Account'}},
     {path: '/create', component: CreatePool, meta: {requireLogin: true, title: 'Create Squares Pool'}},
