@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 const logger = (() => {
-    if (process.env.NODE_ENV !== 'development') {
+    if (!import.meta.env.DEV) {
         return () => {}
     }
 
@@ -29,7 +29,6 @@ const logger = (() => {
     ].join(';')
 
     return msg => {
-        // eslint-disable-next-line no-console
         console.log('%csqmgr', styles, msg)
     }
 })()

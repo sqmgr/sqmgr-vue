@@ -92,7 +92,7 @@ export default {
         return {
             isGuest: !!accessTokenManager.getGuestAccessToken(),
             isAuthenticated: this.$auth.isAuthenticated,
-            version: process.env.VUE_APP_VERSION,
+            version: __APP_VERSION__,
         }
     },
     async created() {

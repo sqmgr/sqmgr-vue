@@ -112,7 +112,7 @@ router.beforeEach(async (to) => {
     if (to.meta.requireLogin) {
         try {
             await authService.loadProfile()
-        } catch (e) {
+        } catch {
             return `/login?target=${encodeURIComponent(to.path)}`
         }
 
@@ -131,7 +131,7 @@ router.beforeEach(async (to) => {
         try {
             await accessTokenManager.getAccessToken(true)
             to.params.initialPool = await sqmgrClient.getPoolByToken(to.params.token)
-        } catch (e) {
+        } catch {
             return `/pool/${to.params.token}/join?target=${encodeURIComponent(to.path)}`
         }
     }

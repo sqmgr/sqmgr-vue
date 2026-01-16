@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable no-console */
 import ModalController from '@/controllers/ModalController'
 
-if (process.env.NODE_ENV !== 'development') {
+if (!import.meta.env.DEV) {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')
             .then(registration => {

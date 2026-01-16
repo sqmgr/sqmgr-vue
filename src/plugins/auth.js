@@ -24,7 +24,7 @@ export default {
         app.mixin({
             created() {
                 if (this.handleLoginEvent) {
-                    authService.addListener('loginEvent', this.handleLoginEvent)
+                    authService.on('loginEvent', this.handleLoginEvent)
                 }
 
                 if (this.handleGuestJoinEvent) {
@@ -34,7 +34,7 @@ export default {
 
             unmounted() {
                 if (this.handleLoginEvent) {
-                    authService.removeListener('loginEvent', this.handleLoginEvent)
+                    authService.off('loginEvent', this.handleLoginEvent)
                 }
 
                 if (this.handleGuestJoinEvent) {

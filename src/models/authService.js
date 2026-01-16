@@ -14,15 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events'
+import mitt from 'mitt'
 import {createAuth0Client} from "@auth0/auth0-spa-js"
 import authConfig from "../../auth_config.json"
 
-class Auth0Service extends EventEmitter {
+class Auth0Service {
     auth0Client = null
     isAuthenticated = false
     profile = {}
     error = null
+    #emitter = mitt()
+
+    on(type, handler) {
+        this.#emitter.on(type, handler)
+    }
+
+    off(type, handler) {
+        this.#emitter.off(type, handler)
+    }
+
+    emit(type, event) {
+        this.#emitter.emit(type, event)
+    }
 
 
     async initAuth0() {

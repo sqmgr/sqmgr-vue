@@ -19,7 +19,7 @@ import ResponseError from "@/models/ResponseError";
 import accessTokenManager from "@/models/accessTokenManager";
 
 class sqmgrClient {
-    baseURL = process.env.VUE_APP_API_URL
+    baseURL = import.meta.env.VITE_API_URL
     _user = null
 
     async request(path, query, requiresAuth = true, init = {}) {

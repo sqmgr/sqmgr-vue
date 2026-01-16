@@ -23,7 +23,7 @@ class accessTokenManager {
     async getAccessToken(createGuestToken) {
         try {
             return await authService.getTokenSilently()
-        } catch (e) {
+        } catch {
             // no-op
         }
 
@@ -55,7 +55,7 @@ class accessTokenManager {
             if (data.expiresAt * 1000 > Date.now()) {
                 return data.jwt
             }
-        } catch (e) {
+        } catch {
             // no-op
         }
 
