@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 <template>
-    <div class="customize-team">
+    <div v-if="modelValue" class="customize-team">
         <div class="field">
             <label :for="`name-${id}`" class="optional">{{ name }} Name</label>
             <input :id="`name-${id}`" :maxlength="teamNameMaxLength" :name="`name-${id}`" :placeholder="name"
                    @keydown="keydown"
-                   @keyup="keyup" autocomplete="off" type="text" v-model="value.name"
+                   @keyup="keyup" autocomplete="off" type="text" v-model="modelValue.name"
                    @blur="hideSuggestions">
 
             <div v-show="suggestTeams.length > 0" class="suggest">
@@ -35,9 +35,9 @@ limitations under the License.
         <div class="field">
             <label class="optional" :for="`color-1-${id}`">{{ name }} Colors</label>
             <input type="color" :id="`color-1-${id}`" :name="`color-1-${id}`" placeholder="#000000"
-                   v-model="value.color1" tabindex="-1">
+                   v-model="modelValue.color1" tabindex="-1">
             <input type="color" :id="`color-2-${id}`" :name="`color-2-${id}`" placeholder="#000000"
-                   v-model="value.color2" tabindex="-1">
+                   v-model="modelValue.color2" tabindex="-1">
         </div>
     </div>
 </template>
@@ -57,7 +57,7 @@ export default {
     },
     computed: {
         teamName() {
-            return this.value.name
+            return this.modelValue?.name
         },
     },
     data() {
@@ -80,7 +80,7 @@ export default {
             type: String,
             required: true,
         },
-        value: {
+        modelValue: {
             type: Object,
         },
     },
@@ -89,9 +89,9 @@ export default {
     },
     methods: {
         selectTeam(team) {
-            this.value.name = team.name
-            this.value.color1 = team.colors[0]
-            this.value.color2 = team.colors[1] || team.colors[0]
+            this.modelValue.name = team.name
+            this.modelValue.color1 = team.colors[0]
+            this.modelValue.color2 = team.colors[1] || team.colors[0]
             setTimeout(() => this.suggestTeams = [], 1)
         },
         selectUp() {

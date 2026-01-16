@@ -37,6 +37,7 @@ limitations under the License.
 </template>
 
 <script>
+    import { markRaw } from 'vue'
     import ModalController from '@/controllers/ModalController'
 
     export default {
@@ -52,7 +53,7 @@ limitations under the License.
                 this.components.push({
                     id: Math.random(),
                     header,
-                    component,
+                    component: markRaw(component),
                     props,
                     on,
                 })
