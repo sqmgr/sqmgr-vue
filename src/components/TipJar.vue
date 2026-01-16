@@ -27,14 +27,14 @@ limitations under the License.
                 <div class="card-body">
                     <h3>Important Reminder</h3>
                     <p><strong>Do not pay for your squares here!</strong></p>
-                    <p>Payments for squares should be sent directly to your pool administrator. Tips sent here support the hosting and development of the SqMGR platform.</p>
+                    <p>Payments for squares should be sent directly to your pool administrator. Tips sent here go toward the hosting and development of the site.</p>
                 </div>
             </div>
 
             <div class="card tip-card">
                 <div class="card-body">
-                    <h3>Support the Site</h3>
-                    <p>If you enjoy using SqMGR, please consider chipping in. Your contributions help cover server costs and keep the site 100% ad-free.</p>
+                    <h3>Support the Project</h3>
+                    <p>SqMGR is a labor of love maintained by a single developer. If you enjoy using the site, please consider chipping in to help cover server costs and keep it 100% ad-free.</p>
                 </div>
                 <div class="action-area">
                     <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=5&note=Thanks+for+SqMGR!" class="venmo-button">
