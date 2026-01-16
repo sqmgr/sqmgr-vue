@@ -81,7 +81,7 @@ limitations under the License.
                 accessTokenManager.getAccessToken(true)
                     .then(() => sqmgrClient.joinPool(this.token, passwordOrJWT, isJWT))
                     .then(() => {
-                        bus.$emit('guestJoin')
+                        bus.emit('guestJoin')
 
                         if (this.$route.query.target) {
                             this.$router.push(this.$route.query.target)

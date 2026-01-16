@@ -14,25 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Vue from 'vue'
+import mitt from 'mitt'
 import Error from '@/components/Error'
 import Prompt from "@/components/Prompt";
 
-const bus = new Vue()
+const bus = mitt()
 
 const obj = {
     bus,
     show() {
-        bus.$emit('show', ...arguments)
+        bus.emit('show', [...arguments])
     },
     abort() {
-        bus.$emit('abort')
+        bus.emit('abort')
     },
     hide() {
-        bus.$emit('hide')
+        bus.emit('hide')
     },
     hideAll() {
-        bus.$emit('hideAll')
+        bus.emit('hideAll')
     },
     showPrompt(title, description, opts = {}) {
         const confirmAction = typeof(opts.action) === 'function' ? opts.action : () => {}

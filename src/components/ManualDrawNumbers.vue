@@ -17,14 +17,13 @@ limitations under the License.
 <template>
     <div>
         <div class="numbers">
-            <template v-for="(num, i) in numbers">
+            <template v-for="(num, i) in numbers" :key="i">
                 <input :class="{ duplicate: duplicates[num] }"
                        type="number"
                        min="0"
                        max="9"
                        v-model="numbers[i]"
-                       :placeholder="`pos ${i + 1}`"
-                       :key="i"/>
+                       :placeholder="`pos ${i + 1}`"/>
             </template>
         </div>
 

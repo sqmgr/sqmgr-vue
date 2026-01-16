@@ -17,7 +17,7 @@ limitations under the License.
 <template>
     <div class="field">
         <label for="password">Join Password</label>
-        <p class="requirement">Must be at least {{minLength}} characters
+        <p class="requirement">Must be at least {{minLength}} characters</p>
         <div class="password">
             <input type="password"
                    ref="password"
@@ -56,17 +56,18 @@ limitations under the License.
                 type: Number,
                 default: 8,
             },
-            value: String,
+            modelValue: String,
         },
+        emits: ['update:modelValue'],
         data() {
             return {
-                password: this.value,
+                password: this.modelValue,
                 confirmPassword: '',
             }
         },
         watch: {
             password(val) {
-                this.$emit('input', val)
+                this.$emit('update:modelValue', val)
             },
             showPasswordsDoNotMatchMessage(val) {
                 if (val) {

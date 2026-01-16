@@ -202,7 +202,7 @@ class sqmgrClient {
             })
         })
             .then(res => {
-                EventBus.$emit('grid-updated', true)
+                EventBus.emit('grid-updated', true)
                 return res
             })
     }
@@ -220,7 +220,7 @@ class sqmgrClient {
             body: JSON.stringify(data),
         })
             .then(res => {
-                EventBus.$emit('square-updated', true)
+                EventBus.emit('square-updated', true)
                 return res
             })
     }

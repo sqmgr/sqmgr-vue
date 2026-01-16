@@ -112,8 +112,8 @@ limitations under the License.
                         }}
                     </div>
 
-                    <template v-for="n in numSquares">
-                        <Square :key="n"
+                    <template v-for="n in numSquares" :key="n">
+                        <Square
                                 :grid-id="gridIdNum"
                                 :pool-config="poolConfig"
                                 :sq-id="n"
@@ -218,12 +218,12 @@ export default {
     },
     created() {
         document.title = `${this.pool.name} - SqMGR`
-        EventBus.$on('square-updated', this.squareUpdated)
-        EventBus.$on('grid-updated', this.gridUpdated)
+        EventBus.on('square-updated', this.squareUpdated)
+        EventBus.on('grid-updated', this.gridUpdated)
     },
-    beforeDestroy() {
-        EventBus.$off('square-updated', this.squareUpdated)
-        EventBus.$off('grid-updated', this.gridUpdated)
+    beforeUnmount() {
+        EventBus.off('square-updated', this.squareUpdated)
+        EventBus.off('grid-updated', this.gridUpdated)
     },
     beforeMount() {
         // ensure store is fresh

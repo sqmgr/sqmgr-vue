@@ -34,12 +34,12 @@ limitations under the License.
         },
         created() {
             this.depth = 0
-            bus.$on('loading-start', this.startLoading)
-            bus.$on('loading-done', this.stopLoading)
+            bus.on('loading-start', this.startLoading)
+            bus.on('loading-done', this.stopLoading)
         },
-        beforeDestroy() {
-            bus.$off('loading-start', this.startLoading)
-            bus.$off('loading-done', this.stopLoading)
+        beforeUnmount() {
+            bus.off('loading-start', this.startLoading)
+            bus.off('loading-done', this.stopLoading)
         },
         methods: {
             progress() {

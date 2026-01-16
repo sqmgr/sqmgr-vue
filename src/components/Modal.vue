@@ -16,8 +16,8 @@ limitations under the License.
 
 <template>
     <div v-if="components.length > 0">
-        <template v-for="component in components">
-            <div v-bind:key="component.id" class="modal-container">
+        <template v-for="component in components" :key="component.id">
+            <div class="modal-container">
                 <div class="cover" @click.prevent="close"></div>
                 <transition appear name="modal">
                     <div class="modal">
@@ -47,13 +47,16 @@ limitations under the License.
             }
         },
         mounted() {
-            ModalController.bus.$on('show', (header, component, props = {}, on = {}) => this.components.push({
-                id: Math.random(),
-                header,
-                component,
-                props,
-                on,
-            }))
+            ModalController.bus.on('show', (args) => {
+                const [header, component, props = {}, on = {}] = args
+                this.components.push({
+                    id: Math.random(),
+                    header,
+                    component,
+                    props,
+                    on,
+                })
+            })
 
             const fireEvent = (c, event) => {
                 if (typeof (c.on[event]) === 'function') {
@@ -61,11 +64,11 @@ limitations under the License.
                 }
             }
 
-            ModalController.bus.$on('abort', () => fireEvent(this.components.pop(), 'modal-aborted'))
+            ModalController.bus.on('abort', () => fireEvent(this.components.pop(), 'modal-aborted'))
 
-            ModalController.bus.$on('hide', () => fireEvent(this.components.pop(), 'modal-closed'))
+            ModalController.bus.on('hide', () => fireEvent(this.components.pop(), 'modal-closed'))
 
-            ModalController.bus.$on('hideAll', () => {
+            ModalController.bus.on('hideAll', () => {
                 let c
                 while (undefined !== (c = this.components.pop())) {
                     fireEvent(c, 'modal-closed')

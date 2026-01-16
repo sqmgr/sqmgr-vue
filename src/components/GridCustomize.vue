@@ -20,8 +20,8 @@ limitations under the License.
     <section class="grid-customize">
         <form @submit.prevent="submit">
             <template v-if="errors">
-                <template v-for="(errList, errKey) in errors">
-                    <div class="errors" :key="errKey">
+                <template v-for="(errList, errKey) in errors" :key="errKey">
+                    <div class="errors">
                         <h2>Error</h2>
 
                         <p>Please correct the following errors:</p>

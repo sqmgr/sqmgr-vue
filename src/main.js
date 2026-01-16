@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import { createStore } from 'vuex'
 import App from './App.vue'
 import AuthPlugin from './plugins/auth'
 import Home from "@/components/Home"
@@ -36,21 +37,16 @@ import PoolJoin from "@/components/PoolJoin"
 import CookiesPolicy from "@/components/CookiesPolicy"
 import GuestAccount from "@/components/GuestAccount"
 import loadingBar from "@/utils/loadingBar.ts"
-import Vuex from 'vuex'
 import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
 import './register-service-worker'
 
-Vue.config.productionTip = false
-
-Vue.use(AuthPlugin)
-Vue.use(VueRouter)
-Vue.use(Vuex)
-
-const store = new Vuex.Store({
-    state: {
-        primarySquare: null,
-        highlightSquares: {},
+const store = createStore({
+    state() {
+        return {
+            primarySquare: null,
+            highlightSquares: {},
+        }
     },
     mutations: {
         primarySquare(state, data) {
@@ -89,19 +85,19 @@ const routes = [
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
 ]
 
-const router = new VueRouter({
-    mode: 'history',
+const router = createRouter({
+    history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
-            return {x: 0, y: 0}
+            return {left: 0, top: 0}
         }
     },
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
     loadingBar.start()
     if (to.meta.title) {
         document.title = `${to.meta.title} - SqMGR`
@@ -117,18 +113,18 @@ router.beforeEach(async (to, from, next) => {
         try {
             await authService.loadProfile()
         } catch (e) {
-            return next(`/login?target=${encodeURIComponent(to.path)}`)
+            return `/login?target=${encodeURIComponent(to.path)}`
         }
 
-        return next()
+        return true
     }
 
     if (to.meta.requireGuestAccount) {
         if (!accessTokenManager.getGuestAccessToken()) {
-            return next(`/`)
+            return '/'
         }
 
-        return next()
+        return true
     }
 
     if (to.meta.requirePoolMembership) {
@@ -136,11 +132,11 @@ router.beforeEach(async (to, from, next) => {
             await accessTokenManager.getAccessToken(true)
             to.params.initialPool = await sqmgrClient.getPoolByToken(to.params.token)
         } catch (e) {
-            return next(`/pool/${to.params.token}/join?target=${encodeURIComponent(to.path)}`)
+            return `/pool/${to.params.token}/join?target=${encodeURIComponent(to.path)}`
         }
     }
 
-    return next()
+    return true
 })
 
 router.afterEach(() => {
@@ -149,9 +145,9 @@ router.afterEach(() => {
 
 authService.initAuth0()
     .then(() => {
-        new Vue({
-            router,
-            store,
-            render: h => h(App),
-        }).$mount('#app')
+        const app = createApp(App)
+        app.use(router)
+        app.use(store)
+        app.use(AuthPlugin)
+        app.mount('#app')
     })

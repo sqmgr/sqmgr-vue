@@ -31,34 +31,36 @@ limitations under the License.
                         </div>
 
                         <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isAdmin"
-                                   handle=".handle" @change="change">
-                            <div class="grid-row" v-for="(grid, i) in grids" :key="grid.id">
-                                <span v-if="pool.isAdmin" class="handle"><i
-                                        class="fas fa-bars"></i> <span>=</span></span>
+                                   handle=".handle" @change="change" item-key="id">
+                            <template #item="{ element: grid, index: i }">
+                                <div class="grid-row">
+                                    <span v-if="pool.isAdmin" class="handle"><i
+                                            class="fas fa-bars"></i> <span>=</span></span>
 
-                                <span class="index">{{ i + 1 }}</span>
+                                    <span class="index">{{ i + 1 }}</span>
 
-                                <router-link class="game" :to="`/pool/${token}/game/${grid.id}`">
-                                    {{grid.name}}
-                                </router-link>
+                                    <router-link class="game" :to="`/pool/${token}/game/${grid.id}`">
+                                        {{grid.name}}
+                                    </router-link>
 
-                                <div class="rollover" v-if="rollover">
-                                    <span class="fas fa-dice" v-if="grid.rollover"></span>
+                                    <div class="rollover" v-if="rollover">
+                                        <span class="fas fa-dice" v-if="grid.rollover"></span>
+                                    </div>
+
+                                    <div class="event-date">
+                                        <span v-if="ymd(grid.eventDate)">{{ ymd(grid.eventDate) }}</span>
+                                        <span v-else class="unknown">0/0/0000</span>
+                                    </div>
+
+                                    <div v-if="pool.isAdmin" class="actions">
+                                        <button type="button" class="icon" @click.prevent="customizeGrid(grid)"><i
+                                                class="fas fa-cog"></i><span>Customize</span></button>
+                                        <button type="button" class="icon destructive" @click.prevent="confirmDelete(grid)">
+                                            <span>Delete</span><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </div>
                                 </div>
-
-                                <div class="event-date">
-                                    <span v-if="ymd(grid.eventDate)">{{ ymd(grid.eventDate) }}</span>
-                                    <span v-else class="unknown">0/0/0000</span>
-                                </div>
-
-                                <div v-if="pool.isAdmin" class="actions">
-                                    <button type="button" class="icon" @click.prevent="customizeGrid(grid)"><i
-                                            class="fas fa-cog"></i><span>Customize</span></button>
-                                    <button type="button" class="icon destructive" @click.prevent="confirmDelete(grid)">
-                                        <span>Delete</span><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </div>
+                            </template>
                         </draggable>
                     </div>
 

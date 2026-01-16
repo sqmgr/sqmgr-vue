@@ -50,8 +50,8 @@ limitations under the License.
             <tr v-if="poolConfig.gridType === 'roll100'">
                 <td>Linked Squares</td>
                 <td>
-                    <template v-for="square in linkedSquares">
-                        <a :key="square" href="#" @click.prevent="showSquare(square)">{{ square }}</a>
+                    <template v-for="square in linkedSquares" :key="square">
+                        <a href="#" @click.prevent="showSquare(square)">{{ square }}</a>
                     </template>
                 </td>
             </tr>
@@ -284,7 +284,7 @@ limitations under the License.
                         sqmgrClient.setPoolGridSquareAnnotation(this.poolConfig.token, this.gridId, this.square.squareId, annotation, icon)
                             .then(res => {
                                 this.localAnnotation = res
-                                EventBus.$emit('grid-updated')
+                                EventBus.emit('grid-updated')
                                 ModalController.hide()
                             })
                         .catch(err => ModalController.showError(err))
@@ -299,7 +299,7 @@ limitations under the License.
                         sqmgrClient.deletePoolGridSquareAnnotation(this.poolConfig.token, this.gridId, this.square.squareId)
                             .then(() => {
                                 this.localAnnotation = null
-                                EventBus.$emit('grid-updated')
+                                EventBus.emit('grid-updated')
                                 ModalController.hide()
                             })
                             .catch(err => ModalController.showError(err))

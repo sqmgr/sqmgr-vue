@@ -24,14 +24,10 @@ limitations under the License.
                 <li class="prev"><a href="#" @click.prevent="$emit('page', prevPage)"><i class="fas fa-angle-left"></i><span>Previous</span></a></li>
             </template>
 
-            <template v-for="page in pages">
-                <template v-if="page === 0">
-                    <li :key="page" class="ellipses"><span>&mldr;</span></li>
-                </template>
-                <template v-else>
-                    <li :key="page" v-if="page === currentPage" class="page"><span class="current">{{page}}</span></li>
-                    <li :key="page" v-else class="page"><a href="#" @click.prevent="$emit('page', page)"><span>{{page}}</span></a></li>
-                </template>
+            <template v-for="page in pages" :key="page">
+                <li v-if="page === 0" class="ellipses"><span>&mldr;</span></li>
+                <li v-else-if="page === currentPage" class="page"><span class="current">{{page}}</span></li>
+                <li v-else class="page"><a href="#" @click.prevent="$emit('page', page)"><span>{{page}}</span></a></li>
             </template>
 
             <template v-if="currentPage === numPages">
