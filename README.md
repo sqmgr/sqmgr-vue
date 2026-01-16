@@ -1,6 +1,6 @@
 # sqmgr-vue - The frontend for SqMGR
 
-[![CI](https://github.com/sqmgr/sqmgr-vue/workflows/.github/workflows/main.yaml/badge.svg?branch=master)](https://github.com/sqmgr/sqmgr-vue/actions?query=workflow%3A.github%2Fworkflows%2Fworkflow.yaml)
+[![CI/CD](https://github.com/sqmgr/sqmgr-vue/actions/workflows/main.yaml/badge.svg?branch=master)](https://github.com/sqmgr/sqmgr-vue/actions/workflows/main.yaml)
 
 SqMGR is a web application for managing football squares pools. This repository contains the Vue.js frontend that powers [sqmgr.com](https://sqmgr.com).
 
