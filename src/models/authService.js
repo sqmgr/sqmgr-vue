@@ -49,6 +49,12 @@ class Auth0Service {
                 redirect_uri: `${window.location.origin}/callback`,
             },
         })
+
+        // Restore auth state from cached session
+        this.isAuthenticated = await this.auth0Client.isAuthenticated()
+        if (this.isAuthenticated) {
+            this.profile = await this.auth0Client.getUser() || {}
+        }
     }
 
     async loadProfile() {
