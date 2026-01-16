@@ -37,9 +37,8 @@ limitations under the License.
                     <p>If you enjoy using SqMGR, please consider chipping in. Your contributions help cover server costs and keep the site 100% ad-free.</p>
                 </div>
                 <div class="action-area">
-                    <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=5&note=Thanks for SqMGR!" class="venmo-button">
-                        <span class="venmo-logo">V</span>
-                        <span>Tip via Venmo</span>
+                    <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=5&note=SqMGR" class="venmo-button">
+                        Tip via Venmo
                     </a>
                 </div>
             </div>
@@ -170,24 +169,10 @@ export default {
         font-weight: 700;
         text-decoration: none;
         transition: background-color 0.2s;
-        gap: 10px;
 
         &:hover {
             background-color: #2d85be;
             text-decoration: none;
-        }
-
-        .venmo-logo {
-            background: white;
-            color: #3d95ce;
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1rem;
         }
     }
 
