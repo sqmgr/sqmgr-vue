@@ -37,7 +37,7 @@ limitations under the License.
                     <p>SqMGR is a labor of love maintained by a single developer. If you enjoy using the site, please consider chipping in to help cover server costs and keep it 100% ad-free.</p>
                 </div>
                 <div class="action-area">
-                    <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=5&note=Thanks+for+SqMGR!" class="venmo-button">
+                    <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=5&note=Thanks%20for%20SqMGR!" class="venmo-button">
                         Tip via Venmo
                     </a>
                 </div>
