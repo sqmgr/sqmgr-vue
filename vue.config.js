@@ -18,6 +18,16 @@ const SitemapWebpackPlugin = require('sitemap-webpack-plugin').default
 const WorkboxPlugin = require('workbox-webpack-plugin')
 
 module.exports = {
+    css: {
+        loaderOptions: {
+            sass: {
+                sassOptions: {
+                    quietDeps: true,
+                },
+                api: 'modern',
+            },
+        },
+    },
     configureWebpack: {
         devtool: 'eval-source-map',
         plugins: [

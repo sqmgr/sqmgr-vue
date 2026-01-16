@@ -76,7 +76,8 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables.scss';
+    @use "sass:color";
+    @use '../variables.scss' as *;
 
     div.loading-bar {
         transition:       all 200ms;
@@ -95,7 +96,7 @@ limitations under the License.
             display:    block;
             width:      20px;
             height:     2px;
-            background: linear-gradient(to right, $primary, lighten($primary, 20%));
+            background: linear-gradient(to right, $primary, color.adjust($primary, $lightness: 20%));
         }
     }
 

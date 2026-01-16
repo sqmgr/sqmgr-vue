@@ -86,7 +86,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables';
+    @use '../variables' as *;
     .passwords-match-check {
         font-size:  0.8em;
         margin-top: $minimal-spacing;

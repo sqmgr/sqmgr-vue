@@ -148,5 +148,5 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../assets/forms.css';
+    @use '../assets/forms.css';
 </style>

@@ -478,7 +478,8 @@ nav.admin-menu {
 }
 </style>
 <style lang="scss">
-@import '../variables';
+@use "sass:color";
+@use '../variables' as *;
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Alfa+Slab+One');
 
 $expand-size: 8in;

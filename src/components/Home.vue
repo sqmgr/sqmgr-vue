@@ -52,7 +52,7 @@ limitations under the License.
 </script>
 
 <style lang="scss" scoped>
-    @import '../variables.scss';
+    @use '../variables.scss' as *;
 
     h1 {
         font-size: 1.6em;

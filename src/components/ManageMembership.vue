@@ -119,7 +119,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables.scss';
+    @use '../variables.scss' as *;
 
     div.reset-membership {
         height: 1.2em;

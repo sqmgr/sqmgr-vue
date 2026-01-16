@@ -96,7 +96,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables.scss';
+    @use '../variables.scss' as *;
 
     label {
         font-family: 'Alfa Slab One', sans-serif;

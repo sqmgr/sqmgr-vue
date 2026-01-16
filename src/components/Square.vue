@@ -154,7 +154,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables';
+    @use '../variables' as *;
 
     .annotation-icon {
         color:     $primary;

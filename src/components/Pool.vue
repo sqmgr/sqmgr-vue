@@ -467,7 +467,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables.scss';
+    @use '../variables.scss' as *;
 
     button.icon span {
         display: none;

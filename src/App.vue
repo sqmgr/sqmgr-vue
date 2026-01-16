@@ -124,8 +124,9 @@ export default {
 </script>
 
 <style lang="scss">
+@use "sass:color";
+@use 'variables.scss' as *;
 @import url('https://fonts.googleapis.com/css?family=Lobster|Alfa+Slab+One|Shadows+Into+Light|Roboto:400,700');
-@import 'variables.scss';
 
 * {
     padding:    0;
@@ -477,15 +478,15 @@ a.btn:active {
     font:             1em Roboto, sans-serif;
     padding:          $minimal-spacing $standard-spacing;
     background-color: $color;
-    box-shadow:       inset 0 -2px 0 darken($color, 12%);
+    box-shadow:       inset 0 -2px 0 color.adjust($color, $lightness: -12%);
 
     &:hover {
-        background-color: lighten($color, 5%);
-        border-color:     darken($color, 15%);
+        background-color: color.adjust($color, $lightness: 5%);
+        border-color:     color.adjust($color, $lightness: -15%);
     }
 
     &:active {
-        background-color: darken($color, 5%);
+        background-color: color.adjust($color, $lightness: -5%);
     }
 
     &:disabled {

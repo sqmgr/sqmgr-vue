@@ -66,7 +66,7 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
-    @import '../variables';
+    @use '../variables' as *;
 
     @media (max-width: 800px) {
         footer {
