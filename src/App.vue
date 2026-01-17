@@ -101,9 +101,8 @@ export default {
     },
     async created() {
         try {
-            await this.$auth.getTokenSilently()
             await this.$auth.loadProfile()
-        } catch (e) {
+        } catch {
             // not logged in
         }
     },

@@ -58,6 +58,16 @@ class Auth0Service {
     }
 
     async loadProfile() {
+        // Always verify we can get a token, not just that we have cached state
+        try {
+            await this.auth0Client.getTokenSilently()
+        } catch {
+            // Token refresh failed - clear cached state and throw
+            this.isAuthenticated = false
+            this.profile = {}
+            throw new Error('not authenticated')
+        }
+
         if (this.profile && this.isAuthenticated) {
             return Promise.resolve()
         }
