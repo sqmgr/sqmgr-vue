@@ -822,6 +822,11 @@ div.notes {
     margin-bottom: var(--spacing);
     white-space:   pre-wrap;
     word-break:    break-word;
+
+    &.notes-screen {
+        border-bottom:  1px solid $border-color;
+        padding-bottom: $standard-spacing;
+    }
 }
 
 // Hide print-only notes on screen

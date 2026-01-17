@@ -35,12 +35,12 @@ limitations under the License.
                             <template #item="{ element: grid, index: i }">
                                 <div class="grid-row">
                                     <span v-if="pool.isAdmin" class="handle"><i
-                                            class="fas fa-bars"></i> <span>=</span></span>
+                                        class="fas fa-bars"></i> <span>=</span></span>
 
                                     <span class="index">{{ i + 1 }}</span>
 
                                     <router-link class="game" :to="`/pool/${token}/game/${grid.id}`">
-                                        {{grid.name}}
+                                        {{ grid.name }}
                                     </router-link>
 
                                     <div class="rollover" v-if="rollover">
@@ -54,10 +54,11 @@ limitations under the License.
 
                                     <div v-if="pool.isAdmin" class="actions">
                                         <button type="button" class="icon" @click.prevent="customizeGrid(grid)"><i
-                                                class="fas fa-cog"></i><span>Customize</span></button>
-                                        <button type="button" class="icon destructive" @click.prevent="confirmDelete(grid)">
+                                            class="fas fa-cog"></i><span>Customize</span></button>
+                                        <button type="button" class="icon destructive"
+                                                @click.prevent="confirmDelete(grid)">
                                             <span>Delete</span><i
-                                                class="fas fa-trash-alt"></i></button>
+                                            class="fas fa-trash-alt"></i></button>
                                     </div>
                                 </div>
                             </template>
@@ -94,7 +95,7 @@ limitations under the License.
                                     <div class="pool-name">
                                         {{ pool.name }} <a v-if="pool.isAdmin" class="edit" href="#"
                                                            @click.prevent="editPoolName=true"><i
-                                            class="fas fa-edit"></i>
+                                        class="fas fa-edit"></i>
                                         <span>Edit</span></a>
                                     </div>
                                 </template>
@@ -108,7 +109,7 @@ limitations under the License.
                             <td>Invite Link</td>
                             <td>
                                 <button type="button" v-if="inviteToken" @click="copyInviteLink"><i
-                                        class="fas fa-copy"></i> Copy
+                                    class="fas fa-copy"></i> Copy
                                 </button>
                             </td>
                         </tr>
@@ -154,10 +155,12 @@ limitations under the License.
                             <td>Password Required if Locked?</td>
                             <td>
                                 <label>
-                                    <input type="radio" v-model="pool.openAccessOnLock" :value="false" :disabled="!pool.passwordRequired"> Yes
+                                    <input type="radio" v-model="pool.openAccessOnLock" :value="false"
+                                           :disabled="!pool.passwordRequired"> Yes
                                 </label>
                                 <label>
-                                    <input type="radio" v-model="pool.openAccessOnLock" :value="true" :disabled="!pool.passwordRequired"> No
+                                    <input type="radio" v-model="pool.openAccessOnLock" :value="true"
+                                           :disabled="!pool.passwordRequired"> No
                                 </label>
                             </td>
                         </tr>
@@ -191,495 +194,496 @@ limitations under the License.
 </template>
 
 <script>
-    import sqmgrClient from "@/models/sqmgrClient"
-    import GridCustomize from '@/components/GridCustomize'
-    import Common from '@/common'
-    import draggable from 'vuedraggable'
-    import ModalController from "@/controllers/ModalController"
-    import toClipboard from "@/utils/toClipboard"
-    import ManageMembership from "@/components/ManageMembership"
+import sqmgrClient from "@/models/sqmgrClient"
+import GridCustomize from '@/components/GridCustomize'
+import Common from '@/common'
+import draggable from 'vuedraggable'
+import ModalController from "@/controllers/ModalController"
+import toClipboard from "@/utils/toClipboard"
+import ManageMembership from "@/components/ManageMembership"
 
-    export default {
-        name: "Pool",
-        components: {draggable},
-        props: {
-            initialPool: {
-                type: Object,
-                required: true,
-            },
-            token: {
-                type: String,
-                required: true,
-            },
+export default {
+    name: "Pool",
+    components: {draggable},
+    props: {
+        initialPool: {
+            type: Object,
+            required: true,
         },
-        data() {
-            return {
-                editPoolName: false,
-                origPoolName: null,
-                pool: this.initialPool,
-                grids: [],
-                inviteToken: null,
-                showCopiedMessage: false,
-                squares: null,
+        token: {
+            type: String,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            editPoolName: false,
+            origPoolName: null,
+            pool: this.initialPool,
+            grids: [],
+            inviteToken: null,
+            showCopiedMessage: false,
+            squares: null,
 
-                // maximum number of grids per pool
-                maxAllowed: 0,
+            // maximum number of grids per pool
+            maxAllowed: 0,
+        }
+    },
+    beforeRouteUpdate(to, from, next) {
+        next()
+    },
+    beforeMount() {
+        document.title = `${this.pool.name} - SqMGR`
+        sqmgrClient.getPoolGridsByToken(this.token)
+            .then(data => {
+                this.grids = data.grids
+                this.maxAllowed = data.maxAllowed
+            })
+            .catch(err => ModalController.showError(err))
+
+        sqmgrClient.getPoolSquares(this.token)
+            .then(squares => this.squares = squares)
+
+        if (this.pool.isAdmin) {
+            this.getInviteToken()
+        }
+    },
+    computed: {
+        claimed() {
+            const total = this.squares ? Object.values(this.squares).filter(s => s.state !== 'unclaimed').length : 0
+
+            if (this.pool.gridType === 'roll100') {
+                return total / 2
+            }
+
+            return total
+        },
+        total() {
+            const total = this.squares ? Object.values(this.squares).length : 0
+
+            if (this.pool.gridType === 'roll100') {
+                return total / 2
+            }
+
+            return total
+        },
+        isLocked() {
+            const locks = new Date(this.pool.locks)
+            return locks.getFullYear() > 1 && locks.getTime() < new Date().getTime()
+        },
+        canAddGame() {
+            return this.maxAllowed > this.grids.length
+        },
+        rollover() {
+            return this.pool.gridType === 'roll100'
+        },
+        openAccessOnLock() {
+            return this.pool.openAccessOnLock
+        },
+        passwordRequired() {
+            return this.pool.passwordRequired
+        },
+    },
+    watch: {
+        editPoolName(newVal) {
+            if (newVal) {
+                this.origPoolName = this.pool.name
+                this.$nextTick()
+                    .then(() => this.$refs.poolName.select())
             }
         },
-        beforeRouteUpdate(to, from, next) {
-            next()
+        passwordRequired(newVal) {
+            sqmgrClient.setPasswordRequiredForPool(this.token, newVal)
+                .catch(err => ModalController.showError(err))
         },
-        beforeMount() {
-            document.title = `${this.pool.name} - SqMGR`
-            sqmgrClient.getPoolGridsByToken(this.token)
-                .then(data => {
-                    this.grids = data.grids
-                    this.maxAllowed = data.maxAllowed
+        openAccessOnLock(newVal) {
+            sqmgrClient.setOpenAccessOnLockForPool(this.token, newVal)
+                .catch(err => ModalController.showError(err))
+        },
+    },
+    methods: {
+        changeJoinPassword() {
+            ModalController.show('Manage Membership', ManageMembership, {
+                    pool: this.pool,
+                },
+                {
+                    updated: () => {
+                        this.getInviteToken()
+                    },
+                })
+        },
+        getInviteToken() {
+            sqmgrClient.getPoolInviteToken(this.token)
+                .then(res => this.inviteToken = res.jwt)
+                .catch(err => ModalController.showError(err))
+        },
+        undoEditPoolName() {
+            this.pool.name = this.origPoolName
+            this.editPoolName = false
+        },
+        poolNameUpdate() {
+            if (this.pool.name === '') {
+                this.undoEditPoolName()
+                return
+            }
+
+            sqmgrClient.renamePool(this.pool.token, this.pool.name)
+                .then(() => {
+                    this.editPoolName = false
+                })
+                .catch(err => ModalController.showError(err))
+        },
+        poolNameKeyDown(event) {
+            if (event.key === 'Escape') {
+                this.undoEditPoolName()
+            }
+        },
+        async copyInviteLink(event) {
+            const url = this.pool.passwordRequired ? `${window.location.origin}/pool/${this.token}/join#${this.inviteToken}` : `${window.location.origin}/pool/${this.token}`
+            toClipboard(url)
+
+            this.showCopiedMessage = true
+
+            await this.$nextTick()
+            const rect = event.target.getBoundingClientRect()
+            this.$refs.copied.style.position = 'absolute'
+            this.$refs.copied.style.top = `${rect.bottom + window.scrollY}px`
+            this.$refs.copied.style.left = `${rect.x + window.scrollX}px`
+
+            setTimeout(() => this.showCopiedMessage = false, 1000)
+        },
+        createGrid() {
+            ModalController.show('Customize Grid', GridCustomize, {
+                token: this.token,
+                pool: this.pool,
+            }, {
+                'saved': grid => {
+                    ModalController.hide()
+                    this.grids.push(grid)
+                },
+            })
+        },
+        customizeGrid(grid) {
+            sqmgrClient.getPoolGridByTokenAndGridId(this.token, grid.id)
+                .then(grid => {
+                    ModalController.show('Customize Grid', GridCustomize, {
+                        grid,
+                        token: this.token,
+                        pool: this.pool,
+                    }, {
+                        'saved': grid => {
+                            ModalController.hide()
+                            let index = -1
+                            for (let i = 0; i < this.grids.length; i++) {
+                                if (this.grids[i].id === grid.id) {
+                                    index = i
+                                }
+                            }
+
+                            if (index >= 0) {
+                                this.grids.splice(index, 1, grid)
+                            }
+                        },
+                    })
+
+                })
+        },
+        confirmDelete(grid) {
+            ModalController.showPrompt('Are you sure?', `Do you really want to delete "${grid.name}"`, {
+                actionButton: 'Delete It',
+                action: () => {
+                    sqmgrClient.deletePoolGridByTokenAndGridId(this.token, grid.id)
+                        .then(() => {
+                            const index = this.grids.indexOf(grid)
+                            if (index >= 0) {
+                                this.grids.splice(index, 1)
+                            }
+                            ModalController.hide()
+                        })
+                        .catch(err => ModalController.showError(err))
+                },
+            })
+
+            return false
+        },
+        ymd(eventDate) {
+            const d = Common.NewDateWithoutTimezone(eventDate)
+            if (d.getFullYear() <= 1) {
+                return ''
+            }
+
+            return d.toLocaleDateString(Common.DateOptions)
+        },
+        date(date, includeTime) {
+            const d = new Date(date)
+            if (d.getFullYear() <= 1) {
+                return ''
+            }
+
+            return includeTime ? d.toLocaleString(Common.DateTimeOptions) : d.toLocaleDateString(Common.DateTimeOptions)
+        },
+        unlockSquares() {
+            const promptOpts = {
+                actionButton: "Unlock Squares",
+                action: () => {
+                    ModalController.hide()
+
+                    sqmgrClient.unlockPool(this.token)
+                        .then(pool => this.pool = pool)
+                        .catch(err => ModalController.showError(err))
+                },
+            }
+
+            ModalController.showPrompt("Unlock the squares?", "Are you sure you want to open the squares back up again for users to claim?", promptOpts)
+        },
+        lockSquares() {
+            sqmgrClient.getPoolSquares(this.token)
+                .then(squares => {
+                    this.squares = squares
+                    const promptOpts = {
+                        actionButton: "Lock Squares",
+                        action: () => {
+                            ModalController.hide()
+
+                            sqmgrClient.lockPool(this.token)
+                                .then(pool => this.pool = pool)
+                                .catch(err => ModalController.showError(err))
+                        },
+                    }
+
+                    const unclaimedSquares = Object.values(squares).filter(s => s.state === 'unclaimed')
+                    if (unclaimedSquares.length > 0) {
+                        promptOpts.warning = "There are still unclaimed squares."
+                    }
+
+                    ModalController.showPrompt("Lock the squares?", "Are you sure you want to lock the squares? Users will no longer be allowed to claim any open squares.", promptOpts)
                 })
                 .catch(err => ModalController.showError(err))
 
-            sqmgrClient.getPoolSquares(this.token)
-                .then(squares => this.squares = squares)
-
-            if (this.pool.isAdmin) {
-                this.getInviteToken()
-            }
         },
-        computed: {
-            claimed() {
-                const total = this.squares ? Object.values(this.squares).filter(s => s.state !== 'unclaimed').length : 0
-
-                if (this.pool.gridType === 'roll100') {
-                    return total / 2
-                }
-
-                return total
-            },
-            total() {
-                const total = this.squares ? Object.values(this.squares).length : 0
-
-                if (this.pool.gridType === 'roll100') {
-                    return total / 2
-                }
-
-                return total
-            },
-            isLocked() {
-                const locks = new Date(this.pool.locks)
-                return locks.getFullYear() > 1 && locks.getTime() < new Date().getTime()
-            },
-            canAddGame() {
-                return this.maxAllowed > this.grids.length
-            },
-            rollover() {
-                return this.pool.gridType === 'roll100'
-            },
-            openAccessOnLock() {
-                return this.pool.openAccessOnLock
-            },
-            passwordRequired() {
-                return this.pool.passwordRequired
-            }
+        change() {
+            sqmgrClient.reorderGrids(this.token, this.grids.map(g => g.id))
+                .catch(err => ModalController.showError(err))
         },
-        watch: {
-            editPoolName(newVal) {
-                if (newVal) {
-                    this.origPoolName = this.pool.name
-                    this.$nextTick()
-                        .then(() => this.$refs.poolName.select())
-                }
-            },
-            passwordRequired(newVal) {
-                sqmgrClient.setPasswordRequiredForPool(this.token, newVal)
-                    .catch(err => ModalController.showError(err))
-            },
-            openAccessOnLock(newVal) {
-                sqmgrClient.setOpenAccessOnLockForPool(this.token, newVal)
-                    .catch(err => ModalController.showError(err))
-            },
-        },
-        methods: {
-            changeJoinPassword() {
-                ModalController.show('Manage Membership', ManageMembership, {
-                        pool: this.pool,
-                    },
-                    {
-                        updated: () => {
-                            this.getInviteToken()
-                        },
-                    })
-            },
-            getInviteToken() {
-                sqmgrClient.getPoolInviteToken(this.token)
-                    .then(res => this.inviteToken = res.jwt)
-                    .catch(err => ModalController.showError(err))
-            },
-            undoEditPoolName() {
-                this.pool.name = this.origPoolName
-                this.editPoolName = false
-            },
-            poolNameUpdate() {
-                if (this.pool.name === '') {
-                    this.undoEditPoolName()
-                    return
-                }
-
-                sqmgrClient.renamePool(this.pool.token, this.pool.name)
-                    .then(() => {
-                        this.editPoolName = false
-                    })
-                    .catch(err => ModalController.showError(err))
-            },
-            poolNameKeyDown(event) {
-                if (event.key === 'Escape') {
-                    this.undoEditPoolName()
-                }
-            },
-            async copyInviteLink(event) {
-                const url = this.pool.passwordRequired ? `${window.location.origin}/pool/${this.token}/join#${this.inviteToken}` : `${window.location.origin}/pool/${this.token}`
-                toClipboard(url)
-
-                this.showCopiedMessage = true
-
-                await this.$nextTick()
-                const rect = event.target.getBoundingClientRect()
-                this.$refs.copied.style.position = 'absolute'
-                this.$refs.copied.style.top = `${rect.bottom + window.scrollY}px`
-                this.$refs.copied.style.left = `${rect.x + window.scrollX}px`
-
-                setTimeout(() => this.showCopiedMessage = false, 1000)
-            },
-            createGrid() {
-                ModalController.show('Customize Grid', GridCustomize, {
-                    token: this.token,
-                    pool: this.pool,
-                }, {
-                    'saved': grid => {
-                        ModalController.hide()
-                        this.grids.push(grid)
-                    },
-                })
-            },
-            customizeGrid(grid) {
-                sqmgrClient.getPoolGridByTokenAndGridId(this.token, grid.id)
-                    .then(grid => {
-                        ModalController.show('Customize Grid', GridCustomize, {
-                            grid,
-                            token: this.token,
-                            pool: this.pool,
-                        }, {
-                            'saved': grid => {
-                                ModalController.hide()
-                                let index = -1
-                                for (let i = 0; i < this.grids.length; i++) {
-                                    if (this.grids[i].id === grid.id) {
-                                        index = i
-                                    }
-                                }
-
-                                if (index >= 0) {
-                                    this.grids.splice(index, 1, grid)
-                                }
-                            },
-                        })
-
-                    })
-            },
-            confirmDelete(grid) {
-                ModalController.showPrompt('Are you sure?', `Do you really want to delete "${grid.name}"`, {
-                    actionButton: 'Delete It',
-                    action: () => {
-                        sqmgrClient.deletePoolGridByTokenAndGridId(this.token, grid.id)
-                            .then(() => {
-                                const index = this.grids.indexOf(grid)
-                                if (index >= 0) {
-                                    this.grids.splice(index, 1)
-                                }
-                                ModalController.hide()
-                            })
-                            .catch(err => ModalController.showError(err))
-                    },
-                })
-
-                return false
-            },
-            ymd(eventDate) {
-                const d = Common.NewDateWithoutTimezone(eventDate)
-                if (d.getFullYear() <= 1) {
-                    return ''
-                }
-
-                return d.toLocaleDateString(Common.DateOptions)
-            },
-            date(date, includeTime) {
-                const d = new Date(date)
-                if (d.getFullYear() <= 1) {
-                    return ''
-                }
-
-                return includeTime ? d.toLocaleString(Common.DateTimeOptions) : d.toLocaleDateString(Common.DateTimeOptions)
-            },
-            unlockSquares() {
-                const promptOpts = {
-                    actionButton: "Unlock Squares",
-                    action: () => {
-                        ModalController.hide()
-
-                        sqmgrClient.unlockPool(this.token)
-                            .then(pool => this.pool = pool)
-                            .catch(err => ModalController.showError(err))
-                    },
-                }
-
-                ModalController.showPrompt("Unlock the squares?", "Are you sure you want to open the squares back up again for users to claim?", promptOpts)
-            },
-            lockSquares() {
-                sqmgrClient.getPoolSquares(this.token)
-                    .then(squares => {
-                        this.squares = squares
-                        const promptOpts = {
-                            actionButton: "Lock Squares",
-                            action: () => {
-                                ModalController.hide()
-
-                                sqmgrClient.lockPool(this.token)
-                                    .then(pool => this.pool = pool)
-                                    .catch(err => ModalController.showError(err))
-                            },
-                        }
-
-                        const unclaimedSquares = Object.values(squares).filter(s => s.state === 'unclaimed')
-                        if (unclaimedSquares.length > 0) {
-                            promptOpts.warning = "There are still unclaimed squares."
-                        }
-
-                        ModalController.showPrompt("Lock the squares?", "Are you sure you want to lock the squares? Users will no longer be allowed to claim any open squares.", promptOpts)
-                    })
-                    .catch(err => ModalController.showError(err))
-
-            },
-            change() {
-                sqmgrClient.reorderGrids(this.token, this.grids.map(g => g.id))
-                    .catch(err => ModalController.showError(err))
-            },
-        },
-    }
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    @use '../variables.scss' as *;
+@use '../variables.scss' as *;
 
-    button.icon span {
+button.icon span {
+    display: none;
+}
+
+.handle {
+    color:  #aaa;
+    cursor: move;
+
+    span {
         display: none;
     }
+}
 
-    .handle {
-        color:  #aaa;
-        cursor: move;
+table, div.grids {
+    margin-bottom: $standard-spacing;
+}
 
-        span {
-            display: none;
+div.grid-row {
+    align-items:           center;
+    display:               grid;
+    /* handle | game |date */
+    grid-template-columns: 30px 1fr 100px;
+    grid-gap:              calc(2 * #{ $minimal-spacing });
+    padding:               calc(2 * #{ $minimal-spacing });
+
+    div.rollover {
+        text-align: center;
+    }
+
+    &:not(.header) {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    &:nth-child(odd) {
+        background-color: var(--light-gray);
+    }
+
+    &.header {
+        font-weight:      bold;
+        background-color: var(--midnight-gray);
+        color:            #fff;
+
+        & > div {
+            justify-self: stretch;
+        }
+
+        div.game {
+            grid-column: 1 / span 2;
         }
     }
 
-    table, div.grids {
-        margin-bottom: $standard-spacing;
+    span.unknown {
+        color: var(--gray);
     }
+}
 
+.admin {
     div.grid-row {
-        align-items:           center;
-        display:               grid;
-        /* handle | game |date */
-        grid-template-columns: 30px 1fr 100px;
-        grid-gap:              calc(2 * #{ $minimal-spacing });
-        padding:               calc(2 * #{ $minimal-spacing });
+        /* Handle | Number | Game | Date | Buttons */
+        grid-template-columns: 40px 30px 1fr 100px 130px;
 
-        div.rollover {
-            text-align: center;
+        & > :first-child {
+            justify-self: center;
         }
 
-        &:not(.header) {
-            border-bottom: 1px solid var(--border-color);
-        }
+        div.actions {
+            text-align: right;
 
-        &:nth-child(odd) {
-            background-color: var(--light-gray);
+            button {
+                margin-left: var(--minimal-spacing);
+
+                &:first-child {
+                    margin: 0;
+                }
+            }
         }
 
         &.header {
-            font-weight:      bold;
-            background-color: var(--midnight-gray);
-            color:            #fff;
-
             & > div {
                 justify-self: stretch;
             }
 
             div.game {
-                grid-column: 1 / span 2;
+                grid-column: 2 / span 2;
             }
         }
 
-        span.unknown {
-            color: var(--gray);
-        }
-    }
-
-    .admin {
-        div.grid-row {
-            /* Handle | Number | Game | Date | Buttons */
-            grid-template-columns: 40px 30px 1fr 100px 130px;
-
-            & > :first-child {
-                justify-self: center;
-            }
-
-            div.actions {
-                text-align: right;
-
-                button {
-                    margin-left: var(--minimal-spacing);
-
-                    &:first-child {
-                        margin: 0;
-                    }
-                }
-            }
+        @media(max-width: 600px) {
+            display:  block;
+            position: relative;
 
             &.header {
-                & > div {
-                    justify-self: stretch;
+                & > * {
+                    display: none;
                 }
 
-                div.game {
-                    grid-column: 2 / span 2;
+                & > div.game {
+                    display: block;
                 }
             }
 
-            @media(max-width: 600px) {
-                display:  block;
-                position: relative;
+            & > .index {
+                margin-left:  var(--spacing);
+                margin-right: $minimal-spacing;
+            }
 
-                &.header {
-                    & > * {
-                        display: none;
-                    }
+            & > .index {
+                text-align: left;
+            }
 
-                    & > div.game {
-                        display: block;
-                    }
-                }
+            & > .event-date {
+                text-align: right;
+            }
 
-                & > .index {
-                    margin-left: var(--spacing);
-                }
+            & > .rollover {
+                position: absolute;
+                bottom:   var(--minimal-spacing);
+                left:     var(--minimal-spacing);
+            }
 
-                & > .index {
-                    text-align: left;
-                }
-
-                & > .event-date {
-                    text-align: right;
-                }
-
-                & > .rollover {
-                    position: absolute;
-                    bottom:   var(--minimal-spacing);
-                    left:     var(--minimal-spacing);
-                }
-
-                & > .actions {
-                    margin-top: var(--spacing);
-                }
+            & > .actions {
+                margin-top: var(--spacing);
             }
         }
     }
+}
 
-    table.pool-settings {
-        width: 100%;
+table.pool-settings {
+    width: 100%;
 
-        td:first-child {
-            width: 105px;
-        }
+    td:first-child {
+        width: 105px;
     }
+}
 
-    div.copied {
-        background-color: $primary;
-        color:            #fff;
+div.copied {
+    background-color: $primary;
+    color:            #fff;
+    padding:          $minimal-spacing;
+}
+
+.copied-enter-active, .copied-leave-active {
+    transition: all 0.5s;
+}
+
+.copied-enter, .copied-leave-to {
+    opacity: 0;
+}
+
+.copied-enter {
+    transform: translateY(-1em);
+}
+
+a.edit {
+    margin-left: $minimal-spacing;
+
+    span {
+        display: none;
+    }
+}
+
+form.standalone {
+    position: relative;
+
+    div.buttons {
         padding:          $minimal-spacing;
-    }
+        box-shadow:       0 1px 2px rgba(black, 0.4);
+        background-color: #fff;
+        border-radius:    0 0 3px 3px;
+        text-align:       right;
+        position:         absolute;
+        right:            3px;
 
-    .copied-enter-active, .copied-leave-active {
-        transition: all 0.5s;
-    }
+        button {
+            margin-left: $minimal-spacing;
 
-    .copied-enter, .copied-leave-to {
-        opacity: 0;
-    }
-
-    .copied-enter {
-        transform: translateY(-1em);
-    }
-
-    a.edit {
-        margin-left: $minimal-spacing;
-
-        span {
-            display: none;
-        }
-    }
-
-    form.standalone {
-        position: relative;
-
-        div.buttons {
-            padding:          $minimal-spacing;
-            box-shadow:       0 1px 2px rgba(black, 0.4);
-            background-color: #fff;
-            border-radius:    0 0 3px 3px;
-            text-align:       right;
-            position:         absolute;
-            right:            3px;
-
-            button {
-                margin-left: $minimal-spacing;
-
-                &:first-child {
-                    margin-left: 0;
-                }
+            &:first-child {
+                margin-left: 0;
             }
         }
     }
+}
 
-    div.pool-name {
-        padding: $minimal-spacing 0;
-        border:  1px solid transparent;
+div.pool-name {
+    padding: $minimal-spacing 0;
+    border:  1px solid transparent;
+}
+
+input.pool-name {
+    margin-left: calc(-1 * #{$minimal-spacing});
+    width:       calc(100% + #{$minimal-spacing});
+}
+
+span.index {
+    text-align: right;
+
+    &::after {
+        content: '.';
+    }
+}
+
+section.rollover {
+    div.grid-row {
+        /* number | game | rollover | date */
+        grid-template-columns: 30px 1fr 100px 100px;
     }
 
-    input.pool-name {
-        margin-left: calc(-1 * #{$minimal-spacing});
-        width:       calc(100% + #{$minimal-spacing});
-    }
-
-    span.index {
-        text-align: right;
-
-        &::after {
-            content: '.';
-        }
-    }
-
-    section.rollover {
+    &.admin {
         div.grid-row {
-            /* number | game | rollover | date */
-            grid-template-columns: 30px 1fr 100px 100px;
-        }
-
-        &.admin {
-            div.grid-row {
-                /* Handle | Number | Game | Rollover | Date | Buttons */
-                grid-template-columns: 40px 30px 1fr 100px 100px 130px;
-            }
+            /* Handle | Number | Game | Rollover | Date | Buttons */
+            grid-template-columns: 40px 30px 1fr 100px 100px 130px;
         }
     }
+}
 </style>
