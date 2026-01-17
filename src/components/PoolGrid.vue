@@ -92,7 +92,8 @@ limitations under the License.
                         <p class="expand-grid">
                             <a v-if="expandedGrid" href="#" @click.prevent="expandedGrid = false"><i
                                 class="fas fa-compress-arrows-alt"></i> Shrink</a>
-                            <a v-else href="#" @click.prevent="expandedGrid = true"><i class="fas fa-expand-arrows-alt"></i>
+                            <a v-else href="#" @click.prevent="expandedGrid = true"><i
+                                class="fas fa-expand-arrows-alt"></i>
                                 Expand</a>
                         </p>
                     </aside>
