@@ -316,8 +316,12 @@ class sqmgrClient {
     }
 
     // Admin methods
-    async getAdminStats() {
-        return this.request('/admin/stats')
+    async getAdminStats(period = 'all') {
+        const query = {}
+        if (period && period !== 'all') {
+            query.period = period
+        }
+        return this.request('/admin/stats', Object.keys(query).length > 0 ? query : null)
     }
 
     async getAdminPools(search = '', offset = 0, limit = 25) {
