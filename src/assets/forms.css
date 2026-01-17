@@ -20,6 +20,7 @@ form {
     border: 1px solid var(--border-color);
     background-color: var(--light-gray);
     padding: var(--spacing);
+    border-radius: 8px;
 }
 
 form.standalone {
@@ -38,6 +39,7 @@ fieldset > p {
 
 p.note {
     font-size: 0.8em;
+    color: var(--dark-gray);
 }
 
 legend {
@@ -47,11 +49,14 @@ legend {
     border-bottom: 1px solid var(--border-color);
     margin-bottom: var(--spacing);
     width: 100%;
+    padding-bottom: var(--minimal-spacing);
 }
 
 label {
     display: block;
-    margin-bottom: var(--minimal-spacing);
+    margin-bottom: calc(var(--minimal-spacing) * 1.5);
+    font-weight: 500;
+    color: #333;
 }
 
 label.optional::after {
@@ -59,31 +64,54 @@ label.optional::after {
     color: var(--gray);
     font-style: italic;
     font-size: 0.8em;
+    font-weight: normal;
 }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
     width: auto;
+    min-height: auto;
 }
 
 input[type="radio"] + label {
     display: inline-block;
     margin-left: 5px;
+    font-weight: normal;
 }
 
 input,
 select,
 textarea {
-    border-radius: 3px;
+    border-radius: 6px;
     border: 1px solid var(--border-color);
     font: 1em var(--font), sans-serif;
-    padding: var(--minimal-spacing);
+    padding: calc(var(--minimal-spacing) * 2.5);
     width: 100%;
+    min-height: 44px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    background-color: #fff;
 }
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--gray);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+    outline: none;
+}
+
 input[type="password"] + input[type="password"] {
     margin-top: var(--minimal-spacing);
 }
 textarea {
-    min-height: 80px;
+    min-height: 100px;
+    resize: vertical;
 }
 div.field::after {
     content: '';
@@ -91,7 +119,8 @@ div.field::after {
     clear: both;
 }
 input::placeholder {
-    color: var(--border-color);
+    color: var(--gray);
+    font-style: italic;
 }
 
 div.field {

@@ -36,15 +36,25 @@ limitations under the License.
     @use '../variables.scss' as *;
 
     div.warning-box {
-        background-color: var(--warning);
-        padding:          var(--minimal-spacing);
+        background:       linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+        padding:          calc(var(--spacing) * 0.75);
         margin-bottom:    var(--spacing);
+        border-left:      4px solid #e6a700;
+        border-radius:    0 8px 8px 0;
+        box-shadow:       0 2px 8px rgba(0, 0, 0, 0.08);
 
         p {
             margin: 0;
+            color: #856404;
+            line-height: 1.5;
 
             i {
-                margin-right: $minimal-spacing;
+                margin-right: calc($minimal-spacing * 2);
+                color: #e6a700;
+            }
+
+            strong {
+                color: #664d03;
             }
         }
     }

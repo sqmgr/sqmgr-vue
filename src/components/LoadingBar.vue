@@ -84,9 +84,12 @@ limitations under the License.
         position:         fixed;
         top:              0;
         left:             0;
-        background-color: $primary;
-        height:           2px;
+        background:       linear-gradient(90deg, $primary, color.adjust($primary, $lightness: 15%), $primary);
+        background-size:  200% 100%;
+        animation:        loading-shimmer 1.5s ease-in-out infinite;
+        height:           3px;
         width:            50%;
+        box-shadow:       0 0 10px color.adjust($primary, $alpha: -0.3), 0 0 5px color.adjust($primary, $alpha: -0.5);
 
         &::after {
             position:   absolute;
@@ -94,10 +97,16 @@ limitations under the License.
             right:      0;
             content:    '';
             display:    block;
-            width:      20px;
-            height:     2px;
-            background: linear-gradient(to right, $primary, color.adjust($primary, $lightness: 20%));
+            width:      30px;
+            height:     3px;
+            background: linear-gradient(to right, transparent, color.adjust($primary, $lightness: 30%));
+            box-shadow: 0 0 15px color.adjust($primary, $lightness: 20%);
         }
+    }
+
+    @keyframes loading-shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
     }
 
     div.loading-enter-active, div.loading-leave-active {
@@ -105,6 +114,6 @@ limitations under the License.
     }
 
     div.loading-enter-active, div.loading-leave-to {
-        transform: translateY(-2px);
+        transform: translateY(-3px);
     }
 </style>

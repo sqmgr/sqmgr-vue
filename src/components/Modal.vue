@@ -92,22 +92,28 @@ limitations under the License.
 
 <style scoped lang="scss">
     div.modal-enter-active {
-        animation: modal 0.2s ease-out;
+        animation: modal 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    div.modal-leave-active {
+        animation: modal 0.15s ease-in reverse;
     }
 
     @keyframes modal {
         0% {
             opacity: 0;
-            margin-top: -50px;
+            transform: translate(-50%, -50%) scale(0.9);
         }
         100% {
             opacity: 1;
-            margin-top: 0;
+            transform: translate(-50%, -50%) scale(1);
         }
     }
 
     div.cover {
-        background-color: rgba(0, 0, 0, 0.75);
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         position: fixed;
         top: 0;
         left: 0;
@@ -119,43 +125,56 @@ limitations under the License.
     div.modal {
         z-index: 100;
         background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 3px;
+        border: none;
+        border-radius: 16px;
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
         min-width: 90vw;
+        overflow: hidden;
 
         @media (min-width: 600px) {
             min-width: 400px;
+            max-width: 90vw;
         }
 
         h2 {
-            background-color: #f3f3f3;
-            font-size: 24px;
-            border-bottom: 1px solid #ddd;
-            line-height: 44px;
-            padding-left: 20px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f4 100%);
+            font-size: 1.25em;
+            border-bottom: 1px solid #e0e0e0;
+            line-height: 52px;
+            padding-left: 24px;
             margin-bottom: 0;
+            font-weight: 600;
 
             &.error {
-                background-color: #f44336;
+                background: linear-gradient(180deg, #f44336 0%, #d32f2f 100%);
                 border-bottom-color: #b71c1c;
                 color: #fff;
             }
         }
 
         a.close {
-            color: rgba(0, 0, 0, 0.25);
+            color: rgba(0, 0, 0, 0.4);
             text-decoration: none;
-            font-weight: bold;
-            font-size: 30px;
-            line-height: 40px;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 52px;
             position: absolute;
-            top: 3px;
-            right: 14px;
+            top: 0;
+            right: 16px;
+            width: 40px;
+            height: 52px;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 150ms ease;
+
+            &:hover {
+                color: rgba(0, 0, 0, 0.7);
+                background-color: rgba(0, 0, 0, 0.05);
+            }
 
             span {
                 display: none;
@@ -164,12 +183,12 @@ limitations under the License.
 
         div.content {
             overflow: auto;
-            padding: 20px 20px 0;
+            padding: 24px 24px 0;
             max-width: 95vw;
-            max-height: calc(75vh - 46px);
+            max-height: calc(80vh - 52px);
 
             & > *:last-child {
-                margin-bottom: 20px;
+                margin-bottom: 24px;
             }
         }
     }

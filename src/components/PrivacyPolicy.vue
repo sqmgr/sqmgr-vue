@@ -19,7 +19,7 @@ limitations under the License.
         <h1>Privacy Policy</h1>
 
 
-        <p>Effective date: August 06, 2019</p>
+        <p>Effective date: January 16, 2026</p>
 
 
         <p>SqMGR ("us", "we", or "our") operates the https://sqmgr.com website (hereinafter referred to as the "Service").</p>

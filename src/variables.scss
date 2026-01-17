@@ -1,10 +1,32 @@
+// Color System
 $border-color:     #ccc;
 $dark-gray:        #888;
 $gray:             #bbb;
 $light-gray:       #eee;
 $minimal-spacing:  4px;
 $primary:          #4caf50;
+$primary-light:    #81c784;
+$primary-dark:     #388e3c;
+$primary-50:       rgba(76, 175, 80, 0.05);
+$primary-100:      rgba(76, 175, 80, 0.1);
 $red:              #f44336;
 $standard-spacing: 20px;
 $text-color:       #272727;
+$text-secondary:   #666;
 $yellow:           #fdd835;
+
+// Surface colors for depth
+$surface-elevated: #fff;
+$surface-sunken:   #f8f9fa;
+
+// 8-point spacing system
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  20px;
+$space-6:  24px;
+$space-8:  32px;
+$space-10: 40px;
+$space-12: 48px;
+$space-16: 64px;

@@ -15,16 +15,44 @@ limitations under the License.
 */
 
 <template>
-    <div class="loading-indicator"><span></span></div>
+    <div class="loading-wrapper">
+        <div class="loading-indicator"><span></span></div>
+        <p v-if="text" class="loading-text">{{ text }}</p>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "LoadingIndicator"
+        name: "LoadingIndicator",
+        props: {
+            text: {
+                type: String,
+                default: ''
+            }
+        }
     }
 </script>
 
 <style scoped lang="scss">
+    div.loading-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    p.loading-text {
+        color: var(--dark-gray);
+        font-size: 0.9em;
+        margin: 0;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+    }
+
     div.loading-indicator {
         $size: 40px;
         animation:        spin 2.4s ease-in-out infinite, reveal .4s ease-in-out;

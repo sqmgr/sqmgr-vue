@@ -634,12 +634,13 @@ div.square {
     border:          1px solid var(--grid-gray);
     display:         flex;
     font-family:     'Roboto Condensed', sans-serif;
-    font-size:       14px;
+    font-size:       clamp(10px, 1.5vw, 14px);
     align-items:     center;
     justify-content: center;
     position:        relative;
     overflow:        hidden;
     padding:         2px;
+    transition:      transform 100ms ease, box-shadow 100ms ease;
 
     i.owned {
         color:     $yellow;
@@ -651,16 +652,28 @@ div.square {
 
     &:hover {
         border-color:        #000;
-        box-shadow:          2px 2px 2px -2px #000;
+        box-shadow:          0 4px 12px rgba(0, 0, 0, 0.15);
         cursor:              pointer;
         user-select:         none;
         -webkit-user-select: none;
         -ms-user-select:     none;
         -moz-user-select:    none;
+        transform:           scale(1.02);
+        z-index:             10;
     }
 
     &.unclaimed:hover {
         border-color: var(--success);
+        box-shadow:   0 4px 12px rgba(33, 150, 243, 0.25);
+    }
+
+    &.unclaimed {
+        animation: subtle-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes subtle-pulse {
+        0%, 100% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f7f7f7 5px, #f7f7f7 10px); }
+        50% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f0f7f0 5px, #f0f7f0 10px); }
     }
 
     &.paid-full::after {
@@ -705,12 +718,9 @@ div.square {
         color:            var(--gray);
     }
 
-    &.unclaimed {
-        background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f7f7f7 5px, #f7f7f7 10px);
-    }
-
     &.unclaimed.held {
         border-color: var(--primary);
+        animation: none;
     }
 
     &.highlighted {

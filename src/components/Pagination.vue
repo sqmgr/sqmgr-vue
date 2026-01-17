@@ -172,6 +172,11 @@ limitations under the License.
         list-style: none;
         margin: 0;
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
     }
     nav.pagination p.showing {
         color: var(--gray);
@@ -181,35 +186,54 @@ limitations under the License.
     }
     nav.pagination a {
         color: #000;
-        display: inline-block;
-        padding: 2px var(--minimal-spacing);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: all 150ms ease;
+    }
+    nav.pagination a:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        text-decoration: none;
     }
     nav.pagination span.current {
-        display: inline-block;
-        padding: 2px var(--minimal-spacing);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
     }
     nav.pagination li {
         display: inline-block;
-    }
-    nav.pagination li {
-        margin-right: var(--minimal-spacing);
     }
     nav.pagination li.prev span.current,
     nav.pagination li.next span.current {
-        color: var(--light-gray);
+        color: var(--gray);
     }
     nav.pagination li.page span.current {
         background-color: var(--primary);
         color: #fff;
-        border-radius: 3px;
-    }
-    nav.pagination li:last-child {
-        margin-right: 0;
+        border-radius: 8px;
     }
     nav.pagination li.prev a span,
     nav.pagination li.next a span,
     nav.pagination li.prev span.current span,
     nav.pagination li.next span.current span {
         display: none;
+    }
+
+    @media (max-width: 600px) {
+        nav.pagination ul {
+            gap: 2px;
+        }
+        nav.pagination a,
+        nav.pagination span.current {
+            min-width: 40px;
+            padding: 8px;
+        }
     }
 </style>

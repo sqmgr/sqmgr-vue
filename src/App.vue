@@ -59,7 +59,11 @@ limitations under the License.
         </header>
         <main>
             <div class="content">
-                <router-view/>
+                <router-view v-slot="{ Component }">
+                    <transition name="page" mode="out-in">
+                        <component :is="Component" />
+                    </transition>
+                </router-view>
             </div>
         </main>
         <footer>
@@ -131,8 +135,24 @@ export default {
 * {
     padding:    0;
     margin:     0;
-    outline:    none;
     box-sizing: border-box;
+}
+
+/* Accessibility: Focus-visible styles for keyboard navigation */
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a.btn:focus-visible {
+    outline: 2px solid var(--primary-darkest);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);
 }
 
 :root {
@@ -149,10 +169,24 @@ export default {
     --hr-color:        #eee;
     --font:            'Roboto';
     --primary:         #4caf50;
+    --primary-light:   #81c784;
     --primary-darker:  #43a047;
     --primary-darkest: #1b5e20;
     --success:         #2196f3;
     --warning:         #ffc107;
+
+    /* Shadow System */
+    --shadow-xs:       0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md:       0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg:       0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl:       0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-primary:  0 4px 14px rgba(76, 175, 80, 0.4);
+
+    /* Transition */
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
 }
 
 html, body {
@@ -427,7 +461,25 @@ p.generated-by {
         margin:    var(--spacing) 0;
     }
 
+    footer nav {
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
 
+        li {
+            margin-left: 0;
+        }
+
+        a {
+            display: inline-block;
+            padding: 8px 12px;
+            min-height: 44px;
+            line-height: 28px;
+        }
+    }
 }
 
 a.btn {
@@ -473,32 +525,51 @@ a.btn:active {
 
 @mixin sqmgrButton($color) {
     border:           1px solid transparent;
-    border-radius:    3px;
+    border-radius:    6px;
     color:            #fff;
     font:             1em Roboto, sans-serif;
-    padding:          $minimal-spacing $standard-spacing;
-    background-color: $color;
-    box-shadow:       inset 0 -2px 0 color.adjust($color, $lightness: -12%);
+    padding:          $minimal-spacing * 2 $standard-spacing;
+    background:       linear-gradient(180deg, $color 0%, color.adjust($color, $lightness: -5%) 100%);
+    box-shadow:       0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    cursor:           pointer;
+    transition:       all var(--transition-fast);
+    min-height:       40px;
 
     &:hover {
-        background-color: color.adjust($color, $lightness: 5%);
-        border-color:     color.adjust($color, $lightness: -15%);
+        background:   linear-gradient(180deg, color.adjust($color, $lightness: 5%) 0%, $color 100%);
+        transform:    translateY(-1px);
+        box-shadow:   0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
     &:active {
-        background-color: color.adjust($color, $lightness: -5%);
+        transform:    translateY(0);
+        background:   color.adjust($color, $lightness: -5%);
+        box-shadow:   0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     &:disabled {
-        opacity:          0.2;
-        background-color: $color;
-        border-color:     transparent;
+        opacity:          0.5;
+        background:       $color;
+        cursor:           not-allowed;
+        transform:        none;
         box-shadow:       none;
     }
 }
 
 button {
     @include sqmgrButton($primary);
+
+    &.sm {
+        padding: $minimal-spacing $minimal-spacing * 3;
+        font-size: 0.875em;
+        min-height: 32px;
+    }
+
+    &.lg {
+        padding: $minimal-spacing * 3 $standard-spacing * 1.5;
+        font-size: 1.125em;
+        min-height: 48px;
+    }
 
     &.small {
         box-shadow: none;
@@ -510,16 +581,38 @@ button.destructive {
 }
 
 button.secondary {
-    background-color: transparent;
+    background:       transparent;
     color:            $primary;
     box-shadow:       none;
+    border:           1px solid color.adjust($primary, $alpha: -0.5);
 
     &:hover {
-        border-color: $primary;
+        border-color:     $primary;
+        background:       rgba($primary, 0.05);
+        transform:        translateY(-1px);
     }
 
     &:active {
-        background: linear-gradient(transparent, rgba(#000, 0.05));
+        background:   rgba($primary, 0.1);
+        transform:    translateY(0);
     }
+}
+
+/* Page transition animations */
+.page-enter-active {
+    transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.page-leave-active {
+    transition: opacity 150ms ease;
+}
+
+.page-enter-from {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.page-leave-to {
+    opacity: 0;
 }
 </style>

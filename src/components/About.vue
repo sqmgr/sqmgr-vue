@@ -67,7 +67,7 @@ section.about {
     h1 {
         font-size: 2.5em;
         color: $primary;
-        margin-bottom: $standard-spacing / 2;
+        margin-bottom: calc($standard-spacing / 2);
     }
 
     .lead {
@@ -118,7 +118,7 @@ section.about {
         margin-left: 0;
 
         li {
-            margin-bottom: $standard-spacing / 2;
+            margin-bottom: calc($standard-spacing / 2);
         }
     }
 }
