@@ -20,111 +20,112 @@ limitations under the License.
             <div class="print-layout">
                 <h1 class="pool-name">Squares Pool - {{ pool.name }}</h1>
 
-            <h2>{{ grid.name }}</h2>
+                <h2>{{ grid.name }}</h2>
 
-            <p v-if="hasEventDate" class="event-date">{{ eventDate }}</p>
+                <p v-if="hasEventDate" class="event-date">{{ eventDate }}</p>
 
-            <template v-if="isAdmin">
-                <nav class="admin-menu">
-                    <h3>Admin Menu</h3>
+                <template v-if="isAdmin">
+                    <nav class="admin-menu">
+                        <h3>Admin Menu</h3>
 
-                    <button type="button" @click.prevent="customizeWasClicked">Customize</button>
+                        <button type="button" @click.prevent="customizeWasClicked">Customize</button>
 
-                    <template v-if="!numbersAreDrawn">
-                        <button type="button" @click.prevent="randomlyDrawNumbersWasClicked">Randomly Draw Numbers
-                        </button>
-                        <button type="button" @click.prevent="manuallyDrawNumbersWasClicked">Manually Draw Numbers
-                        </button>
-                    </template>
-                </nav>
-            </template>
+                        <template v-if="!numbersAreDrawn">
+                            <button type="button" @click.prevent="randomlyDrawNumbersWasClicked">Randomly Draw Numbers
+                            </button>
+                            <button type="button" @click.prevent="manuallyDrawNumbersWasClicked">Manually Draw Numbers
+                            </button>
+                        </template>
+                    </nav>
+                </template>
 
-            <template v-if="grid.settings.notes">
-                <div class="notes">{{ grid.settings.notes }}</div>
-            </template>
+                <!-- Notes for print only (outside grid-layout for proper ordering) -->
+                <div v-if="grid.settings.notes" class="notes notes-print">{{ grid.settings.notes }}</div>
 
-            <div class="grid-metadata">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ pool.token }}</td>
-                    </tr>
-                    <tr>
-                        <td>Pool Name</td>
-                        <td>
-                            <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Event</td>
-                        <td>{{ grid.name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Date of Game</td>
-                        <td>{{ eventDate }}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ pool.gridType }}</td>
-                    </tr>
-                    <tr>
-                        <td>State</td>
-                        <td v-if="isLocked"><i class="fas fa-lock"></i> Squares are locked</td>
-                        <td v-else><i class="fas fa-lock-open"></i> Squares are open</td>
-                    </tr>
-                    <tr>
-                        <td>Draw Type</td>
-                        <td>
-                            <span v-if="!grid.homeNumbers && !grid.awayNumbers">TBD</span>
-                            <span v-else-if="grid.manualDraw">Manual Input</span>
-                            <span v-else>Random</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div class="grid-layout">
+                    <aside class="grid-sidebar">
+                        <!-- Notes for screen only -->
+                        <div v-if="grid.settings.notes" class="notes notes-screen">{{ grid.settings.notes }}</div>
 
-            <p class="expand-grid">
-                <a v-if="expandedGrid" href="#" @click.prevent="expandedGrid = false"><i
-                    class="fas fa-compress-arrows-alt"></i> Shrink</a>
-                <a v-else href="#" @click.prevent="expandedGrid = true"><i class="fas fa-expand-arrows-alt"></i> Expand</a>
-            </p>
+                        <div class="grid-metadata">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>{{ pool.token }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pool Name</td>
+                                    <td>
+                                        <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Event</td>
+                                    <td>{{ grid.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Game</td>
+                                    <td>{{ eventDate }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>{{ pool.gridType }}</td>
+                                </tr>
+                                <tr>
+                                    <td>State</td>
+                                    <td v-if="isLocked"><i class="fas fa-lock"></i> Squares are locked</td>
+                                    <td v-else><i class="fas fa-lock-open"></i> Squares are open</td>
+                                </tr>
+                                <tr>
+                                    <td>Draw Type</td>
+                                    <td>
+                                        <span v-if="!grid.homeNumbers && !grid.awayNumbers">TBD</span>
+                                        <span v-else-if="grid.manualDraw">Manual Input</span>
+                                        <span v-else>Random</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-            <div class="squares-container">
-                <div ref="squares" :class="{ squares: true, [gridType]: true, 'expanded-grid': expandedGrid }">
-                    <div class="spacer">&nbsp;</div>
+                        <p class="expand-grid">
+                            <a v-if="expandedGrid" href="#" @click.prevent="expandedGrid = false"><i
+                                class="fas fa-compress-arrows-alt"></i> Shrink</a>
+                            <a v-else href="#" @click.prevent="expandedGrid = true"><i class="fas fa-expand-arrows-alt"></i>
+                                Expand</a>
+                        </p>
+                    </aside>
 
-                    <div data-team="home" class="team home-team"><span>{{ grid.homeTeamName }}</span></div>
-                    <div data-team="home" v-for="n in 10" :key="`home-${n}`"
-                         :class="`score home-score home-score-${n-1}`">
-                        {{
-                            score('home',
-                                n - 1)
-                        }}
+                    <div class="squares-container">
+                        <div ref="squares" :class="{ squares: true, [gridType]: true, 'expanded-grid': expandedGrid }">
+                            <div class="spacer">&nbsp;</div>
+
+                            <div data-team="home" class="team home-team"><span>{{ grid.homeTeamName }}</span></div>
+                            <div data-team="home" v-for="n in 10" :key="`home-${n}`"
+                                 :class="`score home-score home-score-${n-1}`">
+                                {{ score('home', n - 1) }}
+                            </div>
+
+                            <div data-team="away" class="team away-team"><span>{{ grid.awayTeamName }}</span></div>
+                            <div data-team="away" v-for="n in 10" :key="`away-${n}`"
+                                 :class="`score away-score away-score-${n-1}`">
+                                {{ score('away', n - 1) }}
+                            </div>
+
+                            <template v-for="n in numSquares" :key="n">
+                                <Square
+                                    :grid-id="gridIdNum"
+                                    :pool-config="poolConfig"
+                                    :sq-id="n"
+                                    :square-data="squares[n] || {}"
+                                    :annotation="annotationBySquareId(n)"
+                                    :is-expanded="expandedGrid"
+                                />
+                            </template>
+                        </div>
                     </div>
-
-                    <div data-team="away" class="team away-team"><span>{{ grid.awayTeamName }}</span></div>
-                    <div data-team="away" v-for="n in 10" :key="`away-${n}`"
-                         :class="`score away-score away-score-${n-1}`">
-                        {{
-                            score('away',
-                                n - 1)
-                        }}
-                    </div>
-
-                    <template v-for="n in numSquares" :key="n">
-                        <Square
-                                :grid-id="gridIdNum"
-                                :pool-config="poolConfig"
-                                :sq-id="n"
-                                :square-data="squares[n] || {}"
-                                :annotation="annotationBySquareId(n)"
-                                :is-expanded="expandedGrid"
-                        />
-                    </template>
                 </div>
-            </div>
             </div>
 
             <template v-if="isAdmin">
@@ -519,6 +520,40 @@ p.customize {
     margin-top: calc(-1 * var(--spacing));
 }
 
+div.grid-layout {
+    display:        flex;
+    flex-direction: column;
+    gap:            var(--spacing);
+}
+
+.grid-sidebar {
+    flex-shrink: 0;
+}
+
+// Side-by-side when viewport is wide enough
+@media (min-width: calc(100vmin + $standard-spacing + 400px)) {
+    div.grid-layout {
+        flex-direction: row;
+        align-items:    flex-start;
+    }
+
+    .grid-sidebar {
+        max-width: 400px;
+        order:     2;
+    }
+
+    div.squares-container {
+        flex:      1;
+        min-width: 0;
+        order:     1;
+    }
+
+    div.squares {
+        height: min(calc(100vw - 280px - var(--spacing) * 4), 650px);
+        width:  min(calc(100vw - 280px - var(--spacing) * 4), 650px);
+    }
+}
+
 div.squares-container {
     width:    100%;
     overflow: auto;
@@ -722,7 +757,7 @@ div.square {
 
     &.unclaimed.held {
         border-color: var(--primary);
-        animation: none;
+        animation:    none;
     }
 
     &.highlighted {
@@ -788,6 +823,11 @@ div.notes {
     word-break:    break-word;
 }
 
+// Hide print-only notes on screen
+.notes-print {
+    display: none;
+}
+
 section.templates {
     display: none;
 }
@@ -829,40 +869,56 @@ p.event-date {
     }
 
     .print-layout {
-        display: flex;
+        display:        flex;
         flex-direction: column;
     }
 
+    div.grid-layout {
+        display: block;
+    }
+
+    .grid-sidebar {
+        width:     auto;
+        min-width: auto;
+    }
+
     h1 {
-        font-size: 1.0em;
-        font-weight: normal;
-        margin-bottom: 0;
+        font-size:        1.0em;
+        font-weight:      normal;
+        margin-bottom:    0;
         page-break-after: avoid;
     }
 
     h2 {
-        font-size: 1.4em;
-        margin-bottom: 0;
+        font-size:        1.4em;
+        margin-bottom:    0;
         page-break-after: avoid;
     }
 
     p.event-date {
-        display: block;
-        margin-bottom: 0;
-        font-size: 0.7em;
-        color: var(--gray);
+        display:          block;
+        margin-bottom:    0;
+        font-size:        0.7em;
+        color:            var(--gray);
         page-break-after: avoid;
     }
 
-    div.notes {
-        order: 2;
+    // Hide screen notes when printing
+    .notes-screen {
+        display: none;
+    }
+
+    // Show print notes with proper ordering
+    .notes-print {
+        display:           block;
+        order:             2;
         page-break-before: always;
-        margin-top: var(--spacing);
+        margin-top:        var(--spacing);
     }
 
     .squares-container {
-        order: 1;
-        margin-top: var(--spacing);
+        order:             1;
+        margin-top:        var(--spacing);
         page-break-inside: avoid;
     }
 
