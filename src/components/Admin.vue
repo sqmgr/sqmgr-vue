@@ -62,10 +62,11 @@ limitations under the License.
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Type</th>
-                            <th>Members</th>
-                            <th>Grids</th>
                             <th>Created</th>
+                            <th>Type</th>
+                            <th>Grids</th>
+                            <th>Members</th>
+                            <th>Claimed</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -75,10 +76,11 @@ limitations under the License.
                             <td>
                                 <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
                             </td>
-                            <td>{{ pool.gridType }}</td>
-                            <td>{{ pool.memberCount }}</td>
-                            <td>{{ pool.gridCount }}</td>
                             <td>{{ formatDate(pool.created) }}</td>
+                            <td>{{ pool.gridType }}</td>
+                            <td>{{ pool.gridCount }}</td>
+                            <td>{{ pool.memberCount }}</td>
+                            <td>{{ pool.claimedCount }}</td>
                             <td>
                                 <span :class="['status', pool.archived ? 'archived' : 'active']">
                                     {{ pool.archived ? 'Archived' : 'Active' }}
