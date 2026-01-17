@@ -36,7 +36,7 @@ limitations under the License.
             </ul>
         </nav>
 
-        <p class="version"><a href="https://github.com/sqmgr" :data-version="versionFull" :title="versionFull">{{versionShort}}</a>
+        <p class="version"><a href="https://github.com/sqmgr" :data-version="versionFull" :title="versionFull">{{versionFull}}</a>
         </p>
     </section>
 </template>
@@ -53,14 +53,6 @@ limitations under the License.
             versionFull() {
                 return this.version || 'dev'
             },
-            versionShort() {
-                const match = this.versionFull.match(/^v\d+.\d+/)
-                if (match) {
-                    return match[0]
-                }
-
-                return this.versionFull
-            }
         }
     }
 </script>

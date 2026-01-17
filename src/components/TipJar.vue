@@ -37,7 +37,7 @@ limitations under the License.
                     <p>SqMGR is a labor of love maintained by a single developer. If you enjoy using the site, please consider chipping in to help cover server costs and keep it 100% ad-free.</p>
                 </div>
                 <div class="action-area">
-                    <a href="https://venmo.com/?txn=pay&audience=public&recipients=thomaspeters&amount=5&note=Thanks%20for%20SqMGR!" class="venmo-button">
+                    <a :href="venmoLink" class="venmo-button">
                         Tip via Venmo
                     </a>
                 </div>
@@ -58,10 +58,19 @@ limitations under the License.
     </section>
 </template>
 
-<script>
-export default {
-    name: "Donate",
-}
+<script setup>
+import {ref, onMounted} from "vue"
+
+const recip = "thomaspeters"
+const amount = 5
+const note = "Thanks%20for%20SqMGR!"
+
+const venmoLink = ref(`https://venmo.com/${recip}?txn=pay&amount=${amount}&note=${note}`)
+onMounted(() => {
+    if (/Android|iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        venmoLink.value = `venmo://paycharge?txn=pay&recipients=${recip}&amount=${amount}&note=${note}`
+    }
+})
 </script>
 
 <style scoped lang="scss">
