@@ -36,10 +36,10 @@ limitations under the License.
                     <td class="actions">
                         <template v-if="canArchive">
                             <button v-if="pool.archived"
-                                    @click="unarchivePool(pool)"><i class="fas fa-trash-restore"></i> <span>Unarchive Pool</span>
+                                    @click="unarchivePool(pool)"><i class="fas fa-box-open"></i> <span>Unarchive Pool</span>
                             </button>
                             <button v-else class="destructive"
-                                    @click="archivePool(pool)"><i class="fas fa-trash"></i> <span>Archive Pool</span>
+                                    @click="archivePool(pool)"><i class="fas fa-archive"></i> <span>Archive Pool</span>
                             </button>
                         </template>
                         <button v-if="canLeave" :disabled="deletedPools[pool.token]" class="destructive"
