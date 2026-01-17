@@ -61,7 +61,7 @@ limitations under the License.
             <div class="content">
                 <router-view v-slot="{ Component }">
                     <transition name="page" mode="out-in">
-                        <component :is="Component" />
+                        <component :is="Component"/>
                     </transition>
                 </router-view>
             </div>
@@ -144,15 +144,15 @@ export default {
 }
 
 :focus-visible {
-    outline: 2px solid var(--primary);
+    outline:        2px solid var(--primary);
     outline-offset: 2px;
 }
 
 button:focus-visible,
 a.btn:focus-visible {
-    outline: 2px solid var(--primary-darkest);
+    outline:        2px solid var(--primary-darkest);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);
+    box-shadow:     0 0 0 4px rgba(76, 175, 80, 0.3);
 }
 
 :root {
@@ -229,35 +229,6 @@ footer {
     text-align:  center;
 }
 
-footer p.version {
-    margin:   0;
-    position: absolute;
-    right:    var(--spacing);
-    top:      var(--spacing);
-}
-
-footer p.version a {
-    color:           rgba(0, 0, 0, 0.3);
-    text-decoration: underline;
-}
-
-footer nav ul {
-    list-style: none;
-}
-
-footer nav li {
-    display:     inline-block;
-    margin-left: var(--spacing);
-}
-
-footer nav li:first-child {
-    margin-left: 0;
-}
-
-footer nav a {
-    color:           #fff;
-    text-decoration: none;
-}
 
 header {
     background-color: var(--midnight-gray);
@@ -460,26 +431,6 @@ p.generated-by {
         font-size: 1.8em;
         margin:    var(--spacing) 0;
     }
-
-    footer nav {
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        li {
-            margin-left: 0;
-        }
-
-        a {
-            display: inline-block;
-            padding: 8px 12px;
-            min-height: 44px;
-            line-height: 28px;
-        }
-    }
 }
 
 a.btn {
@@ -524,35 +475,35 @@ a.btn:active {
 }
 
 @mixin sqmgrButton($color) {
-    border:           1px solid transparent;
-    border-radius:    6px;
-    color:            #fff;
-    font:             1em Roboto, sans-serif;
-    padding:          $minimal-spacing * 2 $standard-spacing;
-    background:       linear-gradient(180deg, $color 0%, color.adjust($color, $lightness: -5%) 100%);
-    box-shadow:       0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    cursor:           pointer;
-    transition:       all var(--transition-fast);
-    min-height:       40px;
+    border:        1px solid transparent;
+    border-radius: 6px;
+    color:         #fff;
+    font:          1em Roboto, sans-serif;
+    padding:       $minimal-spacing * 2 $standard-spacing;
+    background:    linear-gradient(180deg, $color 0%, color.adjust($color, $lightness: -5%) 100%);
+    box-shadow:    0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    cursor:        pointer;
+    transition:    all var(--transition-fast);
+    min-height:    40px;
 
     &:hover {
-        background:   linear-gradient(180deg, color.adjust($color, $lightness: 5%) 0%, $color 100%);
-        transform:    translateY(-1px);
-        box-shadow:   0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        background: linear-gradient(180deg, color.adjust($color, $lightness: 5%) 0%, $color 100%);
+        transform:  translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
     &:active {
-        transform:    translateY(0);
-        background:   color.adjust($color, $lightness: -5%);
-        box-shadow:   0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        transform:  translateY(0);
+        background: color.adjust($color, $lightness: -5%);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     &:disabled {
-        opacity:          0.5;
-        background:       $color;
-        cursor:           not-allowed;
-        transform:        none;
-        box-shadow:       none;
+        opacity:    0.5;
+        background: $color;
+        cursor:     not-allowed;
+        transform:  none;
+        box-shadow: none;
     }
 }
 
@@ -560,14 +511,14 @@ button {
     @include sqmgrButton($primary);
 
     &.sm {
-        padding: $minimal-spacing $minimal-spacing * 3;
-        font-size: 0.875em;
+        padding:    $minimal-spacing $minimal-spacing * 3;
+        font-size:  0.875em;
         min-height: 32px;
     }
 
     &.lg {
-        padding: $minimal-spacing * 3 $standard-spacing * 1.5;
-        font-size: 1.125em;
+        padding:    $minimal-spacing * 3 $standard-spacing * 1.5;
+        font-size:  1.125em;
         min-height: 48px;
     }
 
@@ -581,20 +532,20 @@ button.destructive {
 }
 
 button.secondary {
-    background:       transparent;
-    color:            $primary;
-    box-shadow:       none;
-    border:           1px solid color.adjust($primary, $alpha: -0.5);
+    background: transparent;
+    color:      $primary;
+    box-shadow: none;
+    border:     1px solid color.adjust($primary, $alpha: -0.5);
 
     &:hover {
-        border-color:     $primary;
-        background:       rgba($primary, 0.05);
-        transform:        translateY(-1px);
+        border-color: $primary;
+        background:   rgba($primary, 0.05);
+        transform:    translateY(-1px);
     }
 
     &:active {
-        background:   rgba($primary, 0.1);
-        transform:    translateY(0);
+        background: rgba($primary, 0.1);
+        transform:  translateY(0);
     }
 }
 
@@ -608,7 +559,7 @@ button.secondary {
 }
 
 .page-enter-from {
-    opacity: 0;
+    opacity:   0;
     transform: translateY(10px);
 }
 

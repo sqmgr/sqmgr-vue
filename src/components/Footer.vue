@@ -16,6 +16,7 @@ limitations under the License.
 
 <template>
     <section class="footer">
+        <div class="spacer"></div>
         <nav>
             <ul>
                 <li>
@@ -36,41 +37,73 @@ limitations under the License.
             </ul>
         </nav>
 
-        <p class="version"><a href="https://github.com/sqmgr" :data-version="versionFull" :title="versionFull">{{versionFull}}</a>
+        <p class="version"><a href="https://github.com/sqmgr" :data-version="versionFull"
+                              :title="versionFull">{{ versionFull }}</a>
         </p>
     </section>
 </template>
 
 <script>
-    export default {
-        name: "Footer",
-        props: {
-            version: {
-                type: String
-            }
+export default {
+    name: "Footer",
+    props: {
+        version: {
+            type: String,
         },
-        computed: {
-            versionFull() {
-                return this.version || 'dev'
-            },
-        }
-    }
+    },
+    computed: {
+        versionFull() {
+            return this.version || 'dev'
+        },
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    @use '../variables' as *;
+@use '../variables' as *;
 
-    @media (max-width: 800px) {
-        footer {
-            nav {
-                li {
-                display: block;
-                margin: 0;
-                text-align: left;
-                }
+section.footer {
+    padding-bottom: $standard-spacing;
+    display: flex;
+    justify-content: space-between;
 
-                margin-bottom: $standard-spacing;
-            }
+    nav {
+        a {
+            color:           #fff;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: $standard-spacing;
+
         }
     }
+
+    div.spacer {
+        flex: 1;
+    }
+    p.version {
+        flex: 1;
+        text-align: right;
+        a {
+            color: rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    @media (max-width: 800px) {
+        div.spacer {
+            display: none;
+        }
+
+        nav ul {
+            gap: calc($standard-spacing / 2);
+            flex-direction: column;
+            align-items: start;
+        }
+    }
+}
 </style>
