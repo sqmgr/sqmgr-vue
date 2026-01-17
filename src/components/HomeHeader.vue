@@ -17,7 +17,7 @@ limitations under the License.
 <template>
     <section class="home-header">
         <div class="hero-content">
-            <p class="credibility-badge">Trusted by Pool Managers Everywhere</p>
+            <p class="credibility-badge">Trusted by {{trustedBy}}</p>
             <h2>The <span class="highlight">Easiest Way</span> to Run Your Football Squares Pool</h2>
             <p class="subtitle">Create professional pools in minutes. Share with friends. Track results
                 automatically.</p>
@@ -32,10 +32,33 @@ limitations under the License.
     </section>
 </template>
 
-<script>
-export default {
-    name: "HomeHeader",
-}
+<script setup>
+import {onMounted, ref} from "vue"
+
+const trustedBy = ref("")
+const trustedByList = [
+    "Pool Managers Everywhere",
+    "Football Fanatics Everywhere",
+    "My Brother",
+    "All of My Friends",
+    "Gameday Coordinators Everywhere",
+    "Grid Gurus Everywhere",
+    "Stat Nerds Everywhere",
+    "Prop Bet Experts Everywhere",
+    "Tailgate Legends Everywhere",
+    "Scoreboard Watchers Everywhere",
+    "Hometown Heroes Everywhere",
+    "Bandwagon Fans Everywhere",
+    "All My Favorite Peeps",
+    "My Mom and Dad",
+    "That One Friend From High School",
+    "That One Dude on Your Street",
+    "Kim, No the Other Kim",
+    "Square Aficionados Everywhere",
+]
+onMounted(() => {
+    trustedBy.value = trustedByList[Math.floor(Math.random() * trustedByList.length)]
+})
 </script>
 
 <style lang="scss" scoped>
