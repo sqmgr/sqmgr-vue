@@ -23,6 +23,7 @@ import Home from "@/components/Home"
 import Auth0Callback from "@/components/Auth0Callback"
 import HomeHeader from "@/components/HomeHeader"
 import About from "@/components/About"
+import HowItWorks from "@/components/HowItWorks"
 import TermsOfService from "@/components/TermsOfService"
 import PrivacyPolicy from "@/components/PrivacyPolicy"
 import YourAccount from "@/components/YourAccount"
@@ -72,6 +73,7 @@ const routes = [
     },
     {path: '/callback', component: Auth0Callback},
     {path: '/about', component: About, meta: {title: 'About'}},
+    {path: '/how-it-works', component: HowItWorks, meta: {title: 'How It Works'}},
     {path: '/terms', component: TermsOfService, meta: {title: 'Terms of Service'}},
     {path: '/privacy', component: PrivacyPolicy, meta: {title: 'Privacy Policy'}},
     {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
