@@ -118,7 +118,7 @@ limitations under the License.
                     action: () => {
                         sqmgrClient.leavePool(pool.token)
                             .then(() => {
-                                this.$set(this.deletedPools, pool.token, true)
+                                this.deletedPools[pool.token] = true
                                 ModalController.hide()
                             })
                             .catch(err => ModalController.showError(err))

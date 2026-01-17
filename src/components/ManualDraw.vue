@@ -55,6 +55,7 @@ limitations under the License.
                 required: true,
             }
         },
+        emits: ['draw'],
         data() {
             return {
                 homeNumbers: {
@@ -75,7 +76,7 @@ limitations under the License.
                 ModalController.hide()
             },
             submit() {
-                this.$emit('submit', {
+                this.$emit('draw', {
                     homeNumbers: this.homeNumbers.numbers.map(n => parseInt(n, 10)),
                     awayNumbers: this.awayNumbers.numbers.map(n => parseInt(n, 10)),
                 })

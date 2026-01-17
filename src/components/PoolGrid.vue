@@ -382,7 +382,7 @@ export default {
                 allSquaresClaimed: this.checkAllSquaresClaimed(),
                 grid: this.grid,
             }, {
-                submit: nums => {
+                draw: nums => {
                     sqmgrClient.drawManualNumbers(this.token, this.grid.id, nums.homeNumbers, nums.awayNumbers)
                         .then(grid => {
                             this.grid = grid

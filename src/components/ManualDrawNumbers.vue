@@ -19,9 +19,10 @@ limitations under the License.
         <div class="numbers">
             <template v-for="(num, i) in numbers" :key="i">
                 <input :class="{ duplicate: duplicates[num] }"
-                       type="number"
-                       min="0"
-                       max="9"
+                       type="text"
+                       inputmode="numeric"
+                       pattern="[0-9]"
+                       maxlength="1"
                        v-model="numbers[i]"
                        :placeholder="`pos ${i + 1}`"/>
             </template>
@@ -38,25 +39,29 @@ limitations under the License.
     export default {
         name: "ManualDrawNumbers",
         props: {
-            value: {
+            modelValue: {
                 type: Object,
                 required: true,
             }
         },
+        emits: ['update:modelValue'],
         data() {
             return {
-                numbers: this.value.numbers,
+                numbers: [...this.modelValue.numbers],
                 missingNumbers: [],
                 duplicates: {},
             }
         },
         watch: {
-            numbers() {
-                this.validateNumbers()
-                this.$emit('input', {
-                    numbers: this.numbers,
-                    valid: this.missingNumbers.length === 0,
-                })
+            numbers: {
+                handler() {
+                    this.validateNumbers()
+                    this.$emit('update:modelValue', {
+                        numbers: this.numbers,
+                        valid: this.missingNumbers.length === 0,
+                    })
+                },
+                deep: true,
             }
         },
         mounted() {
@@ -111,7 +116,7 @@ limitations under the License.
                     if (want.get(nInt) !== undefined) {
                         want.delete(nInt)
                     } else {
-                        this.$set(this.duplicates, nInt, true)
+                        this.duplicates[nInt] = true
                     }
                 })
 
@@ -134,14 +139,8 @@ limitations under the License.
         }
     }
 
-    input[type="number"] {
+    input[type="text"] {
         text-align: center;
-
-        &::-webkit-inner-spin-button,
-        &::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin:             0;
-        }
 
         &.duplicate {
             border-color: $red;
