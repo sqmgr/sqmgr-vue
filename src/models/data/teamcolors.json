@@ -3823,6 +3823,95 @@
     "league": "NCAA"
   },
   {
+    "name": "Bellarmine University",
+    "colors": [
+      "#752936",
+      "#C8C8C8",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "East Texas A&M University",
+    "colors": [
+      "#00386C",
+      "#FFC333",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Le Moyne College",
+    "colors": [
+      "#00452A",
+      "#FCE300",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Lindenwood University",
+    "colors": [
+      "#010101",
+      "#B3A369",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Mercyhurst University",
+    "colors": [
+      "#07594D",
+      "#182752",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Queens University of Charlotte",
+    "colors": [
+      "#192C66",
+      "#857040",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Stonehill College",
+    "colors": [
+      "#2F2975",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "University of Southern Indiana",
+    "colors": [
+      "#002856",
+      "#CF102D",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "University of St. Thomas",
+    "colors": [
+      "#512773",
+      "#98999B",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "University of West Georgia",
+    "colors": [
+      "#0656A5",
+      "#DA2128",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
     "name": "Birmingham Stallions",
     "colors": [
       "#9D2235",
