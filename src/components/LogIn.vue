@@ -16,11 +16,20 @@ limitations under the License.
 
 <template>
     <section class="login">
-        <h1>Log In to SqMGR</h1>
-
-        <p>That feature requires a SqMGR account. Registration and the SqMGR site is 100% free.</p>
-
-        <p>You can create an account or log in by clicking <a href="#" @click.prevent="logIn">here</a>.</p>
+        <div class="login-card">
+            <div class="icon-container">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h1>Log In to SqMGR</h1>
+            <p class="description">
+                This feature requires a SqMGR account.
+                Registration is quick and the site is 100% free.
+            </p>
+            <button class="lg" @click="logIn">
+                Log In / Sign Up
+            </button>
+            <p class="note">No payment info required</p>
+        </div>
     </section>
 </template>
 
@@ -37,6 +46,94 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '../variables.scss' as *;
 
+section.login {
+    display:         flex;
+    justify-content: center;
+    align-items:     center;
+    min-height:      60vh;
+    padding:         $standard-spacing;
+}
+
+.login-card {
+    background:     $surface-elevated;
+    border:         1px solid $light-gray;
+    border-radius:  16px;
+    padding:        $standard-spacing * 2;
+    text-align:     center;
+    max-width:      400px;
+    width:          100%;
+    box-shadow:     0 2px 8px rgba(0, 0, 0, 0.04);
+    transition:     all 0.3s ease;
+
+    &:hover {
+        box-shadow:   0 12px 24px rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+    }
+
+    .icon-container {
+        width:           80px;
+        height:          80px;
+        background:      linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary, 0.05) 100%);
+        border-radius:   20px;
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+        margin:          0 auto $standard-spacing * 1.5;
+
+        i {
+            font-size: 2.5em;
+            color:     $primary;
+        }
+    }
+
+    h1 {
+        font-size:     1.75em;
+        margin-bottom: $standard-spacing * 0.75;
+        color:         $text-color;
+    }
+
+    .description {
+        color:         $dark-gray;
+        line-height:   1.6;
+        margin-bottom: $standard-spacing * 1.5;
+    }
+
+    button.lg {
+        width:         100%;
+        margin-bottom: $standard-spacing;
+    }
+
+    .note {
+        color:     $dark-gray;
+        font-size: 0.85em;
+        margin:    0;
+    }
+}
+
+@media (max-width: 480px) {
+    section.login {
+        min-height: 50vh;
+        padding:    $standard-spacing * 0.75;
+    }
+
+    .login-card {
+        padding: $standard-spacing * 1.5;
+
+        .icon-container {
+            width:  64px;
+            height: 64px;
+
+            i {
+                font-size: 2em;
+            }
+        }
+
+        h1 {
+            font-size: 1.5em;
+        }
+    }
+}
 </style>
