@@ -939,13 +939,12 @@ p.event-date {
     }
     div.std25.squares,
     div.std50.squares,
-    div.std100.squares {
-        width:  6.5in;
-        height: 6.5in;
-    }
+    div.std100.squares,
     div.roll100.squares {
-        width:  6.5in;
-        height: 6.5in;
+        width:        100%;
+        max-width:    6.5in;
+        height:       auto;
+        aspect-ratio: 1;
     }
 
     div.std100.squares,
