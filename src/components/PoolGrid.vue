@@ -17,7 +17,8 @@ limitations under the License.
 <template>
     <div :class="divClasses">
         <template v-if="grid">
-            <h1 class="pool-name">Squares Pool - {{ pool.name }}</h1>
+            <div class="print-layout">
+                <h1 class="pool-name">Squares Pool - {{ pool.name }}</h1>
 
             <h2>{{ grid.name }}</h2>
 
@@ -123,6 +124,7 @@ limitations under the License.
                         />
                     </template>
                 </div>
+            </div>
             </div>
 
             <template v-if="isAdmin">
@@ -822,10 +824,48 @@ p.event-date {
 }
 
 @media print {
-    h1 { font-size: 1.0em; font-weight: normal; margin-bottom: 0; }
-    h2 { font-size: 1.4em; margin-bottom: 0; }
-    p.event-date { display: block; margin-bottom: 0; font-size: 0.7em; color: var(--gray); }
-    .squares-container { margin-top: var(--spacing); }
+    html, body {
+        background-color: #fff;
+    }
+
+    .print-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 1.0em;
+        font-weight: normal;
+        margin-bottom: 0;
+        page-break-after: avoid;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        margin-bottom: 0;
+        page-break-after: avoid;
+    }
+
+    p.event-date {
+        display: block;
+        margin-bottom: 0;
+        font-size: 0.7em;
+        color: var(--gray);
+        page-break-after: avoid;
+    }
+
+    div.notes {
+        order: 2;
+        page-break-before: always;
+        margin-top: var(--spacing);
+    }
+
+    .squares-container {
+        order: 1;
+        margin-top: var(--spacing);
+        page-break-inside: avoid;
+    }
+
     header { display: none; }
     footer { display: none; }
     div.content { padding: 0; }
