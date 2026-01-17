@@ -314,6 +314,21 @@ class sqmgrClient {
 
         return this._user
     }
+
+    // Admin methods
+    async getAdminStats() {
+        return this.request('/admin/stats')
+    }
+
+    async getAdminPools(search = '', offset = 0, limit = 25) {
+        const query = { offset, limit }
+        if (search) query.search = search
+        return this.request('/admin/pools', query)
+    }
+
+    async adminJoinPool(token) {
+        return this.request(`/admin/pool/${token}/join`, null, true, { method: 'POST' })
+    }
 }
 
 export default new sqmgrClient()

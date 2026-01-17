@@ -40,6 +40,7 @@ import GuestAccount from "@/components/GuestAccount"
 import loadingBar from "@/utils/loadingBar.ts"
 import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
+import Admin from "@/components/Admin"
 import './register-service-worker'
 import './assets/forms.css'
 
@@ -86,6 +87,7 @@ const routes = [
     {path: '/pool/:token/join', component: PoolJoin, props: true},
     {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: {requirePoolMembership: true}},
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
+    {path: '/admin', component: Admin, meta: {requireAdmin: true, title: 'Admin'}},
 ]
 
 const router = createRouter({
@@ -117,6 +119,20 @@ router.beforeEach(async (to) => {
             await authService.loadProfile()
         } catch {
             return `/login?target=${encodeURIComponent(to.path)}`
+        }
+
+        return true
+    }
+
+    if (to.meta.requireAdmin) {
+        try {
+            await authService.loadProfile()
+            const user = await sqmgrClient.getUser()
+            if (!user.is_admin) {
+                return '/'
+            }
+        } catch {
+            return '/'
         }
 
         return true
