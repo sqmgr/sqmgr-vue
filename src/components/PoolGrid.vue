@@ -39,9 +39,6 @@ limitations under the License.
                     </nav>
                 </template>
 
-                <!-- Notes for print only (outside grid-layout for proper ordering) -->
-                <div v-if="grid.settings.notes" class="notes notes-print">{{ grid.settings.notes }}</div>
-
                 <div class="grid-layout">
                     <aside class="grid-sidebar">
                         <!-- Notes for screen only -->
@@ -127,6 +124,9 @@ limitations under the License.
                         </div>
                     </div>
                 </div>
+
+                <!-- Notes for print only (after grid so it appears on page 2) -->
+                <div v-if="grid.settings.notes" class="notes notes-print">{{ grid.settings.notes }}</div>
             </div>
 
             <template v-if="isAdmin">
@@ -865,13 +865,16 @@ p.event-date {
 }
 
 @media print {
+    @page {
+        margin: 0.5in;
+    }
+
     html, body {
         background-color: #fff;
     }
 
     .print-layout {
-        display:        flex;
-        flex-direction: column;
+        display: block;
     }
 
     div.grid-layout {
@@ -909,16 +912,14 @@ p.event-date {
         display: none;
     }
 
-    // Show print notes with proper ordering
+    // Show print notes on page 2
     .notes-print {
         display:           block;
-        order:             2;
         page-break-before: always;
         margin-top:        var(--spacing);
     }
 
     .squares-container {
-        order:             1;
         margin-top:        var(--spacing);
         page-break-inside: avoid;
     }
@@ -939,12 +940,12 @@ p.event-date {
     div.std25.squares,
     div.std50.squares,
     div.std100.squares {
-        width:  7in;
-        height: 7in;
+        width:  6.5in;
+        height: 6.5in;
     }
     div.roll100.squares {
-        width:  7in;
-        height: 7in;
+        width:  6.5in;
+        height: 6.5in;
     }
 
     div.std100.squares,
