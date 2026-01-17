@@ -17,7 +17,20 @@ limitations under the License.
 <template>
     <section class="home-header">
         <div class="hero-content">
-            <p class="credibility-badge">Trusted by {{trustedBy}}</p>
+            <p class="credibility-badge">
+                Trusted by
+                <span class="trusted-wrapper">
+                    <Transition
+                        name="slide-up"
+                        mode="out-in"
+                        @before-leave="onBeforeLeave"
+                        @enter="onEnter"
+                        @after-enter="onAfterEnter"
+                    >
+                        <span :key="trustedBy" class="trusted-item">{{trustedBy}}</span>
+                    </Transition>
+                </span>
+            </p>
             <h2>The <span class="highlight">Easiest Way</span> to Run Your Football Squares Pool</h2>
             <p class="subtitle">Create professional pools in minutes. Share with friends. Track results
                 automatically.</p>
@@ -33,9 +46,8 @@ limitations under the License.
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue"
+import {onMounted, onUnmounted, ref} from "vue"
 
-const trustedBy = ref("")
 const trustedByList = [
     "Pool Managers Everywhere",
     "Football Fanatics Everywhere",
@@ -51,14 +63,43 @@ const trustedByList = [
     "Bandwagon Fans Everywhere",
     "All My Favorite Peeps",
     "My Mom and Dad",
-    "That One Friend From High School",
+    "Your One Friend From High School",
     "That One Dude on Your Street",
-    "Kim, No the Other Kim",
+    "Kim, You Don't Know Her",
     "Square Aficionados Everywhere",
+    "That Actor Whose Name You Forgot",
 ]
+const trustedBy = ref(trustedByList[0])
+
+let intervalId
+
 onMounted(() => {
-    trustedBy.value = trustedByList[Math.floor(Math.random() * trustedByList.length)]
+    intervalId = setInterval(() => {
+        trustedBy.value = trustedByList[Math.floor(Math.random() * trustedByList.length)]
+    }, 5000)
 })
+
+onUnmounted(() => {
+    if (intervalId) clearInterval(intervalId)
+})
+
+const onBeforeLeave = (el) => {
+    const wrapper = el.parentElement
+    wrapper.style.width = `${el.offsetWidth}px`
+    wrapper.style.height = `${el.offsetHeight}px`
+}
+
+const onEnter = (el) => {
+    const wrapper = el.parentElement
+    wrapper.style.width = `${el.offsetWidth}px`
+    wrapper.style.height = `${el.offsetHeight}px`
+}
+
+const onAfterEnter = (el) => {
+    const wrapper = el.parentElement
+    wrapper.style.width = null
+    wrapper.style.height = null
+}
 </script>
 
 <style lang="scss" scoped>
@@ -85,6 +126,19 @@ section.home-header {
         letter-spacing:  0.5px;
         margin-bottom:   $standard-spacing;
         backdrop-filter: blur(4px);
+
+        .trusted-wrapper {
+            display:  inline-block;
+            position: relative;
+            vertical-align: bottom;
+            transition: width 0.5s ease;
+            white-space: nowrap;
+        }
+
+        .trusted-item {
+            display: inline-block;
+            white-space: nowrap;
+        }
     }
 
     h2 {
@@ -207,5 +261,20 @@ section.home-header {
             font-size: 0.8em;
         }
     }
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+    transition: all 0.5s ease;
+}
+
+.slide-up-enter-from {
+    opacity:   0;
+    transform: translateY(10px);
+}
+
+.slide-up-leave-to {
+    opacity:   0;
+    transform: translateY(-10px);
 }
 </style>
