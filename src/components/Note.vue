@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 <template>
-    <form class="add-note" @submit.prevent="$emit('submit', form.note)">
+    <form class="add-note" @submit.prevent.stop="submit">
         <div class="field">
             <label for="note">Note</label>
             <input type="text" id="note" name="note" v-model="form.note" ref="name" placeholder="Reason for change">
@@ -42,6 +42,11 @@ limitations under the License.
         },
         mounted() {
             setTimeout(() => this.$refs.name.focus(), 1)
+        },
+        methods: {
+            submit() {
+                this.$emit('save', this.form.note)
+            }
         }
     }
 </script>

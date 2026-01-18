@@ -232,7 +232,7 @@ limitations under the License.
             },
             stateDidChange() {
                 ModalController.show('Note', Note, {}, {
-                    submit: note => {
+                    save: note => {
                         sqmgrClient.setSquareState(this.poolConfig.token, this.square.squareId, this.form.state, note)
                             .then(() => {
                                 ModalController.hide()

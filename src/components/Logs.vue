@@ -72,7 +72,7 @@ limitations under the License.
         methods: {
             addNote() {
                 ModalController.show('Add Note', Note, {}, {
-                    submit: note => {
+                    save: note => {
                         if (note) {
                             sqmgrClient.updateSquare(this.poolConfig.token, this.squareId, {note})
                                 .then(() => {
