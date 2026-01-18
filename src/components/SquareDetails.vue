@@ -74,6 +74,14 @@ limitations under the License.
                     Common.DateTimeOptions)}}
                 </td>
             </tr>
+            <tr v-if="poolConfig.isAdmin && square.userInfo">
+                <td>User Type</td>
+                <td>{{ square.userInfo.userType === 'registered' ? 'Registered User' : 'Guest User' }}</td>
+            </tr>
+            <tr v-if="poolConfig.isAdmin && square.userInfo && square.userInfo.userType === 'registered'">
+                <td>Email</td>
+                <td>{{ square.userInfo.email || 'Not available' }}</td>
+            </tr>
             </tbody>
         </table>
 
