@@ -147,6 +147,7 @@ export default {
             selectedPeriod: 'all',
             periods: [
                 {value: 'all', label: 'All Time'},
+                {value: '1h', label: 'Last Hour'},
                 {value: '24h', label: 'Last 24 Hours'},
                 {value: 'week', label: 'Last Week'},
                 {value: 'month', label: 'Last Month'},
@@ -274,14 +275,14 @@ h2 {
 }
 
 .stats-container {
-    border-radius: $standard-spacing;
-    padding:       $standard-spacing;
-    display: inline-flex;
+    border-radius:  $standard-spacing;
+    padding:        $standard-spacing;
+    display:        inline-flex;
     flex-direction: column;
-    gap: $standard-spacing;
-    align-items: center;
-    box-shadow:   0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: $standard-spacing;
+    gap:            $standard-spacing;
+    align-items:    center;
+    box-shadow:     0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom:  $standard-spacing;
 
     .period-filter {
         margin-bottom: var(--spacing);
