@@ -230,7 +230,7 @@ section.home-header {
 
 @media (max-width: 600px) {
     section.home-header {
-        padding: $standard-spacing * 1.5 0;
+        padding: 0 0 $standard-spacing * 1.5;
 
         p.credibility-badge {
             font-size: 0.75em;

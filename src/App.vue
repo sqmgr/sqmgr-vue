@@ -235,19 +235,33 @@ header {
     padding:          var(--spacing) 0;
 
     & > div {
-        position: relative;
+        position:        relative;
+        display:         flex;
+        justify-content: space-between;
+        align-items:     flex-start;
     }
 
     img.logo {
-        height: 42px;
-        width:  158px;
+        display: block;
+        height:  42px;
+    }
+
+    h1 {
+        font-family: 'Alfa Slab One', sans-serif;
+        font-size:   1.6em;
+        text-shadow: 3px 3px var(--midnight-gray), 5px 5px var(--primary);
+        margin:      0;
+
+        a {
+            color: #fff;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
     }
 
     nav {
-        position: absolute;
-        top:      0;
-        right:    var(--spacing);
-
         ul {
             list-style: none;
         }
@@ -264,24 +278,10 @@ header {
         a {
             color:       #fff;
             font-weight: bold;
+            line-height: 42px;
         }
     }
 
-    h1 {
-        font-family: 'Alfa Slab One', sans-serif;
-        font-size:   1.6em;
-        text-shadow: 3px 3px var(--midnight-gray), 5px 5px var(--primary);
-        margin:      0;
-        display:     inline-block;
-
-        a {
-            color: #fff;
-
-            &:hover {
-                text-decoration: none;
-            }
-        }
-    }
 
     h2 {
         border:      none;
@@ -420,10 +420,21 @@ p.generated-by {
         margin-bottom: 0;
     }
 
-    header nav {
-        margin-top: var(--spacing);
-        position:   static;
-        text-align: center;
+    header > div {
+        flex-direction: column;
+        align-items:    center;
+        gap: $standard-spacing;
+
+        & > section {
+            order: 3;
+        }
+
+        & > nav {
+            a {
+                line-height: normal;
+            }
+        }
+
     }
 
     header h2 {
