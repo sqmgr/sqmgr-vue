@@ -16,7 +16,6 @@ limitations under the License.
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { VitePWA } from 'vite-plugin-pwa'
 import Sitemap from 'vite-plugin-sitemap'
 import { fileURLToPath, URL } from 'node:url'
 import { readFileSync } from 'node:fs'
@@ -29,14 +28,6 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    VitePWA({
-      strategies: 'injectManifest',
-      srcDir: 'src',
-      filename: 'sw.js',
-      injectManifest: {
-        maximumFileSizeToCacheInBytes: 1024 * 1024 * 5, // 5 MiB
-      },
-    }),
     Sitemap({
       hostname: 'https://sqmgr.com',
       dynamicRoutes: [

@@ -41,8 +41,14 @@ import loadingBar from "@/utils/loadingBar.ts"
 import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
 import Admin from "@/components/Admin"
-import './register-service-worker'
 import './assets/forms.css'
+
+// Unregister any existing service workers from previous versions
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(registration => registration.unregister())
+    })
+}
 
 const store = createStore({
     state() {

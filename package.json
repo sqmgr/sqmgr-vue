@@ -29,7 +29,6 @@
     "sass": "^1.83.4",
     "simple-git-hooks": "^2.13.1",
     "vite": "^7.3.1",
-    "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-sitemap": "^0.8.2",
     "vuedraggable": "^4.1.0"
   }
