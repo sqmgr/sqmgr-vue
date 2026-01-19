@@ -65,10 +65,10 @@ limitations under the License.
         <div class="grid-showcase">
             <p class="showcase-intro">See your pool come to life with a professional, easy-to-read grid</p>
             <div class="grid-image">
-                <img srcset="../assets/grid.png,
-                             ../assets/grid@2x.png 2x,
-                             ../assets/grid@3x.png 3x"
-                     src="../assets/grid.png"
+                <img srcset="/images/grid.png,
+                             /images/grid@2x.png 2x,
+                             /images/grid@3x.png 3x"
+                     src="/images/grid.png"
                      alt="Football Squares Grid Example" />
             </div>
         </div>

@@ -22,10 +22,10 @@ limitations under the License.
                     <router-link to="/">
                         <img
                             class="logo"
-                            src="./assets/logo@2x.png"
-                            srcset="./assets/logo.png,
-                                     ./assets/logo@2x.png 2x,
-                                     ./assets/logo@3x.png 3x"
+                            src="/images/logo@2x.png"
+                            srcset="/images/logo.png,
+                                     /images/logo@2x.png 2x,
+                                     /images/logo@3x.png 3x"
                             alt="SqMGR"
                         />
                     </router-link>
