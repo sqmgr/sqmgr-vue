@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 <template>
-    <section class="home-header">
-        <div class="hero-content">
-            <p class="credibility-badge">
-                Trusted by
-                <span class="trusted-wrapper">
+    <div class="content">
+        <section class="home-header">
+            <div class="hero-content">
+                <p class="credibility-badge">
+                    Trusted by
+                    <span class="trusted-wrapper">
                     <Transition
                         name="slide-up"
                         mode="out-in"
@@ -27,22 +28,23 @@ limitations under the License.
                         @enter="onEnter"
                         @after-enter="onAfterEnter"
                     >
-                        <span :key="trustedBy" class="trusted-item">{{trustedBy}}</span>
+                        <span :key="trustedBy" class="trusted-item">{{ trustedBy }}</span>
                     </Transition>
                 </span>
-            </p>
-            <h2>The <span class="highlight">Easiest Way</span> to Run Your Football Squares Pool</h2>
-            <p class="subtitle">Create professional pools in minutes. Share with friends. Track results
-                automatically.</p>
+                </p>
+                <h2>The <span class="highlight">Easiest Way</span> to Run Your Football Squares Pool</h2>
+                <p class="subtitle">Create professional pools in minutes. Share with friends. Track results
+                    automatically.</p>
 
-            <div class="cta-container">
-                <router-link class="btn cta-primary" to="/create">Create Your Pool</router-link>
-                <router-link class="btn cta-secondary" to="/how-it-works">See How It Works</router-link>
+                <div class="cta-container">
+                    <router-link class="btn cta-primary" to="/create">Create Your Pool</router-link>
+                    <router-link class="btn cta-secondary" to="/how-it-works">See How It Works</router-link>
+                </div>
+
+                <p class="social-proof">100% Free - No Hidden Fees - No Ads</p>
             </div>
-
-            <p class="social-proof">100% Free - No Hidden Fees - No Ads</p>
-        </div>
-    </section>
+        </section>
+    </div>
 </template>
 
 <script setup>
@@ -109,6 +111,7 @@ const onAfterEnter = (el) => {
 section.home-header {
     text-align: center;
     padding:    $standard-spacing * 2.5 0;
+    margin: 0 auto;
 
     .hero-content {
         max-width: 800px;
@@ -128,15 +131,15 @@ section.home-header {
         backdrop-filter: blur(4px);
 
         .trusted-wrapper {
-            display:  inline-block;
-            position: relative;
+            display:        inline-block;
+            position:       relative;
             vertical-align: bottom;
-            transition: width 0.5s ease;
-            white-space: nowrap;
+            transition:     width 0.5s ease;
+            white-space:    nowrap;
         }
 
         .trusted-item {
-            display: inline-block;
+            display:     inline-block;
             white-space: nowrap;
         }
     }
@@ -228,7 +231,7 @@ section.home-header {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     section.home-header {
         padding: 0 0 $standard-spacing * 1.5;
 

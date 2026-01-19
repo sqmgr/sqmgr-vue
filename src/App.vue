@@ -30,8 +30,6 @@ limitations under the License.
                         />
                     </router-link>
                 </h1>
-                <router-view name="header"/>
-
                 <nav>
                     <ul>
                         <li>
@@ -56,6 +54,7 @@ limitations under the License.
                     </ul>
                 </nav>
             </div>
+            <router-view name="header" />
         </header>
         <main>
             <div class="content">
@@ -424,10 +423,6 @@ p.generated-by {
         flex-direction: column;
         align-items:    center;
         gap: $standard-spacing;
-
-        & > section {
-            order: 3;
-        }
 
         & > nav {
             a {
