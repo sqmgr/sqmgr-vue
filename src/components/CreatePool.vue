@@ -62,10 +62,8 @@ limitations under the License.
                 <div class="help col-2">
                     <h2>Help</h2>
 
-                    <p>This screen will allow you to create a new squares pool. You can create many games from a single
-                        squares pool (i.e., each game for your favorite team during the regular season). Each game
-                        within a squares pool will use the same grid (e.g. users will have the same square each game)
-                        but each game can have different numbers assigned to each square.</p>
+                    <p>You can run multiple games from the same pool which is perfect for tracking a full season
+                        where participants keep the same squares across games.</p>
 
                     <p>You'll have further opportunity to customize the look &amp; feel after you create your squares
                         pool.</p>
@@ -73,15 +71,15 @@ limitations under the License.
                     <h3>Grid Configuration</h3>
 
                     <ul>
-                        <li><strong>Standard, 100 squares:</strong> A 10x10 grid. This is the most common pool.</li>
-                        <li><strong>Standard, 50 squares:</strong> A 5x10 grid where each square will be assigned two home numbers and one away number.</li>
-                        <li><strong>Standard, 25 squares:</strong> A 5x5 grid where each square will be assigned two home and two away numbers. This is great if you have fewer participants.</li>
-                        <li><strong>Rollover, 100 squares:</strong> A 10x10 grid but each participant will claim two squares, a primary square and a secondary square. You can designate certain games as a "rollover" game and the secondary squares will be empty. If the final score lands on that square, you roll the money over to the next game. This is great for pools that span many games (e.g., a full season or playoffs).</li>
+                        <li><strong>Standard, 100 squares:</strong> A 10x10 grid with 100 squares. The classic choice for most pools.</li>
+                        <li><strong>Standard, 50 squares:</strong> A 5x10 grid with 50 squares. Each square covers two possible home scores. Good for medium-sized groups.</li>
+                        <li><strong>Standard, 25 squares:</strong> A 5x5 grid with 25 squares. Each square covers multiple score combinations. Ideal for smaller groups.</li>
+                        <li><strong>Rollover, 100 squares:</strong> A 10x10 grid where each participant claims two squares: a primary and a secondary. You can designated specific games where the secondary square will be left blank which will allow the pot to "rollover" to the next game.</li>
                     </ul>
 
                     <h3>Join Password</h3>
 
-                    <p>The password will be required by people you invite before they are allowed to view the board.</p>
+                    <p>The password will be required by people you invite before they are allowed to view the board. You'll have the option to make it optional.</p>
                 </div>
             </div>
         </template>
@@ -147,3 +145,11 @@ limitations under the License.
     }
 </script>
 
+<style scoped lang="scss">
+@use '../variables.scss' as *;
+ul {
+    li {
+        margin: $standard-spacing;
+    }
+}
+</style>
