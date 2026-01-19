@@ -678,7 +678,7 @@ div.square {
     border:          1px solid var(--grid-gray);
     display:         flex;
     font-family:     'Roboto Condensed', sans-serif;
-    font-size:       clamp(10px, 1.0vw, 1.0vw);
+    font-size:       clamp(10px, 1.0vw, 20px);
     align-items:     center;
     justify-content: center;
     position:        relative;
