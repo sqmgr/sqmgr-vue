@@ -617,11 +617,17 @@ div.team {
     }
 }
 
+div.std25 div.square span.name {
+    font-size: clamp(10px, 1.8vw, 30px);
+}
+
 div.score {
     background-color: var(--grid-gray);
     display:          flex;
     align-items:      center;
     justify-content:  center;
+    font-size:        clamp(10px, 1.2vw, 1.2vw);
+    font-weight:      bold;
 
     &.home-score { grid-row-start: 2 }
 
@@ -672,7 +678,7 @@ div.square {
     border:          1px solid var(--grid-gray);
     display:         flex;
     font-family:     'Roboto Condensed', sans-serif;
-    font-size:       clamp(10px, 1.5vw, 14px);
+    font-size:       clamp(10px, 1.0vw, 1.0vw);
     align-items:     center;
     justify-content: center;
     position:        relative;
@@ -947,16 +953,9 @@ p.event-date {
     div.std100.squares,
     div.roll100.squares {
         width:        100%;
-        max-width:    6.5in;
+        max-width:    7.5in;
         height:       auto;
         aspect-ratio: 1;
-    }
-
-    div.std100.squares,
-    div.roll100.squares {
-        span.name {
-            font-size: 0.7em;
-        }
     }
 
     div.team {
@@ -969,8 +968,22 @@ p.event-date {
         }
     }
 
-    div.square::after {
-        display: none;
+    div.std25.squares div.square span.name {
+        font-size: clamp(10px, 2.5vw, 2.5vw);
+    }
+
+    div.square {
+        span.name {
+            font-size: clamp(10px, 1.5vw, 1.5vw);
+        }
+
+        span.square-id {
+            font-size: 10px;
+        }
+
+        &::after {
+            display: none;
+        }
     }
 }
 </style>
