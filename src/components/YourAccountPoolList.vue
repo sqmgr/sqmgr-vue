@@ -31,7 +31,7 @@ limitations under the License.
                     <td>
                         <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
                     </td>
-                    <td>{{ pool.gridType }}</td>
+                    <td>{{ gridType(pool.gridType) }}</td>
                     <td>{{ date(pool.created) }}</td>
                     <td class="actions">
                         <template v-if="canArchive">
@@ -124,6 +124,20 @@ limitations under the License.
                             .catch(err => ModalController.showError(err))
                     },
                 })
+            },
+            gridType(gridType) {
+                switch (gridType) {
+                    case 'std100':
+                        return 'Standard';
+                    case 'std50':
+                        return '50 Squares';
+                    case 'std25':
+                        return '25 Squares';
+                    case 'roll100':
+                        return 'Rollover';
+                }
+
+                return gridType
             }
         }
     }
