@@ -54,7 +54,7 @@ Create a `.env` file for local development or `.env.production` for production:
 
 Variable | Description | Default
 --- | --- | ---
-`VITE_API_URL` | Backend API URL | `http://localhost:5001`
+`VITE_API_URL` | Backend API URL | `http://localhost:8000`
 
 ### Auth0 Configuration
 
