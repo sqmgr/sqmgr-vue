@@ -532,7 +532,7 @@ div.grid-layout {
 }
 
 // Side-by-side when viewport is wide enough
-@media (min-width: calc(100vmin + $standard-spacing + 400px)) {
+@media (min-width: calc(100vmin + $standard-spacing + 415px)) {
     div.grid-layout {
         flex-direction: row;
         align-items:    flex-start;
@@ -550,8 +550,8 @@ div.grid-layout {
     }
 
     div.squares {
-        height: min(calc(100vw - 280px - var(--spacing) * 4), 650px);
-        width:  min(calc(100vw - 280px - var(--spacing) * 4), 650px);
+        height: min(calc(100vmin - 280px - var(--spacing) * 4), 650px);
+        width:  min(calc(100vmin - 280px - var(--spacing) * 4), 650px);
     }
 }
 
