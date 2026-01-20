@@ -62,9 +62,14 @@ class Auth0Service {
         try {
             await this.auth0Client.getTokenSilently()
         } catch {
-            // Token refresh failed - clear cached state and throw
+            // Token refresh failed - clear cached state and notify UI
             this.isAuthenticated = false
             this.profile = {}
+            this.emit('loginEvent', {
+                loggedIn: false,
+                profile: {},
+                state: null,
+            })
             throw new Error('not authenticated')
         }
 
