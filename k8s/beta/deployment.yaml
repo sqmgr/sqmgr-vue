@@ -21,7 +21,7 @@ spec:
       - name: github
       containers:
         - name: nginx
-          image: ghcr.io/sqmgr/sqmgr-vue/sqmgr-vue:latest
+          image: ghcr.io/sqmgr/sqmgr-vue:beta
           imagePullPolicy: Always
           readinessProbe:
             httpGet:
