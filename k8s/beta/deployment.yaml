@@ -22,7 +22,7 @@ spec:
       containers:
         - name: nginx
           image: ghcr.io/sqmgr/sqmgr-vue/sqmgr-vue:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           readinessProbe:
             httpGet:
               port: 80
