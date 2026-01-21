@@ -120,6 +120,5 @@ jobs:
           chmod 600 ~/.kube/config
       - name: Deploy to beta
         run: |
-          kubectl set image deployment/sqmgr-vue-beta \
-            nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:beta
+          kubectl rollout restart deployment/sqmgr-vue-beta
           kubectl rollout status deployment/sqmgr-vue-beta --timeout=300s
