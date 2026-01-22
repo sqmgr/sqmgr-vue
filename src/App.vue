@@ -54,7 +54,7 @@ limitations under the License.
                     </ul>
                 </nav>
             </div>
-            <router-view name="header" />
+            <router-view name="header"/>
         </header>
         <main>
             <div class="content">
@@ -422,7 +422,7 @@ p.generated-by {
     header > div {
         flex-direction: column;
         align-items:    center;
-        gap: $standard-spacing;
+        gap:            $standard-spacing;
 
         & > nav {
             a {
@@ -436,23 +436,6 @@ p.generated-by {
         font-size: 1.8em;
         margin:    var(--spacing) 0;
     }
-}
-
-a.btn {
-    border-radius:    8px;
-    background-color: var(--primary);
-    color:            #fff;
-    display:          inline-block;
-    padding:          calc(var(--minimal-spacing) + 3px);
-}
-
-a.btn:hover {
-    background:      var(--primary) linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-    text-decoration: none;
-}
-
-a.btn:active {
-    background: var(--primary-darker);
 }
 
 @keyframes spin {
@@ -492,9 +475,10 @@ a.btn:active {
     min-height:    40px;
 
     &:hover {
-        background: linear-gradient(180deg, color.adjust($color, $lightness: 5%) 0%, $color 100%);
-        transform:  translateY(-1px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        background:      linear-gradient(180deg, color.adjust($color, $lightness: 5%) 0%, $color 100%);
+        transform:       translateY(-1px);
+        box-shadow:      0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        text-decoration: none;
     }
 
     &:active {
@@ -512,7 +496,7 @@ a.btn:active {
     }
 }
 
-button {
+button, .btn {
     @include sqmgrButton($primary);
 
     &.sm {

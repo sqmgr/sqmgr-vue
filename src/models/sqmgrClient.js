@@ -315,6 +315,10 @@ class sqmgrClient {
         return this._user
     }
 
+    async getUserStats() {
+        return this.request(`/user/self/stats`)
+    }
+
     // Admin methods
     async getAdminStats(period = 'all') {
         const query = {}
