@@ -37,23 +37,23 @@ limitations under the License.
 
                 <div class="stats" v-if="stats">
                     <div class="stat-card">
-                        <span class="stat-value">{{ stats.totalPools }}</span>
+                        <span class="stat-value">{{ formatNumber(stats.totalPools) }}</span>
                         <span class="stat-label">Total Pools</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-value">{{ stats.activePools }}</span>
+                        <span class="stat-value">{{ formatNumber(stats.activePools) }}</span>
                         <span class="stat-label">Active Pools</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-value">{{ stats.archivedPools }}</span>
+                        <span class="stat-value">{{ formatNumber(stats.archivedPools) }}</span>
                         <span class="stat-label">Archived Pools</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-value">{{ stats.totalUsers }}</span>
+                        <span class="stat-value">{{ formatNumber(stats.totalUsers) }}</span>
                         <span class="stat-label">Users</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-value">{{ stats.guestUsers }}</span>
+                        <span class="stat-value">{{ formatNumber(stats.guestUsers) }}</span>
                         <span class="stat-label">Guest Users</span>
                     </div>
                 </div>
@@ -95,9 +95,9 @@ limitations under the License.
                         </td>
                         <td>{{ formatDate(pool.created) }}</td>
                         <td>{{ pool.gridType }}</td>
-                        <td>{{ pool.gridCount }}</td>
-                        <td>{{ pool.memberCount }}</td>
-                        <td>{{ pool.claimedCount }}</td>
+                        <td>{{ formatNumber(pool.gridCount) }}</td>
+                        <td>{{ formatNumber(pool.memberCount) }}</td>
+                        <td>{{ formatNumber(pool.claimedCount) }}</td>
                         <td>
                                 <span :class="['status', pool.archived ? 'archived' : 'active']">
                                     {{ pool.archived ? 'Archived' : 'Active' }}
@@ -246,6 +246,11 @@ export default {
         formatDate(dateStr) {
             const date = new Date(dateStr)
             return date.toLocaleDateString()
+        },
+
+        formatNumber(num) {
+            if (num === undefined || num === null) return '0'
+            return num.toLocaleString()
         },
 
         getErrorMessage(err) {
