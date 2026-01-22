@@ -91,6 +91,8 @@ limitations under the License.
 </script>
 
 <style scoped lang="scss">
+    @use '../variables.scss' as *;
+
     div.modal-enter-active {
         animation: modal 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -124,9 +126,9 @@ limitations under the License.
 
     div.modal {
         z-index: 100;
-        background-color: #fff;
+        background-color: $surface-elevated;
         border: none;
-        border-radius: 16px;
+        border-radius: $radius-2xl;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -168,7 +170,7 @@ limitations under the License.
             width: 40px;
             height: 52px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: $radius-lg;
             transition: all 150ms ease;
 
             &:hover {

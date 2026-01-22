@@ -40,8 +40,8 @@ limitations under the License.
         padding:          calc(var(--spacing) * 0.75);
         margin-bottom:    var(--spacing);
         border-left:      4px solid #e6a700;
-        border-radius:    0 8px 8px 0;
-        box-shadow:       0 2px 8px rgba(0, 0, 0, 0.08);
+        border-radius:    0 $radius-lg $radius-lg 0;
+        box-shadow:       $shadow-card;
 
         p {
             margin: 0;

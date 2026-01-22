@@ -559,7 +559,7 @@ div.grid-row {
             }
         }
 
-        @media(max-width: 600px) {
+        @include mobile {
             display:  block;
             position: relative;
 

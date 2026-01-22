@@ -94,7 +94,7 @@ section.footer {
         }
     }
 
-    @media (max-width: 800px) {
+    @include tablet {
         div.spacer {
             display: none;
         }

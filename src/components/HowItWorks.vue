@@ -97,10 +97,10 @@ section.how-it-works {
 }
 
 .card {
-    background: #fff;
+    background: $surface-elevated;
     padding: $standard-spacing * 1.5;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: $radius-lg;
+    box-shadow: $shadow-card;
     transition: transform 0.2s ease;
     border: 1px solid $light-gray;
     position: relative;
@@ -172,7 +172,7 @@ section.how-it-works {
     }
 }
 
-@media (max-width: 600px) {
+@include mobile {
     .intro {
         h1 {
             font-size: 2em;

@@ -230,7 +230,7 @@ section.home-header {
     }
 }
 
-@media (max-width: 800px) {
+@include tablet {
     section.home-header {
         padding: $standard-spacing 0 $standard-spacing * 1.5;
 

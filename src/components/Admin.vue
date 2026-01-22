@@ -280,18 +280,18 @@ h2 {
 }
 
 .stats-container {
-    border-radius:  $standard-spacing;
+    border-radius:  $radius-lg;
     padding:        $standard-spacing;
     display:        inline-flex;
     flex-direction: column;
     gap:            $standard-spacing;
     align-items:    center;
-    box-shadow:     0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow:     $shadow-card;
     margin-bottom:  $standard-spacing;
 
     .period-filter {
         margin-bottom: var(--spacing);
-        background:    #fff;
+        background:    $surface-elevated;
 
         .label {
             font-weight:    600;
@@ -312,7 +312,7 @@ h2 {
         .period-btn {
             background:    transparent;
             border:        1px solid #e0e0e0;
-            border-radius: 6px;
+            border-radius: $radius-md;
             padding:       6px 14px;
             font-size:     0.9rem;
             color:         #666;
@@ -344,9 +344,9 @@ h2 {
 }
 
 .stat-card {
-    background:     #f8f9fa;
-    border:         1px solid #e0e0e0;
-    border-radius:  8px;
+    background:     $surface-sunken;
+    border:         1px solid $light-gray;
+    border-radius:  $radius-lg;
     padding:        var(--spacing);
     min-width:      120px;
     text-align:     center;
@@ -409,18 +409,18 @@ h2 {
 .status {
     display:       inline-block;
     padding:       4px 8px;
-    border-radius: 4px;
+    border-radius: $radius-sm;
     font-size:     0.85em;
     font-weight:   500;
 
     &.active {
-        background: #d4edda;
-        color:      #155724;
+        background: $alert-success-bg;
+        color:      $alert-success-text;
     }
 
     &.archived {
-        background: #f8d7da;
-        color:      #721c24;
+        background: $alert-error-bg;
+        color:      $alert-error-text;
     }
 }
 
@@ -435,12 +435,10 @@ button.small {
 }
 
 .error {
-    color:         #721c24;
-    background:    #f8d7da;
-    border-radius: 8px;
+    @include alert-error;
 }
 
-@media (max-width: 800px) {
+@include tablet {
     .pools-table {
         display:    block;
         overflow-x: auto;

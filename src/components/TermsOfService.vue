@@ -105,15 +105,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use '../variables.scss' as *;
+
 .terms-of-service {
     padding: var(--spacing) 0;
 }
 
 .card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--border-color);
+    background: $surface-elevated;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-card;
+    border: 1px solid $border-color;
 }
 
 .tos-content {
@@ -180,7 +182,7 @@ export default {
     }
 }
 
-@media (max-width: 600px) {
+@include mobile {
     .tos-content {
         padding: var(--spacing);
 

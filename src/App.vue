@@ -185,6 +185,22 @@ a.btn:focus-visible {
     --transition-fast: 150ms ease;
     --transition-base: 200ms ease;
     --transition-slow: 300ms ease;
+
+    /* Border Radius */
+    --radius-sm:  4px;
+    --radius-md:  6px;
+    --radius-lg:  8px;
+    --radius-xl:  12px;
+    --radius-2xl: 16px;
+
+    /* Alert Colors */
+    --alert-error-bg:     #f8d7da;
+    --alert-error-text:   #721c24;
+    --alert-success-bg:   #d4edda;
+    --alert-success-text: #155724;
+
+    /* Card Shadow */
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 html, body {
@@ -408,7 +424,7 @@ p.generated-by {
     color:     var(--gray);
 }
 
-@media (max-width: 800px) {
+@include tablet {
     div.columns {
         display: block;
     }

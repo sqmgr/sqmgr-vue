@@ -218,7 +218,7 @@ limitations under the License.
     .pool-card {
         background: $surface-sunken;
         border: 1px solid $light-gray;
-        border-radius: 8px;
+        border-radius: $radius-lg;
         padding: $space-3 $space-4;
         display: flex;
         flex-direction: row;
@@ -228,7 +228,7 @@ limitations under the License.
         transition: box-shadow 0.2s, opacity 0.2s;
 
         &:hover {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: $shadow-card;
         }
 
         &.deleted {
@@ -386,7 +386,7 @@ limitations under the License.
     }
 
     // Responsive: stack on mobile
-    @media (max-width: 540px) {
+    @media (max-width: $breakpoint-sm) {
         .pool-card {
             flex-direction: column;
             align-items: flex-start;

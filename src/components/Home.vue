@@ -115,13 +115,13 @@ limitations under the License.
     }
 
     .feature-card {
-        background:     #fff;
-        border:         1px solid #eee;
-        border-radius:  16px;
+        background:     $surface-elevated;
+        border:         1px solid $light-gray;
+        border-radius:  $radius-2xl;
         padding:        $standard-spacing * 1.5;
         text-align:     center;
         transition:     all 0.3s ease;
-        box-shadow:     0 2px 8px rgba(0, 0, 0, 0.04);
+        box-shadow:     $shadow-card;
 
         &:hover {
             transform:  translateY(-8px);
@@ -133,7 +133,7 @@ limitations under the License.
             width:            64px;
             height:           64px;
             background:       linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary, 0.05) 100%);
-            border-radius:    16px;
+            border-radius:    $radius-2xl;
             display:          flex;
             align-items:      center;
             justify-content:  center;
@@ -201,7 +201,7 @@ limitations under the License.
                 width:         800px;
                 transform:     rotateX(8deg) rotateY(-3deg) rotateZ(1deg);
                 box-shadow:    0 25px 50px rgba(0, 0, 0, 0.15);
-                border-radius: 12px;
+                border-radius: $radius-xl;
                 border:        8px solid white;
                 transition:    all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
@@ -234,7 +234,7 @@ limitations under the License.
                     width:         100%;
                     box-shadow:    0 10px 30px rgba(0, 0, 0, 0.12);
                     border-width:  4px;
-                    border-radius: 8px;
+                    border-radius: $radius-lg;
 
                     &:hover {
                         transform: scale(1.01);

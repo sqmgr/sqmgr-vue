@@ -30,3 +30,57 @@ $space-8:  32px;
 $space-10: 40px;
 $space-12: 48px;
 $space-16: 64px;
+
+// Border Radius
+$radius-sm:   4px;
+$radius-md:   6px;
+$radius-lg:   8px;
+$radius-xl:   12px;
+$radius-2xl:  16px;
+$radius-full: 9999px;
+
+// Alert Colors
+$alert-error-bg:     #f8d7da;
+$alert-error-text:   #721c24;
+$alert-success-bg:   #d4edda;
+$alert-success-text: #155724;
+
+// Shadows (SCSS versions matching CSS vars)
+$shadow-card:   0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-button: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// Breakpoints
+$breakpoint-sm: 540px;
+$breakpoint-md: 600px;
+$breakpoint-lg: 800px;
+
+// Utility Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin card-base($radius: $radius-lg) {
+  background: $surface-elevated;
+  border: 1px solid $light-gray;
+  border-radius: $radius;
+  box-shadow: $shadow-card;
+}
+
+@mixin alert-error {
+  background: $alert-error-bg;
+  color: $alert-error-text;
+  padding: $space-4;
+  border-radius: $radius-lg;
+}
+
+@mixin alert-success {
+  background: $alert-success-bg;
+  color: $alert-success-text;
+  padding: $space-4;
+  border-radius: $radius-lg;
+}
+
+@mixin mobile { @media (max-width: $breakpoint-md) { @content; } }
+@mixin tablet { @media (max-width: $breakpoint-lg) { @content; } }

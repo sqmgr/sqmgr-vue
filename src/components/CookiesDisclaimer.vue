@@ -65,7 +65,7 @@ limitations under the License.
         max-width:        400px;
         bottom:           $standard-spacing;
         right:            $standard-spacing;
-        border-radius:    8px;
+        border-radius:    $radius-lg;
         border-left:      4px solid $primary;
 
         @media(max-width: 400px + ( $standard-spacing * 2 )) {

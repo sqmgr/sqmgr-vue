@@ -470,7 +470,7 @@ nav.admin-menu {
             margin-right: 0;
         }
 
-        @media(max-width: 800px) {
+        @media (max-width: 800px) { // tablet breakpoint
             display:       block;
             margin-bottom: var(--minimal-spacing);
 
@@ -561,7 +561,7 @@ div.squares-container {
 }
 
 div.squares {
-    background-color:      #fff;
+    background-color:      $surface-elevated;
     display:               grid;
     grid-gap:              2px;
     margin:                0 auto;
@@ -860,7 +860,7 @@ p.add-note {
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 800px) { // tablet breakpoint
     div#grid-container {
         overflow: auto;
         width:    100%;

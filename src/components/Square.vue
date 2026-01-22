@@ -174,7 +174,7 @@ limitations under the License.
         text-align-last: center;
     }
 
-    @media (max-width: 600px) {
+    @include mobile {
         div.square:not(.expanded) {
             font-size: 0.6em;
 

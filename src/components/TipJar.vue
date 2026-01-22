@@ -112,14 +112,14 @@ onMounted(() => {
     }
 
     .card {
-        background: #fff;
-        border-radius: 12px;
+        background: $surface-elevated;
+        border-radius: $radius-xl;
         padding: 32px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--light-gray);
+        box-shadow: $shadow-card;
+        border: 1px solid $light-gray;
         transition: transform 0.2s ease;
 
         &:hover {
@@ -146,7 +146,7 @@ onMounted(() => {
         align-items: flex-start;
         gap: 24px;
 
-        @media (max-width: 600px) {
+        @include mobile {
             flex-direction: column;
             text-align: center;
             align-items: center;
@@ -174,7 +174,7 @@ onMounted(() => {
         background-color: #3d95ce;
         color: white;
         padding: 12px 24px;
-        border-radius: 8px;
+        border-radius: $radius-lg;
         font-weight: 700;
         text-decoration: none;
         transition: background-color 0.2s;

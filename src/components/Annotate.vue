@@ -107,13 +107,13 @@ limitations under the License.
         text-align:            center;
 
         label {
-            background-color: white;
+            background-color: $surface-elevated;
             border:           1px solid $border-color;
             padding:          $minimal-spacing;
             margin:           0;
 
             i {
-                background-color: #fff;
+                background-color: $surface-elevated;
                 color:            $primary;
                 display:          block;
             }

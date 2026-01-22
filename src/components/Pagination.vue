@@ -192,7 +192,7 @@ limitations under the License.
         min-width: 44px;
         min-height: 44px;
         padding: 8px 12px;
-        border-radius: 8px;
+        border-radius: var(--radius-lg);
         transition: all 150ms ease;
     }
     nav.pagination a:hover {
@@ -217,7 +217,7 @@ limitations under the License.
     nav.pagination li.page span.current {
         background-color: var(--primary);
         color: #fff;
-        border-radius: 8px;
+        border-radius: var(--radius-lg);
     }
     nav.pagination li.prev a span,
     nav.pagination li.next a span,
@@ -226,7 +226,7 @@ limitations under the License.
         display: none;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 600px) { /* mobile breakpoint */
         nav.pagination ul {
             gap: 2px;
         }

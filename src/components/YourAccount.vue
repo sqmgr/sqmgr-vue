@@ -243,8 +243,8 @@ limitations under the License.
         gap: $space-6;
         background: $surface-elevated;
         padding: $space-6;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border-radius: $radius-xl;
+        box-shadow: $shadow-card;
         margin-bottom: $space-6;
     }
 
@@ -302,7 +302,7 @@ limitations under the License.
     .stat-card {
         background: $surface-elevated;
         border: 1px solid $light-gray;
-        border-radius: 8px;
+        border-radius: $radius-lg;
         padding: $space-5;
         text-align: center;
         display: flex;
@@ -330,9 +330,9 @@ limitations under the License.
 
     .pool-column {
         background: $surface-elevated;
-        border-radius: 12px;
+        border-radius: $radius-xl;
         padding: $space-5;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        box-shadow: $shadow-card;
     }
 
     .pool-column-header {
@@ -371,15 +371,12 @@ limitations under the License.
     }
 
     .error {
-        background: #f8d7da;
-        color: #721c24;
-        padding: $space-4;
-        border-radius: 8px;
+        @include alert-error;
         text-align: center;
     }
 
     // Responsive
-    @media (max-width: 800px) {
+    @include tablet {
         .profile-header {
             flex-direction: column;
             text-align: center;

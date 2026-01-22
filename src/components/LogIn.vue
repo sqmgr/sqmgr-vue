@@ -60,12 +60,12 @@ section.login {
 .login-card {
     background:     $surface-elevated;
     border:         1px solid $light-gray;
-    border-radius:  16px;
+    border-radius:  $radius-2xl;
     padding:        $standard-spacing * 2;
     text-align:     center;
     max-width:      400px;
     width:          100%;
-    box-shadow:     0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow:     $shadow-card;
     transition:     all 0.3s ease;
 
     &:hover {
@@ -77,7 +77,7 @@ section.login {
         width:           80px;
         height:          80px;
         background:      linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary, 0.05) 100%);
-        border-radius:   20px;
+        border-radius:   $radius-2xl;
         display:         flex;
         align-items:     center;
         justify-content: center;
