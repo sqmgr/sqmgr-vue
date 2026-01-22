@@ -54,22 +54,21 @@ const trustedByList = [
     "Pool Managers Everywhere",
     "Football Fanatics Everywhere",
     "My Brother",
-    "All of My Friends",
-    "Gameday Coordinators Everywhere",
+    "Almost All of My Friends",
     "Grid Gurus Everywhere",
     "Stat Nerds Everywhere",
     "Prop Bet Experts Everywhere",
     "Tailgate Legends Everywhere",
     "Scoreboard Watchers Everywhere",
-    "Hometown Heroes Everywhere",
     "Bandwagon Fans Everywhere",
-    "All My Favorite Peeps",
     "My Mom and Dad",
     "Your One Friend From High School",
     "That One Dude on Your Street",
     "Kim, You Don't Know Her",
     "Square Aficionados Everywhere",
     "That Actor Whose Name You Forgot",
+    "People Who Still Call it \"The Big Game\"",
+    "Guys Who Bet on the Coin Toss",
 ]
 const trustedBy = ref(trustedByList[0])
 
@@ -111,7 +110,7 @@ const onAfterEnter = (el) => {
 section.home-header {
     text-align: center;
     padding:    $standard-spacing * 2.5 0;
-    margin: 0 auto;
+    margin:     0 auto;
 
     .hero-content {
         max-width: 800px;
@@ -236,7 +235,7 @@ section.home-header {
         padding: $standard-spacing 0 $standard-spacing * 1.5;
 
         p.credibility-badge {
-            font-size: 0.75em;
+            font-size:     0.75em;
             margin-bottom: 0;
         }
 
