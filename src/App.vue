@@ -496,7 +496,7 @@ p.generated-by {
     }
 }
 
-button, .btn {
+button, .action-btn {
     @include sqmgrButton($primary);
 
     &.sm {

@@ -27,7 +27,7 @@ limitations under the License.
                         <span class="separator">|</span>
                         <span class="auth-badge">{{ authProvider }} Account</span>
                     </div>
-                    <router-link to="/create" class="btn">Create Squares Pool</router-link>
+                    <router-link to="/create" class="action-btn">Create Squares Pool</router-link>
                 </div>
             </div>
 
