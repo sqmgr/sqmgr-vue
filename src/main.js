@@ -41,6 +41,7 @@ import loadingBar from "@/utils/loadingBar.ts"
 import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
 import Admin from "@/components/Admin"
+import AdminUser from "@/components/AdminUser"
 import './assets/forms.css'
 
 // Unregister any existing service workers from previous versions
@@ -94,6 +95,7 @@ const routes = [
     {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: {requirePoolMembership: true}},
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
     {path: '/admin', component: Admin, meta: {requireAdmin: true, title: 'Admin'}},
+    {path: '/admin/user/:userId', component: AdminUser, props: true, meta: {requireAdmin: true, title: 'Admin - User Details'}},
 ]
 
 const router = createRouter({

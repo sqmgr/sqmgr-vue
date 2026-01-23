@@ -79,6 +79,7 @@ limitations under the License.
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Created By</th>
                         <th>Created</th>
                         <th>Type</th>
                         <th>Grids</th>
@@ -92,6 +93,9 @@ limitations under the License.
                     <tr v-for="pool in pools.pools" :key="pool.token">
                         <td>
                             <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
+                        </td>
+                        <td>
+                            <router-link :to="`/admin/user/${pool.ownerId}`">{{ formatOwner(pool) }}</router-link>
                         </td>
                         <td>{{ formatDate(pool.created) }}</td>
                         <td>{{ pool.gridType }}</td>
@@ -246,6 +250,16 @@ export default {
         formatDate(dateStr) {
             const date = new Date(dateStr)
             return date.toLocaleDateString()
+        },
+
+        formatOwner(pool) {
+            if (pool.ownerEmail) {
+                return pool.ownerEmail
+            }
+            if (pool.ownerStore === 'sqmgr') {
+                return `Guest #${pool.ownerId}`
+            }
+            return `User #${pool.ownerId}`
         },
 
         formatNumber(num) {

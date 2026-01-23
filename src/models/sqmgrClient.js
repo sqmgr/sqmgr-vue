@@ -337,6 +337,16 @@ class sqmgrClient {
     async adminJoinPool(token) {
         return this.request(`/admin/pool/${token}/join`, null, true, { method: 'POST' })
     }
+
+    async getAdminUser(userId) {
+        return this.request(`/admin/user/${userId}`)
+    }
+
+    async getAdminUserPools(userId, includeArchived = false, offset = 0, limit = 25) {
+        const query = { offset, limit }
+        if (includeArchived) query.includeArchived = 'true'
+        return this.request(`/admin/user/${userId}/pools`, query)
+    }
 }
 
 export default new sqmgrClient()
