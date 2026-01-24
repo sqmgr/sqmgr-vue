@@ -1332,6 +1332,7 @@ p.add-note {
             flex:        1;
             display:     flex;
             align-items: center;
+            align-self: center;
             gap:         $space-2;
             min-height:  24px;
         }
