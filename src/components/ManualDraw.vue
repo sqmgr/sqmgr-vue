@@ -21,7 +21,7 @@ limitations under the License.
 
             <warning-box v-if="!allSquaresClaimed" warning="Not all squares have been claimed yet" />
 
-            <!-- Single set mode (legacy "same" config) -->
+            <!-- Single set mode (legacy "standard" config) -->
             <template v-if="isSingleSetMode">
                 <div class="field">
                     <label :style="homeTeamLabelStyle">{{ grid.homeTeamName }}</label>

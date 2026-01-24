@@ -413,7 +413,7 @@ export default {
             return false
         },
         hasMultipleNumberSets() {
-            return this.pool.numberSetConfig && this.pool.numberSetConfig !== 'same' &&
+            return this.pool.numberSetConfig && this.pool.numberSetConfig !== 'standard' &&
                 this.grid.numberSets && Object.keys(this.grid.numberSets).length > 0
         },
         sortedNumberSets() {
