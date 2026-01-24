@@ -889,7 +889,7 @@ div.square {
     padding:         2px;
     transition:      transform 100ms ease, box-shadow 100ms ease;
 
-    i.owned {
+    :deep(i.owned) {
         color:     $yellow;
         font-size: 0.9em;
         position:  absolute;
@@ -981,21 +981,21 @@ div.square {
     }
 
     @at-root .rollover &.secondary {
-        & > span.name,
-        & > .owned,
-        & > .square-id {
+        & > :deep(span.name),
+        & > :deep(.owned),
+        & > :deep(.square-id) {
             opacity: 0.2;
         }
     }
 
     @at-root .is-locked.rollover &.secondary {
-        & > span.name,
-        & > .owned {
+        & > :deep(span.name),
+        & > :deep(.owned) {
             opacity: 0;
         }
     }
 
-    span.square-id {
+    :deep(span.square-id) {
         position:  absolute;
         top:       2px;
         right:     2px;
@@ -1004,7 +1004,7 @@ div.square {
         z-index:   1;
     }
 
-    span.name {
+    :deep(span.name) {
         position: relative;
         z-index:  2;
     }
