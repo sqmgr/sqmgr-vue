@@ -102,6 +102,7 @@ limitations under the License.
                             <th>Created By</th>
                             <th>Created</th>
                             <th>Type</th>
+                            <th>Number Set</th>
                             <th>Grids</th>
                             <th>Members</th>
                             <th>Claimed</th>
@@ -119,6 +120,7 @@ limitations under the License.
                             </td>
                             <td>{{ formatDate(pool.created) }}</td>
                             <td>{{ pool.gridType }}</td>
+                            <td>{{ pool.numberSetConfig }}</td>
                             <td>{{ formatNumber(pool.gridCount) }}</td>
                             <td>{{ formatNumber(pool.memberCount) }}</td>
                             <td>{{ formatNumber(pool.claimedCount) }}</td>
