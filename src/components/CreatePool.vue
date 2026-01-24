@@ -95,8 +95,8 @@ limitations under the License.
                                     <i class="fas fa-random"></i>
                                 </div>
                                 <div>
-                                    <h2>Number Set</h2>
-                                    <p>When should numbers change during the game?</p>
+                                    <h2>Number Rotation</h2>
+                                    <p>Do you want the numbers to remain constant or change by quarter or half?</p>
                                 </div>
                             </div>
                             <div class="card-content">
@@ -201,26 +201,26 @@ limitations under the License.
                         <button type="button" class="help-toggle" @click="showNumberHelp = !showNumberHelp">
                             <div class="help-header">
                                 <i class="fas fa-random"></i>
-                                <h3>Number Sets Explained</h3>
+                                <h3>Number Rotation Explained</h3>
                             </div>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </button>
                         <div class="help-content">
                             <dl class="help-definitions">
-                                <dt>Standard</dt>
-                                <dd>One set of numbers for all quarters.</dd>
+                                <dt v-if="numberSetTypes.has('standard')">Standard</dt>
+                                <dd v-if="numberSetTypes.has('standard')">One set of numbers for the whole game.</dd>
 
-                                <dt>1st, 2nd, 3rd, Final</dt>
-                                <dd>Different numbers for Q1, Q2, Q3 and the Final score.</dd>
+                                <dt v-if="numberSetTypes.has('123f')">1st, 2nd, 3rd, Final</dt>
+                                <dd v-if="numberSetTypes.has('123f')">Different numbers for Q1, Q2, Q3 and the Final score.</dd>
 
-                                <dt>Half, Final</dt>
-                                <dd>Two sets - one for halftime, one for the final score.</dd>
+                                <dt v-if="numberSetTypes.has('hf')">Half, Final</dt>
+                                <dd v-if="numberSetTypes.has('hf')">Two sets - one for halftime, one for the final score.</dd>
 
-                                <dt>1st, 2nd, 3rd, 4th</dt>
-                                <dd>Different numbers for each quarter.</dd>
+                                <dt v-if="numberSetTypes.has('1234')">1st, 2nd, 3rd, 4th</dt>
+                                <dd v-if="numberSetTypes.has('1234')">Different numbers for each quarter.</dd>
 
-                                <dt>Half, 4th</dt>
-                                <dd>Two sets - one for halftime, one for end of 4th quarter.</dd>
+                                <dt v-if="numberSetTypes.has('h4')">Half, 4th</dt>
+                                <dd v-if="numberSetTypes.has('h4')">Two sets - one for halftime, one for end of 4th quarter.</dd>
                             </dl>
                         </div>
                     </div>
@@ -303,14 +303,19 @@ limitations under the License.
             },
             getNumberSetDescription(key) {
                 const descriptions = {
-                    'standard': 'One set of numbers drawn for all quarters',
-                    '1-2-3-final': 'New numbers drawn for Q1, Q2, Q3 and Final',
-                    'half-final': 'Numbers change at halftime and for the final',
-                    '1-2-3-4': 'New numbers drawn for each quarter',
-                    'half-4': 'Numbers change at halftime and end of 4th',
+                    'standard': 'One set of numbers for the whole game',
+                    '123f': 'Numbers for first, second and third quarters and the final score',
+                    'hf': 'Numbers for first half and final',
+                    '1234': 'Numbers for all four quarters. Ignores overtime',
+                    'h4': 'Numbers for first half and second half. Ignores overtime',
                 }
                 return descriptions[key] || ''
             }
+        },
+        computed: {
+           numberSetTypes() {
+               return new Set(Object.values(this.config.numberSetConfigs).map(o => o.key))
+           }
         }
     }
 </script>
