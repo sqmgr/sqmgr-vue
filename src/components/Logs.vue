@@ -19,7 +19,7 @@ limitations under the License.
         <template v-if="showAddNote">
             <div class="add-note-row">
                 <button type="button" class="add-note-btn" @click.prevent="addNote">
-                    <i class="fas fa-plus"></i>
+                    <i class="fa-solid fa-comment-plus"></i>
                     Add Note
                 </button>
             </div>
@@ -143,36 +143,26 @@ limitations under the License.
 <style lang="scss" scoped>
 @use '../variables.scss' as *;
 
+button.add-note-btn {
+    background: $light-gray;
+    box-shadow: none;
+    color: $text-color;
+
+    &:hover {
+        color: $primary;
+        transform: none;
+    }
+}
+
 section.audit-log {
     overflow: auto;
+    border-top: 1px solid $light-gray;
+    margin-top: $standard-spacing;
 }
 
 .add-note-row {
-    padding: $space-3 $space-5;
-    border-bottom: 1px solid $light-gray;
-}
-
-.add-note-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: $space-2;
-    padding: $space-2 $space-4;
-    background: $primary;
-    color: #fff;
-    border: none;
-    border-radius: $radius-md;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-
-    &:hover {
-        background: $primary-dark;
-    }
-
-    i {
-        font-size: 0.75rem;
-    }
+    padding: $space-3 0;
+    text-align: right;
 }
 
 .empty-state {

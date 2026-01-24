@@ -95,7 +95,7 @@ limitations under the License.
         </div>
 
         <div class="buttons" v-if="canClaim || canUnclaim || poolConfig.isAdmin">
-            <button type="button" @click.prevent="annotate" v-if="poolConfig.isAdmin">Annotate</button>
+            <button type="button" @click.prevent="annotate" v-if="poolConfig.isAdmin" class="secondary">Add Symbol</button>
             <button type="button" @click.prevent="claimSquare" v-if="canClaim">Claim</button>
             <button type="button" class="destructive" @click.prevent="unclaimSquare" v-if="canUnclaim">Relinquish
                 Claim
@@ -343,7 +343,7 @@ limitations under the License.
 
     div.buttons {
         margin-top: $standard-spacing;
-        text-align: left;
+        text-align: center;
     }
 
     div.annotation {
