@@ -129,8 +129,8 @@ limitations under the License.
             setTypes() {
                 const config = this.pool.numberSetConfig
                 const configMap = {
-                    'q1234': ['q1', 'q2', 'q3', 'q4'],
-                    'q123f': ['q1', 'q2', 'q3', 'final'],
+                    '1234': ['q1', 'q2', 'q3', 'q4'],
+                    '123f': ['q1', 'q2', 'q3', 'final'],
                     'hf': ['half', 'final'],
                     'h4': ['half', 'q4'],
                 }
