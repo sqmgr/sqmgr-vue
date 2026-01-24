@@ -54,7 +54,8 @@ limitations under the License.
                                         </router-link>
 
                                         <div class="rollover" v-if="rollover">
-                                            <span class="fas fa-dice" v-if="grid.rollover" title="Rollover enabled"></span>
+                                            <span class="fas fa-dice" v-if="grid.rollover"
+                                                  title="Rollover enabled"></span>
                                         </div>
 
                                         <div class="event-date">
@@ -63,10 +64,12 @@ limitations under the License.
                                         </div>
 
                                         <div v-if="pool.isAdmin" class="actions">
-                                            <button type="button" class="icon-btn" @click.prevent="customizeGrid(grid)" title="Customize">
+                                            <button type="button" class="icon-btn" @click.prevent="customizeGrid(grid)"
+                                                    title="Customize">
                                                 <i class="fas fa-cog"></i>
                                             </button>
-                                            <button type="button" class="icon-btn destructive" @click.prevent="confirmDelete(grid)" title="Delete">
+                                            <button type="button" class="icon-btn destructive"
+                                                    @click.prevent="confirmDelete(grid)" title="Delete">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </div>
@@ -104,7 +107,8 @@ limitations under the License.
                                                    @keydown="poolNameKeyDown"
                                                    placeholder="Squares Pool Name"/>
                                             <div class="inline-edit-actions">
-                                                <button type="button" class="icon-btn secondary" @click.prevent="undoEditPoolName">
+                                                <button type="button" class="icon-btn secondary"
+                                                        @click.prevent="undoEditPoolName">
                                                     <i class="fas fa-times"></i>
                                                 </button>
                                                 <button type="submit" class="icon-btn">
@@ -115,7 +119,8 @@ limitations under the License.
                                     </template>
                                     <template v-else>
                                         <span class="pool-name-display">{{ pool.name }}</span>
-                                        <button v-if="pool.isAdmin" class="edit-link" @click.prevent="editPoolName=true">
+                                        <button v-if="pool.isAdmin" class="edit-link"
+                                                @click.prevent="editPoolName=true">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </template>
@@ -233,9 +238,11 @@ limitations under the License.
             </div>
             <div class="help-content">
                 <h3>How it works</h3>
-                <p>SqMGR allows you to create multiple games or events within a single squares pool. People will claim a square
+                <p>SqMGR allows you to create multiple games or events within a single squares pool. People will claim a
+                    square
                     and then use that same square for all games in the pool. Each game will draw unique numbers.</p>
-                <p>For example, Ted might claim square 5 for an entire football season, but each week he'll have a different set
+                <p>For example, Ted might claim square 5 for an entire football season, but each week he'll have a
+                    different set
                     of numbers for that square (e.g., 0 and 7 for week 1, 8 and 8 for week 2, etc.).</p>
             </div>
         </div>
@@ -531,74 +538,74 @@ export default {
 
 // Pool Header
 .pool-header {
-    display: flex;
-    align-items: center;
+    display:         flex;
+    align-items:     center;
     justify-content: space-between;
-    margin-bottom: $space-6;
-    gap: $space-4;
-    flex-wrap: wrap;
+    margin-bottom:   $space-6;
+    gap:             $space-4;
+    flex-wrap:       wrap;
 
     h1 {
-        margin: 0;
-        font-size: 2em;
+        margin:    0;
+        font-size: 2rem;
     }
 }
 
 .pool-status {
-    display: inline-flex;
-    align-items: center;
-    gap: $space-2;
-    padding: $space-2 $space-4;
+    display:       inline-flex;
+    align-items:   center;
+    gap:           $space-2;
+    padding:       $space-2 $space-4;
     border-radius: $radius-full;
-    font-size: 0.875em;
-    font-weight: 600;
-    background: rgba($primary, 0.1);
-    color: $primary-dark;
+    font-size:     0.875rem;
+    font-weight:   600;
+    background:    rgba($primary, 0.1);
+    color:         $primary-dark;
 
     &.locked {
         background: rgba($red, 0.1);
-        color: $red;
+        color:      $red;
     }
 
     i {
-        font-size: 0.875em;
+        font-size: 0.875rem;
     }
 }
 
 // Card Styles
 .card {
-    background: #fff;
-    border: 1px solid $light-gray;
+    background:    #fff;
+    border:        1px solid $light-gray;
     border-radius: $radius-xl;
-    box-shadow: var(--shadow-sm);
-    overflow: hidden;
+    box-shadow:    var(--shadow-sm);
+    overflow:      hidden;
 }
 
 .card-header {
-    display: flex;
-    align-items: center;
+    display:         flex;
+    align-items:     center;
     justify-content: space-between;
-    padding: $space-4 $space-5;
-    border-bottom: 1px solid $light-gray;
-    background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+    padding:         $space-4 $space-5;
+    border-bottom:   1px solid $light-gray;
+    background:      linear-gradient(180deg, #fafafa 0%, #fff 100%);
 
     h2 {
-        margin: 0;
-        font-size: 1.25em;
+        margin:    0;
+        font-size: 1.25rem;
     }
 }
 
 .card-footer {
-    padding: $space-4 $space-5;
+    padding:    $space-4 $space-5;
     border-top: 1px solid $light-gray;
     background: #fafafa;
 }
 
 .game-count {
-    font-size: 0.875em;
-    color: $text-secondary;
-    background: $light-gray;
-    padding: $space-1 $space-3;
+    font-size:     0.875rem;
+    color:         $text-secondary;
+    background:    $light-gray;
+    padding:       $space-1 $space-3;
     border-radius: $radius-full;
 }
 
@@ -608,12 +615,12 @@ export default {
 }
 
 div.grid-row {
-    align-items: center;
-    display: grid;
+    align-items:           center;
+    display:               grid;
     grid-template-columns: 30px 1fr 100px;
-    gap: $space-3;
-    padding: $space-3 $space-5;
-    transition: background-color var(--transition-fast);
+    gap:                   $space-3;
+    padding:               $space-3 $space-5;
+    transition:            background-color var(--transition-fast);
 
     &:not(.header):hover {
         background-color: rgba($primary, 0.03);
@@ -623,61 +630,67 @@ div.grid-row {
         border-bottom: 1px solid $light-gray;
     }
 
+    &:not(.header) div.event-date {
+        font-size: 0.875rem;
+    }
+
     &.header {
-        font-weight: 600;
-        font-size: 0.8125em;
+        font-weight:    600;
+        font-size:      0.8125rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: $text-secondary;
-        background: #fafafa;
-        border-bottom: 1px solid $light-gray;
-        padding: $space-3 $space-5;
+        color:          $text-secondary;
+        background:     #fafafa;
+        border-bottom:  1px solid $light-gray;
+        padding:        $space-3 $space-5;
 
         div.game {
-            grid-column: 1 / span 2;
+            grid-column: 2;
         }
     }
 
     a.game {
         font-weight: 600;
-        color: $text-color;
-        transition: color var(--transition-fast);
+        color:       $text-color;
+        transition:  color var(--transition-fast);
 
         &:hover {
-            color: $primary;
+            color:           $primary;
             text-decoration: none;
         }
     }
 
     div.rollover {
         text-align: center;
-        color: $primary;
+
+        & > span {
+            color: $text-secondary;
+        }
     }
 
     div.event-date {
-        font-size: 0.875em;
-        color: $text-secondary;
+        color:     $text-secondary;
     }
 
     span.unknown {
-        color: $gray;
+        color:      $gray;
         font-style: italic;
     }
 }
 
 .handle {
-    color: $gray;
-    cursor: grab;
-    display: flex;
-    align-items: center;
+    color:           $gray;
+    cursor:          grab;
+    display:         flex;
+    align-items:     center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: $radius-sm;
-    transition: all var(--transition-fast);
+    width:           24px;
+    height:          24px;
+    border-radius:   $radius-sm;
+    transition:      all var(--transition-fast);
 
     &:hover {
-        color: $dark-gray;
+        color:      $dark-gray;
         background: $light-gray;
     }
 
@@ -688,8 +701,8 @@ div.grid-row {
 
 span.index {
     text-align: right;
-    color: $text-secondary;
-    font-size: 0.875em;
+    color:      $text-secondary;
+    font-size:  0.875rem;
 
     &::after {
         content: '.';
@@ -698,31 +711,31 @@ span.index {
 
 // Icon Buttons
 .icon-btn {
-    display: inline-flex;
-    align-items: center;
+    display:         inline-flex;
+    align-items:     center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    border-radius: $radius-md;
-    background: transparent;
-    color: $text-secondary;
-    border: 1px solid transparent;
-    box-shadow: none;
-    min-height: auto;
-    transition: all var(--transition-fast);
+    width:           32px;
+    height:          32px;
+    padding:         0;
+    border-radius:   $radius-md;
+    background:      transparent;
+    color:           $text-secondary;
+    border:          1px solid transparent;
+    box-shadow:      none;
+    min-height:      auto;
+    transition:      all var(--transition-fast);
 
     &:hover {
         background: $light-gray;
-        color: $text-color;
-        transform: none;
+        color:      $text-color;
+        transform:  none;
         box-shadow: none;
     }
 
     &.destructive {
         &:hover {
             background: rgba($red, 0.1);
-            color: $red;
+            color:      $red;
         }
     }
 
@@ -732,62 +745,56 @@ span.index {
 }
 
 div.actions {
-    display: flex;
-    gap: $space-1;
+    display:         flex;
+    gap:             $space-1;
     justify-content: flex-end;
 }
 
 // Admin Layout
 .admin {
     div.grid-row {
-        grid-template-columns: 24px 30px 1fr 100px auto;
+        grid-template-columns: 24px 30px 1fr 100px 75px;
 
         &.header {
             div.game {
-                grid-column: 2 / span 2;
+                grid-column: 3 / span 1;
+            }
+
+            div.event-date {
+                grid-column: 4 / span 1;
             }
         }
 
         @include mobile {
-            display: block;
-            position: relative;
-            padding: $space-4 $space-4;
-
-            &.header {
-                display: none;
-            }
+            grid-template-columns: 24px 3ch 1fr 1fr;
+            row-gap:               0;
 
             .handle {
-                position: absolute;
-                left: $space-2;
-                top: 50%;
-                transform: translateY(-50%);
+                grid-column-start: 1;
+                grid-row:          1 / span 2;
             }
-
             .index {
-                display: inline;
-                margin-left: $space-8;
+                grid-column-start: 2;
+                grid-row:          1 / span 2;
+            }
+            &.header .game {
+                grid-row-start:    1;
+                grid-column-start: 1;
+            }
+            .game {
+                grid-column: 3 / span 2;
             }
 
-            a.game {
-                display: inline;
+            &.header .event-date {
+                grid-row-start:    1;
+                grid-column-start: 3 / span 2;
             }
-
             .event-date {
-                display: block;
-                margin-top: $space-2;
-                margin-left: $space-8;
+                grid-column-start: 3;
+                align-self: start;
             }
-
-            .rollover {
-                position: absolute;
-                right: $space-4;
-                top: $space-4;
-            }
-
             .actions {
-                margin-top: $space-3;
-                margin-left: $space-8;
+                grid-column-start: 4;
             }
         }
     }
@@ -798,35 +805,134 @@ section.rollover {
     div.grid-row {
         grid-template-columns: 30px 1fr 80px 100px;
 
-        &.header div.game {
-            grid-column: 1 / span 2;
+        &.header .game {
+            grid-column: 2;
         }
+
+        @include mobile {
+            grid-template-columns: 25px 1fr auto;
+            row-gap:               0;
+
+            &.header {
+                .game {
+                    grid-column: 2;
+                }
+
+                .rollover {
+                    grid-column: 3;
+                }
+
+                .event-date {
+                    grid-column: 2;
+                }
+            }
+
+            .index {
+                grid-row:    1;
+                grid-column: 1;
+            }
+            .game {
+                grid-row:    1;
+                grid-column: 2;
+            }
+            .rollover {
+                grid-row:    1;
+                grid-column: 3;
+            }
+            .event-date {
+                grid-row:    2;
+                grid-column: 2;
+            }
+
+
+        }
+
     }
 
-    &.admin div.grid-row {
-        grid-template-columns: 24px 30px 1fr 80px 100px auto;
+    &.admin {
+        div.grid-row {
+            grid-template-columns: 24px 3ch 1fr 100px 100px 75px;
 
-        &.header div.game {
-            grid-column: 2 / span 2;
+            &.header {
+                & > * {
+                }
+
+                .game {
+                    grid-column: 3;
+                }
+
+                .rollover {
+                    grid-column: 4;
+                }
+
+                .event-date {
+                    grid-column: 5;
+                }
+
+            }
+
+            @include mobile {
+                grid-template-columns: 24px 3ch 1fr auto;
+
+                &.header {
+                    .rollover {
+                        grid-column: 4;
+                    }
+
+                    .event-date {
+                        grid-column: 3;
+                    }
+                }
+
+                .handle {
+                    grid-row:    1 / span 2;
+                    grid-column: 1;
+                }
+
+                .index {
+                    grid-row:    1 / span 2;
+                    grid-column: 2;
+                }
+
+                .game {
+                    grid-column: 3;
+                }
+
+                .event-date {
+                    grid-row:    2;
+                    grid-column: 3;
+                    align-self: start;
+                }
+
+                .rollover {
+                    grid-row:    1;
+                    grid-column: 4;
+                }
+
+                .actions {
+                    grid-row:    2;
+                    grid-column: 4;
+                }
+            }
         }
     }
 }
 
 // Empty State
 .empty-state {
-    padding: $space-10 $space-5;
+    padding:    $space-10 $space-5;
     text-align: center;
-    color: $text-secondary;
+    color:      $text-secondary;
 
     i {
-        font-size: 2.5em;
-        color: $gray;
+        font-size:     2.5rem;
+        color:         $gray;
         margin-bottom: $space-4;
     }
 
     p {
-        margin: 0;
-        font-size: 0.9375em;
+        margin:    0;
+        font-size: 0.9375rem;
     }
 }
 
@@ -836,29 +942,29 @@ section.rollover {
 }
 
 .setting-item {
-    display: flex;
+    display:     flex;
     align-items: flex-start;
-    padding: $space-3 $space-5;
-    gap: $space-4;
-    transition: background-color var(--transition-fast);
+    padding:     $space-3 $space-5;
+    gap:         $space-4;
+    transition:  background-color var(--transition-fast);
 
     &:hover {
         background-color: #fafafa;
     }
 
     & > label {
-        flex: 0 0 140px;
-        font-size: 0.875em;
-        color: $text-secondary;
+        flex:        0 0 140px;
+        font-size:   0.875rem;
+        color:       $text-secondary;
         padding-top: $space-1;
     }
 
     .setting-value {
-        flex: 1;
-        display: flex;
+        flex:        1;
+        display:     flex;
         align-items: center;
-        gap: $space-2;
-        min-height: 32px;
+        gap:         $space-2;
+        min-height:  32px;
     }
 }
 
@@ -868,107 +974,107 @@ section.rollover {
 
 .edit-link {
     background: transparent;
-    border: none;
+    border:     none;
     box-shadow: none;
-    color: $gray;
-    padding: $space-1;
+    color:      $gray;
+    padding:    $space-1;
     min-height: auto;
-    cursor: pointer;
+    cursor:     pointer;
 
     &:hover {
-        color: $primary;
+        color:      $primary;
         background: transparent;
-        transform: none;
+        transform:  none;
         box-shadow: none;
     }
 }
 
 code.token {
-    background: $light-gray;
-    padding: $space-1 $space-2;
+    background:    $light-gray;
+    padding:       $space-1 $space-2;
     border-radius: $radius-sm;
-    font-size: 0.875em;
-    font-family: monospace;
+    font-size:     0.875rem;
+    font-family:   monospace;
 }
 
 .badge {
-    display: inline-block;
-    padding: $space-1 $space-3;
-    background: $light-gray;
-    border-radius: $radius-full;
-    font-size: 0.8125em;
-    font-weight: 500;
+    display:        inline-block;
+    padding:        $space-1 $space-3;
+    background:     $light-gray;
+    border-radius:  $radius-full;
+    font-size:      0.8125rem;
+    font-weight:    500;
     text-transform: uppercase;
 }
 
 // Progress Bar
 .progress-info {
-    width: 100%;
+    width:     100%;
     max-width: 200px;
 }
 
 .progress-text {
-    font-size: 0.875em;
-    font-weight: 500;
-    display: block;
+    font-size:     0.875rem;
+    font-weight:   500;
+    display:       block;
     margin-bottom: $space-1;
 }
 
 .progress-bar {
-    height: 6px;
-    background: $light-gray;
+    height:        6px;
+    background:    $light-gray;
     border-radius: $radius-full;
-    overflow: hidden;
+    overflow:      hidden;
 }
 
 .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, $primary-light 0%, $primary 100%);
+    height:        100%;
+    background:    linear-gradient(90deg, $primary-light 0%, $primary 100%);
     border-radius: $radius-full;
-    transition: width var(--transition-slow);
+    transition:    width var(--transition-slow);
 }
 
 // Status Badge
 .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: $space-2;
-    padding: $space-1 $space-3;
+    display:       inline-flex;
+    align-items:   center;
+    gap:           $space-2;
+    padding:       $space-1 $space-3;
     border-radius: $radius-full;
-    font-size: 0.8125em;
-    font-weight: 500;
+    font-size:     0.8125rem;
+    font-weight:   500;
 
     &.open {
         background: rgba($primary, 0.1);
-        color: $primary-dark;
+        color:      $primary-dark;
     }
 
     &.locked {
         background: rgba($red, 0.1);
-        color: $red;
+        color:      $red;
     }
 
     i {
-        font-size: 0.875em;
+        font-size: 0.875rem;
     }
 }
 
 // Radio Group
 .radio-group {
     display: flex;
-    gap: $space-4;
+    gap:     $space-4;
 }
 
 .radio-label {
-    display: inline-flex;
+    display:     inline-flex;
     align-items: center;
-    gap: $space-2;
-    font-size: 0.875em;
-    cursor: pointer;
+    gap:         $space-2;
+    font-size:   0.875rem;
+    cursor:      pointer;
 
     &.disabled {
         opacity: 0.5;
-        cursor: not-allowed;
+        cursor:  not-allowed;
     }
 
     input[type="radio"] {
@@ -977,64 +1083,64 @@ code.token {
 }
 
 .date-text {
-    font-size: 0.875em;
-    color: $text-secondary;
+    font-size: 0.875rem;
+    color:     $text-secondary;
 }
 
 // Inline Edit
 .inline-edit {
-    display: flex;
+    display:     flex;
     align-items: center;
-    gap: $space-2;
-    width: 100%;
+    gap:         $space-2;
+    width:       100%;
 
     input.pool-name {
-        flex: 1;
-        padding: $space-2 $space-3;
-        border: 1px solid $border-color;
+        flex:          1;
+        padding:       $space-2 $space-3;
+        border:        1px solid $border-color;
         border-radius: $radius-md;
-        font-size: 0.9375em;
+        font-size:     0.9375rem;
 
         &:focus {
-            outline: none;
+            outline:      none;
             border-color: $primary;
-            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+            box-shadow:   0 0 0 3px rgba($primary, 0.1);
         }
     }
 }
 
 .inline-edit-actions {
     display: flex;
-    gap: $space-1;
+    gap:     $space-1;
 }
 
 // Help Card
 .help-card {
-    display: flex;
-    gap: $space-5;
-    padding: $space-5;
-    margin-top: $space-6;
-    background: linear-gradient(135deg, rgba($primary, 0.03) 0%, rgba($primary, 0.08) 100%);
-    border: 1px solid rgba($primary, 0.15);
+    display:       flex;
+    gap:           $space-5;
+    padding:       $space-5;
+    margin-top:    $space-6;
+    background:    linear-gradient(135deg, rgba($primary, 0.03) 0%, rgba($primary, 0.08) 100%);
+    border:        1px solid rgba($primary, 0.15);
     border-radius: $radius-xl;
 
     @include mobile {
         flex-direction: column;
-        text-align: center;
+        text-align:     center;
     }
 }
 
 .help-icon {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
+    flex-shrink:     0;
+    width:           48px;
+    height:          48px;
+    display:         flex;
+    align-items:     center;
     justify-content: center;
-    background: $primary;
-    color: #fff;
-    border-radius: $radius-lg;
-    font-size: 1.25em;
+    background:      $primary;
+    color:           #fff;
+    border-radius:   $radius-lg;
+    font-size:       1.25rem;
 
     @include mobile {
         margin: 0 auto;
@@ -1043,15 +1149,15 @@ code.token {
 
 .help-content {
     h3 {
-        margin: 0 0 $space-3;
-        font-size: 1.125em;
-        color: $primary-dark;
+        margin:    0 0 $space-3;
+        font-size: 1.125rem;
+        color:     $primary-dark;
     }
 
     p {
-        margin: 0 0 $space-3;
-        color: $text-secondary;
-        font-size: 0.9375em;
+        margin:      0 0 $space-3;
+        color:       $text-secondary;
+        font-size:   0.9375rem;
         line-height: 1.6;
 
         &:last-child {
@@ -1062,14 +1168,14 @@ code.token {
 
 // Copied Toast
 div.copied {
-    background: $primary;
-    color: #fff;
-    padding: $space-2 $space-4;
+    background:    $primary;
+    color:         #fff;
+    padding:       $space-2 $space-4;
     border-radius: $radius-md;
-    font-size: 0.875em;
-    font-weight: 500;
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
+    font-size:     0.875rem;
+    font-weight:   500;
+    box-shadow:    var(--shadow-lg);
+    z-index:       1000;
 }
 
 .copied-enter-active,
@@ -1079,19 +1185,19 @@ div.copied {
 
 .copied-enter-from,
 .copied-leave-to {
-    opacity: 0;
+    opacity:   0;
     transform: translateY(-8px);
 }
 
 // Responsive adjustments
 @include tablet {
     .pool-header h1 {
-        font-size: 1.5em;
+        font-size: 1.5rem;
     }
 
     .setting-item {
         flex-direction: column;
-        gap: $space-2;
+        gap:            $space-2;
 
         & > label {
             flex: none;
