@@ -639,7 +639,7 @@ div.grid-row {
     }
 
     a.game {
-        font-weight: 500;
+        font-weight: 600;
         color: $text-color;
         transition: color var(--transition-fast);
 
