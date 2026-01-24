@@ -718,7 +718,7 @@ span.index {
     height:          32px;
     padding:         0;
     border-radius:   $radius-md;
-    background:      transparent;
+    background:      $light-gray;
     color:           $text-secondary;
     border:          1px solid transparent;
     box-shadow:      none;
@@ -727,7 +727,7 @@ span.index {
 
     &:hover {
         background: $light-gray;
-        color:      $text-color;
+        color:      $primary;
         transform:  none;
         box-shadow: none;
     }
