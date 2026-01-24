@@ -124,7 +124,7 @@ limitations under the License.
                 return this.labelStyle(this.grid.settings.awayTeamColor1, this.grid.settings.awayTeamColor2)
             },
             isSingleSetMode() {
-                return !this.pool.numberSetConfig || this.pool.numberSetConfig === 'same'
+                return !this.pool.numberSetConfig || this.pool.numberSetConfig === 'standard'
             },
             setTypes() {
                 const config = this.pool.numberSetConfig
