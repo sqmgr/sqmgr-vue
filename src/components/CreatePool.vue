@@ -89,12 +89,11 @@ limitations under the License.
                     <h3>Number Set Configuration</h3>
 
                     <ul>
-                        <li><strong>Same Set:</strong> The classic option. One set of numbers is drawn and used for all quarters.</li>
-                        <li><strong>1st, 2nd, 3rd, 4th:</strong> Different numbers for each quarter. Each quarter has its own random draw.</li>
-                        <li><strong>1st, 2nd, 3rd, Final:</strong> Different numbers for Q1-Q3 and Final score.</li>
-                        <li><strong>1st, 2nd, 3rd, 4th, Final:</strong> Different numbers for each quarter plus a separate set for the Final score.</li>
-                        <li><strong>Half, Final:</strong> Two sets - one for halftime, one for final score.</li>
-                        <li><strong>Half, 4th:</strong> Two sets - one for halftime, one for 4th quarter.</li>
+                        <li><strong>Single:</strong> The classic option. One set of numbers is drawn and used for all quarters.</li>
+                        <li><strong>1st, 2nd, 3rd, Final:</strong> Different numbers for Q1, Q2, Q3 and the Final score.</li>
+                        <li><strong>Half, Final:</strong> Two sets - one for halftime, one for the final score.</li>
+                        <li><strong>1st, 2nd, 3rd, 4th:</strong> Different numbers for each quarter.</li>
+                        <li><strong>Half, 4th:</strong> Two sets - one for halftime, one for the end of the 4th quarter.</li>
                     </ul>
 
                     <h3>Join Password</h3>
