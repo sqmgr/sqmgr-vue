@@ -17,175 +17,228 @@ limitations under the License.
 <template>
     <section class="pool" :class="{ admin: this.pool.isAdmin, rollover }">
         <template v-if="pool">
-            <h1>Squares Pool - {{ this.pool.name }}</h1>
+            <div class="pool-header">
+                <h1>{{ this.pool.name }}</h1>
+                <div class="pool-status" :class="{ locked: isLocked }">
+                    <i :class="isLocked ? 'fas fa-lock' : 'fas fa-lock-open'"></i>
+                    <span>{{ isLocked ? 'Locked' : 'Open' }}</span>
+                </div>
+            </div>
 
             <div class="columns">
                 <div class="col-3">
-                    <h2>Games in Pool</h2>
-
-                    <div class="grids">
-                        <div class="grid-row header">
-                            <div class="game">Game</div>
-                            <div class="rollover" v-if="rollover">Rollover</div>
-                            <div class="event-date">Event Date</div>
+                    <div class="card games-card">
+                        <div class="card-header">
+                            <h2>Games in Pool</h2>
+                            <span class="game-count">{{ grids.length }} game{{ grids.length !== 1 ? 's' : '' }}</span>
                         </div>
 
-                        <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isAdmin"
-                                   handle=".handle" @change="change" item-key="id">
-                            <template #item="{ element: grid, index: i }">
-                                <div class="grid-row">
-                                    <span v-if="pool.isAdmin" class="handle"><i
-                                        class="fas fa-bars"></i> <span>=</span></span>
+                        <div class="grids" v-if="grids.length > 0">
+                            <div class="grid-row header">
+                                <div class="game">Game</div>
+                                <div class="rollover" v-if="rollover">Rollover</div>
+                                <div class="event-date">Event Date</div>
+                            </div>
 
-                                    <span class="index">{{ i + 1 }}</span>
+                            <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isAdmin"
+                                       handle=".handle" @change="change" item-key="id">
+                                <template #item="{ element: grid, index: i }">
+                                    <div class="grid-row">
+                                        <span v-if="pool.isAdmin" class="handle"><i
+                                            class="fas fa-grip-vertical"></i></span>
 
-                                    <router-link class="game" :to="`/pool/${token}/game/${grid.id}`">
-                                        {{ grid.name }}
-                                    </router-link>
+                                        <span class="index">{{ i + 1 }}</span>
 
-                                    <div class="rollover" v-if="rollover">
-                                        <span class="fas fa-dice" v-if="grid.rollover"></span>
+                                        <router-link class="game" :to="`/pool/${token}/game/${grid.id}`">
+                                            {{ grid.name }}
+                                        </router-link>
+
+                                        <div class="rollover" v-if="rollover">
+                                            <span class="fas fa-dice" v-if="grid.rollover" title="Rollover enabled"></span>
+                                        </div>
+
+                                        <div class="event-date">
+                                            <span v-if="ymd(grid.eventDate)">{{ ymd(grid.eventDate) }}</span>
+                                            <span v-else class="unknown">Not set</span>
+                                        </div>
+
+                                        <div v-if="pool.isAdmin" class="actions">
+                                            <button type="button" class="icon-btn" @click.prevent="customizeGrid(grid)" title="Customize">
+                                                <i class="fas fa-cog"></i>
+                                            </button>
+                                            <button type="button" class="icon-btn destructive" @click.prevent="confirmDelete(grid)" title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
                                     </div>
+                                </template>
+                            </draggable>
+                        </div>
 
-                                    <div class="event-date">
-                                        <span v-if="ymd(grid.eventDate)">{{ ymd(grid.eventDate) }}</span>
-                                        <span v-else class="unknown">0/0/0000</span>
-                                    </div>
+                        <div class="empty-state" v-else>
+                            <i class="fas fa-football-ball"></i>
+                            <p>No games yet. Add your first game to get started.</p>
+                        </div>
 
-                                    <div v-if="pool.isAdmin" class="actions">
-                                        <button type="button" class="icon" @click.prevent="customizeGrid(grid)"><i
-                                            class="fas fa-cog"></i><span>Customize</span></button>
-                                        <button type="button" class="icon destructive"
-                                                @click.prevent="confirmDelete(grid)">
-                                            <span>Delete</span><i
-                                            class="fas fa-trash-alt"></i></button>
-                                    </div>
-                                </div>
-                            </template>
-                        </draggable>
-                    </div>
-
-                    <div class="buttons" v-if="pool.isAdmin">
-                        <button :disabled="!canAddGame" type="button" @click.prevent="createGrid">Add Game</button>
+                        <div class="card-footer" v-if="pool.isAdmin">
+                            <button :disabled="!canAddGame" type="button" @click.prevent="createGrid">
+                                <i class="fas fa-plus"></i> Add Game
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-1">
-                    <h2>Pool Settings</h2>
+                    <div class="card settings-card">
+                        <div class="card-header">
+                            <h2>Pool Settings</h2>
+                        </div>
 
-                    <table class="pool-settings">
-                        <tbody>
-                        <tr>
-                            <td>Name</td>
-                            <td>
-                                <template v-if="editPoolName">
-                                    <form class="standalone" @submit.prevent="poolNameUpdate">
-                                        <input class="pool-name" ref="poolName" type="text" v-model="pool.name"
-                                               @keydown="poolNameKeyDown"
-                                               placeholder="Squares Pool Name"/>
-                                        <div class="buttons">
-                                            <button type="button" class="small secondary"
-                                                    @click.prevent="undoEditPoolName"><i class="fas fa-times"></i>
-                                            </button>
-                                            <button type="submit" class="small"><i class="fas fa-check"></i></button>
+                        <div class="settings-list">
+                            <div class="setting-item">
+                                <label>Name</label>
+                                <div class="setting-value">
+                                    <template v-if="editPoolName">
+                                        <form class="inline-edit" @submit.prevent="poolNameUpdate">
+                                            <input class="pool-name" ref="poolName" type="text" v-model="pool.name"
+                                                   @keydown="poolNameKeyDown"
+                                                   placeholder="Squares Pool Name"/>
+                                            <div class="inline-edit-actions">
+                                                <button type="button" class="icon-btn secondary" @click.prevent="undoEditPoolName">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                                <button type="submit" class="icon-btn">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </template>
+                                    <template v-else>
+                                        <span class="pool-name-display">{{ pool.name }}</span>
+                                        <button v-if="pool.isAdmin" class="edit-link" @click.prevent="editPoolName=true">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Token</label>
+                                <div class="setting-value">
+                                    <code class="token">{{ token }}</code>
+                                </div>
+                            </div>
+
+                            <div class="setting-item" v-if="pool.isAdmin">
+                                <label>Invite Link</label>
+                                <div class="setting-value">
+                                    <button type="button" class="sm" v-if="inviteToken" @click="copyInviteLink">
+                                        <i class="fas fa-copy"></i> Copy Link
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="setting-item" v-if="pool.isAdmin">
+                                <label>Join Password</label>
+                                <div class="setting-value">
+                                    <button type="button" class="sm secondary" @click="changeJoinPassword">
+                                        <i class="fas fa-key"></i> Change
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Grid Type</label>
+                                <div class="setting-value">
+                                    <span class="badge">{{ pool.gridType }}</span>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Claimed Squares</label>
+                                <div class="setting-value">
+                                    <div class="progress-info">
+                                        <span class="progress-text">{{ claimed }} of {{ total }}</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" :style="{ width: progressPercent + '%' }"></div>
                                         </div>
-                                    </form>
-                                </template>
-                                <template v-else>
-                                    <div class="pool-name">
-                                        {{ pool.name }} <a v-if="pool.isAdmin" class="edit" href="#"
-                                                           @click.prevent="editPoolName=true"><i
-                                        class="fas fa-edit"></i>
-                                        <span>Edit</span></a>
                                     </div>
-                                </template>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Token</td>
-                            <td>{{ token }}</td>
-                        </tr>
-                        <tr v-if="pool.isAdmin">
-                            <td>Invite Link</td>
-                            <td>
-                                <button type="button" v-if="inviteToken" @click="copyInviteLink"><i
-                                    class="fas fa-copy"></i> Copy
-                                </button>
-                            </td>
-                        </tr>
-                        <tr v-if="pool.isAdmin">
-                            <td>Join Password</td>
-                            <td>
-                                <button type="button" @click="changeJoinPassword"><i class="fas fa-key"></i> Change
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Grid Type</td>
-                            <td>{{ pool.gridType }}</td>
-                        </tr>
-                        <tr>
-                            <td>Claimed Squares</td>
-                            <td>{{ claimed }} of {{ total }}</td>
-                        </tr>
-                        <tr>
-                            <td>State</td>
-                            <td>
-                                <template v-if="isLocked">
-                                    <i class="fas fa-lock"></i> Locked ({{ date(pool.locks, false) }})<br>
+                                </div>
+                            </div>
 
-                                </template>
-                                <template v-else>
-                                    <i class="fas fa-lock-open"></i> Open<br>
-                                </template>
-                            </td>
-                        </tr>
-                        <tr v-if="pool.isAdmin">
-                            <td>Password Required?</td>
-                            <td>
-                                <label>
-                                    <input type="radio" v-model="pool.passwordRequired" :value="true"> Yes
-                                </label>
-                                <label>
-                                    <input type="radio" v-model="pool.passwordRequired" :value="false"> No
-                                </label>
-                            </td>
-                        </tr>
-                        <tr v-if="pool.isAdmin">
-                            <td>Password Required if Locked?</td>
-                            <td>
-                                <label>
-                                    <input type="radio" v-model="pool.openAccessOnLock" :value="false"
-                                           :disabled="!pool.passwordRequired"> Yes
-                                </label>
-                                <label>
-                                    <input type="radio" v-model="pool.openAccessOnLock" :value="true"
-                                           :disabled="!pool.passwordRequired"> No
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Created</td>
-                            <td>{{ date(pool.created, true) }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            <div class="setting-item">
+                                <label>State</label>
+                                <div class="setting-value">
+                                    <span class="status-badge" :class="{ locked: isLocked, open: !isLocked }">
+                                        <i :class="isLocked ? 'fas fa-lock' : 'fas fa-lock-open'"></i>
+                                        {{ isLocked ? `Locked (${date(pool.locks, false)})` : 'Open' }}
+                                    </span>
+                                </div>
+                            </div>
 
-                    <div class="buttons" v-if="pool.isAdmin">
-                        <button v-if="isLocked" type="button" @click="unlockSquares">Open Squares</button>
-                        <button v-else type="button" @click="lockSquares">Lock Squares</button>
+                            <div class="setting-item" v-if="pool.isAdmin">
+                                <label>Password Required?</label>
+                                <div class="setting-value">
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" v-model="pool.passwordRequired" :value="true"> Yes
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" v-model="pool.passwordRequired" :value="false"> No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-item" v-if="pool.isAdmin">
+                                <label>Password Required if Locked?</label>
+                                <div class="setting-value">
+                                    <div class="radio-group">
+                                        <label class="radio-label" :class="{ disabled: !pool.passwordRequired }">
+                                            <input type="radio" v-model="pool.openAccessOnLock" :value="false"
+                                                   :disabled="!pool.passwordRequired"> Yes
+                                        </label>
+                                        <label class="radio-label" :class="{ disabled: !pool.passwordRequired }">
+                                            <input type="radio" v-model="pool.openAccessOnLock" :value="true"
+                                                   :disabled="!pool.passwordRequired"> No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Created</label>
+                                <div class="setting-value">
+                                    <span class="date-text">{{ date(pool.created, true) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer" v-if="pool.isAdmin">
+                            <button v-if="isLocked" type="button" class="secondary" @click="unlockSquares">
+                                <i class="fas fa-lock-open"></i> Open Squares
+                            </button>
+                            <button v-else type="button" @click="lockSquares">
+                                <i class="fas fa-lock"></i> Lock Squares
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </template>
 
-        <h2>Help</h2>
-
-        <p>SqMGR allows you to create multiple games or events within a single squares pool. People will claim a square
-            and then use that same square for all games in the pool. Each game will draw unique numbers.</p>
-
-        <p>For example, Ted might claim square 5 for an entire football season, but each week he'll have a different set
-            of numbers for that square (e.g., 0 and 7 for week 1, 8 and 8 for week 2, etc.).</p>
+        <div class="help-card">
+            <div class="help-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="help-content">
+                <h3>How it works</h3>
+                <p>SqMGR allows you to create multiple games or events within a single squares pool. People will claim a square
+                    and then use that same square for all games in the pool. Each game will draw unique numbers.</p>
+                <p>For example, Ted might claim square 5 for an entire football season, but each week he'll have a different set
+                    of numbers for that square (e.g., 0 and 7 for week 1, 8 and 8 for week 2, etc.).</p>
+            </div>
+        </div>
 
         <transition name="copied">
             <div ref="copied" class="copied" v-if="showCopiedMessage">Copied!</div>
@@ -266,6 +319,10 @@ export default {
             }
 
             return total
+        },
+        progressPercent() {
+            if (this.total === 0) return 0
+            return Math.round((this.claimed / this.total) * 100)
         },
         isLocked() {
             const locks = new Date(this.pool.locks)
@@ -472,217 +529,572 @@ export default {
 <style scoped lang="scss">
 @use '../variables.scss' as *;
 
-button.icon span {
-    display: none;
-}
+// Pool Header
+.pool-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-6;
+    gap: $space-4;
+    flex-wrap: wrap;
 
-.handle {
-    color:  #aaa;
-    cursor: move;
-
-    span {
-        display: none;
+    h1 {
+        margin: 0;
+        font-size: 2em;
     }
 }
 
-table, div.grids {
-    margin-bottom: $standard-spacing;
+.pool-status {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-4;
+    border-radius: $radius-full;
+    font-size: 0.875em;
+    font-weight: 600;
+    background: rgba($primary, 0.1);
+    color: $primary-dark;
+
+    &.locked {
+        background: rgba($red, 0.1);
+        color: $red;
+    }
+
+    i {
+        font-size: 0.875em;
+    }
+}
+
+// Card Styles
+.card {
+    background: #fff;
+    border: 1px solid $light-gray;
+    border-radius: $radius-xl;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-4 $space-5;
+    border-bottom: 1px solid $light-gray;
+    background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+
+    h2 {
+        margin: 0;
+        font-size: 1.25em;
+    }
+}
+
+.card-footer {
+    padding: $space-4 $space-5;
+    border-top: 1px solid $light-gray;
+    background: #fafafa;
+}
+
+.game-count {
+    font-size: 0.875em;
+    color: $text-secondary;
+    background: $light-gray;
+    padding: $space-1 $space-3;
+    border-radius: $radius-full;
+}
+
+// Games Grid
+.grids {
+    margin: 0;
 }
 
 div.grid-row {
-    align-items:           center;
-    display:               grid;
-    /* handle | game |date */
+    align-items: center;
+    display: grid;
     grid-template-columns: 30px 1fr 100px;
-    grid-gap:              calc(2 * #{ $minimal-spacing });
-    padding:               calc(2 * #{ $minimal-spacing });
+    gap: $space-3;
+    padding: $space-3 $space-5;
+    transition: background-color var(--transition-fast);
 
-    div.rollover {
-        text-align: center;
+    &:not(.header):hover {
+        background-color: rgba($primary, 0.03);
     }
 
-    &:not(.header) {
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    &:nth-child(odd) {
-        background-color: var(--light-gray);
+    &:not(.header):not(:last-child) {
+        border-bottom: 1px solid $light-gray;
     }
 
     &.header {
-        font-weight:      bold;
-        background-color: var(--midnight-gray);
-        color:            #fff;
-
-        & > div {
-            justify-self: stretch;
-        }
+        font-weight: 600;
+        font-size: 0.8125em;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: $text-secondary;
+        background: #fafafa;
+        border-bottom: 1px solid $light-gray;
+        padding: $space-3 $space-5;
 
         div.game {
             grid-column: 1 / span 2;
         }
     }
 
+    a.game {
+        font-weight: 500;
+        color: $text-color;
+        transition: color var(--transition-fast);
+
+        &:hover {
+            color: $primary;
+            text-decoration: none;
+        }
+    }
+
+    div.rollover {
+        text-align: center;
+        color: $primary;
+    }
+
+    div.event-date {
+        font-size: 0.875em;
+        color: $text-secondary;
+    }
+
     span.unknown {
-        color: var(--gray);
+        color: $gray;
+        font-style: italic;
     }
 }
 
-.admin {
-    div.grid-row {
-        /* Handle | Number | Game | Date | Buttons */
-        grid-template-columns: 40px 30px 1fr 100px 130px;
+.handle {
+    color: $gray;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: $radius-sm;
+    transition: all var(--transition-fast);
 
-        & > :first-child {
-            justify-self: center;
-        }
-
-        div.actions {
-            text-align: right;
-
-            button {
-                margin-left: var(--minimal-spacing);
-
-                &:first-child {
-                    margin: 0;
-                }
-            }
-        }
-
-        &.header {
-            & > div {
-                justify-self: stretch;
-            }
-
-            div.game {
-                grid-column: 2 / span 2;
-            }
-        }
-
-        @include mobile {
-            display:  block;
-            position: relative;
-
-            &.header {
-                & > * {
-                    display: none;
-                }
-
-                & > div.game {
-                    display: block;
-                }
-            }
-
-            & > .index {
-                margin-left:  var(--spacing);
-                margin-right: $minimal-spacing;
-            }
-
-            & > .index {
-                text-align: left;
-            }
-
-            & > .event-date {
-                text-align: right;
-            }
-
-            & > .rollover {
-                position: absolute;
-                bottom:   var(--minimal-spacing);
-                left:     var(--minimal-spacing);
-            }
-
-            & > .actions {
-                margin-top: var(--spacing);
-            }
-        }
+    &:hover {
+        color: $dark-gray;
+        background: $light-gray;
     }
-}
 
-table.pool-settings {
-    width: 100%;
-
-    td:first-child {
-        width: 105px;
+    &:active {
+        cursor: grabbing;
     }
-}
-
-div.copied {
-    background-color: $primary;
-    color:            #fff;
-    padding:          $minimal-spacing;
-}
-
-.copied-enter-active, .copied-leave-active {
-    transition: all 0.5s;
-}
-
-.copied-enter, .copied-leave-to {
-    opacity: 0;
-}
-
-.copied-enter {
-    transform: translateY(-1em);
-}
-
-a.edit {
-    margin-left: $minimal-spacing;
-
-    span {
-        display: none;
-    }
-}
-
-form.standalone {
-    position: relative;
-
-    div.buttons {
-        padding:          $minimal-spacing;
-        box-shadow:       0 1px 2px rgba(black, 0.4);
-        background-color: #fff;
-        border-radius:    0 0 3px 3px;
-        text-align:       right;
-        position:         absolute;
-        right:            3px;
-
-        button {
-            margin-left: $minimal-spacing;
-
-            &:first-child {
-                margin-left: 0;
-            }
-        }
-    }
-}
-
-div.pool-name {
-    padding: $minimal-spacing 0;
-    border:  1px solid transparent;
-}
-
-input.pool-name {
-    margin-left: calc(-1 * #{$minimal-spacing});
-    width:       calc(100% + #{$minimal-spacing});
 }
 
 span.index {
     text-align: right;
+    color: $text-secondary;
+    font-size: 0.875em;
 
     &::after {
         content: '.';
     }
 }
 
-section.rollover {
-    div.grid-row {
-        /* number | game | rollover | date */
-        grid-template-columns: 30px 1fr 100px 100px;
+// Icon Buttons
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: $radius-md;
+    background: transparent;
+    color: $text-secondary;
+    border: 1px solid transparent;
+    box-shadow: none;
+    min-height: auto;
+    transition: all var(--transition-fast);
+
+    &:hover {
+        background: $light-gray;
+        color: $text-color;
+        transform: none;
+        box-shadow: none;
     }
 
-    &.admin {
-        div.grid-row {
-            /* Handle | Number | Game | Rollover | Date | Buttons */
-            grid-template-columns: 40px 30px 1fr 100px 100px 130px;
+    &.destructive {
+        &:hover {
+            background: rgba($red, 0.1);
+            color: $red;
+        }
+    }
+
+    &.secondary {
+        border-color: $light-gray;
+    }
+}
+
+div.actions {
+    display: flex;
+    gap: $space-1;
+    justify-content: flex-end;
+}
+
+// Admin Layout
+.admin {
+    div.grid-row {
+        grid-template-columns: 24px 30px 1fr 100px auto;
+
+        &.header {
+            div.game {
+                grid-column: 2 / span 2;
+            }
+        }
+
+        @include mobile {
+            display: block;
+            position: relative;
+            padding: $space-4 $space-4;
+
+            &.header {
+                display: none;
+            }
+
+            .handle {
+                position: absolute;
+                left: $space-2;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .index {
+                display: inline;
+                margin-left: $space-8;
+            }
+
+            a.game {
+                display: inline;
+            }
+
+            .event-date {
+                display: block;
+                margin-top: $space-2;
+                margin-left: $space-8;
+            }
+
+            .rollover {
+                position: absolute;
+                right: $space-4;
+                top: $space-4;
+            }
+
+            .actions {
+                margin-top: $space-3;
+                margin-left: $space-8;
+            }
+        }
+    }
+}
+
+// Rollover Layout
+section.rollover {
+    div.grid-row {
+        grid-template-columns: 30px 1fr 80px 100px;
+
+        &.header div.game {
+            grid-column: 1 / span 2;
+        }
+    }
+
+    &.admin div.grid-row {
+        grid-template-columns: 24px 30px 1fr 80px 100px auto;
+
+        &.header div.game {
+            grid-column: 2 / span 2;
+        }
+    }
+}
+
+// Empty State
+.empty-state {
+    padding: $space-10 $space-5;
+    text-align: center;
+    color: $text-secondary;
+
+    i {
+        font-size: 2.5em;
+        color: $gray;
+        margin-bottom: $space-4;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.9375em;
+    }
+}
+
+// Settings Card
+.settings-list {
+    padding: $space-2 0;
+}
+
+.setting-item {
+    display: flex;
+    align-items: flex-start;
+    padding: $space-3 $space-5;
+    gap: $space-4;
+    transition: background-color var(--transition-fast);
+
+    &:hover {
+        background-color: #fafafa;
+    }
+
+    & > label {
+        flex: 0 0 140px;
+        font-size: 0.875em;
+        color: $text-secondary;
+        padding-top: $space-1;
+    }
+
+    .setting-value {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        min-height: 32px;
+    }
+}
+
+.pool-name-display {
+    font-weight: 500;
+}
+
+.edit-link {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: $gray;
+    padding: $space-1;
+    min-height: auto;
+    cursor: pointer;
+
+    &:hover {
+        color: $primary;
+        background: transparent;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+code.token {
+    background: $light-gray;
+    padding: $space-1 $space-2;
+    border-radius: $radius-sm;
+    font-size: 0.875em;
+    font-family: monospace;
+}
+
+.badge {
+    display: inline-block;
+    padding: $space-1 $space-3;
+    background: $light-gray;
+    border-radius: $radius-full;
+    font-size: 0.8125em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+// Progress Bar
+.progress-info {
+    width: 100%;
+    max-width: 200px;
+}
+
+.progress-text {
+    font-size: 0.875em;
+    font-weight: 500;
+    display: block;
+    margin-bottom: $space-1;
+}
+
+.progress-bar {
+    height: 6px;
+    background: $light-gray;
+    border-radius: $radius-full;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $primary-light 0%, $primary 100%);
+    border-radius: $radius-full;
+    transition: width var(--transition-slow);
+}
+
+// Status Badge
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 $space-3;
+    border-radius: $radius-full;
+    font-size: 0.8125em;
+    font-weight: 500;
+
+    &.open {
+        background: rgba($primary, 0.1);
+        color: $primary-dark;
+    }
+
+    &.locked {
+        background: rgba($red, 0.1);
+        color: $red;
+    }
+
+    i {
+        font-size: 0.875em;
+    }
+}
+
+// Radio Group
+.radio-group {
+    display: flex;
+    gap: $space-4;
+}
+
+.radio-label {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: 0.875em;
+    cursor: pointer;
+
+    &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    input[type="radio"] {
+        margin: 0;
+    }
+}
+
+.date-text {
+    font-size: 0.875em;
+    color: $text-secondary;
+}
+
+// Inline Edit
+.inline-edit {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    width: 100%;
+
+    input.pool-name {
+        flex: 1;
+        padding: $space-2 $space-3;
+        border: 1px solid $border-color;
+        border-radius: $radius-md;
+        font-size: 0.9375em;
+
+        &:focus {
+            outline: none;
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+    }
+}
+
+.inline-edit-actions {
+    display: flex;
+    gap: $space-1;
+}
+
+// Help Card
+.help-card {
+    display: flex;
+    gap: $space-5;
+    padding: $space-5;
+    margin-top: $space-6;
+    background: linear-gradient(135deg, rgba($primary, 0.03) 0%, rgba($primary, 0.08) 100%);
+    border: 1px solid rgba($primary, 0.15);
+    border-radius: $radius-xl;
+
+    @include mobile {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.help-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary;
+    color: #fff;
+    border-radius: $radius-lg;
+    font-size: 1.25em;
+
+    @include mobile {
+        margin: 0 auto;
+    }
+}
+
+.help-content {
+    h3 {
+        margin: 0 0 $space-3;
+        font-size: 1.125em;
+        color: $primary-dark;
+    }
+
+    p {
+        margin: 0 0 $space-3;
+        color: $text-secondary;
+        font-size: 0.9375em;
+        line-height: 1.6;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Copied Toast
+div.copied {
+    background: $primary;
+    color: #fff;
+    padding: $space-2 $space-4;
+    border-radius: $radius-md;
+    font-size: 0.875em;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+}
+
+.copied-enter-active,
+.copied-leave-active {
+    transition: all 0.3s ease;
+}
+
+.copied-enter-from,
+.copied-leave-to {
+    opacity: 0;
+    transform: translateY(-8px);
+}
+
+// Responsive adjustments
+@include tablet {
+    .pool-header h1 {
+        font-size: 1.5em;
+    }
+
+    .setting-item {
+        flex-direction: column;
+        gap: $space-2;
+
+        & > label {
+            flex: none;
         }
     }
 }
