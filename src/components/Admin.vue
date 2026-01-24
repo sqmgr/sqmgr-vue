@@ -65,7 +65,7 @@ limitations under the License.
                 <button
                     type="button"
                     :class="['tab-btn', { active: activeTab === 'pools' }]"
-                    @click="activeTab = 'pools'"
+                    @click="switchTab('pools')"
                 >
                     <i class="fas fa-th-large"></i>
                     Pools
@@ -73,7 +73,7 @@ limitations under the License.
                 <button
                     type="button"
                     :class="['tab-btn', { active: activeTab === 'users' }]"
-                    @click="switchToUsersTab"
+                    @click="switchTab('users')"
                 >
                     <i class="fas fa-users"></i>
                     Users
@@ -86,7 +86,7 @@ limitations under the License.
                 <div class="search-bar">
                     <input
                         type="text"
-                        v-model="searchQuery"
+                        v-model="searchInput"
                         placeholder="Search pools by name..."
                         @input="debouncedSearch"
                     />
@@ -158,7 +158,7 @@ limitations under the License.
                 <div class="search-bar">
                     <input
                         type="text"
-                        v-model="usersSearchQuery"
+                        v-model="usersSearchInput"
                         placeholder="Search users by email..."
                         @input="debouncedUsersSearch"
                     />
@@ -218,8 +218,8 @@ limitations under the License.
                         v-if="users.total > usersPerPage"
                         :total="users.total"
                         :per-page="usersPerPage"
-                        :current-page="usersCurrentPage"
-                        @page="goToUsersPage"
+                        :current-page="currentPage"
+                        @page="goToPage"
                     />
                 </div>
                 <div v-else class="no-pools">No users found.</div>
@@ -239,8 +239,6 @@ export default {
     components: {Pagination},
     data() {
         return {
-            activeTab: 'pools',
-
             stats: null,
             statsLoading: true,
             statsError: null,
@@ -257,10 +255,6 @@ export default {
             pools: null,
             poolsLoading: true,
             poolsError: null,
-
-            searchQuery: '',
-            searchTimeout: null,
-            currentPage: 1,
             poolsPerPage: 25,
 
             joiningPool: null,
@@ -268,20 +262,92 @@ export default {
             users: null,
             usersLoading: false,
             usersError: null,
-            usersSearchQuery: '',
-            usersSearchTimeout: null,
-            usersCurrentPage: 1,
             usersPerPage: 25,
             usersFetched: false,
-            usersSortColumn: 'created',
-            usersSortDirection: 'desc',
+
+            // Local input state for responsive typing
+            searchInput: '',
+            usersSearchInput: '',
+            searchTimeout: null,
+            usersSearchTimeout: null,
         }
+    },
+    computed: {
+        activeTab() {
+            return this.$route.query.tab === 'users' ? 'users' : 'pools'
+        },
+        currentPage() {
+            const page = parseInt(this.$route.query.page, 10)
+            return (isNaN(page) || page < 1) ? 1 : page
+        },
+        searchQuery() {
+            return this.$route.query.search || ''
+        },
+        usersSortColumn() {
+            const col = this.$route.query.sort
+            return ['poolsOwned', 'poolsJoined', 'created'].includes(col) ? col : 'created'
+        },
+        usersSortDirection() {
+            return this.$route.query.dir === 'asc' ? 'asc' : 'desc'
+        },
     },
     async beforeMount() {
         this.fetchStats()
-        this.fetchPools()
+        // Sync local search inputs with URL on mount
+        this.searchInput = this.searchQuery
+        this.usersSearchInput = this.searchQuery
+        // Initial data fetch based on URL state
+        this.fetchDataForCurrentTab()
+    },
+    watch: {
+        '$route.query': {
+            handler(newQuery, oldQuery) {
+                if (this.$route.path !== '/admin') return
+                // Sync search inputs with URL
+                this.searchInput = this.searchQuery
+                this.usersSearchInput = this.searchQuery
+                // Fetch data if query changed (not on initial load handled by beforeMount)
+                if (oldQuery !== undefined) {
+                    this.fetchDataForCurrentTab()
+                }
+            },
+        },
     },
     methods: {
+        updateUrl(params, replace = false) {
+            const query = { ...this.$route.query }
+            Object.entries(params).forEach(([key, value]) => {
+                if (value === null || value === undefined || value === '' ||
+                    (key === 'page' && value === 1) ||
+                    (key === 'tab' && value === 'pools') ||
+                    (key === 'sort' && value === 'created') ||
+                    (key === 'dir' && value === 'desc')) {
+                    delete query[key]
+                } else {
+                    query[key] = String(value)
+                }
+            })
+            // Only update if query actually changed
+            const currentQueryStr = JSON.stringify(this.$route.query)
+            const newQueryStr = JSON.stringify(query)
+            if (currentQueryStr !== newQueryStr) {
+                this.$router[replace ? 'replace' : 'push']({ query }).catch(() => {})
+            }
+        },
+
+        fetchDataForCurrentTab() {
+            if (this.activeTab === 'pools') {
+                this.fetchPools()
+            } else {
+                this.fetchUsers()
+            }
+        },
+
+        switchTab(tab) {
+            if (this.activeTab === tab) return
+            this.updateUrl({ tab, page: null, search: null, sort: null, dir: null })
+        },
+
         async fetchStats() {
             this.statsLoading = true
             this.statsError = null
@@ -300,12 +366,12 @@ export default {
             this.fetchStats()
         },
 
-        async fetchPools(offset = 0) {
+        async fetchPools() {
             this.poolsLoading = true
             this.poolsError = null
+            const offset = (this.currentPage - 1) * this.poolsPerPage
             try {
                 this.pools = await sqmgrClient.getAdminPools(this.searchQuery, offset, this.poolsPerPage)
-                this.currentPage = Math.floor(offset / this.poolsPerPage) + 1
             } catch (err) {
                 this.poolsError = this.getErrorMessage(err)
             } finally {
@@ -318,14 +384,12 @@ export default {
                 clearTimeout(this.searchTimeout)
             }
             this.searchTimeout = setTimeout(() => {
-                this.currentPage = 1
-                this.fetchPools(0)
+                this.updateUrl({ search: this.searchInput, page: 1 }, true)
             }, 300)
         },
 
         goToPage(page) {
-            const offset = (page - 1) * this.poolsPerPage
-            this.fetchPools(offset)
+            this.updateUrl({ page })
         },
 
         confirmJoinPool(pool) {
@@ -354,25 +418,18 @@ export default {
             }
         },
 
-        switchToUsersTab() {
-            this.activeTab = 'users'
-            if (!this.usersFetched) {
-                this.fetchUsers()
-            }
-        },
-
-        async fetchUsers(offset = 0) {
+        async fetchUsers() {
             this.usersLoading = true
             this.usersError = null
+            const offset = (this.currentPage - 1) * this.usersPerPage
             try {
                 this.users = await sqmgrClient.getAdminUsers(
-                    this.usersSearchQuery,
+                    this.searchQuery,
                     offset,
                     this.usersPerPage,
                     this.usersSortColumn,
                     this.usersSortDirection
                 )
-                this.usersCurrentPage = Math.floor(offset / this.usersPerPage) + 1
                 this.usersFetched = true
             } catch (err) {
                 this.usersError = this.getErrorMessage(err)
@@ -382,13 +439,11 @@ export default {
         },
 
         sortUsers(column) {
+            let newDir = 'desc'
             if (this.usersSortColumn === column) {
-                this.usersSortDirection = this.usersSortDirection === 'asc' ? 'desc' : 'asc'
-            } else {
-                this.usersSortColumn = column
-                this.usersSortDirection = 'desc'
+                newDir = this.usersSortDirection === 'asc' ? 'desc' : 'asc'
             }
-            this.fetchUsers(0)
+            this.updateUrl({ sort: column, dir: newDir, page: 1 })
         },
 
         debouncedUsersSearch() {
@@ -396,14 +451,8 @@ export default {
                 clearTimeout(this.usersSearchTimeout)
             }
             this.usersSearchTimeout = setTimeout(() => {
-                this.usersCurrentPage = 1
-                this.fetchUsers(0)
+                this.updateUrl({ search: this.usersSearchInput, page: 1 }, true)
             }, 300)
-        },
-
-        goToUsersPage(page) {
-            const offset = (page - 1) * this.usersPerPage
-            this.fetchUsers(offset)
         },
 
         formatDate(dateStr) {
