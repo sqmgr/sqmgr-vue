@@ -179,7 +179,7 @@ limitations under the License.
             font-size: 0.6em;
 
             &::after {
-                content: none;
+                display: none;
             }
 
             .square-id {

@@ -66,14 +66,16 @@ limitations under the License.
                                         <div class="action-divider">
                                             <span>Draw Numbers</span>
                                         </div>
-                                        <button type="button" class="action-btn" @click.prevent="randomlyDrawNumbersWasClicked">
+                                        <button type="button" class="action-btn"
+                                                @click.prevent="randomlyDrawNumbersWasClicked">
                                             <i class="fas fa-dice"></i>
                                             <div class="action-text">
                                                 <span class="action-label">Random Draw</span>
                                                 <span class="action-desc">Let the system randomly assign numbers</span>
                                             </div>
                                         </button>
-                                        <button type="button" class="action-btn" @click.prevent="manuallyDrawNumbersWasClicked">
+                                        <button type="button" class="action-btn"
+                                                @click.prevent="manuallyDrawNumbersWasClicked">
                                             <i class="fas fa-edit"></i>
                                             <div class="action-text">
                                                 <span class="action-label">Manual Entry</span>
@@ -98,6 +100,20 @@ limitations under the License.
                                 <h2>Organizer Note</h2>
                             </div>
                             <div class="notes-content">{{ grid.settings.notes }}</div>
+                        </div>
+
+                        <!-- Number Set Legend (only for multi-set pools) -->
+                        <div v-if="hasMultipleNumberSets" class="card legend-card">
+                            <div class="card-header">
+                                <i class="fas fa-palette"></i>
+                                <h2>Number Sets</h2>
+                            </div>
+                            <div class="legend-items">
+                                <div v-for="setType in sortedNumberSets" :key="setType" class="legend-item">
+                                    <span class="legend-color" :class="setType"></span>
+                                    <span class="legend-label">{{ numberSetLabels[setType] }}</span>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Settings Card -->
@@ -133,6 +149,12 @@ limitations under the License.
                                     </div>
                                 </div>
                                 <div class="setting-item">
+                                    <label>Number of Sets</label>
+                                    <div class="setting-value">
+                                        <span class="badge">{{ numberSetConfigLabel }}</span>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
                                     <label>State</label>
                                     <div class="setting-value">
                                         <span class="status-badge" :class="{ locked: isLocked, open: !isLocked }">
@@ -159,7 +181,8 @@ limitations under the License.
                         </div>
 
                         <!-- Expand/Shrink Button -->
-                        <button type="button" class="expand-btn secondary" @click.prevent="expandedGrid = !expandedGrid">
+                        <button type="button" class="expand-btn secondary"
+                                @click.prevent="expandedGrid = !expandedGrid">
                             <i :class="expandedGrid ? 'fas fa-compress-arrows-alt' : 'fas fa-expand-arrows-alt'"></i>
                             {{ expandedGrid ? 'Shrink Grid' : 'Expand Grid' }}
                         </button>
@@ -171,14 +194,30 @@ limitations under the License.
 
                             <div data-team="home" class="team home-team"><span>{{ grid.homeTeamName }}</span></div>
                             <div data-team="home" v-for="n in 10" :key="`home-${n}`"
-                                 :class="`score home-score home-score-${n-1}`">
-                                {{ score('home', n - 1) }}
+                                 :class="scoreClass('home', n-1)">
+                                <template v-if="hasMultipleNumberSets">
+                                    <span v-for="setType in sortedNumberSets" :key="`home-set-${setType}-${n}`"
+                                          class="set-number" :class="setType">
+                                        {{ getNumberSetScore(setType, 'home', n - 1) }}
+                                    </span>
+                                </template>
+                                <template v-else>
+                                    {{ score('home', n - 1) }}
+                                </template>
                             </div>
 
                             <div data-team="away" class="team away-team"><span>{{ grid.awayTeamName }}</span></div>
                             <div data-team="away" v-for="n in 10" :key="`away-${n}`"
-                                 :class="`score away-score away-score-${n-1}`">
-                                {{ score('away', n - 1) }}
+                                 :class="scoreClass('away', n-1)">
+                                <template v-if="hasMultipleNumberSets">
+                                    <span v-for="setType in sortedNumberSets" :key="`away-set-${setType}-${n}`"
+                                          class="set-number" :class="setType">
+                                        {{ getNumberSetScore(setType, 'away', n - 1) }}
+                                    </span>
+                                </template>
+                                <template v-else>
+                                    {{ score('away', n - 1) }}
+                                </template>
                             </div>
 
                             <template v-for="n in numSquares" :key="n">
@@ -227,7 +266,7 @@ import ModalController from '@/controllers/ModalController'
 import sqmgrClient from "@/models/sqmgrClient"
 import EventBus from "@/models/EventBus"
 import Pagination from "@/components/Pagination"
-import '@/models/sqmgrConfig'
+import sqmgrConfig from "@/models/sqmgrConfig"
 import ManualDraw from "@/components/ManualDraw"
 import normalizeColor from "@/utils/normalizeColor" // load this right away
 
@@ -297,6 +336,7 @@ export default {
             numLogs: 0,
 
             expandedGrid: false,
+            config: null,
         }
     },
     created() {
@@ -326,6 +366,8 @@ export default {
         })
 
         this.fetchLogs()
+
+        sqmgrConfig().then(config => this.config = config)
     },
     computed: {
         poolConfig() {
@@ -361,10 +403,40 @@ export default {
             return this.locks && this.locks.getTime() < new Date().getTime()
         },
         numbersAreDrawn() {
-            return this.grid.homeNumbers || this.grid.awayNumbers
+            // Check both legacy single-set and new multi-set
+            if (this.grid.homeNumbers || this.grid.awayNumbers) {
+                return true
+            }
+            if (this.grid.numberSets && Object.keys(this.grid.numberSets).length > 0) {
+                return true
+            }
+            return false
+        },
+        hasMultipleNumberSets() {
+            return this.pool.numberSetConfig && this.pool.numberSetConfig !== 'same' &&
+                this.grid.numberSets && Object.keys(this.grid.numberSets).length > 0
+        },
+        sortedNumberSets() {
+            if (!this.hasMultipleNumberSets) return []
+            const order = ['q1', 'q2', 'q3', 'q4', 'half', 'final']
+            return order.filter(key => this.grid.numberSets[key])
+        },
+        numberSetLabels() {
+            return {
+                'q1': '1st',
+                'q2': '2nd',
+                'q3': '3rd',
+                'q4': '4th',
+                'half': 'Half',
+                'final': 'Final',
+            }
         },
         isAdmin() {
             return this.pool.isAdmin
+        },
+        numberSetConfigLabel() {
+            const found = this.config?.numberSetConfigs?.find(c => c.key === this.pool.numberSetConfig)
+            return found?.label || 'Standard'
         },
         numSquares() {
             return Object.values(this.squares).length
@@ -397,6 +469,14 @@ export default {
         this.updateTeamColors()
     },
     methods: {
+        scoreClass(homeAway, n) {
+            const classes = ['score', `${homeAway}-score`, `${homeAway}-score-${n}`]
+            if (this.hasMultipleNumberSets) {
+                classes.push('multi-set', `multi-set-${this.sortedNumberSets.length}`)
+            }
+
+            return classes
+        },
         fetchLogs() {
             if (!this.isAdmin) {
                 return
@@ -460,9 +540,18 @@ export default {
             ModalController.show('Manually Draw Numbers', ManualDraw, {
                 allSquaresClaimed: this.checkAllSquaresClaimed(),
                 grid: this.grid,
+                pool: this.pool,
             }, {
                 draw: nums => {
                     sqmgrClient.drawManualNumbers(this.token, this.grid.id, nums.homeNumbers, nums.awayNumbers)
+                        .then(grid => {
+                            this.grid = grid
+                            ModalController.hide()
+                        })
+                        .catch(err => ModalController.showError(err))
+                },
+                drawMultiSet: numberSets => {
+                    sqmgrClient.drawManualNumbersMultiSet(this.token, this.grid.id, numberSets)
                         .then(grid => {
                             this.grid = grid
                             ModalController.hide()
@@ -497,6 +586,16 @@ export default {
 
             return numbers[index]
         },
+        getNumberSetScore(setType, team, index) {
+            if (!this.grid.numberSets || !this.grid.numberSets[setType]) {
+                return ''
+            }
+            const numbers = this.grid.numberSets[setType][`${team}Numbers`]
+            if (!numbers) {
+                return ''
+            }
+            return numbers[index]
+        },
         updateTeamColors() {
 
             const squares = this.$refs.squares
@@ -525,8 +624,444 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@use '../variables.scss' as *;
+<style>
+:root {
+    --team-primary:    #000;
+    --team-secondary:  #666;
+    --grid-gray:       #ddd;
+
+
+    --minimal-spacing: 4px;
+    --spacing:         20px;
+
+    --midnight-gray:   #171717;
+    --light-gray:      #eee;
+    --gray:            #bbb;
+    --dark-gray:       #888;
+    --red:             #f44336;
+    --red-darker:      #e53935;
+    --border-color:    #ccc;
+    --hr-color:        #eee;
+    --font:            'Roboto';
+    --primary:         #4caf50;
+    --primary-darker:  #43a047;
+    --primary-darkest: #1b5e20;
+    --success:         #2196f3;
+    --warning:         #ffc107;
+}
+</style>
+<style lang="scss" scoped>
+@use '../variables' as *;
+@use "sass:color";
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Alfa+Slab+One');
+
+$expand-size: 8in;
+
+$q1-color:    #f0ad4e;
+$q2-color:    #ff7f7f;
+$q3-color:    #5cb85c;
+$q4-color:    #5bc0de;
+
+$q1-color:    #5b8c85;
+$q1-color:    #e8985e;
+$q1-color:    #7a6c5d;
+$q1-color:    #8b5e83;
+
+$q1-color:    #4477aa;
+$q2-color:    #ee6677;
+$q3-color:    #228833;
+$q4-color:    #ccbb44;
+
+
+section.grid {
+    position: relative;
+}
+
+p.customize {
+    margin-top: calc(-1 * var(--spacing));
+}
+
+div.grid-layout {
+    display:        flex;
+    flex-direction: column;
+    gap:            var(--spacing);
+}
+
+.grid-sidebar {
+    flex-shrink: 0;
+}
+
+// Side-by-side when viewport is wide enough
+@media (min-width: calc(100vmin + $standard-spacing + 415px)) {
+    div.grid-layout {
+        flex-direction: row;
+        align-items:    flex-start;
+    }
+
+    .grid-sidebar {
+        max-width: 400px;
+        order:     2;
+    }
+
+    div.squares-container {
+        flex:      1;
+        min-width: 0;
+        order:     1;
+    }
+
+    div.squares {
+        height: min(calc(100vmin - 280px - var(--spacing) * 4), 650px);
+        width:  min(calc(100vmin - 280px - var(--spacing) * 4), 650px);
+    }
+}
+
+div.squares-container {
+    width:    100%;
+    overflow: auto;
+}
+
+div.squares {
+    background-color:      $surface-elevated;
+    display:               grid;
+    grid-gap:              2px;
+    margin:                0 auto;
+    height:                calc(100vmin - var(--spacing) * 2);
+    width:                 calc(100vmin - var(--spacing) * 2);
+    grid-template-columns: repeat(2, 0.5fr) repeat(10, 1fr);
+    grid-template-rows:    repeat(2, 0.5fr) repeat(10, 1fr);
+}
+
+@media (max-width: 8.5in) {
+    div.expanded-grid {
+        width:  $expand-size;
+        height: $expand-size;
+    }
+}
+
+div.spacer {
+    background-color: transparent;
+    grid-column:      1/ span 2;
+    grid-row:         1/ span 2;
+}
+
+div.team {
+    background:  linear-gradient(var(--team-primary), var(--team-primary) calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), var(--team-secondary) calc(50% + 1px), var(--team-secondary) 100%);
+    color:       #fff;
+    font-family: 'Alfa Slab One', sans-serif;
+    font-size:   1.5em;
+    position:    relative;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+
+    &.home-team {
+        grid-column-start: 3;
+        grid-column-end:   13;
+    }
+
+    &.away-team {
+        background:     linear-gradient(90deg, var(--team-primary), var(--team-primary) calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), var(--team-secondary) calc(50% + 1px), var(--team-secondary) 100%);
+        grid-row-start: 3;
+        grid-row-end:   13;
+    }
+
+    span {
+        display:     block;
+        transform:   translate(-50%, -50%);
+        position:    absolute;
+        white-space: nowrap;
+        top:         50%;
+        left:        50%;
+    }
+
+    &.away-team span {
+        transform: translate(-50%, -50%) rotate(270deg);
+    }
+}
+
+div.std25 div.square span.name {
+    font-size: clamp(10px, 1.8vw, 30px);
+}
+
+div.score {
+    background-color: var(--grid-gray);
+    display:          flex;
+    align-items:      center;
+    justify-content:  center;
+    font-size:        clamp(10px, 1.2vw, 1.2vw);
+    font-weight:      bold;
+
+    &.home-score { grid-row-start: 2 }
+
+    &.home-score-0 { grid-column-start: 3 }
+
+    &.home-score-1 { grid-column-start: 4 }
+
+    &.home-score-2 { grid-column-start: 5 }
+
+    &.home-score-3 { grid-column-start: 6 }
+
+    &.home-score-4 { grid-column-start: 7 }
+
+    &.home-score-5 { grid-column-start: 8 }
+
+    &.home-score-6 { grid-column-start: 9 }
+
+    &.home-score-7 { grid-column-start: 10 }
+
+    &.home-score-8 { grid-column-start: 11 }
+
+    &.home-score-9 { grid-column-start: 12 }
+
+    &.away-score { grid-column-start: 2 }
+
+    &.away-score-0 { grid-row-start: 3 }
+
+    &.away-score-1 { grid-row-start: 4 }
+
+    &.away-score-2 { grid-row-start: 5 }
+
+    &.away-score-3 { grid-row-start: 6 }
+
+    &.away-score-4 { grid-row-start: 7 }
+
+    &.away-score-5 { grid-row-start: 8 }
+
+    &.away-score-6 { grid-row-start: 9 }
+
+    &.away-score-7 { grid-row-start: 10 }
+
+    &.away-score-8 { grid-row-start: 11 }
+
+    &.away-score-9 { grid-row-start: 12 }
+
+    &.multi-set {
+        display:               grid;
+        gap:                   2px;
+        align-items:           stretch;
+        color:                 rgba(255, 255, 255, 0.8);
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr;
+
+        &.away-score {
+            grid-template-rows: 2fr 2fr;
+            grid-template-columns: 1fr;
+        }
+
+        &.multi-set-4 {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        & > span:first-child {
+            background-color: $q1-color;
+        }
+
+        & > span:nth-child(2) {
+            background-color: $q2-color;
+        }
+
+        & > span:nth-child(3) {
+            background-color: $q3-color;
+        }
+
+        & > span:last-child {
+            background-color: $q4-color;
+        }
+
+
+        span {
+            display:         flex;
+            justify-content: center;
+            align-items:     center;
+            background:      red;
+        }
+    }
+}
+
+div.square {
+    border:          1px solid var(--grid-gray);
+    display:         flex;
+    font-family:     'Roboto Condensed', sans-serif;
+    font-size:       clamp(10px, 1.0vw, 20px);
+    align-items:     center;
+    justify-content: center;
+    position:        relative;
+    overflow:        hidden;
+    padding:         2px;
+    transition:      transform 100ms ease, box-shadow 100ms ease;
+
+    i.owned {
+        color:     $yellow;
+        font-size: 0.9em;
+        position:  absolute;
+        top:       2px;
+        left:      2px;
+    }
+
+    &:hover {
+        border-color:        #000;
+        box-shadow:          0 4px 12px rgba(0, 0, 0, 0.15);
+        cursor:              pointer;
+        user-select:         none;
+        -webkit-user-select: none;
+        -ms-user-select:     none;
+        -moz-user-select:    none;
+        transform:           scale(1.02);
+        z-index:             10;
+    }
+
+    &.unclaimed:hover {
+        border-color: var(--success);
+        box-shadow:   0 4px 12px rgba(33, 150, 243, 0.25);
+    }
+
+    &.unclaimed {
+        animation: subtle-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes subtle-pulse {
+        0%, 100% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f7f7f7 5px, #f7f7f7 10px); }
+        50% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f0f7f0 5px, #f0f7f0 10px); }
+    }
+
+    &.paid-full::after {
+        content:          '';
+        position:         absolute;
+        left:             2px;
+        height:           4px;
+        background-color: var(--success);
+        bottom:           2px;
+        right:            2px;
+        font-size:        0.8em;
+        color:            var(--success);
+    }
+
+    &.paid-partial {
+    }
+
+    &.paid-partial::after {
+        content:    '';
+        position:   absolute;
+        left:       2px;
+        height:     4px;
+        background: linear-gradient(90deg, #ffc107, #ffc107 50%, var(--gray) 50%);
+        bottom:     2px;
+        right:      2px;
+        font-size:  0.8em;
+        color:      var(--gray);
+    }
+
+    &.claimed {
+    }
+
+    &.claimed::after {
+        content:          '';
+        position:         absolute;
+        left:             2px;
+        height:           4px;
+        background-color: var(--gray);
+        bottom:           2px;
+        right:            2px;
+        font-size:        0.8em;
+        color:            var(--gray);
+    }
+
+    &.unclaimed.held {
+        border-color: var(--primary);
+        animation:    none;
+    }
+
+    &.highlighted {
+        box-shadow: 0 0 1px 1px var(--primary);
+    }
+
+    &.annotated {
+        background:   linear-gradient(rgba($primary, 0.1), rgba($primary, 0.05));
+        border-color: $primary;
+        box-shadow:   0 0 2px $primary;
+    }
+
+    @at-root .rollover &.secondary {
+        & > span.name,
+        & > .owned,
+        & > .square-id {
+            opacity: 0.2;
+        }
+    }
+
+    @at-root .is-locked.rollover &.secondary {
+        & > span.name,
+        & > .owned {
+            opacity: 0;
+        }
+    }
+
+    span.square-id {
+        position:  absolute;
+        top:       2px;
+        right:     2px;
+        font-size: 0.8em;
+        color:     var(--dark-gray);
+        z-index:   1;
+    }
+
+    span.name {
+        position: relative;
+        z-index:  2;
+    }
+}
+
+div.std25 div.square {
+    grid-row-start:    span 2;
+    grid-column-start: span 2;
+}
+
+div.std50 div.square {
+    grid-row-start:    span 1;
+    grid-column-start: span 2;
+}
+
+div.notes.notes-print::before {
+    content:   'Note from organizer:';
+    display:   block;
+    font-size: 0.8em;
+    color:     var(--gray);
+}
+
+div.notes.notes-print {
+    margin-bottom: var(--spacing);
+    white-space:   pre-wrap;
+    word-break:    break-word;
+}
+
+// Hide print-only notes on screen
+.notes-print {
+    display: none;
+}
+
+section.templates {
+    display: none;
+}
+
+section.audit-log {
+    margin-top: var(--spacing);
+}
+
+p.add-note {
+    font-size:     0.8em;
+    margin-bottom: var(--minimal-spacing);
+    text-align:    right;
+}
+
+@media (max-width: 800px) { // tablet breakpoint
+    div#grid-container {
+        overflow: auto;
+        width:    100%;
+    }
+
+    div.team {
+        font-size: 1.0em;
+    }
+}
 
 // Page Header
 .page-header {
@@ -718,13 +1253,13 @@ export default {
     }
 
     .action-divider {
-        display:     flex;
-        align-items: center;
-        gap:         $space-3;
-        padding:     $space-3 0;
-        color:       $text-secondary;
-        font-size:   0.75rem;
-        font-weight: 600;
+        display:        flex;
+        align-items:    center;
+        gap:            $space-3;
+        padding:        $space-3 0;
+        color:          $text-secondary;
+        font-size:      0.75rem;
+        font-weight:    600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
 
@@ -865,13 +1400,49 @@ export default {
     }
 }
 
+// Legend Card
+.legend-card {
+    .legend-items {
+        display:   flex;
+        flex-wrap: wrap;
+        gap:       $space-3;
+        padding:   $space-4 $space-5;
+    }
+
+    .legend-item {
+        display:     flex;
+        align-items: center;
+        gap:         $space-2;
+    }
+
+    .legend-color {
+        width:         16px;
+        height:        16px;
+        border-radius: $radius-sm;
+
+        &.q1, &.half { background: $q1-color; }
+
+        &.q2 { background: $q2-color; }
+
+        &.q3 { background: $q3-color; }
+
+        &.q4, &.final { background: $q4-color; }
+    }
+
+    .legend-label {
+        font-size:   0.875rem;
+        color:       $text-color;
+        font-weight: 500;
+    }
+}
+
 // Expand Button
 .expand-btn {
-    width:         100%;
-    display:       flex;
-    align-items:   center;
+    width:           100%;
+    display:         flex;
+    align-items:     center;
     justify-content: center;
-    gap:           $space-2;
+    gap:             $space-2;
 
     @media (min-width: 8.5in) {
         display: none;
@@ -880,390 +1451,11 @@ export default {
 
 // Logs Card
 .logs-card {
-    margin: $space-6 auto 0;
+    margin:    $space-6 auto 0;
     max-width: 1200px;
 
     :deep(section.audit-log) {
         margin-top: 0;
-    }
-}
-</style>
-<style lang="scss">
-@use "sass:color";
-@use '../variables' as *;
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Alfa+Slab+One');
-
-$expand-size: 8in;
-
-:root {
-    --team-primary:    #000;
-    --team-secondary:  #666;
-    --grid-gray:       #ddd;
-
-
-    --minimal-spacing: 4px;
-    --spacing:         20px;
-
-    --midnight-gray:   #171717;
-    --light-gray:      #eee;
-    --gray:            #bbb;
-    --dark-gray:       #888;
-    --red:             #f44336;
-    --red-darker:      #e53935;
-    --border-color:    #ccc;
-    --hr-color:        #eee;
-    --font:            'Roboto';
-    --primary:         #4caf50;
-    --primary-darker:  #43a047;
-    --primary-darkest: #1b5e20;
-    --success:         #2196f3;
-    --warning:         #ffc107;
-}
-
-section.grid {
-    position: relative;
-}
-
-p.customize {
-    margin-top: calc(-1 * var(--spacing));
-}
-
-div.grid-layout {
-    display:        flex;
-    flex-direction: column;
-    gap:            var(--spacing);
-}
-
-.grid-sidebar {
-    flex-shrink: 0;
-}
-
-// Side-by-side when viewport is wide enough
-@media (min-width: calc(100vmin + $standard-spacing + 415px)) {
-    div.grid-layout {
-        flex-direction: row;
-        align-items:    flex-start;
-    }
-
-    .grid-sidebar {
-        max-width: 400px;
-        order:     2;
-    }
-
-    div.squares-container {
-        flex:      1;
-        min-width: 0;
-        order:     1;
-    }
-
-    div.squares {
-        height: min(calc(100vmin - 280px - var(--spacing) * 4), 650px);
-        width:  min(calc(100vmin - 280px - var(--spacing) * 4), 650px);
-    }
-}
-
-div.squares-container {
-    width:    100%;
-    overflow: auto;
-}
-
-div.squares {
-    background-color:      $surface-elevated;
-    display:               grid;
-    grid-gap:              2px;
-    margin:                0 auto;
-    height:                calc(100vmin - var(--spacing) * 2);
-    width:                 calc(100vmin - var(--spacing) * 2);
-    grid-template-columns: repeat(2, 0.5fr) repeat(10, 1fr);
-    grid-template-rows:    repeat(2, 0.5fr) repeat(10, 1fr);
-}
-
-@media (max-width: 8.5in) {
-    div.expanded-grid {
-        width:  $expand-size;
-        height: $expand-size;
-    }
-}
-
-div.spacer {
-    background-color: transparent;
-    grid-column:      1/ span 2;
-    grid-row:         1/ span 2;
-}
-
-div.team {
-    background:  linear-gradient(var(--team-primary), var(--team-primary) calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), var(--team-secondary) calc(50% + 1px), var(--team-secondary) 100%);
-    color:       #fff;
-    font-family: 'Alfa Slab One', sans-serif;
-    font-size:   1.5em;
-    position:    relative;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-
-    &.home-team {
-        grid-column-start: 3;
-        grid-column-end:   13;
-    }
-
-    &.away-team {
-        background:     linear-gradient(90deg, var(--team-primary), var(--team-primary) calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), var(--team-secondary) calc(50% + 1px), var(--team-secondary) 100%);
-        grid-row-start: 3;
-        grid-row-end:   13;
-    }
-
-    span {
-        display:     block;
-        transform:   translate(-50%, -50%);
-        position:    absolute;
-        white-space: nowrap;
-        top:         50%;
-        left:        50%;
-    }
-
-    &.away-team span {
-        transform: translate(-50%, -50%) rotate(270deg);
-    }
-}
-
-div.std25 div.square span.name {
-    font-size: clamp(10px, 1.8vw, 30px);
-}
-
-div.score {
-    background-color: var(--grid-gray);
-    display:          flex;
-    align-items:      center;
-    justify-content:  center;
-    font-size:        clamp(10px, 1.2vw, 1.2vw);
-    font-weight:      bold;
-
-    &.home-score { grid-row-start: 2 }
-
-    &.home-score-0 { grid-column-start: 3 }
-
-    &.home-score-1 { grid-column-start: 4 }
-
-    &.home-score-2 { grid-column-start: 5 }
-
-    &.home-score-3 { grid-column-start: 6 }
-
-    &.home-score-4 { grid-column-start: 7 }
-
-    &.home-score-5 { grid-column-start: 8 }
-
-    &.home-score-6 { grid-column-start: 9 }
-
-    &.home-score-7 { grid-column-start: 10 }
-
-    &.home-score-8 { grid-column-start: 11 }
-
-    &.home-score-9 { grid-column-start: 12 }
-
-    &.away-score { grid-column-start: 2 }
-
-    &.away-score-0 { grid-row-start: 3 }
-
-    &.away-score-1 { grid-row-start: 4 }
-
-    &.away-score-2 { grid-row-start: 5 }
-
-    &.away-score-3 { grid-row-start: 6 }
-
-    &.away-score-4 { grid-row-start: 7 }
-
-    &.away-score-5 { grid-row-start: 8 }
-
-    &.away-score-6 { grid-row-start: 9 }
-
-    &.away-score-7 { grid-row-start: 10 }
-
-    &.away-score-8 { grid-row-start: 11 }
-
-    &.away-score-9 { grid-row-start: 12 }
-}
-
-div.square {
-    border:          1px solid var(--grid-gray);
-    display:         flex;
-    font-family:     'Roboto Condensed', sans-serif;
-    font-size:       clamp(10px, 1.0vw, 20px);
-    align-items:     center;
-    justify-content: center;
-    position:        relative;
-    overflow:        hidden;
-    padding:         2px;
-    transition:      transform 100ms ease, box-shadow 100ms ease;
-
-    i.owned {
-        color:     $yellow;
-        font-size: 0.9em;
-        position:  absolute;
-        top:       2px;
-        left:      2px;
-    }
-
-    &:hover {
-        border-color:        #000;
-        box-shadow:          0 4px 12px rgba(0, 0, 0, 0.15);
-        cursor:              pointer;
-        user-select:         none;
-        -webkit-user-select: none;
-        -ms-user-select:     none;
-        -moz-user-select:    none;
-        transform:           scale(1.02);
-        z-index:             10;
-    }
-
-    &.unclaimed:hover {
-        border-color: var(--success);
-        box-shadow:   0 4px 12px rgba(33, 150, 243, 0.25);
-    }
-
-    &.unclaimed {
-        animation: subtle-pulse 3s ease-in-out infinite;
-    }
-
-    @keyframes subtle-pulse {
-        0%, 100% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f7f7f7 5px, #f7f7f7 10px); }
-        50% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f0f7f0 5px, #f0f7f0 10px); }
-    }
-
-    &.paid-full::after {
-        content:          '';
-        position:         absolute;
-        left:             2px;
-        height:           4px;
-        background-color: var(--success);
-        bottom:           2px;
-        right:            2px;
-        font-size:        0.8em;
-        color:            var(--success);
-    }
-
-    &.paid-partial {
-    }
-
-    &.paid-partial::after {
-        content:    '';
-        position:   absolute;
-        left:       2px;
-        height:     4px;
-        background: linear-gradient(90deg, #ffc107, #ffc107 50%, var(--gray) 50%);
-        bottom:     2px;
-        right:      2px;
-        font-size:  0.8em;
-        color:      var(--gray);
-    }
-
-    &.claimed {
-    }
-
-    &.claimed::after {
-        content:          '';
-        position:         absolute;
-        left:             2px;
-        height:           4px;
-        background-color: var(--gray);
-        bottom:           2px;
-        right:            2px;
-        font-size:        0.8em;
-        color:            var(--gray);
-    }
-
-    &.unclaimed.held {
-        border-color: var(--primary);
-        animation:    none;
-    }
-
-    &.highlighted {
-        box-shadow: 0 0 1px 1px var(--primary);
-    }
-
-    &.annotated {
-        background:   linear-gradient(rgba($primary, 0.1), rgba($primary, 0.05));
-        border-color: $primary;
-        box-shadow:   0 0 2px $primary;
-    }
-
-    @at-root .rollover &.secondary {
-        & > span.name,
-        & > .owned,
-        & > .square-id {
-            opacity: 0.2;
-        }
-    }
-
-    @at-root .is-locked.rollover &.secondary {
-        & > span.name,
-        & > .owned {
-            opacity: 0;
-        }
-    }
-
-    span.square-id {
-        position:  absolute;
-        top:       2px;
-        right:     2px;
-        font-size: 0.8em;
-        color:     var(--dark-gray);
-        z-index:   1;
-    }
-
-    span.name {
-        position: relative;
-        z-index:  2;
-    }
-}
-
-div.std25 div.square {
-    grid-row-start:    span 2;
-    grid-column-start: span 2;
-}
-
-div.std50 div.square {
-    grid-row-start:    span 1;
-    grid-column-start: span 2;
-}
-
-div.notes.notes-print::before {
-    content:   'Note from organizer:';
-    display:   block;
-    font-size: 0.8em;
-    color:     var(--gray);
-}
-
-div.notes.notes-print {
-    margin-bottom: var(--spacing);
-    white-space:   pre-wrap;
-    word-break:    break-word;
-}
-
-// Hide print-only notes on screen
-.notes-print {
-    display: none;
-}
-
-section.templates {
-    display: none;
-}
-
-section.audit-log {
-    margin-top: var(--spacing);
-}
-
-p.add-note {
-    font-size:     0.8em;
-    margin-bottom: var(--minimal-spacing);
-    text-align:    right;
-}
-
-@media (max-width: 800px) { // tablet breakpoint
-    div#grid-container {
-        overflow: auto;
-        width:    100%;
-    }
-
-    div.team {
-        font-size: 1.0em;
     }
 }
 
@@ -1319,6 +1511,7 @@ p.add-note {
     .notes-screen { display: none; }
     .admin-card { display: none; }
     .settings-card { display: none; }
+    .legend-card { display: none; }
     .logs-card { display: none; }
     .expand-btn { display: none; }
     header { display: none; }

@@ -51,6 +51,15 @@ limitations under the License.
                             </select>
                         </div>
 
+                        <div class="field">
+                            <label for="number-set-config">Number Set Configuration</label>
+                            <select id="number-set-config" name="number-set-config" v-model="numberSetConfig">
+                                <option v-for="nsc in config.numberSetConfigs" :key="nsc.key" :value="nsc.key">
+                                    {{nsc.label}}
+                                </option>
+                            </select>
+                        </div>
+
                         <password-field v-model="joinPassword" :min-length="config.minJoinPasswordLength" />
 
                         <div class="buttons">
@@ -75,6 +84,17 @@ limitations under the License.
                         <li><strong>Standard, 50 squares:</strong> A 5x10 grid with 50 squares. Each square covers two possible home scores. Good for medium-sized groups.</li>
                         <li><strong>Standard, 25 squares:</strong> A 5x5 grid with 25 squares. Each square covers multiple score combinations. Ideal for smaller groups.</li>
                         <li><strong>Rollover, 100 squares:</strong> A 10x10 grid where each participant claims two squares: a primary and a secondary. You can designated specific games where the secondary square will be left blank which will allow the pot to "rollover" to the next game.</li>
+                    </ul>
+
+                    <h3>Number Set Configuration</h3>
+
+                    <ul>
+                        <li><strong>Same Set:</strong> The classic option. One set of numbers is drawn and used for all quarters.</li>
+                        <li><strong>1st, 2nd, 3rd, 4th:</strong> Different numbers for each quarter. Each quarter has its own random draw.</li>
+                        <li><strong>1st, 2nd, 3rd, Final:</strong> Different numbers for Q1-Q3 and Final score.</li>
+                        <li><strong>1st, 2nd, 3rd, 4th, Final:</strong> Different numbers for each quarter plus a separate set for the Final score.</li>
+                        <li><strong>Half, Final:</strong> Two sets - one for halftime, one for final score.</li>
+                        <li><strong>Half, 4th:</strong> Two sets - one for halftime, one for 4th quarter.</li>
                     </ul>
 
                     <h3>Join Password</h3>
@@ -103,6 +123,7 @@ limitations under the License.
                 config: null,
                 name: '',
                 gridType: '',
+                numberSetConfig: '',
                 joinPassword: '',
                 validationErrors: null,
                 creating: false,
@@ -112,6 +133,9 @@ limitations under the License.
             config(newVal) {
                 if (this.gridType === '') {
                     this.gridType = newVal.gridTypes[0].key
+                }
+                if (this.numberSetConfig === '' && newVal.numberSetConfigs) {
+                    this.numberSetConfig = newVal.numberSetConfigs[0].key
                 }
             },
         },
@@ -127,6 +151,7 @@ limitations under the License.
                 sqmgrClient.createPool({
                     name: this.name,
                     gridType: this.gridType,
+                    numberSetConfig: this.numberSetConfig,
                     joinPassword: this.joinPassword,
                     confirmJoinPassword: this.confirmJoinPassword,
                 })

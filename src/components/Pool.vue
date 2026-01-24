@@ -160,6 +160,13 @@ limitations under the License.
                             </div>
 
                             <div class="setting-item">
+                                <label>Number of Sets</label>
+                                <div class="setting-value">
+                                    <span class="badge number-set-badge">{{ numberSetConfigLabel }}</span>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
                                 <label>Claimed Squares</label>
                                 <div class="setting-value">
                                     <div class="progress-info">
@@ -255,6 +262,7 @@ limitations under the License.
 
 <script>
 import sqmgrClient from "@/models/sqmgrClient"
+import sqmgrConfig from "@/models/sqmgrConfig"
 import GridCustomize from '@/components/GridCustomize'
 import Common from '@/common'
 import draggable from 'vuedraggable'
@@ -284,6 +292,7 @@ export default {
             inviteToken: null,
             showCopiedMessage: false,
             squares: null,
+            config: null,
 
             // maximum number of grids per pool
             maxAllowed: 0,
@@ -303,6 +312,8 @@ export default {
 
         sqmgrClient.getPoolSquares(this.token)
             .then(squares => this.squares = squares)
+
+        sqmgrConfig().then(config => this.config = config)
 
         if (this.pool.isAdmin) {
             this.getInviteToken()
@@ -340,6 +351,10 @@ export default {
         },
         rollover() {
             return this.pool.gridType === 'roll100'
+        },
+        numberSetConfigLabel() {
+            const found = this.config?.numberSetConfigs?.find(c => c.key === this.pool.numberSetConfig)
+            return found?.label || 'Standard'
         },
         openAccessOnLock() {
             return this.pool.openAccessOnLock
@@ -1187,21 +1202,5 @@ div.copied {
 .copied-leave-to {
     opacity:   0;
     transform: translateY(-8px);
-}
-
-// Responsive adjustments
-@include tablet {
-    .pool-header h1 {
-        font-size: 1.5rem;
-    }
-
-    .setting-item {
-        flex-direction: column;
-        gap:            $space-2;
-
-        & > label {
-            flex: none;
-        }
-    }
 }
 </style>
