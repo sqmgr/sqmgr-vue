@@ -40,23 +40,22 @@ limitations under the License.
         <p class="version"><a href="https://github.com/sqmgr" :data-version="versionFull"
                               :title="versionFull">{{ versionFull }}</a>
         </p>
+
+        <p class="copyright">© 2019–{{year}} <a href="https://tompeters.me">Tom Peters</a>. All rights reserved.</p>
     </section>
 </template>
 
-<script>
-export default {
-    name: "Footer",
-    props: {
-        version: {
-            type: String,
-        },
-    },
-    computed: {
-        versionFull() {
-            return this.version || 'dev'
-        },
-    },
-}
+<script setup>
+import {computed} from "vue"
+
+const props = defineProps({
+    version: {
+        type: String,
+    }
+})
+
+const versionFull = computed(() => props.version || 'dev')
+const year = new Date().getFullYear()
 </script>
 
 <style scoped lang="scss">
@@ -66,6 +65,7 @@ section.footer {
     padding-bottom: $standard-spacing;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     nav {
         a {
@@ -91,6 +91,24 @@ section.footer {
         text-align: right;
         a {
             color: rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    p.copyright {
+        width: 100%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.875rem;
+        margin-top: $standard-spacing;
+
+        a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: underline;
+            transition: all 200ms ;
+
+            &:hover {
+                color: white;
+            }
         }
     }
 
