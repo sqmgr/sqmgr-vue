@@ -18,81 +18,151 @@ limitations under the License.
     <div :class="divClasses">
         <template v-if="grid">
             <div class="print-layout">
-                <h1 class="pool-name">Squares Pool - {{ pool.name }}</h1>
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="header-content">
+                        <router-link :to="`/pool/${pool.token}`" class="breadcrumb">
+                            <i class="fas fa-arrow-left"></i>
+                            {{ pool.name }}
+                        </router-link>
+                        <h1>{{ grid.name }}</h1>
+                        <div class="header-badges">
+                            <span v-if="hasEventDate" class="date-badge">
+                                <i class="fas fa-calendar-alt"></i>
+                                {{ eventDate }}
+                            </span>
+                            <span class="status-badge" :class="{ locked: isLocked, open: !isLocked }">
+                                <i :class="isLocked ? 'fas fa-lock' : 'fas fa-lock-open'"></i>
+                                {{ isLocked ? 'Locked' : 'Open' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-                <h2>{{ grid.name }}</h2>
-
-                <p v-if="hasEventDate" class="event-date">{{ eventDate }}</p>
-
-                <template v-if="isAdmin">
-                    <nav class="admin-menu">
-                        <h3>Admin Menu</h3>
-
-                        <button type="button" @click.prevent="customizeWasClicked">Customize</button>
-
-                        <template v-if="!numbersAreDrawn">
-                            <button type="button" @click.prevent="randomlyDrawNumbersWasClicked">Randomly Draw Numbers
-                            </button>
-                            <button type="button" @click.prevent="manuallyDrawNumbersWasClicked">Manually Draw Numbers
-                            </button>
-                        </template>
-                    </nav>
-                </template>
+                <!-- Print-only header -->
+                <h1 class="pool-name print-only">Squares Pool - {{ pool.name }}</h1>
+                <h2 class="print-only">{{ grid.name }}</h2>
+                <p v-if="hasEventDate" class="event-date print-only">{{ eventDate }}</p>
 
                 <div class="grid-layout">
                     <aside class="grid-sidebar">
-                        <!-- Notes for screen only -->
-                        <div v-if="grid.settings.notes" class="notes notes-screen">{{ grid.settings.notes }}</div>
+                        <!-- Admin Menu Card -->
+                        <template v-if="isAdmin">
+                            <div class="card admin-card">
+                                <div class="card-header">
+                                    <i class="fas fa-cog"></i>
+                                    <h2>Admin Actions</h2>
+                                </div>
+                                <div class="admin-actions">
+                                    <button type="button" class="action-btn" @click.prevent="customizeWasClicked">
+                                        <i class="fas fa-paint-brush"></i>
+                                        <div class="action-text">
+                                            <span class="action-label">Customize</span>
+                                            <span class="action-desc">Edit team names, colors, and settings</span>
+                                        </div>
+                                    </button>
 
-                        <div class="grid-metadata">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>{{ pool.token }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Pool Name</td>
-                                    <td>
-                                        <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Event</td>
-                                    <td>{{ grid.name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Date of Game</td>
-                                    <td>{{ eventDate }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>{{ pool.gridType }}</td>
-                                </tr>
-                                <tr>
-                                    <td>State</td>
-                                    <td v-if="isLocked"><i class="fas fa-lock"></i> Squares are locked</td>
-                                    <td v-else><i class="fas fa-lock-open"></i> Squares are open</td>
-                                </tr>
-                                <tr>
-                                    <td>Draw Type</td>
-                                    <td>
-                                        <span v-if="!grid.homeNumbers && !grid.awayNumbers">TBD</span>
-                                        <span v-else-if="grid.manualDraw">Manual Input</span>
-                                        <span v-else>Random</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                    <template v-if="!numbersAreDrawn">
+                                        <div class="action-divider">
+                                            <span>Draw Numbers</span>
+                                        </div>
+                                        <button type="button" class="action-btn" @click.prevent="randomlyDrawNumbersWasClicked">
+                                            <i class="fas fa-dice"></i>
+                                            <div class="action-text">
+                                                <span class="action-label">Random Draw</span>
+                                                <span class="action-desc">Let the system randomly assign numbers</span>
+                                            </div>
+                                        </button>
+                                        <button type="button" class="action-btn" @click.prevent="manuallyDrawNumbersWasClicked">
+                                            <i class="fas fa-edit"></i>
+                                            <div class="action-text">
+                                                <span class="action-label">Manual Entry</span>
+                                                <span class="action-desc">Enter the numbers yourself</span>
+                                            </div>
+                                        </button>
+                                    </template>
+                                    <template v-else>
+                                        <div class="numbers-drawn-notice">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Numbers have been drawn</span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Notes Card for screen only -->
+                        <div v-if="grid.settings.notes" class="card notes-card notes-screen">
+                            <div class="card-header">
+                                <i class="fas fa-sticky-note"></i>
+                                <h2>Organizer Note</h2>
+                            </div>
+                            <div class="notes-content">{{ grid.settings.notes }}</div>
                         </div>
 
-                        <p class="expand-grid">
-                            <a v-if="expandedGrid" href="#" @click.prevent="expandedGrid = false"><i
-                                class="fas fa-compress-arrows-alt"></i> Shrink</a>
-                            <a v-else href="#" @click.prevent="expandedGrid = true"><i
-                                class="fas fa-expand-arrows-alt"></i>
-                                Expand</a>
-                        </p>
+                        <!-- Settings Card -->
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <i class="fas fa-info-circle"></i>
+                                <h2>Game Details</h2>
+                            </div>
+                            <div class="settings-list">
+                                <div class="setting-item">
+                                    <label>Pool</label>
+                                    <div class="setting-value">
+                                        <router-link :to="`/pool/${pool.token}`" class="pool-link">
+                                            <i class="fas fa-layer-group"></i>
+                                            {{ pool.name }}
+                                        </router-link>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Token</label>
+                                    <div class="setting-value">
+                                        <code class="token">{{ pool.token }}</code>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Event Date</label>
+                                    <div class="setting-value">{{ eventDate }}</div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Grid Type</label>
+                                    <div class="setting-value">
+                                        <span class="badge">{{ pool.gridType }}</span>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>State</label>
+                                    <div class="setting-value">
+                                        <span class="status-badge" :class="{ locked: isLocked, open: !isLocked }">
+                                            <i :class="isLocked ? 'fas fa-lock' : 'fas fa-lock-open'"></i>
+                                            {{ isLocked ? 'Locked' : 'Open' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Numbers</label>
+                                    <div class="setting-value">
+                                        <span v-if="!grid.homeNumbers && !grid.awayNumbers" class="numbers-pending">
+                                            <i class="fas fa-clock"></i> Pending
+                                        </span>
+                                        <span v-else-if="grid.manualDraw" class="numbers-manual">
+                                            <i class="fas fa-edit"></i> Manual
+                                        </span>
+                                        <span v-else class="numbers-random">
+                                            <i class="fas fa-dice"></i> Random
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expand/Shrink Button -->
+                        <button type="button" class="expand-btn secondary" @click.prevent="expandedGrid = !expandedGrid">
+                            <i :class="expandedGrid ? 'fas fa-compress-arrows-alt' : 'fas fa-expand-arrows-alt'"></i>
+                            {{ expandedGrid ? 'Shrink Grid' : 'Expand Grid' }}
+                        </button>
                     </aside>
 
                     <div class="squares-container">
@@ -129,10 +199,19 @@ limitations under the License.
                 <div v-if="grid.settings.notes" class="notes notes-print">{{ grid.settings.notes }}</div>
             </div>
 
+            <!-- Activity Log Card -->
             <template v-if="isAdmin">
-                <Logs :pool-config="poolConfig" :show-add-note="false" :logs="logs"/>
-                <Pagination :current-page="currentLogPage" :per-page="logsPerPage" :total="numLogs"
-                            @page="goToLogsPage"/>
+                <div class="card logs-card">
+                    <div class="card-header">
+                        <i class="fas fa-history"></i>
+                        <h2>Activity Log</h2>
+                    </div>
+                    <Logs :pool-config="poolConfig" :show-add-note="false" :logs="logs"/>
+                    <div class="card-footer" v-if="numLogs > logsPerPage">
+                        <Pagination :current-page="currentLogPage" :per-page="logsPerPage" :total="numLogs"
+                                    @page="goToLogsPage"/>
+                    </div>
+                </div>
             </template>
         </template>
     </div>
@@ -446,38 +525,366 @@ export default {
 }
 </script>
 
-<!-- TODO - Make this scoped again -->
 <style scoped lang="scss">
-.grid-metadata {
-    margin-bottom: var(--spacing);
+@use '../variables.scss' as *;
 
-    table {
-        td:first-child {
-            white-space: nowrap;
+// Page Header
+.page-header {
+    margin-bottom: $space-6;
+
+    .header-content {
+        display:        flex;
+        flex-direction: column;
+        gap:            $space-2;
+    }
+
+    .breadcrumb {
+        display:     inline-flex;
+        align-items: center;
+        gap:         $space-2;
+        font-size:   0.875rem;
+        color:       $text-secondary;
+        transition:  color var(--transition-fast);
+
+        &:hover {
+            color:           $primary;
+            text-decoration: none;
+        }
+
+        i {
+            font-size: 0.75rem;
+        }
+    }
+
+    h1 {
+        margin:    0;
+        font-size: 2rem;
+
+        @include mobile {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-badges {
+        display:   flex;
+        flex-wrap: wrap;
+        gap:       $space-2;
+    }
+}
+
+.date-badge {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           $space-2;
+    padding:       $space-1 $space-3;
+    background:    $light-gray;
+    border-radius: $radius-full;
+    font-size:     0.8125rem;
+    color:         $text-secondary;
+
+    i {
+        font-size: 0.75rem;
+    }
+}
+
+.status-badge {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           $space-2;
+    padding:       $space-1 $space-3;
+    border-radius: $radius-full;
+    font-size:     0.8125rem;
+    font-weight:   500;
+
+    &.open {
+        background: rgba($primary, 0.1);
+        color:      $primary-dark;
+    }
+
+    &.locked {
+        background: rgba($red, 0.1);
+        color:      $red;
+    }
+
+    i {
+        font-size: 0.75rem;
+    }
+}
+
+// Print-only elements
+.print-only {
+    display: none;
+}
+
+// Card Styles
+.card {
+    background:    #fff;
+    border:        1px solid $light-gray;
+    border-radius: $radius-xl;
+    box-shadow:    var(--shadow-sm);
+    overflow:      hidden;
+    margin-bottom: $space-5;
+}
+
+.card-header {
+    display:       flex;
+    align-items:   center;
+    gap:           $space-3;
+    padding:       $space-4 $space-5;
+    border-bottom: 1px solid $light-gray;
+    background:    linear-gradient(180deg, #fafafa 0%, #fff 100%);
+
+    h2 {
+        margin:    0;
+        font-size: 1.125rem;
+    }
+
+    > i {
+        color:     $text-secondary;
+        font-size: 1rem;
+    }
+}
+
+.card-footer {
+    padding:    $space-4 $space-5;
+    border-top: 1px solid $light-gray;
+    background: #fafafa;
+}
+
+// Admin Actions Card
+.admin-card {
+    .admin-actions {
+        padding: $space-3;
+    }
+
+    .action-btn {
+        display:       flex;
+        align-items:   center;
+        gap:           $space-4;
+        width:         100%;
+        padding:       $space-4;
+        background:    #fff;
+        border:        1px solid $light-gray;
+        border-radius: $radius-lg;
+        text-align:    left;
+        cursor:        pointer;
+        transition:    all var(--transition-fast);
+        margin-bottom: $space-2;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &:hover {
+            background:   rgba($primary, 0.03);
+            border-color: rgba($primary, 0.3);
+            transform:    none;
+            box-shadow:   none;
+        }
+
+        > i {
+            flex-shrink:     0;
+            width:           40px;
+            height:          40px;
+            display:         flex;
+            align-items:     center;
+            justify-content: center;
+            background:      $light-gray;
+            border-radius:   $radius-md;
+            color:           $text-secondary;
+            font-size:       1rem;
+        }
+
+        .action-text {
+            flex:           1;
+            display:        flex;
+            flex-direction: column;
+            gap:            $space-1;
+        }
+
+        .action-label {
+            font-weight: 600;
+            color:       $text-color;
+        }
+
+        .action-desc {
+            font-size: 0.8125rem;
+            color:     $text-secondary;
+
+            @include mobile {
+                display: none;
+            }
+        }
+    }
+
+    .action-divider {
+        display:     flex;
+        align-items: center;
+        gap:         $space-3;
+        padding:     $space-3 0;
+        color:       $text-secondary;
+        font-size:   0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &::before,
+        &::after {
+            content:    '';
+            flex:       1;
+            height:     1px;
+            background: $light-gray;
+        }
+    }
+
+    .numbers-drawn-notice {
+        display:       flex;
+        align-items:   center;
+        gap:           $space-3;
+        padding:       $space-4;
+        background:    rgba($primary, 0.05);
+        border-radius: $radius-lg;
+        color:         $primary-dark;
+        font-weight:   500;
+        margin-top:    $space-3;
+
+        i {
+            color: $primary;
         }
     }
 }
 
-nav.admin-menu {
-    border:        1px solid var(--border-color);
-    margin-bottom: var(--spacing);
-    padding:       var(--spacing);
+// Notes Card
+.notes-card {
+    .notes-content {
+        padding:     $space-4 $space-5;
+        white-space: pre-wrap;
+        word-break:  break-word;
+        line-height: 1.6;
+        color:       $text-secondary;
+    }
+}
 
-    button {
-        margin-right: var(--minimal-spacing);
+// Settings Card
+.settings-card {
+    .settings-list {
+        padding: $space-2 0;
+    }
 
-        &:last-child {
-            margin-right: 0;
+    .setting-item {
+        display:     flex;
+        align-items: flex-start;
+        padding:     $space-3 $space-5;
+        gap:         $space-4;
+        transition:  background-color var(--transition-fast);
+
+        &:hover {
+            background-color: #fafafa;
         }
 
-        @media (max-width: 800px) { // tablet breakpoint
-            display:       block;
-            margin-bottom: var(--minimal-spacing);
+        > label {
+            flex:        0 0 100px;
+            font-size:   0.875rem;
+            color:       $text-secondary;
+            padding-top: $space-1;
 
-            &:last-child {
-                margin-bottom: 0;
+            @include mobile {
+                flex: 0 0 80px;
             }
         }
+
+        .setting-value {
+            flex:        1;
+            display:     flex;
+            align-items: center;
+            gap:         $space-2;
+            min-height:  24px;
+        }
+    }
+
+    .pool-link {
+        display:     inline-flex;
+        align-items: center;
+        gap:         $space-2;
+        color:       $text-color;
+        font-weight: 500;
+        transition:  color var(--transition-fast);
+
+        &:hover {
+            color:           $primary;
+            text-decoration: none;
+        }
+
+        i {
+            color:     $text-secondary;
+            font-size: 0.875rem;
+        }
+    }
+
+    code.token {
+        background:    $light-gray;
+        padding:       $space-1 $space-2;
+        border-radius: $radius-sm;
+        font-size:     0.8125rem;
+        font-family:   monospace;
+    }
+
+    .badge {
+        display:        inline-block;
+        padding:        $space-1 $space-3;
+        background:     $light-gray;
+        border-radius:  $radius-full;
+        font-size:      0.8125rem;
+        font-weight:    500;
+        text-transform: uppercase;
+    }
+
+    .numbers-pending,
+    .numbers-manual,
+    .numbers-random {
+        display:     inline-flex;
+        align-items: center;
+        gap:         $space-2;
+        font-size:   0.875rem;
+
+        i {
+            font-size: 0.75rem;
+        }
+    }
+
+    .numbers-pending {
+        color: $text-secondary;
+    }
+
+    .numbers-manual {
+        color: $primary-dark;
+    }
+
+    .numbers-random {
+        color: $primary-dark;
+    }
+}
+
+// Expand Button
+.expand-btn {
+    width:         100%;
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+    gap:           $space-2;
+
+    @media (min-width: 8.5in) {
+        display: none;
+    }
+}
+
+// Logs Card
+.logs-card {
+    margin: $space-6 auto 0;
+    max-width: 1200px;
+
+    :deep(section.audit-log) {
+        margin-top: 0;
     }
 }
 </style>
@@ -817,22 +1224,17 @@ div.std50 div.square {
     grid-column-start: span 2;
 }
 
-div.notes::before {
+div.notes.notes-print::before {
     content:   'Note from organizer:';
     display:   block;
     font-size: 0.8em;
     color:     var(--gray);
 }
 
-div.notes {
+div.notes.notes-print {
     margin-bottom: var(--spacing);
     white-space:   pre-wrap;
     word-break:    break-word;
-
-    &.notes-screen {
-        border-bottom:  1px solid $border-color;
-        padding-bottom: $standard-spacing;
-    }
 }
 
 // Hide print-only notes on screen
@@ -854,12 +1256,6 @@ p.add-note {
     text-align:    right;
 }
 
-@media (min-width: 8.5in) {
-    p.expand-grid {
-        display: none;
-    }
-}
-
 @media (max-width: 800px) { // tablet breakpoint
     div#grid-container {
         overflow: auto;
@@ -869,10 +1265,6 @@ p.add-note {
     div.team {
         font-size: 1.0em;
     }
-}
-
-p.event-date {
-    display: none;
 }
 
 @media print {
@@ -897,31 +1289,43 @@ p.event-date {
         min-width: auto;
     }
 
-    h1 {
+    // Show print-only elements
+    .print-only {
+        display: block !important;
+    }
+
+    h1.pool-name.print-only {
         font-size:        1.0em;
         font-weight:      normal;
         margin-bottom:    0;
         page-break-after: avoid;
     }
 
-    h2 {
+    h2.print-only {
         font-size:        1.4em;
         margin-bottom:    0;
         page-break-after: avoid;
     }
 
-    p.event-date {
-        display:          block;
+    p.event-date.print-only {
         margin-bottom:    0;
         font-size:        0.7em;
         color:            var(--gray);
         page-break-after: avoid;
     }
 
-    // Hide screen notes when printing
-    .notes-screen {
-        display: none;
-    }
+    // Hide screen-only elements
+    .page-header { display: none; }
+    .notes-screen { display: none; }
+    .admin-card { display: none; }
+    .settings-card { display: none; }
+    .logs-card { display: none; }
+    .expand-btn { display: none; }
+    header { display: none; }
+    footer { display: none; }
+    div.content { padding: 0; }
+    nav { display: none; }
+    section.audit-log { display: none; }
 
     // Show print notes on page 2
     .notes-print {
@@ -935,13 +1339,6 @@ p.event-date {
         page-break-inside: avoid;
     }
 
-    header { display: none; }
-    footer { display: none; }
-    div.content { padding: 0; }
-    nav { display: none; }
-    div.grid-metadata { display: none; }
-    section.audit-log { display: none; }
-    p.expand-grid { display: none; }
     div.score {
         background:  transparent;
         border:      2px solid var(--team-secondary-no-white);
