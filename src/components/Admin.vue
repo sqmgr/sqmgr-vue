@@ -61,75 +61,169 @@ limitations under the License.
                 <div v-else-if="statsError" class="error">{{ statsError }}</div>
             </div>
 
-            <h2>All Pools</h2>
-
-            <div class="search-bar">
-                <input
-                    type="text"
-                    v-model="searchQuery"
-                    placeholder="Search pools by name..."
-                    @input="debouncedSearch"
-                />
+            <div class="tabs">
+                <button
+                    type="button"
+                    :class="['tab-btn', { active: activeTab === 'pools' }]"
+                    @click="activeTab = 'pools'"
+                >
+                    <i class="fas fa-th-large"></i>
+                    Pools
+                </button>
+                <button
+                    type="button"
+                    :class="['tab-btn', { active: activeTab === 'users' }]"
+                    @click="switchToUsersTab"
+                >
+                    <i class="fas fa-users"></i>
+                    Users
+                </button>
             </div>
 
-            <div v-if="poolsLoading" class="loading">Loading pools...</div>
-            <div v-else-if="poolsError" class="error">{{ poolsError }}</div>
-            <div v-else-if="pools && pools.pools">
-                <table class="pools-table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Created By</th>
-                        <th>Created</th>
-                        <th>Type</th>
-                        <th>Grids</th>
-                        <th>Members</th>
-                        <th>Claimed</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="pool in pools.pools" :key="pool.token">
-                        <td>
-                            <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
-                        </td>
-                        <td>
-                            <router-link :to="`/admin/user/${pool.ownerId}`">{{ formatOwner(pool) }}</router-link>
-                        </td>
-                        <td>{{ formatDate(pool.created) }}</td>
-                        <td>{{ pool.gridType }}</td>
-                        <td>{{ formatNumber(pool.gridCount) }}</td>
-                        <td>{{ formatNumber(pool.memberCount) }}</td>
-                        <td>{{ formatNumber(pool.claimedCount) }}</td>
-                        <td>
+            <div v-if="activeTab === 'pools'" class="tab-content">
+                <h2>All Pools</h2>
+
+                <div class="search-bar">
+                    <input
+                        type="text"
+                        v-model="searchQuery"
+                        placeholder="Search pools by name..."
+                        @input="debouncedSearch"
+                    />
+                </div>
+
+                <div v-if="poolsLoading" class="loading">Loading pools...</div>
+                <div v-else-if="poolsError" class="error">{{ poolsError }}</div>
+                <div v-else-if="pools && pools.pools">
+                    <table class="pools-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created By</th>
+                            <th>Created</th>
+                            <th>Type</th>
+                            <th>Grids</th>
+                            <th>Members</th>
+                            <th>Claimed</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="pool in pools.pools" :key="pool.token">
+                            <td>
+                                <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
+                            </td>
+                            <td>
+                                <router-link :to="`/admin/user/${pool.ownerId}`">{{ formatOwner(pool) }}</router-link>
+                            </td>
+                            <td>{{ formatDate(pool.created) }}</td>
+                            <td>{{ pool.gridType }}</td>
+                            <td>{{ formatNumber(pool.gridCount) }}</td>
+                            <td>{{ formatNumber(pool.memberCount) }}</td>
+                            <td>{{ formatNumber(pool.claimedCount) }}</td>
+                            <td>
                                 <span :class="['status', pool.archived ? 'archived' : 'active']">
                                     {{ pool.archived ? 'Archived' : 'Active' }}
                                 </span>
-                        </td>
-                        <td>
-                            <button
-                                type="button"
-                                class="small"
-                                @click="confirmJoinPool(pool)"
-                                :disabled="joiningPool === pool.token"
-                            >
-                                {{ joiningPool === pool.token ? 'Joining...' : 'Join' }}
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="small"
+                                    @click="confirmJoinPool(pool)"
+                                    :disabled="joiningPool === pool.token"
+                                >
+                                    {{ joiningPool === pool.token ? 'Joining...' : 'Join' }}
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <pagination
-                    v-if="pools.total > poolsPerPage"
-                    :total="pools.total"
-                    :per-page="poolsPerPage"
-                    :current-page="currentPage"
-                    @page="goToPage"
-                />
+                    <pagination
+                        v-if="pools.total > poolsPerPage"
+                        :total="pools.total"
+                        :per-page="poolsPerPage"
+                        :current-page="currentPage"
+                        @page="goToPage"
+                    />
+                </div>
+                <div v-else class="no-pools">No pools found.</div>
             </div>
-            <div v-else class="no-pools">No pools found.</div>
+
+            <div v-if="activeTab === 'users'" class="tab-content">
+                <h2>All Users</h2>
+
+                <div class="search-bar">
+                    <input
+                        type="text"
+                        v-model="usersSearchQuery"
+                        placeholder="Search users by email..."
+                        @input="debouncedUsersSearch"
+                    />
+                </div>
+
+                <div v-if="usersLoading" class="loading">Loading users...</div>
+                <div v-else-if="usersError" class="error">{{ usersError }}</div>
+                <div v-else-if="users && users.users">
+                    <table class="pools-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Type</th>
+                            <th class="sortable" @click="sortUsers('poolsOwned')">
+                                Pools Owned
+                                <span class="sort-icon" v-if="usersSortColumn === 'poolsOwned'">
+                                    {{ usersSortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th class="sortable" @click="sortUsers('poolsJoined')">
+                                Pools Joined
+                                <span class="sort-icon" v-if="usersSortColumn === 'poolsJoined'">
+                                    {{ usersSortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th class="sortable" @click="sortUsers('created')">
+                                Created
+                                <span class="sort-icon" v-if="usersSortColumn === 'created'">
+                                    {{ usersSortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th>Admin</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="user in users.users" :key="user.id">
+                            <td>
+                                <router-link :to="`/admin/user/${user.id}`">{{ user.id }}</router-link>
+                            </td>
+                            <td>
+                                <router-link :to="`/admin/user/${user.id}`">{{ formatUserEmail(user) }}</router-link>
+                            </td>
+                            <td>{{ user.store === 'auth0' ? 'Registered' : 'Guest' }}</td>
+                            <td>{{ formatNumber(user.poolsOwned) }}</td>
+                            <td>{{ formatNumber(user.poolsJoined) }}</td>
+                            <td>{{ formatDate(user.created) }}</td>
+                            <td>
+                                <span v-if="user.isAdmin" class="status active">Yes</span>
+                                <span v-else class="status-muted">No</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <pagination
+                        v-if="users.total > usersPerPage"
+                        :total="users.total"
+                        :per-page="usersPerPage"
+                        :current-page="usersCurrentPage"
+                        @page="goToUsersPage"
+                    />
+                </div>
+                <div v-else class="no-pools">No users found.</div>
+            </div>
         </div>
     </section>
 </template>
@@ -145,6 +239,8 @@ export default {
     components: {Pagination},
     data() {
         return {
+            activeTab: 'pools',
+
             stats: null,
             statsLoading: true,
             statsError: null,
@@ -168,6 +264,17 @@ export default {
             poolsPerPage: 25,
 
             joiningPool: null,
+
+            users: null,
+            usersLoading: false,
+            usersError: null,
+            usersSearchQuery: '',
+            usersSearchTimeout: null,
+            usersCurrentPage: 1,
+            usersPerPage: 25,
+            usersFetched: false,
+            usersSortColumn: 'created',
+            usersSortDirection: 'desc',
         }
     },
     async beforeMount() {
@@ -247,6 +354,58 @@ export default {
             }
         },
 
+        switchToUsersTab() {
+            this.activeTab = 'users'
+            if (!this.usersFetched) {
+                this.fetchUsers()
+            }
+        },
+
+        async fetchUsers(offset = 0) {
+            this.usersLoading = true
+            this.usersError = null
+            try {
+                this.users = await sqmgrClient.getAdminUsers(
+                    this.usersSearchQuery,
+                    offset,
+                    this.usersPerPage,
+                    this.usersSortColumn,
+                    this.usersSortDirection
+                )
+                this.usersCurrentPage = Math.floor(offset / this.usersPerPage) + 1
+                this.usersFetched = true
+            } catch (err) {
+                this.usersError = this.getErrorMessage(err)
+            } finally {
+                this.usersLoading = false
+            }
+        },
+
+        sortUsers(column) {
+            if (this.usersSortColumn === column) {
+                this.usersSortDirection = this.usersSortDirection === 'asc' ? 'desc' : 'asc'
+            } else {
+                this.usersSortColumn = column
+                this.usersSortDirection = 'desc'
+            }
+            this.fetchUsers(0)
+        },
+
+        debouncedUsersSearch() {
+            if (this.usersSearchTimeout) {
+                clearTimeout(this.usersSearchTimeout)
+            }
+            this.usersSearchTimeout = setTimeout(() => {
+                this.usersCurrentPage = 1
+                this.fetchUsers(0)
+            }, 300)
+        },
+
+        goToUsersPage(page) {
+            const offset = (page - 1) * this.usersPerPage
+            this.fetchUsers(offset)
+        },
+
         formatDate(dateStr) {
             const date = new Date(dateStr)
             return date.toLocaleDateString()
@@ -260,6 +419,16 @@ export default {
                 return `Guest #${pool.ownerId}`
             }
             return `User #${pool.ownerId}`
+        },
+
+        formatUserEmail(user) {
+            if (user.email) {
+                return user.email
+            }
+            if (user.store === 'sqmgr') {
+                return `Guest #${user.id}`
+            }
+            return `User #${user.id}`
         },
 
         formatNumber(num) {
@@ -293,13 +462,60 @@ h2 {
     margin-bottom: var(--spacing);
 }
 
+.tabs {
+    display:       flex;
+    gap:           $standard-spacing * 1.5;
+    margin-top:    $standard-spacing;
+    margin-bottom: $standard-spacing;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-btn {
+    all:           unset;
+    display:       inline-flex;
+    align-items:   center;
+    gap:           8px;
+    padding:       12px 4px;
+    font-size:     1rem;
+    font-weight:   500;
+    color:         #666;
+    cursor:        pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    transition:    color 0.2s, border-color 0.2s;
+
+    i {
+        font-size: 1.1em;
+    }
+
+    &:hover:not(.active) {
+        color:        #333;
+        border-color: #ccc;
+    }
+
+    &.active {
+        color:        var(--primary);
+        border-color: var(--primary);
+    }
+}
+
+.tab-content {
+    h2 {
+        margin-top: var(--spacing);
+    }
+}
+
+.status-muted {
+    color: #999;
+}
+
 .stats-container {
     border-radius:  $radius-lg;
     padding:        $standard-spacing;
-    display:        inline-flex;
+    display:        flex;
     flex-direction: column;
     gap:            $standard-spacing;
-    align-items:    center;
+    align-items:    flex-start;
     box-shadow:     $shadow-card;
     margin-bottom:  $standard-spacing;
 
@@ -404,6 +620,21 @@ h2 {
         background:  #f8f9fa;
         color:       $text-color;
         font-weight: 600;
+
+        &.sortable {
+            cursor:      pointer;
+            user-select: none;
+
+            &:hover {
+                background: #eee;
+            }
+
+            .sort-icon {
+                margin-left: 4px;
+                font-size:   0.75em;
+                color:       var(--primary);
+            }
+        }
     }
 
     tbody tr:hover {

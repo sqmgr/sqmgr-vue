@@ -347,6 +347,14 @@ class sqmgrClient {
         if (includeArchived) query.includeArchived = 'true'
         return this.request(`/admin/user/${userId}/pools`, query)
     }
+
+    async getAdminUsers(search = '', offset = 0, limit = 25, sortBy = '', sortDir = 'desc') {
+        const query = { offset, limit }
+        if (search) query.search = search
+        if (sortBy) query.sortBy = sortBy
+        if (sortDir) query.sortDir = sortDir
+        return this.request('/admin/users', query)
+    }
 }
 
 export default new sqmgrClient()
