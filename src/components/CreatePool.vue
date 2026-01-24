@@ -17,93 +17,214 @@ limitations under the License.
 <template>
     <section class="create">
         <template v-if="!config">
-            <p>Loading...</p>
+            <div class="loading-state">
+                <loading-indicator />
+                <p>Loading configuration...</p>
+            </div>
         </template>
         <template v-else>
-            <h1>Create New Squares Pool</h1>
+            <div class="page-header">
+                <h1>Create New Squares Pool</h1>
+                <p class="subtitle">Set up your football squares pool in seconds</p>
+            </div>
 
-            <div class="columns">
-                <form class="col-2" @submit.prevent="submit">
-                    <validation-errors v-if="validationErrors" :validation-errors="validationErrors" />
+            <div class="create-layout">
+                <div class="form-section">
+                    <form @submit.prevent="submit">
+                        <validation-errors v-if="validationErrors" :validation-errors="validationErrors" />
 
-                    <fieldset>
-                        <legend>Basic Settings</legend>
-
-                        <div class="field">
-                            <label for="name">Squares Pool Name</label>
-                            <input type="text"
-                                   id="name"
-                                   name="name"
-                                   placeholder="Squares Pool Name"
-                                   autocomplete="off"
-                                   v-model="name"
-                                   :maxlength="config.nameMaxLength"
-                                   required
-                            />
+                        <div class="form-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div>
+                                    <h2>Pool Details</h2>
+                                    <p>Give your pool a name that participants will recognize</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="field">
+                                    <label for="name">Pool Name</label>
+                                    <input type="text"
+                                           id="name"
+                                           name="name"
+                                           placeholder="e.g. Big Game Pool, Office Pool, etc."
+                                           autocomplete="off"
+                                           v-model="name"
+                                           :maxlength="config.nameMaxLength"
+                                           required
+                                    />
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="field">
-                            <label for="grid-type">Grid Configuration</label>
-                            <select id="grid-type" name="grid-type" v-model="gridType">
-                                <option v-for="gridType in config.gridTypes" :key="gridType.key" :value="gridType.key">
-                                    {{gridType.description}}
-                                </option>
-                            </select>
+                        <div class="form-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-th"></i>
+                                </div>
+                                <div>
+                                    <h2>Grid Configuration</h2>
+                                    <p>Choose how many squares in your pool</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="option-cards">
+                                    <label v-for="gt in config.gridTypes"
+                                           :key="gt.key"
+                                           class="option-card"
+                                           :class="{ selected: gridType === gt.key }">
+                                        <input type="radio"
+                                               name="grid-type"
+                                               :value="gt.key"
+                                               v-model="gridType" />
+                                        <span class="option-content">
+                                            <span class="option-title">{{ gt.description }}</span>
+                                            <span class="option-desc">{{ getGridDescription(gt.key) }}</span>
+                                        </span>
+                                        <span class="check-icon"><i class="fas fa-check"></i></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="field">
-                            <label for="number-set-config">Number Set Configuration</label>
-                            <select id="number-set-config" name="number-set-config" v-model="numberSetConfig">
-                                <option v-for="nsc in config.numberSetConfigs" :key="nsc.key" :value="nsc.key">
-                                    {{nsc.label}}
-                                </option>
-                            </select>
+                        <div class="form-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-random"></i>
+                                </div>
+                                <div>
+                                    <h2>Number Set</h2>
+                                    <p>When should numbers change during the game?</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="option-cards">
+                                    <label v-for="nsc in config.numberSetConfigs"
+                                           :key="nsc.key"
+                                           class="option-card"
+                                           :class="{ selected: numberSetConfig === nsc.key }">
+                                        <input type="radio"
+                                               name="number-set-config"
+                                               :value="nsc.key"
+                                               v-model="numberSetConfig" />
+                                        <span class="option-content">
+                                            <span class="option-title">{{ nsc.label }}</span>
+                                            <span class="option-desc">{{ getNumberSetDescription(nsc.key) }}</span>
+                                        </span>
+                                        <span class="check-icon"><i class="fas fa-check"></i></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
-                        <password-field v-model="joinPassword" :min-length="config.minJoinPasswordLength" />
-
-                        <div class="buttons">
-                            <loading-indicator v-if="this.creating" class="small" />
-                            <button type="submit" name="submit" :disabled="this.creating">Create</button>
+                        <div class="form-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div>
+                                    <h2>Security</h2>
+                                    <p>Set a password for participants to join</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <password-field v-model="joinPassword" :min-length="config.minJoinPasswordLength" />
+                            </div>
                         </div>
-                    </fieldset>
-                </form>
-                <div class="help col-2">
-                    <h2>Help</h2>
 
-                    <p>You can run multiple games from the same pool which is perfect for tracking a full season
-                        where participants keep the same squares across games.</p>
-
-                    <p>You'll have further opportunity to customize the look &amp; feel after you create your squares
-                        pool.</p>
-
-                    <h3>Grid Configuration</h3>
-
-                    <p>Determine how many squares you want in your pool. The <strong>Standard</strong> is 100, but there are options for fewer squares.</p>
-
-                    <ul>
-                        <li><strong>Standard, 100 squares:</strong> A 10x10 grid with 100 squares. The classic choice for most pools.</li>
-                        <li><strong>Standard, 50 squares:</strong> A 5x10 grid with 50 squares. Each square covers two possible home scores. Good for medium-sized groups.</li>
-                        <li><strong>Standard, 25 squares:</strong> A 5x5 grid with 25 squares. Each square covers multiple score combinations. Ideal for smaller groups.</li>
-                        <li><strong>Rollover, 100 squares:</strong> A 10x10 grid where each participant claims two squares: a primary and a secondary. You can designated specific games where the secondary square will be left blank which will allow the pot to "rollover" to the next game.</li>
-                    </ul>
-
-                    <h3>Number Set Configuration</h3>
-
-                    <p>Do you want number changes mid-game? The <strong>Standard</strong> is to use the same number throughout the game, but you can change them by half or even quarter if you want.</p>
-
-                    <ul>
-                        <li><strong>Standard:</strong> The classic option. One set of numbers is drawn and used for all quarters.</li>
-                        <li><strong>1st, 2nd, 3rd, Final:</strong> Different numbers for Q1, Q2, Q3 and the Final score.</li>
-                        <li><strong>Half, Final:</strong> Two sets - one for halftime, one for the final score.</li>
-                        <li><strong>1st, 2nd, 3rd, 4th:</strong> Different numbers for each quarter.</li>
-                        <li><strong>Half, 4th:</strong> Two sets - one for halftime, one for the end of the 4th quarter.</li>
-                    </ul>
-
-                    <h3>Join Password</h3>
-
-                    <p>The password will be required by people you invite before they are allowed to view the board. You'll have the option to make it optional.</p>
+                        <div class="submit-section">
+                            <div class="submit-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>You can customize colors and settings after creation</span>
+                            </div>
+                            <button type="submit" class="lg" name="submit" :disabled="this.creating">
+                                <loading-indicator v-if="this.creating" class="small" />
+                                <template v-else>
+                                    <i class="fas fa-plus-circle"></i>
+                                    Create Pool
+                                </template>
+                            </button>
+                        </div>
+                    </form>
                 </div>
+
+                <aside class="help-section">
+                    <div class="help-card">
+                        <div class="help-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Quick Tips</h3>
+                        </div>
+                        <ul class="tips-list">
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Run multiple games from one pool for a full season</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Participants keep the same squares across games</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Customize colors and team names after creation</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="help-card expandable" :class="{ expanded: showGridHelp }">
+                        <button type="button" class="help-toggle" @click="showGridHelp = !showGridHelp">
+                            <div class="help-header">
+                                <i class="fas fa-th"></i>
+                                <h3>Grid Types Explained</h3>
+                            </div>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="help-content">
+                            <dl class="help-definitions">
+                                <dt>Standard, 100 squares</dt>
+                                <dd>A 10x10 grid. The classic choice for most pools.</dd>
+
+                                <dt>Standard, 50 squares</dt>
+                                <dd>A 5x10 grid. Each square covers two possible home scores. Good for medium-sized groups.</dd>
+
+                                <dt>Standard, 25 squares</dt>
+                                <dd>A 5x5 grid. Each square covers multiple score combinations. Ideal for smaller groups.</dd>
+
+                                <dt>Rollover, 100 squares</dt>
+                                <dd>Each participant claims a primary and secondary square. You can leave the secondary blank to rollover the pot.</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="help-card expandable" :class="{ expanded: showNumberHelp }">
+                        <button type="button" class="help-toggle" @click="showNumberHelp = !showNumberHelp">
+                            <div class="help-header">
+                                <i class="fas fa-random"></i>
+                                <h3>Number Sets Explained</h3>
+                            </div>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </button>
+                        <div class="help-content">
+                            <dl class="help-definitions">
+                                <dt>Standard</dt>
+                                <dd>One set of numbers for all quarters.</dd>
+
+                                <dt>1st, 2nd, 3rd, Final</dt>
+                                <dd>Different numbers for Q1, Q2, Q3 and the Final score.</dd>
+
+                                <dt>Half, Final</dt>
+                                <dd>Two sets - one for halftime, one for the final score.</dd>
+
+                                <dt>1st, 2nd, 3rd, 4th</dt>
+                                <dd>Different numbers for each quarter.</dd>
+
+                                <dt>Half, 4th</dt>
+                                <dd>Two sets - one for halftime, one for end of 4th quarter.</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </template>
     </section>
@@ -130,6 +251,8 @@ limitations under the License.
                 joinPassword: '',
                 validationErrors: null,
                 creating: false,
+                showGridHelp: false,
+                showNumberHelp: false,
             }
         },
         watch: {
@@ -168,6 +291,25 @@ limitations under the License.
                         ModalController.showError(err)
                     })
                     .finally(() => this.creating = false)
+            },
+            getGridDescription(key) {
+                const descriptions = {
+                    'std100': 'Classic 10x10 grid for most pools',
+                    'std50': 'Good for medium-sized groups',
+                    'std25': 'Ideal for smaller groups',
+                    'roll100': 'With rollover feature for multi-game pools',
+                }
+                return descriptions[key] || ''
+            },
+            getNumberSetDescription(key) {
+                const descriptions = {
+                    'standard': 'One set of numbers drawn for all quarters',
+                    '1-2-3-final': 'New numbers drawn for Q1, Q2, Q3 and Final',
+                    'half-final': 'Numbers change at halftime and for the final',
+                    '1-2-3-4': 'New numbers drawn for each quarter',
+                    'half-4': 'Numbers change at halftime and end of 4th',
+                }
+                return descriptions[key] || ''
             }
         }
     }
@@ -175,9 +317,391 @@ limitations under the License.
 
 <style scoped lang="scss">
 @use '../variables.scss' as *;
-ul {
+
+section.create {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.loading-state {
+    text-align: center;
+    padding: $space-16 0;
+
+    p {
+        color: $dark-gray;
+        margin-top: $space-4;
+    }
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: $space-10;
+
+    h1 {
+        font-size: 2.25em;
+        margin-bottom: $space-2;
+        color: $text-color;
+    }
+
+    .subtitle {
+        font-size: 1.1em;
+        color: $dark-gray;
+        margin: 0;
+    }
+}
+
+.create-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: $space-8;
+    align-items: start;
+}
+
+// Form Section
+.form-section {
+    form {
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+}
+
+.form-card {
+    @include card-base($radius-xl);
+    margin-bottom: $space-5;
+    overflow: hidden;
+
+    .card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: $space-4;
+        padding: $space-5;
+        background: linear-gradient(to bottom, $surface-sunken, transparent);
+        border-bottom: 1px solid $light-gray;
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, rgba($primary, 0.15) 0%, rgba($primary, 0.05) 100%);
+            border-radius: $radius-lg;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            i {
+                font-size: 1.1em;
+                color: $primary;
+            }
+        }
+
+        h2 {
+            font-size: 1.15em;
+            margin: 0 0 $space-1;
+            color: $text-color;
+        }
+
+        p {
+            font-size: 0.875em;
+            color: $dark-gray;
+            margin: 0;
+        }
+    }
+
+    .card-content {
+        padding: $space-5;
+    }
+
+    .field {
+        margin-bottom: 0;
+
+        label {
+            font-size: 0.9em;
+        }
+    }
+
+    .field-hint {
+        font-size: 0.8em;
+        color: $dark-gray;
+        margin: $space-2 0 0;
+        font-style: italic;
+    }
+}
+
+// Option Cards (for grid type selection)
+.option-cards {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+}
+
+.option-card {
+    display: flex;
+    align-items: center;
+    padding: $space-4;
+    border: 2px solid $light-gray;
+    border-radius: $radius-lg;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background: $surface-elevated;
+    margin: 0;
+    font-weight: normal;
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    .option-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: $space-1;
+    }
+
+    .option-title {
+        font-weight: 600;
+        color: $text-color;
+        font-size: 0.95em;
+    }
+
+    .option-desc {
+        font-size: 0.8em;
+        color: $dark-gray;
+    }
+
+    .check-icon {
+        width: 24px;
+        height: 24px;
+        border: 2px solid $gray;
+        border-radius: $radius-full;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-fast);
+        flex-shrink: 0;
+
+        i {
+            font-size: 0.7em;
+            color: white;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+    }
+
+    &:hover {
+        border-color: $primary-light;
+        background: $primary-50;
+    }
+
+    &.selected {
+        border-color: $primary;
+        background: $primary-50;
+
+        .check-icon {
+            background: $primary;
+            border-color: $primary;
+
+            i {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// Submit Section
+.submit-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-5;
+    background: $surface-sunken;
+    border-radius: $radius-xl;
+    margin-top: $space-6;
+
+    .submit-info {
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        font-size: 0.875em;
+        color: $dark-gray;
+
+        i {
+            color: $primary;
+        }
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        padding: $space-3 $space-6;
+
+        i {
+            font-size: 1em;
+        }
+    }
+}
+
+// Help Section (Sidebar)
+.help-section {
+    position: sticky;
+    top: $space-5;
+}
+
+.help-card {
+    @include card-base($radius-xl);
+    margin-bottom: $space-4;
+    overflow: hidden;
+
+    .help-header {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+
+        i {
+            font-size: 1em;
+            color: $primary;
+        }
+
+        h3 {
+            font-size: 1em;
+            margin: 0;
+            font-weight: 600;
+            color: $text-color;
+        }
+    }
+
+    &:not(.expandable) {
+        padding: $space-5;
+
+        .help-header {
+            margin-bottom: $space-4;
+        }
+    }
+
+    &.expandable {
+        .help-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: $space-4 $space-5;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            text-align: left;
+            color: inherit;
+
+            &:hover {
+                background: $surface-sunken;
+                transform: none;
+            }
+
+            .toggle-icon {
+                color: $dark-gray;
+                transition: transform var(--transition-base);
+            }
+        }
+
+        .help-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-slow);
+
+            & > * {
+                padding-top: $standard-spacing;
+            }
+        }
+
+        &.expanded {
+            .help-toggle .toggle-icon {
+                transform: rotate(180deg);
+            }
+
+            .help-content {
+                max-height: 500px;
+            }
+        }
+    }
+}
+
+.tips-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
     li {
-        margin: $standard-spacing;
+        display: flex;
+        align-items: flex-start;
+        gap: $space-3;
+        padding: $space-2 0;
+        font-size: 0.9em;
+        color: $text-color;
+
+        i {
+            color: $primary;
+            font-size: 0.75em;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+    }
+}
+
+.help-definitions {
+    padding: 0 $space-5 $space-5;
+    margin: 0;
+
+    dt {
+        font-weight: 600;
+        font-size: 0.9em;
+        color: $text-color;
+        margin-top: $space-3;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    dd {
+        font-size: 0.85em;
+        color: $dark-gray;
+        margin: $space-1 0 0 0;
+        line-height: 1.5;
+    }
+}
+
+// Responsive
+@include tablet {
+    .create-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .help-section {
+        position: static;
+    }
+
+    .submit-section {
+        flex-direction: column;
+        gap: $space-4;
+        text-align: center;
+
+        button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+}
+
+@include mobile {
+    .page-header h1 {
+        font-size: 1.75em;
+    }
+
+    .form-card .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $space-3;
     }
 }
 </style>
