@@ -149,7 +149,7 @@ limitations under the License.
                                     </div>
                                 </div>
                                 <div class="setting-item">
-                                    <label>Number of Sets</label>
+                                    <label>Number Rotation</label>
                                     <div class="setting-value">
                                         <span class="badge">{{ numberSetConfigLabel }}</span>
                                     </div>

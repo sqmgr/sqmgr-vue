@@ -43,8 +43,9 @@ limitations under the License.
                         :class="['tab', { active: activeTab === setType, complete: isSetComplete(setType) }]"
                         @click="activeTab = setType"
                     >
-                        <span class="tab-label">{{ getSetLabel(setType) }}</span>
                         <i v-if="isSetComplete(setType)" class="fas fa-check-circle"></i>
+                        <i v-else class="fa-regular fa-circle"></i>
+                        <span class="tab-label">{{ getSetLabel(setType) }}</span>
                     </button>
                 </div>
 
@@ -239,51 +240,6 @@ limitations under the License.
         padding:     $minimal-spacing;
         text-align:  center;
         text-shadow: 0 0 3px rgba(black, 0.8);
-    }
-
-    .tabs {
-        display: flex;
-        gap: $minimal-spacing;
-        margin-bottom: $standard-spacing;
-        flex-wrap: wrap;
-    }
-
-    .tab {
-        padding: $minimal-spacing $standard-spacing;
-        border: 1px solid $border-color;
-        border-radius: $radius-md;
-        background: $surface-elevated;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: $minimal-spacing;
-        transition: all 0.2s ease;
-
-        &:hover {
-            background: $light-gray;
-        }
-
-        &.active {
-            background: $primary;
-            color: white;
-            border-color: $primary;
-        }
-
-        &.complete {
-            border-color: $primary;
-
-            i {
-                color: $primary;
-            }
-
-            &.active i {
-                color: white;
-            }
-        }
-
-        .tab-label {
-            font-weight: 600;
-        }
     }
 
     .tab-content {

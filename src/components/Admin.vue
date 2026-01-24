@@ -513,43 +513,6 @@ h2 {
     margin-bottom: var(--spacing);
 }
 
-.tabs {
-    display:       flex;
-    gap:           $standard-spacing * 1.5;
-    margin-top:    $standard-spacing;
-    margin-bottom: $standard-spacing;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.tab-btn {
-    all:           unset;
-    display:       inline-flex;
-    align-items:   center;
-    gap:           8px;
-    padding:       12px 4px;
-    font-size:     1rem;
-    font-weight:   500;
-    color:         #666;
-    cursor:        pointer;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -1px;
-    transition:    color 0.2s, border-color 0.2s;
-
-    i {
-        font-size: 1.1em;
-    }
-
-    &:hover:not(.active) {
-        color:        #333;
-        border-color: #ccc;
-    }
-
-    &.active {
-        color:        var(--primary);
-        border-color: var(--primary);
-    }
-}
-
 .tab-content {
     h2 {
         margin-top: var(--spacing);
