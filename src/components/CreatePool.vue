@@ -79,6 +79,8 @@ limitations under the License.
 
                     <h3>Grid Configuration</h3>
 
+                    <p>Determine how many squares you want in your pool. The <strong>Standard</strong> is 100, but there are options for fewer squares.</p>
+
                     <ul>
                         <li><strong>Standard, 100 squares:</strong> A 10x10 grid with 100 squares. The classic choice for most pools.</li>
                         <li><strong>Standard, 50 squares:</strong> A 5x10 grid with 50 squares. Each square covers two possible home scores. Good for medium-sized groups.</li>
@@ -88,8 +90,10 @@ limitations under the License.
 
                     <h3>Number Set Configuration</h3>
 
+                    <p>Do you want number changes mid-game? The <strong>Standard</strong> is to use the same number throughout the game, but you can change them by half or even quarter if you want.</p>
+
                     <ul>
-                        <li><strong>Single:</strong> The classic option. One set of numbers is drawn and used for all quarters.</li>
+                        <li><strong>Standard:</strong> The classic option. One set of numbers is drawn and used for all quarters.</li>
                         <li><strong>1st, 2nd, 3rd, Final:</strong> Different numbers for Q1, Q2, Q3 and the Final score.</li>
                         <li><strong>Half, Final:</strong> Two sets - one for halftime, one for the final score.</li>
                         <li><strong>1st, 2nd, 3rd, 4th:</strong> Different numbers for each quarter.</li>
