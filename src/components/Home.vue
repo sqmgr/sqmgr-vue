@@ -69,178 +69,177 @@ limitations under the License.
                              /images/grid@2x.png 2x,
                              /images/grid@3x.png 3x"
                      src="/images/grid.png"
-                     alt="Football Squares Grid Example" />
+                     alt="Football Squares Grid Example"/>
             </div>
         </div>
     </section>
 </template>
 
 <script>
-    export default {
-        name: "Home",
-    }
+export default {
+    name: "Home",
+}
 </script>
 
 <style lang="scss" scoped>
-    @use '../variables.scss' as *;
+@use '../variables.scss' as *;
 
-    section.index {
-        max-width:  1200px;
-        margin:     0 auto;
-        padding:    $standard-spacing * 2 0;
+section.index {
+    max-width: 1200px;
+    margin:    0 auto;
+    padding:   $standard-spacing * 2 0;
+}
+
+.section-header {
+    text-align:    center;
+    margin-bottom: $standard-spacing * 2;
+
+    h2 {
+        font-size:     2em;
+        margin-bottom: calc($standard-spacing / 2);
+        color:         $text-color;
     }
 
-    .section-header {
-        text-align:    center;
-        margin-bottom: $standard-spacing * 2;
+    p {
+        font-size: 1.15em;
+        color:     $dark-gray;
+        margin:    0;
+    }
+}
 
-        h2 {
-            font-size:     2em;
-            margin-bottom: calc($standard-spacing / 2);
-            color:         $text-color;
-        }
+.features-grid {
+    display:               grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:              $standard-spacing * 1.5;
+    margin-bottom:         $standard-spacing * 3;
+}
 
-        p {
-            font-size: 1.15em;
-            color:     $dark-gray;
-            margin:    0;
+.feature-card {
+    background:    $surface-elevated;
+    border:        1px solid $light-gray;
+    border-radius: $radius-2xl;
+    padding:       $standard-spacing * 1.5;
+    text-align:    center;
+    transition:    all 0.3s ease;
+    box-shadow:    $shadow-card;
+
+    &:hover {
+        transform:    translateY(-8px);
+        box-shadow:   0 12px 24px rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+    }
+
+    .icon-container {
+        width:           64px;
+        height:          64px;
+        background:      linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary, 0.05) 100%);
+        border-radius:   $radius-2xl;
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+        margin:          0 auto $standard-spacing;
+
+        i {
+            font-size: 1.75em;
+            color:     $primary;
         }
     }
 
+    h3 {
+        font-size:     1.25em;
+        margin-bottom: $standard-spacing * 0.75;
+        color:         $text-color;
+    }
+
+    & > p {
+        color:         $dark-gray;
+        line-height:   1.6;
+        font-size:     0.95em;
+        margin-bottom: $standard-spacing;
+    }
+
+    ul.benefits {
+        list-style: none;
+        margin:     0;
+        padding:    0;
+        text-align: left;
+
+        li {
+            padding:   $standard-spacing * 0.4 0 0 $standard-spacing * 1.25;
+            position:  relative;
+            color:     $text-color;
+            font-size: 0.9em;
+
+            &::before {
+                font-family: 'Font Awesome 7 Pro';
+                font-weight: 900;
+                content:     '\f00c';
+                position:    absolute;
+                left:        0;
+                color:       $primary;
+                font-size:   0.8em;
+            }
+        }
+    }
+}
+
+.grid-showcase {
+    text-align: center;
+
+    .showcase-intro {
+        font-size:     1.1em;
+        color:         $dark-gray;
+        margin-bottom: $standard-spacing * 1.5;
+    }
+
+    .grid-image {
+        perspective: 1000px;
+
+        img {
+            max-width:     100%;
+            width:         800px;
+            transform:     rotateX(8deg) rotateY(-3deg) rotateZ(1deg);
+            box-shadow:    0 25px 50px rgba(0, 0, 0, 0.15);
+            border-radius: $radius-xl;
+            border:        8px solid white;
+            transition:    all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+            &:hover {
+                transform:  rotateX(0) rotateY(0) rotateZ(0) scale(1.02);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+}
+
+@media(max-width: 900px) {
     .features-grid {
-        display:               grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap:              $standard-spacing * 1.5;
-        margin-bottom:         $standard-spacing * 3;
+        grid-template-columns: 1fr;
+        grid-gap:              $standard-spacing;
     }
 
     .feature-card {
-        background:     $surface-elevated;
-        border:         1px solid $light-gray;
-        border-radius:  $radius-2xl;
-        padding:        $standard-spacing * 1.5;
-        text-align:     center;
-        transition:     all 0.3s ease;
-        box-shadow:     $shadow-card;
+        padding: $standard-spacing;
 
         &:hover {
-            transform:  translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            border-color: transparent;
-        }
-
-        .icon-container {
-            width:            64px;
-            height:           64px;
-            background:       linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary, 0.05) 100%);
-            border-radius:    $radius-2xl;
-            display:          flex;
-            align-items:      center;
-            justify-content:  center;
-            margin:           0 auto $standard-spacing;
-
-            i {
-                font-size: 1.75em;
-                color:     $primary;
-            }
-        }
-
-        h3 {
-            font-size:     1.25em;
-            margin-bottom: $standard-spacing * 0.75;
-            color:         $text-color;
-        }
-
-        & > p {
-            color:         $dark-gray;
-            line-height:   1.6;
-            font-size:     0.95em;
-            margin-bottom: $standard-spacing;
-        }
-
-        ul.benefits {
-            list-style:    none;
-            margin:        0;
-            padding:       0;
-            text-align:    left;
-
-            li {
-                padding:       $standard-spacing * 0.4 0;
-                padding-left:  $standard-spacing * 1.25;
-                position:      relative;
-                color:         $text-color;
-                font-size:     0.9em;
-
-                &::before {
-                    content:     '\f00c';
-                    font-family: 'Font Awesome 5 Free';
-                    font-weight: 900;
-                    position:    absolute;
-                    left:        0;
-                    color:       $primary;
-                    font-size:   0.8em;
-                }
-            }
+            transform: translateY(-4px);
         }
     }
 
     .grid-showcase {
-        text-align: center;
-
-        .showcase-intro {
-            font-size:     1.1em;
-            color:         $dark-gray;
-            margin-bottom: $standard-spacing * 1.5;
-        }
-
         .grid-image {
-            perspective: 1000px;
-
             img {
-                max-width:     100%;
-                width:         800px;
-                transform:     rotateX(8deg) rotateY(-3deg) rotateZ(1deg);
-                box-shadow:    0 25px 50px rgba(0, 0, 0, 0.15);
-                border-radius: $radius-xl;
-                border:        8px solid white;
-                transition:    all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transform:     none;
+                width:         100%;
+                box-shadow:    0 10px 30px rgba(0, 0, 0, 0.12);
+                border-width:  4px;
+                border-radius: $radius-lg;
 
                 &:hover {
-                    transform:  rotateX(0) rotateY(0) rotateZ(0) scale(1.02);
-                    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+                    transform: scale(1.01);
                 }
             }
         }
     }
-
-    @media(max-width: 900px) {
-        .features-grid {
-            grid-template-columns: 1fr;
-            grid-gap: $standard-spacing;
-        }
-
-        .feature-card {
-            padding: $standard-spacing;
-
-            &:hover {
-                transform: translateY(-4px);
-            }
-        }
-
-        .grid-showcase {
-            .grid-image {
-                img {
-                    transform:     none;
-                    width:         100%;
-                    box-shadow:    0 10px 30px rgba(0, 0, 0, 0.12);
-                    border-width:  4px;
-                    border-radius: $radius-lg;
-
-                    &:hover {
-                        transform: scale(1.01);
-                    }
-                }
-            }
-        }
-    }
+}
 </style>
