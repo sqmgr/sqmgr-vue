@@ -268,7 +268,7 @@ import EventBus from "@/models/EventBus"
 import Pagination from "@/components/Pagination"
 import sqmgrConfig from "@/models/sqmgrConfig"
 import ManualDraw from "@/components/ManualDraw"
-import normalizeColor from "@/utils/normalizeColor" // load this right away
+import normalizeColor from "@/utils/normalizeColor" // utility to normalize color values
 
 const intColor = (color) => {
     if (!Array.isArray(color) || color.length !== 4) {
@@ -630,7 +630,6 @@ export default {
     --team-secondary:  #666;
     --grid-gray:       #ddd;
 
-
     --minimal-spacing: 4px;
     --spacing:         20px;
 
@@ -656,16 +655,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Alfa+Slab+One');
 
 $expand-size: 8in;
-
-$q1-color:    #f0ad4e;
-$q2-color:    #ff7f7f;
-$q3-color:    #5cb85c;
-$q4-color:    #5bc0de;
-
-$q1-color:    #5b8c85;
-$q1-color:    #e8985e;
-$q1-color:    #7a6c5d;
-$q1-color:    #8b5e83;
 
 $q1-color:    #4477aa;
 $q2-color:    #ee6677;
@@ -872,7 +861,6 @@ div.score {
             display:         flex;
             justify-content: center;
             align-items:     center;
-            background:      red;
         }
     }
 }
@@ -1332,7 +1320,7 @@ p.add-note {
             flex:        1;
             display:     flex;
             align-items: center;
-            align-self: center;
+            align-self:  center;
             gap:         $space-2;
             min-height:  24px;
         }
