@@ -1279,12 +1279,24 @@ p.add-note {
 
 // Notes Card
 .notes-card {
+    background:   rgba($yellow, 0.08);
+    border-color: rgba($yellow, 0.35);
+
+    .card-header {
+        background:   rgba($yellow, 0.12);
+        border-color: rgba($yellow, 0.25);
+
+        i {
+            color: darken($yellow, 15%);
+        }
+    }
+
     .notes-content {
         padding:     $space-4 $space-5;
         white-space: pre-wrap;
         word-break:  break-word;
         line-height: 1.6;
-        color:       $text-secondary;
+        color:       $text-color;
     }
 }
 
