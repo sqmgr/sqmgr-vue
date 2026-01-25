@@ -163,6 +163,11 @@ limitations under the License.
                                 <label>Number Rotation</label>
                                 <div class="setting-value">
                                     <span class="badge number-set-badge">{{ numberSetConfigLabel }}</span>
+                                    <button v-if="pool.isAdmin && pool.canChangeNumberSetConfig"
+                                            class="edit-link"
+                                            @click.prevent="openChangeNumberSetConfig">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
                                 </div>
                             </div>
 
@@ -269,6 +274,7 @@ import draggable from 'vuedraggable'
 import ModalController from "@/controllers/ModalController"
 import toClipboard from "@/utils/toClipboard"
 import ManageMembership from "@/components/ManageMembership"
+import ChangeNumberSetConfig from "@/components/ChangeNumberSetConfig"
 
 export default {
     name: "Pool",
@@ -388,6 +394,16 @@ export default {
                 {
                     updated: () => {
                         this.getInviteToken()
+                    },
+                })
+        },
+        openChangeNumberSetConfig() {
+            ModalController.show('Change Number Rotation', ChangeNumberSetConfig, {
+                    pool: this.pool,
+                },
+                {
+                    updated: (pool) => {
+                        this.pool = pool
                     },
                 })
         },

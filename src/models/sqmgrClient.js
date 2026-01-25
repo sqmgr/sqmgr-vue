@@ -158,6 +158,13 @@ class sqmgrClient {
         return this.updatePool(token, {action: 'unarchive'})
     }
 
+    changeNumberSetConfig(token, numberSetConfig) {
+        return this.updatePool(token, {
+            action: 'changeNumberSetConfig',
+            numberSetConfig
+        })
+    }
+
     getPoolSquares(token) {
         return this.request(`/pool/${token}/square`)
     }
