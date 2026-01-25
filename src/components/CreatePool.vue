@@ -303,11 +303,11 @@ limitations under the License.
             },
             getNumberSetDescription(key) {
                 const descriptions = {
-                    'standard': 'One set of numbers for the whole game',
-                    '123f': 'Numbers for first, second and third quarters and the final score',
-                    'hf': 'Numbers for first half and final',
-                    '1234': 'Numbers for all four quarters. Ignores overtime',
-                    'h4': 'Numbers for first half and second half. Ignores overtime',
+                    'standard': 'Drawn numbers remain the same for the whole game',
+                    '123f': 'Different numbers for first, second and third quarters and the final score',
+                    'hf': 'Different numbers for first half and final',
+                    '1234': 'Different numbers for all four quarters. Ignores overtime',
+                    'h4': 'Different numbers for first half and second half. Ignores overtime',
                 }
                 return descriptions[key] || ''
             }
