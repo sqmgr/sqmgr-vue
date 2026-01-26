@@ -27,9 +27,9 @@ limitations under the License.
                         <p>Please correct the following errors:</p>
 
                         <ul>
-                            <li>{{errKey}}
+                            <li>{{ errKey }}
                                 <ul>
-                                    <li v-for="err in errList" :key="err">{{err}}</li>
+                                    <li v-for="err in errList" :key="err">{{ err }}</li>
                                 </ul>
                             </li>
                         </ul>
@@ -40,7 +40,7 @@ limitations under the License.
                 <legend>General Settings</legend>
 
                 <div class="field">
-                    <label for="label" class="optional">Label</label>
+                    <label for="label" class="optional">Event Name</label>
                     <input type="text" id="label" name="label" v-model="form.label">
                 </div>
 
@@ -61,26 +61,30 @@ limitations under the License.
                               v-model="form.notes"></textarea>
                 </div>
 
-                <div class="field">
-                    <label for="branding-image-url" class="optional">Branding Image URL</label>
-                    <input type="url" id="branding-image-url" name="branding-image-url"
-                           placeholder="https://example.com/logo.png"
-                           v-model="form.brandingImageUrl">
-                    <small class="helper-text">Link to an image hosted elsewhere to display above the notes.</small>
-                </div>
+                <div class="branding-section">
+                    <div class="branding-fields">
+                        <div class="field">
+                            <label for="branding-image-url" class="optional">Branding Image URL</label>
+                            <input type="url" id="branding-image-url" name="branding-image-url"
+                                   placeholder="https://example.com/logo.png"
+                                   v-model="form.brandingImageUrl">
+                            <small class="helper-text">Link to a branding image to display with the grid. Must be hosted elsewhere.</small>
+                        </div>
 
-                <div class="field" v-if="form.brandingImageUrl">
-                    <label for="branding-image-alt" class="optional">Image Description (Alt Text)</label>
-                    <input type="text" id="branding-image-alt" name="branding-image-alt"
-                           placeholder="Company logo"
-                           v-model="form.brandingImageAlt">
-                </div>
+                        <div class="field" v-if="form.brandingImageUrl">
+                            <label for="branding-image-alt" class="optional">Image Description (Alt Text)</label>
+                            <input type="text" id="branding-image-alt" name="branding-image-alt"
+                                   placeholder="Company logo"
+                                   v-model="form.brandingImageAlt">
+                        </div>
+                    </div>
 
-                <div class="branding-preview" v-if="form.brandingImageUrl">
-                    <label>Preview</label>
-                    <img :src="form.brandingImageUrl" :alt="form.brandingImageAlt || 'Branding image'"
-                         @error="onImageError" @load="onImageLoad" :class="{ 'image-error': imageError }">
-                    <small v-if="imageError" class="error-text">Unable to load image. Please check the URL.</small>
+                    <div class="branding-preview" v-if="form.brandingImageUrl">
+                        <span class="preview-label">Preview</span>
+                        <img :src="form.brandingImageUrl" :alt="form.brandingImageAlt || 'Branding image'"
+                             @error="onImageError" @load="onImageLoad" :class="{ 'image-error': imageError }">
+                        <small v-if="imageError" class="error-text">Unable to load image. Please check the URL.</small>
+                    </div>
                 </div>
             </fieldset>
             <fieldset>
@@ -99,162 +103,208 @@ limitations under the License.
 </template>
 
 <script>
-    import GridCustomizeTeam from './GridCustomizeTeam.vue'
-    import ModalController from '@/controllers/ModalController'
-    import sqmgrClient from "@/models/sqmgrClient";
-    import sqmgrConfig from "@/models/sqmgrConfig";
+import GridCustomizeTeam from './GridCustomizeTeam.vue'
+import ModalController from '@/controllers/ModalController'
+import sqmgrClient from "@/models/sqmgrClient"
+import sqmgrConfig from "@/models/sqmgrConfig"
 
-    export default {
-        name: "GridCustomize",
-        components: {GridCustomizeTeam},
-        props: {
-            token: {
-                type: String,
-                required: true,
-            },
-            pool: {
-                type: Object,
-                required: true,
-            },
-            grid: {
-                type: Object,
-                required: false,
-            },
+export default {
+    name: "GridCustomize",
+    components: {GridCustomizeTeam},
+    props: {
+        token: {
+            type: String,
+            required: true,
         },
-        data() {
-            return {
-                ModalController,
-                errors: null,
-                notesMaxLength: 200,
-                imageError: false,
-                form: {
-                    eventDate: '0000-00-00',
-                    notes: '',
-                    rollover: false,
-                    label: '',
-                    brandingImageUrl: '',
-                    brandingImageAlt: '',
-                    awayTeam: {
-                        name: '',
-                        color1: '',
-                        color2: '',
+        pool: {
+            type: Object,
+            required: true,
+        },
+        grid: {
+            type: Object,
+            required: false,
+        },
+    },
+    data() {
+        return {
+            ModalController,
+            errors: null,
+            notesMaxLength: 200,
+            imageError: false,
+            form: {
+                eventDate: '0000-00-00',
+                notes: '',
+                rollover: false,
+                label: '',
+                brandingImageUrl: '',
+                brandingImageAlt: '',
+                awayTeam: {
+                    name: '',
+                    color1: '',
+                    color2: '',
+                },
+                homeTeam: {
+                    name: '',
+                    color1: '',
+                    color2: '',
+                },
+            },
+        }
+    },
+    created() {
+        sqmgrConfig()
+            .then(config => this.notesMaxLength = config.notesMaxLength)
+            .catch(err => ModalController.showError(err))
+    },
+    beforeMount() {
+        if (this.grid) {
+            const date = this.grid.eventDate.substr(0, 10)
+            this.form.eventDate = date === '0001-01-01' ? '' : date
+            this.form.notes = this.grid.settings.notes
+            this.form.rollover = this.grid.rollover
+            this.form.label = this.grid.label
+            this.form.brandingImageUrl = this.grid.settings.brandingImageUrl || ''
+            this.form.brandingImageAlt = this.grid.settings.brandingImageAlt || ''
+            this.form.awayTeam.name = this.grid.awayTeamName
+            this.form.awayTeam.color1 = this.grid.settings.awayTeamColor1
+            this.form.awayTeam.color2 = this.grid.settings.awayTeamColor2
+            this.form.homeTeam.name = this.grid.homeTeamName
+            this.form.homeTeam.color1 = this.grid.settings.homeTeamColor1
+            this.form.homeTeam.color2 = this.grid.settings.homeTeamColor2
+        }
+    },
+    methods: {
+        submit() {
+            // Check if branding image URL is broken
+            if (this.form.brandingImageUrl && this.imageError) {
+                ModalController.showPrompt(
+                    'Broken Image URL',
+                    'The branding image URL could not be loaded. Would you like to fix the URL or remove it?',
+                    {
+                        cancelButton: 'Fix it',
+                        actionButton: 'Remove it and Save',
+                        warning: 'If you remove it, the grid will be saved without a branding image.',
+                        cancelAction: () => {
+                            this.$nextTick(() => {
+                                const input = document.getElementById('branding-image-url')
+                                if (input) input.focus()
+                            })
+                        },
+                        action: () => {
+                            this.form.brandingImageUrl = ''
+                            this.form.brandingImageAlt = ''
+                            this.imageError = false
+                            ModalController.hide()
+                            this.doSave()
+                        },
                     },
-                    homeTeam: {
-                        name: '',
-                        color1: '',
-                        color2: '',
+                )
+                return
+            }
+
+            this.doSave()
+        },
+        doSave() {
+            this.errors = null
+
+            const id = this.grid ? this.grid.id : 0
+            const data = {
+                eventDate: this.form.eventDate,
+                notes: this.form.notes,
+                label: this.form.label,
+                homeTeamName: this.form.homeTeam.name,
+                homeTeamColor1: this.form.homeTeam.color1,
+                homeTeamColor2: this.form.homeTeam.color2,
+                awayTeamName: this.form.awayTeam.name,
+                awayTeamColor1: this.form.awayTeam.color1,
+                awayTeamColor2: this.form.awayTeam.color2,
+                brandingImageUrl: this.form.brandingImageUrl,
+                brandingImageAlt: this.form.brandingImageAlt,
+            }
+
+            if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
+
+            sqmgrClient.saveGrid(this.token, id, data)
+                .then(grid => {
+                    this.$emit('saved', grid)
+                })
+                .catch(err => {
+                    if (err.response && err.response.data && err.response.data.result) {
+                        this.errors = err.response.data.result
                     }
-                }
-            }
-        },
-        created() {
-            sqmgrConfig()
-                .then(config => this.notesMaxLength = config.notesMaxLength)
-                .catch(err => ModalController.showError(err))
-        },
-        beforeMount() {
-            if (this.grid) {
-                const date = this.grid.eventDate.substr(0, 10)
-                this.form.eventDate = date === '0001-01-01' ? '' : date
-                this.form.notes = this.grid.settings.notes
-                this.form.rollover = this.grid.rollover
-                this.form.label = this.grid.label
-                this.form.brandingImageUrl = this.grid.settings.brandingImageUrl || ''
-                this.form.brandingImageAlt = this.grid.settings.brandingImageAlt || ''
-                this.form.awayTeam.name = this.grid.awayTeamName
-                this.form.awayTeam.color1 = this.grid.settings.awayTeamColor1
-                this.form.awayTeam.color2 = this.grid.settings.awayTeamColor2
-                this.form.homeTeam.name = this.grid.homeTeamName
-                this.form.homeTeam.color1 = this.grid.settings.homeTeamColor1
-                this.form.homeTeam.color2 = this.grid.settings.homeTeamColor2
-            }
-        },
-        methods: {
-            submit() {
-                this.errors = null
 
-                const id = this.grid ? this.grid.id : 0
-                const data = {
-                    eventDate: this.form.eventDate,
-                    notes: this.form.notes,
-                    label: this.form.label,
-                    homeTeamName: this.form.homeTeam.name,
-                    homeTeamColor1: this.form.homeTeam.color1,
-                    homeTeamColor2: this.form.homeTeam.color2,
-                    awayTeamName: this.form.awayTeam.name,
-                    awayTeamColor1: this.form.awayTeam.color1,
-                    awayTeamColor2: this.form.awayTeam.color2,
-                    brandingImageUrl: this.form.brandingImageUrl,
-                    brandingImageAlt: this.form.brandingImageAlt,
-                }
-
-                if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
-
-                sqmgrClient.saveGrid(this.token, id, data)
-                    .then(grid => {
-                        this.$emit('saved', grid)
-                    })
-                    .catch(err => {
-                        if (err.response && err.response.data && err.response.data.result) {
-                            this.errors = err.response.data.result
-                        }
-
-                        ModalController.showError(err)
-                    })
-            },
-            didClickCancel() {
-                this.$emit('canceled')
-                ModalController.abort()
-            },
-            onImageError() {
-                this.imageError = true
-            },
-            onImageLoad() {
-                this.imageError = false
-            }
+                    ModalController.showError(err)
+                })
         },
-    }
+        didClickCancel() {
+            this.$emit('canceled')
+            ModalController.abort()
+        },
+        onImageError() {
+            this.imageError = true
+        },
+        onImageLoad() {
+            this.imageError = false
+        },
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    section.grid-customize {
-        position: relative;
-        width:    70vw;
+@use '../variables.scss' as *;
+
+section.grid-customize {
+    position: relative;
+    width:    70vw;
+}
+
+.helper-text {
+    display:    block;
+    margin-top: 4px;
+    color:      #666;
+    font-size:  0.85em;
+}
+
+.error-text {
+    display:    block;
+    margin-top: 4px;
+    color:      #f44336;
+    font-size:  0.85em;
+}
+
+.branding-section {
+    display:     flex;
+    gap:         20px;
+    align-items: flex-start;
+}
+
+.branding-fields {
+    flex: 1;
+}
+
+.branding-preview {
+    flex-shrink: 0;
+    width:       150px;
+
+    .preview-label {
+        display:       block;
+        margin-bottom: calc(var(--minimal-spacing) * 1.5);
+        font-weight:   500;
     }
 
-    .helper-text {
-        display: block;
-        margin-top: 4px;
-        color: #666;
-        font-size: 0.85em;
-    }
+    img {
+        background-color: white;
+        padding:          calc(var(--minimal-spacing) * 2.5);
+        display:          block;
+        max-width:        100%;
+        max-height:       150px;
+        border:           1px solid var(--border-color);
+        border-radius:    6px;
+        object-fit:       contain;
 
-    .error-text {
-        display: block;
-        margin-top: 4px;
-        color: #f44336;
-        font-size: 0.85em;
-    }
-
-    .branding-preview {
-        margin-top: 10px;
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+        &.image-error {
+            display: none;
         }
-
-        img {
-            max-width: 100%;
-            max-height: 150px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            object-fit: contain;
-
-            &.image-error {
-                display: none;
-            }
-        }
     }
+}
 </style>
