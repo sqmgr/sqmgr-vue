@@ -609,4 +609,10 @@ button.secondary {
     }
 }
 
+@media print {
+    header { display: none !important; }
+    footer { display: none !important; }
+    html, body { background-color: #fff !important; }
+}
+
 </style>

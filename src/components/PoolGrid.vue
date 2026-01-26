@@ -40,9 +40,17 @@ limitations under the License.
                 </div>
 
                 <!-- Print-only header -->
-                <h1 class="pool-name print-only">Squares Pool - {{ pool.name }}</h1>
-                <h2 class="print-only">{{ grid.name }}</h2>
-                <p v-if="hasEventDate" class="event-date print-only">{{ eventDate }}</p>
+                <div class="print-only print-header">
+                    <div class="print-header-text">
+                        <p class="pool-name">Squares Pool - {{ pool.name }}</p>
+                        <h2>{{ grid.name }}</h2>
+                        <p v-if="hasEventDate" class="event-date">{{ eventDate }}</p>
+                    </div>
+                    <div v-if="grid.settings.brandingImageUrl" class="print-header-branding">
+                        <img :src="grid.settings.brandingImageUrl"
+                             :alt="grid.settings.brandingImageAlt || 'Sponsor logo'">
+                    </div>
+                </div>
 
                 <div class="grid-layout">
                     <aside class="grid-sidebar">
@@ -240,12 +248,6 @@ limitations under the License.
                             </template>
                         </div>
                     </div>
-                </div>
-
-                <!-- Branding image for print only (after grid so it appears on page 2) -->
-                <div v-if="grid.settings.brandingImageUrl" class="branding branding-print">
-                    <img :src="grid.settings.brandingImageUrl"
-                         :alt="grid.settings.brandingImageAlt || 'Sponsor logo'">
                 </div>
 
                 <!-- Notes for print only (after grid so it appears on page 2) -->
@@ -1510,10 +1512,6 @@ p.add-note {
         margin: 0.5in;
     }
 
-    html, body {
-        background-color: #fff;
-    }
-
     .print-layout {
         display: block;
     }
@@ -1532,24 +1530,44 @@ p.add-note {
         display: block !important;
     }
 
-    h1.pool-name.print-only {
-        font-size:        1.0em;
-        font-weight:      normal;
-        margin-bottom:    0;
+    .print-header {
+        display:          flex !important;
+        justify-content:  space-between;
+        align-items:      flex-start;
+        margin-bottom:    var(--spacing);
         page-break-after: avoid;
-    }
 
-    h2.print-only {
-        font-size:        1.4em;
-        margin-bottom:    0;
-        page-break-after: avoid;
-    }
+        .print-header-text {
+            flex: 1;
 
-    p.event-date.print-only {
-        margin-bottom:    0;
-        font-size:        0.7em;
-        color:            var(--gray);
-        page-break-after: avoid;
+            .pool-name {
+                font-size:     1.0em;
+                font-weight:   normal;
+                margin-bottom: 0;
+            }
+
+            h2 {
+                font-size:     1.4em;
+                margin-bottom: 0;
+            }
+
+            .event-date {
+                margin-bottom: 0;
+                font-size:     0.7em;
+                color:         var(--gray);
+            }
+        }
+
+        .print-header-branding {
+            flex-shrink:  0;
+            margin-left:  var(--spacing);
+
+            img {
+                max-width:  150px;
+                max-height: 80px;
+                object-fit: contain;
+            }
+        }
     }
 
     // Hide screen-only elements
@@ -1567,23 +1585,10 @@ p.add-note {
     nav { display: none; }
     section.audit-log { display: none; }
 
-    // Show print branding and notes on page 2
-    .branding-print {
-        display:           block;
-        page-break-before: always;
-        margin-top:        var(--spacing);
-        text-align:        center;
-
-        img {
-            max-width:  300px;
-            max-height: 100px;
-            object-fit: contain;
-        }
-    }
-
     .notes-print {
-        display:    block;
-        margin-top: var(--spacing);
+        display:           block;
+        margin-top:        var(--spacing);
+        page-break-before: always;
     }
 
     .squares-container {
