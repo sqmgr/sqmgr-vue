@@ -111,6 +111,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
 @use '../variables.scss' as *;
 
 .change-number-set-config {
@@ -131,7 +132,7 @@ export default {
     border-radius: $radius-md;
     margin-bottom: $space-5;
     font-size: 0.875rem;
-    color: darken($yellow, 30%);
+    color: color.adjust($yellow, $lightness: -30%);
 
     i {
         color: $yellow;

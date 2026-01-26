@@ -1334,7 +1334,7 @@ p.add-note {
         border-color: rgba($yellow, 0.25);
 
         i {
-            color: darken($yellow, 15%);
+            color: color.adjust($yellow, $lightness: -15%);
         }
     }
 
