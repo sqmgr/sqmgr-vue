@@ -235,6 +235,7 @@ import sqmgrClient from "@/models/sqmgrClient"
 import Pagination from "@/components/Pagination"
 import ModalController from "@/controllers/ModalController"
 import ResponseError from "@/models/ResponseError"
+import Common from "@/common"
 
 export default {
     name: "Admin",
@@ -459,7 +460,7 @@ export default {
 
         formatDate(dateStr) {
             const date = new Date(dateStr)
-            return date.toLocaleDateString()
+            return date.toLocaleString(undefined, Common.DateTimeOptions)
         },
 
         formatOwner(pool) {
