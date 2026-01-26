@@ -44,7 +44,7 @@ limitations under the License.
                 <ul class="benefits">
                     <li>Multiple grid types</li>
                     <li>Custom team colors</li>
-                    <li>Flexible lock dates</li>
+                    <li>Add your own branding</li>
                 </ul>
             </div>
 
