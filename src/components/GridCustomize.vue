@@ -74,7 +74,7 @@ limitations under the License.
                         <div class="field" v-if="form.brandingImageUrl">
                             <label for="branding-image-alt" class="optional">Image Description (Alt Text)</label>
                             <input type="text" id="branding-image-alt" name="branding-image-alt"
-                                   placeholder="Company logo"
+                                   placeholder="Description of the image"
                                    v-model="form.brandingImageAlt">
                         </div>
                     </div>
@@ -274,8 +274,14 @@ section.grid-customize {
 
 .branding-section {
     display:     flex;
-    gap:         20px;
+    gap:         $standard-spacing;
     align-items: flex-start;
+
+    @include mobile {
+        gap: 0;
+        flex-direction: column;
+        margin-bottom: $standard-spacing;
+    }
 }
 
 .branding-fields {
