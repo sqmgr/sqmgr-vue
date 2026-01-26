@@ -32,9 +32,8 @@ limitations under the License.
                     </Transition>
                 </span>
                 </p>
-                <h2>The <span class="highlight">Easiest Way</span> to Run Your Football Squares Pool</h2>
-                <p class="subtitle">Create professional pools in minutes. Share with friends. Track results
-                    automatically.</p>
+                <h2>The <span class="highlight">Easiest Way</span> to Run Your Football Squares</h2>
+                <p class="subtitle">Create professional pools in minutes. Share with friends. No spreadsheets required.</p>
 
                 <div class="cta-container">
                     <router-link class="btn cta-primary" to="/create">Create Your Pool</router-link>
