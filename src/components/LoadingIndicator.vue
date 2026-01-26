@@ -60,7 +60,7 @@ limitations under the License.
         border-radius:    $size;
         color:            #fff;
         display:          inline-block;
-        font-family:      'Alfa Slab One', sans-serif;
+        font-family:      'Barlow Condensed', sans-serif;
         font-size:        30px;
         font-weight:      bold;
         height:           $size;

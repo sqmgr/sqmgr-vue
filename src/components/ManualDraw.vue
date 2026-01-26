@@ -234,7 +234,7 @@ limitations under the License.
     @use '../variables.scss' as *;
 
     label {
-        font-family: 'Alfa Slab One', sans-serif;
+        font-family: 'Barlow Condensed', sans-serif;
         font-size:   1.2em;
         color:       #fff;
         padding:     $minimal-spacing;

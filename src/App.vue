@@ -128,7 +128,7 @@ export default {
 <style lang="scss">
 @use "sass:color";
 @use 'variables.scss' as *;
-@import url('https://fonts.googleapis.com/css?family=Lobster|Alfa+Slab+One|Shadows+Into+Light|Roboto:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
     padding:    0;
@@ -262,7 +262,7 @@ header {
     }
 
     h1 {
-        font-family: 'Alfa Slab One', sans-serif;
+        font-family: 'Barlow Condensed', sans-serif;
         font-size:   1.6em;
         text-shadow: 3px 3px var(--midnight-gray), 5px 5px var(--primary);
         margin:      0;

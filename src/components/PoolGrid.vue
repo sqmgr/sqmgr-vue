@@ -652,7 +652,6 @@ export default {
 <style lang="scss" scoped>
 @use '../variables' as *;
 @use "sass:color";
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Alfa+Slab+One');
 
 $expand-size: 8in;
 
@@ -736,8 +735,8 @@ div.spacer {
 div.team {
     background:  linear-gradient(var(--team-primary), var(--team-primary) calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), var(--team-secondary) calc(50% + 1px), var(--team-secondary) 100%);
     color:       #fff;
-    font-family: 'Alfa Slab One', sans-serif;
-    font-size:   1.5em;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size:   2.0rem;
     position:    relative;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
 
