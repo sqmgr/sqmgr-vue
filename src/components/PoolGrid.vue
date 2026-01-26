@@ -1527,11 +1527,11 @@ p.add-note {
 
     // Show print-only elements
     .print-only {
-        display: block !important;
+        display: block;
     }
 
     .print-header {
-        display:          flex !important;
+        display:          flex;
         justify-content:  space-between;
         align-items:      flex-start;
         margin-bottom:    var(--spacing);

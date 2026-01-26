@@ -610,9 +610,9 @@ button.secondary {
 }
 
 @media print {
-    header { display: none !important; }
-    footer { display: none !important; }
-    html, body { background-color: #fff !important; }
+    header { display: none; }
+    footer { display: none; }
+    html, body { background-color: #fff; }
 }
 
 </style>
