@@ -93,6 +93,14 @@ limitations under the License.
                             </div>
                         </template>
 
+                        <!-- Branding Image Card for screen only -->
+                        <div v-if="grid.settings.brandingImageUrl" class="card branding-card branding-screen">
+                            <div class="branding-content">
+                                <img :src="grid.settings.brandingImageUrl"
+                                     :alt="grid.settings.brandingImageAlt || 'Sponsor logo'">
+                            </div>
+                        </div>
+
                         <!-- Notes Card for screen only -->
                         <div v-if="grid.settings.notes" class="card notes-card notes-screen">
                             <div class="card-header">
@@ -232,6 +240,12 @@ limitations under the License.
                             </template>
                         </div>
                     </div>
+                </div>
+
+                <!-- Branding image for print only (after grid so it appears on page 2) -->
+                <div v-if="grid.settings.brandingImageUrl" class="branding branding-print">
+                    <img :src="grid.settings.brandingImageUrl"
+                         :alt="grid.settings.brandingImageAlt || 'Sponsor logo'">
                 </div>
 
                 <!-- Notes for print only (after grid so it appears on page 2) -->
@@ -1025,6 +1039,22 @@ div.notes.notes-print {
     display: none;
 }
 
+// Branding print section
+.branding-print {
+    display: none;
+}
+
+div.branding.branding-print {
+    margin-bottom: var(--spacing);
+    text-align: center;
+
+    img {
+        max-width: 300px;
+        max-height: 100px;
+        object-fit: contain;
+    }
+}
+
 section.templates {
     display: none;
 }
@@ -1276,6 +1306,22 @@ p.add-note {
     }
 }
 
+// Branding Card
+.branding-card {
+    .branding-content {
+        padding:         $space-4 $space-5;
+        display:         flex;
+        justify-content: center;
+        align-items:     center;
+
+        img {
+            max-width:  100%;
+            max-height: 150px;
+            object-fit: contain;
+        }
+    }
+}
+
 // Notes Card
 .notes-card {
     background:   rgba($yellow, 0.08);
@@ -1509,6 +1555,7 @@ p.add-note {
     // Hide screen-only elements
     .page-header { display: none; }
     .notes-screen { display: none; }
+    .branding-screen { display: none; }
     .admin-card { display: none; }
     .settings-card { display: none; }
     .legend-card { display: none; }
@@ -1520,11 +1567,23 @@ p.add-note {
     nav { display: none; }
     section.audit-log { display: none; }
 
-    // Show print notes on page 2
-    .notes-print {
+    // Show print branding and notes on page 2
+    .branding-print {
         display:           block;
         page-break-before: always;
         margin-top:        var(--spacing);
+        text-align:        center;
+
+        img {
+            max-width:  300px;
+            max-height: 100px;
+            object-fit: contain;
+        }
+    }
+
+    .notes-print {
+        display:    block;
+        margin-top: var(--spacing);
     }
 
     .squares-container {

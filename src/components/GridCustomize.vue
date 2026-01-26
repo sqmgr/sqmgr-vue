@@ -60,6 +60,28 @@ limitations under the License.
                     <textarea id="notes" :maxlength="notesMaxLength" name="notes" placeholder="Notes"
                               v-model="form.notes"></textarea>
                 </div>
+
+                <div class="field">
+                    <label for="branding-image-url" class="optional">Branding Image URL</label>
+                    <input type="url" id="branding-image-url" name="branding-image-url"
+                           placeholder="https://example.com/logo.png"
+                           v-model="form.brandingImageUrl">
+                    <small class="helper-text">Link to an image hosted elsewhere to display above the notes.</small>
+                </div>
+
+                <div class="field" v-if="form.brandingImageUrl">
+                    <label for="branding-image-alt" class="optional">Image Description (Alt Text)</label>
+                    <input type="text" id="branding-image-alt" name="branding-image-alt"
+                           placeholder="Company logo"
+                           v-model="form.brandingImageAlt">
+                </div>
+
+                <div class="branding-preview" v-if="form.brandingImageUrl">
+                    <label>Preview</label>
+                    <img :src="form.brandingImageUrl" :alt="form.brandingImageAlt || 'Branding image'"
+                         @error="onImageError" @load="onImageLoad" :class="{ 'image-error': imageError }">
+                    <small v-if="imageError" class="error-text">Unable to load image. Please check the URL.</small>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Styling</legend>
@@ -104,11 +126,14 @@ limitations under the License.
                 ModalController,
                 errors: null,
                 notesMaxLength: 200,
+                imageError: false,
                 form: {
                     eventDate: '0000-00-00',
                     notes: '',
                     rollover: false,
                     label: '',
+                    brandingImageUrl: '',
+                    brandingImageAlt: '',
                     awayTeam: {
                         name: '',
                         color1: '',
@@ -134,6 +159,8 @@ limitations under the License.
                 this.form.notes = this.grid.settings.notes
                 this.form.rollover = this.grid.rollover
                 this.form.label = this.grid.label
+                this.form.brandingImageUrl = this.grid.settings.brandingImageUrl || ''
+                this.form.brandingImageAlt = this.grid.settings.brandingImageAlt || ''
                 this.form.awayTeam.name = this.grid.awayTeamName
                 this.form.awayTeam.color1 = this.grid.settings.awayTeamColor1
                 this.form.awayTeam.color2 = this.grid.settings.awayTeamColor2
@@ -157,6 +184,8 @@ limitations under the License.
                     awayTeamName: this.form.awayTeam.name,
                     awayTeamColor1: this.form.awayTeam.color1,
                     awayTeamColor2: this.form.awayTeam.color2,
+                    brandingImageUrl: this.form.brandingImageUrl,
+                    brandingImageAlt: this.form.brandingImageAlt,
                 }
 
                 if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
@@ -176,6 +205,12 @@ limitations under the License.
             didClickCancel() {
                 this.$emit('canceled')
                 ModalController.abort()
+            },
+            onImageError() {
+                this.imageError = true
+            },
+            onImageLoad() {
+                this.imageError = false
             }
         },
     }
@@ -185,5 +220,41 @@ limitations under the License.
     section.grid-customize {
         position: relative;
         width:    70vw;
+    }
+
+    .helper-text {
+        display: block;
+        margin-top: 4px;
+        color: #666;
+        font-size: 0.85em;
+    }
+
+    .error-text {
+        display: block;
+        margin-top: 4px;
+        color: #f44336;
+        font-size: 0.85em;
+    }
+
+    .branding-preview {
+        margin-top: 10px;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 150px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            object-fit: contain;
+
+            &.image-error {
+                display: none;
+            }
+        }
     }
 </style>
