@@ -52,6 +52,15 @@ limitations under the License.
                     </div>
                 </div>
 
+                <!-- Print-only Number Rotation legend -->
+                <div v-if="hasMultipleNumberSets" class="print-only print-legend">
+                    <strong>Number Rotation:</strong>
+                    <span v-for="setType in sortedNumberSets" :key="setType" class="print-legend-item">
+                        <span class="legend-color" :class="setType"></span>
+                        {{ numberSetLabels[setType] }}
+                    </span>
+                </div>
+
                 <div class="grid-layout">
                     <aside class="grid-sidebar">
                         <!-- Admin Menu Card -->
@@ -1589,6 +1598,35 @@ p.add-note {
         display:           block;
         margin-top:        var(--spacing);
         page-break-before: always;
+    }
+
+    .print-legend {
+        display:       flex;
+        align-items:   center;
+        gap:           1rem;
+        margin-bottom: var(--spacing);
+        font-size:     0.875rem;
+
+        .print-legend-item {
+            display:     inline-flex;
+            align-items: center;
+            gap:         0.25rem;
+        }
+
+        .legend-color {
+            width:         12px;
+            height:        12px;
+            border-radius: 2px;
+            display:       inline-block;
+
+            &.q1, &.half { background: $q1-color; }
+
+            &.q2 { background: $q2-color; }
+
+            &.q3 { background: $q3-color; }
+
+            &.q4, &.final { background: $q4-color; }
+        }
     }
 
     .squares-container {
