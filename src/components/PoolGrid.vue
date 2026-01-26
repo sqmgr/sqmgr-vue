@@ -1572,6 +1572,12 @@ p.add-note {
             font-size: 10px;
         }
 
+        &:hover {
+            border:     1px solid $border-color;
+            box-shadow: none;
+            transform:  none;
+        }
+
         &::after {
             display: none;
         }
