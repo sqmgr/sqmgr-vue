@@ -34,7 +34,7 @@ limitations under the License.
             <div class="card tip-card">
                 <div class="card-body">
                     <h3>Support the Project</h3>
-                    <p>SqMGR is a labor of love maintained by a single developer. If you enjoy using the site, please consider chipping in to help cover server costs and keep it 100% ad-free.</p>
+                    <p>SqMGR is a labor of love maintained by a single developer. If you enjoy using the site, please consider chipping in to help cover server costs.</p>
                 </div>
                 <div class="action-area">
                     <a :href="venmoLink" class="venmo-button">

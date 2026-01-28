@@ -24,14 +24,14 @@ limitations under the License.
         <div class="content-grid">
             <div class="card origin">
                 <h2><i class="fas fa-history"></i> Origin Story</h2>
-                <p>SqMGR was born out of frustration. Managing paper pools is messy, and existing online tools were either outdated, expensive, or riddled with ads. I wanted to build something better, something I would want to use myself.</p>
+                <p>SqMGR was born out of frustration. Managing paper pools is messy, and existing online tools were either outdated or expensive. I wanted to build something better, something I would want to use myself.</p>
             </div>
 
             <div class="card goals">
                 <h2><i class="fas fa-bullseye"></i> Project Goals</h2>
                 <ul>
                     <li><strong>User Experience:</strong> Make the site intuitive for both administrators and participants.</li>
-                    <li><strong>Privacy Focused:</strong> No ads. No selling user data. Your privacy matters.</li>
+                    <li><strong>Privacy Focused:</strong> No selling user data. Your privacy matters.</li>
                     <li><strong>Open Source:</strong> The code is available for anyone to inspect and contribute to.</li>
                     <li><strong>Free Forever:</strong> The core service will always be free to use.</li>
                 </ul>

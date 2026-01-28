@@ -40,7 +40,7 @@ limitations under the License.
                     <router-link class="btn cta-secondary" to="/how-it-works">See How It Works</router-link>
                 </div>
 
-                <p class="social-proof">100% Free - No Hidden Fees - No Ads</p>
+                <p class="social-proof">100% Free - No Hidden Fees</p>
             </div>
         </section>
     </div>
