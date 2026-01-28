@@ -59,9 +59,7 @@ limitations under the License.
         <main>
             <div class="content">
                 <router-view v-slot="{ Component }">
-                    <transition name="page" mode="out-in">
-                        <component :is="Component"/>
-                    </transition>
+                    <component :is="Component"/>
                 </router-view>
             </div>
         </main>
@@ -549,24 +547,6 @@ button.secondary {
         background: rgba($primary, 0.1);
         transform:  translateY(0);
     }
-}
-
-/* Page transition animations */
-.page-enter-active {
-    transition: opacity 200ms ease, transform 200ms ease;
-}
-
-.page-leave-active {
-    transition: opacity 150ms ease;
-}
-
-.page-enter-from {
-    opacity:   0;
-    transform: translateY(10px);
-}
-
-.page-leave-to {
-    opacity: 0;
 }
 
 .tabs {
