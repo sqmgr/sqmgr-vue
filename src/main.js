@@ -37,7 +37,6 @@ import sqmgrClient from "@/models/sqmgrClient"
 import PoolJoin from "@/components/PoolJoin"
 import CookiesPolicy from "@/components/CookiesPolicy"
 import GuestAccount from "@/components/GuestAccount"
-import loadingBar from "@/utils/loadingBar.ts"
 import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
 import Admin from "@/components/Admin"
@@ -111,7 +110,6 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-    loadingBar.start()
     if (to.meta.title) {
         document.title = `${to.meta.title} - SqMGR`
     } else {
@@ -164,10 +162,6 @@ router.beforeEach(async (to) => {
     }
 
     return true
-})
-
-router.afterEach(() => {
-    loadingBar.stop()
 })
 
 authService.initAuth0()

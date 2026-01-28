@@ -72,7 +72,6 @@ limitations under the License.
         </footer>
         <Modal/>
         <cookies-disclaimer/>
-        <loading-bar/>
     </div>
 </template>
 
@@ -81,12 +80,10 @@ import Footer from "@/components/Footer"
 import Modal from "@/components/Modal"
 import CookiesDisclaimer from "@/components/CookiesDisclaimer"
 import accessTokenManager from "@/models/accessTokenManager"
-import LoadingBar from "@/components/LoadingBar"
 
 export default {
     name: 'app',
     components: {
-        LoadingBar,
         CookiesDisclaimer,
         Modal,
         Footer,
