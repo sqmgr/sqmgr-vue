@@ -79,6 +79,7 @@ loopme.com, 11530, DIRECT, 6c8d5f95897a5a3b
 adform.com, 2996, DIRECT
 risecodes.com, 6124caed9c7adb0001c028d8, DIRECT
 minutemedia.com, 01garg96c88b, DIRECT
+google.com, pub-2071286896032016, DIRECT, f08c47fec0942fa0
 google.com, pub-6445234841753687, RESELLER, f08c47fec0942fa0
 
 
