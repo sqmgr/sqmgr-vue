@@ -730,6 +730,10 @@ div.grid-layout {
 
 div.squares-container {
     width:    100%;
+
+    @include mobile {
+        overflow: auto;
+    }
 }
 
 div.squares {
