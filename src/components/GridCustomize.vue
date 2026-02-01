@@ -37,6 +37,33 @@ limitations under the License.
                 </template>
             </template>
             <fieldset>
+                <legend>Link to Live Event (Optional)</legend>
+
+                <div class="event-mode-toggle">
+                    <label>
+                        <input type="radio" v-model="eventMode" value="manual">
+                        Manual Entry
+                    </label>
+                    <label>
+                        <input type="radio" v-model="eventMode" value="live">
+                        Link to Live Event
+                    </label>
+                </div>
+
+                <EventSearch
+                    v-if="eventMode === 'live'"
+                    @selected="onEventSelected"
+                    :initial-event="form.bdlEvent"
+                />
+
+                <p v-if="form.bdlEventId" class="linked-event-notice">
+                    <i class="fas fa-link"></i>
+                    Linked to: {{ linkedEventDescription }}
+                    <button type="button" class="sm destructive" @click="unlinkEvent">Unlink</button>
+                </p>
+            </fieldset>
+
+            <fieldset>
                 <legend>General Settings</legend>
 
                 <div class="field">
@@ -104,13 +131,14 @@ limitations under the License.
 
 <script>
 import GridCustomizeTeam from './GridCustomizeTeam.vue'
+import EventSearch from './EventSearch.vue'
 import ModalController from '@/controllers/ModalController'
 import sqmgrClient from "@/models/sqmgrClient"
 import sqmgrConfig from "@/models/sqmgrConfig"
 
 export default {
     name: "GridCustomize",
-    components: {GridCustomizeTeam},
+    components: {GridCustomizeTeam, EventSearch},
     props: {
         token: {
             type: String,
@@ -131,6 +159,7 @@ export default {
             errors: null,
             notesMaxLength: 200,
             imageError: false,
+            eventMode: 'manual',
             form: {
                 eventDate: '0000-00-00',
                 notes: '',
@@ -138,6 +167,8 @@ export default {
                 label: '',
                 brandingImageUrl: '',
                 brandingImageAlt: '',
+                bdlEventId: null,
+                bdlEvent: null,
                 awayTeam: {
                     name: '',
                     color1: '',
@@ -150,6 +181,15 @@ export default {
                 },
             },
         }
+    },
+    computed: {
+        linkedEventDescription() {
+            if (!this.form.bdlEvent) return ''
+            const event = this.form.bdlEvent
+            const away = event.awayTeam?.name || 'Away'
+            const home = event.homeTeam?.name || 'Home'
+            return `${away} @ ${home}`
+        },
     },
     created() {
         sqmgrConfig()
@@ -171,6 +211,13 @@ export default {
             this.form.homeTeam.name = this.grid.homeTeamName
             this.form.homeTeam.color1 = this.grid.settings.homeTeamColor1
             this.form.homeTeam.color2 = this.grid.settings.homeTeamColor2
+
+            // Load BDL event if linked
+            if (this.grid.bdlEventId) {
+                this.form.bdlEventId = this.grid.bdlEventId
+                this.form.bdlEvent = this.grid.bdlEvent || null
+                this.eventMode = 'live'
+            }
         }
     },
     methods: {
@@ -220,6 +267,7 @@ export default {
                 awayTeamColor2: this.form.awayTeam.color2,
                 brandingImageUrl: this.form.brandingImageUrl,
                 brandingImageAlt: this.form.brandingImageAlt,
+                bdlEventId: this.form.bdlEventId,
             }
 
             if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
@@ -246,6 +294,29 @@ export default {
         onImageLoad() {
             this.imageError = false
         },
+        onEventSelected(event) {
+            this.form.bdlEventId = event.id
+            this.form.bdlEvent = event
+
+            // Auto-populate team names from event
+            if (event.homeTeam) {
+                this.form.homeTeam.name = event.homeTeam.name || event.homeTeam.fullName || ''
+            }
+            if (event.awayTeam) {
+                this.form.awayTeam.name = event.awayTeam.name || event.awayTeam.fullName || ''
+            }
+
+            // Auto-populate event date
+            if (event.eventDate) {
+                const date = new Date(event.eventDate)
+                this.form.eventDate = date.toISOString().substr(0, 10)
+            }
+        },
+        unlinkEvent() {
+            this.form.bdlEventId = null
+            this.form.bdlEvent = null
+            this.eventMode = 'manual'
+        },
     },
 }
 </script>
@@ -256,6 +327,38 @@ export default {
 section.grid-customize {
     position: relative;
     width:    70vw;
+}
+
+.event-mode-toggle {
+    display: flex;
+    gap: var(--spacing);
+    margin-bottom: var(--spacing);
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: var(--minimal-spacing);
+        cursor: pointer;
+    }
+}
+
+.linked-event-notice {
+    display: flex;
+    align-items: center;
+    gap: var(--minimal-spacing);
+    padding: var(--minimal-spacing) var(--spacing);
+    background-color: #e8f5e9;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    margin-top: var(--spacing);
+
+    i {
+        color: #4caf50;
+    }
+
+    button {
+        margin-left: auto;
+    }
 }
 
 .helper-text {

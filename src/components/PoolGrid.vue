@@ -35,6 +35,11 @@ limitations under the License.
                                 <i :class="isLocked ? 'fas fa-lock' : 'fas fa-lock-open'"></i>
                                 {{ isLocked ? 'Locked' : 'Open' }}
                             </span>
+                            <span v-if="grid.bdlEvent" class="event-status-badge" :class="eventStatusClass">
+                                <i :class="eventStatusIcon"></i>
+                                {{ eventStatusText }}
+                                <span v-if="grid.bdlEvent.status === 'in_progress'" class="live-indicator">LIVE</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -167,6 +172,21 @@ limitations under the License.
                                     <label>Event Date</label>
                                     <div class="setting-value">{{ eventDate }}</div>
                                 </div>
+                                <div v-if="grid.bdlEvent" class="setting-item linked-game-item">
+                                    <label>Linked Game</label>
+                                    <div class="setting-value">
+                                        <span class="linked-game">
+                                            {{ grid.bdlEvent.awayTeam?.abbreviation }} @ {{ grid.bdlEvent.homeTeam?.abbreviation }}
+                                            <span class="league-badge">{{ grid.bdlEvent.league?.toUpperCase() }}</span>
+                                        </span>
+                                        <div v-if="bdlEventScores.length" class="linked-game-scores">
+                                            <div v-for="score in bdlEventScores" :key="score.label" class="score-item">
+                                                <span class="score-label">{{ score.label }}:</span>
+                                                <span class="score-value">{{ score.away }}-{{ score.home }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="setting-item">
                                     <label>Grid Type</label>
                                     <div class="setting-value">
@@ -253,6 +273,7 @@ limitations under the License.
                                     :square-data="squares[n] || {}"
                                     :annotation="annotationBySquareId(n)"
                                     :is-expanded="expandedGrid"
+                                    :winning-periods="getWinningPeriodsForSquare(n)"
                                 />
                             </template>
                         </div>
@@ -481,6 +502,109 @@ export default {
 
             return classes
         },
+        eventStatusClass() {
+            if (!this.grid?.bdlEvent) return ''
+            switch (this.grid.bdlEvent.status) {
+                case 'in_progress': return 'live'
+                case 'final': return 'final'
+                default: return 'scheduled'
+            }
+        },
+        eventStatusIcon() {
+            if (!this.grid?.bdlEvent) return ''
+            switch (this.grid.bdlEvent.status) {
+                case 'in_progress': return 'fas fa-circle'
+                case 'final': return 'fas fa-check-circle'
+                default: return 'fas fa-clock'
+            }
+        },
+        eventStatusText() {
+            if (!this.grid?.bdlEvent) return ''
+            switch (this.grid.bdlEvent.status) {
+                case 'in_progress': return ''
+                case 'final': return 'Final'
+                default: return 'Scheduled'
+            }
+        },
+        winningSquaresMap() {
+            // Map from squareId -> array of winning period types
+            const map = {}
+            if (!this.grid?.winningSquares) return map
+
+            for (const [periodType, squareId] of Object.entries(this.grid.winningSquares)) {
+                if (!map[squareId]) {
+                    map[squareId] = []
+                }
+                map[squareId].push(periodType)
+            }
+            return map
+        },
+        bdlEventScores() {
+            const event = this.grid?.bdlEvent
+            if (!event) {
+                return []
+            }
+
+            const config = this.pool?.numberSetConfig || 'standard'
+            const scores = []
+            const status = event.status
+            const period = event.period || 0
+
+            // Determine which quarters are complete based on status and period
+            // Period 1 = 1st qtr in progress (nothing complete)
+            // Period 2 = 2nd qtr in progress (Q1 complete)
+            // Period 3 = 3rd qtr in progress (Q1, Q2, Half complete)
+            // Period 4 = 4th qtr in progress (Q1, Q2, Q3, Half complete)
+            // Final = all complete
+            const isFinal = status === 'final'
+            const q1Complete = isFinal || period >= 2
+            const q2Complete = isFinal || period >= 3
+            const halfComplete = q2Complete
+            const q3Complete = isFinal || period >= 4
+
+            if (config === 'hf') {
+                // Half, Final
+                if (halfComplete && event.homeQ1 != null && event.homeQ2 != null) {
+                    scores.push({
+                        label: 'Half',
+                        home: (event.homeQ1 || 0) + (event.homeQ2 || 0),
+                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0)
+                    })
+                }
+                if (isFinal && event.homeScore != null) {
+                    scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
+                }
+            } else if (config === '123f') {
+                // 1st, 2nd, 3rd, Final
+                if (q1Complete && event.homeQ1 != null) {
+                    scores.push({ label: '1st', home: event.homeQ1, away: event.awayQ1 })
+                }
+                if (q2Complete && event.homeQ2 != null) {
+                    scores.push({
+                        label: '2nd',
+                        home: (event.homeQ1 || 0) + (event.homeQ2 || 0),
+                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0)
+                    })
+                }
+                if (q3Complete && event.homeQ3 != null) {
+                    scores.push({
+                        label: '3rd',
+                        home: (event.homeQ1 || 0) + (event.homeQ2 || 0) + (event.homeQ3 || 0),
+                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0) + (event.awayQ3 || 0)
+                    })
+                }
+                if (isFinal && event.homeScore != null) {
+                    scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
+                }
+            } else {
+                // Standard - final only
+                if (isFinal && event.homeScore != null) {
+                    scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
+                }
+            }
+
+            return scores
+        },
     },
     watch: {
         grid(newGrid) {
@@ -654,6 +778,9 @@ export default {
             }
 
             return this.grid.annotations[squareId]
+        },
+        getWinningPeriodsForSquare(squareId) {
+            return this.winningSquaresMap[squareId] || []
         },
     },
 }
@@ -1005,6 +1132,11 @@ div.square {
         box-shadow:   0 0 2px $primary;
     }
 
+    &.winner {
+        border-style: solid;
+        box-shadow:   0 0 4px rgba(0, 0, 0, 0.15);
+    }
+
     @at-root .rollover &.secondary {
         & > :deep(span.name),
         & > :deep(.owned),
@@ -1185,6 +1317,45 @@ p.add-note {
     i {
         font-size: 0.75rem;
     }
+}
+
+.event-status-badge {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           $space-2;
+    padding:       $space-1 $space-3;
+    border-radius: $radius-full;
+    font-size:     0.8125rem;
+    font-weight:   500;
+
+    &.scheduled {
+        background: rgba(#666, 0.1);
+        color:      #666;
+    }
+
+    &.live {
+        background: rgba($red, 0.1);
+        color:      $red;
+
+        i {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    }
+
+    &.final {
+        background: rgba($primary, 0.1);
+        color:      $primary-dark;
+    }
+
+    .live-indicator {
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
 // Print-only elements
@@ -1467,6 +1638,48 @@ p.add-note {
 
     .numbers-random {
         color: $primary-dark;
+    }
+
+    .linked-game-item .setting-value {
+        flex-direction: column;
+        align-items:    flex-start;
+    }
+
+    .linked-game {
+        display:     inline-flex;
+        align-items: center;
+        gap:         $space-2;
+
+        .league-badge {
+            font-size:     0.75rem;
+            padding:       $space-1 $space-2;
+            background:    rgba($primary, 0.1);
+            border-radius: $radius-sm;
+            color:         $primary-dark;
+            font-weight:   600;
+        }
+    }
+
+    .linked-game-scores {
+        display:        flex;
+        flex-wrap:      wrap;
+        gap:            $space-2 $space-4;
+        margin-top:     $space-2;
+        font-size:      0.875rem;
+
+        .score-item {
+            display:     flex;
+            gap:         $space-1;
+        }
+
+        .score-label {
+            color:       $text-secondary;
+        }
+
+        .score-value {
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
     }
 }
 
