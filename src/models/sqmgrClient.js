@@ -169,7 +169,7 @@ class sqmgrClient {
         return this.request(`/pool/${token}/square`)
     }
 
-    drawNumbers(token, gridId) {
+    drawNumbers(token, gridId, lockPool = true) {
         return this.request(`/pool/${token}/grid/${gridId}`, null, true, {
             method: 'POST',
             headers: {
@@ -177,11 +177,12 @@ class sqmgrClient {
             },
             body: JSON.stringify({
                 action: 'drawNumbers',
+                data: { lockPool }
             })
         })
     }
 
-    drawManualNumbers(token, gridId, homeTeamNumbers, awayTeamNumbers) {
+    drawManualNumbers(token, gridId, homeTeamNumbers, awayTeamNumbers, lockPool = true) {
         return this.request(`/pool/${token}/grid/${gridId}`, null, true, {
             method: 'POST',
             headers: {
@@ -192,12 +193,13 @@ class sqmgrClient {
                 data: {
                     homeTeamNumbers,
                     awayTeamNumbers,
+                    lockPool,
                 }
             })
         })
     }
 
-    drawManualNumbersMultiSet(token, gridId, numberSets) {
+    drawManualNumbersMultiSet(token, gridId, numberSets, lockPool = true) {
         return this.request(`/pool/${token}/grid/${gridId}`, null, true, {
             method: 'POST',
             headers: {
@@ -207,6 +209,7 @@ class sqmgrClient {
                 action: 'drawManualNumbers',
                 data: {
                     numberSets,
+                    lockPool,
                 }
             })
         })

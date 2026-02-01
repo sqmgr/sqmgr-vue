@@ -293,6 +293,7 @@ import EventBus from "@/models/EventBus"
 import Pagination from "@/components/Pagination"
 import sqmgrConfig from "@/models/sqmgrConfig"
 import ManualDraw from "@/components/ManualDraw"
+import DrawConfirmation from "@/components/DrawConfirmation"
 import normalizeColor from "@/utils/normalizeColor" // utility to normalize color values
 
 const intColor = (color) => {
@@ -564,21 +565,28 @@ export default {
         manuallyDrawNumbersWasClicked() {
             ModalController.show('Manually Draw Numbers', ManualDraw, {
                 allSquaresClaimed: this.checkAllSquaresClaimed(),
+                isLocked: this.isLocked,
                 grid: this.grid,
                 pool: this.pool,
             }, {
-                draw: nums => {
-                    sqmgrClient.drawManualNumbers(this.token, this.grid.id, nums.homeNumbers, nums.awayNumbers)
-                        .then(grid => {
-                            this.grid = grid
+                draw: (nums, lockPool) => {
+                    sqmgrClient.drawManualNumbers(this.token, this.grid.id, nums.homeNumbers, nums.awayNumbers, lockPool)
+                        .then(response => {
+                            this.grid = response
+                            if (response.poolLocks) {
+                                this.pool.locks = response.poolLocks
+                            }
                             ModalController.hide()
                         })
                         .catch(err => ModalController.showError(err))
                 },
-                drawMultiSet: numberSets => {
-                    sqmgrClient.drawManualNumbersMultiSet(this.token, this.grid.id, numberSets)
-                        .then(grid => {
-                            this.grid = grid
+                drawMultiSet: (numberSets, lockPool) => {
+                    sqmgrClient.drawManualNumbersMultiSet(this.token, this.grid.id, numberSets, lockPool)
+                        .then(response => {
+                            this.grid = response
+                            if (response.poolLocks) {
+                                this.pool.locks = response.poolLocks
+                            }
                             ModalController.hide()
                         })
                         .catch(err => ModalController.showError(err))
@@ -587,16 +595,18 @@ export default {
         },
         randomlyDrawNumbersWasClicked() {
             const allClaimed = this.checkAllSquaresClaimed()
-            const description = 'Do you want to randomly draw the numbers for this game? This action cannot be undone.'
-            const warning = !allClaimed && 'Not all squares have been claimed yet'
 
-            ModalController.showPrompt('Draw the Numbers', description, {
-                warning,
-                actionButton: 'Draw',
-                action: () => {
-                    sqmgrClient.drawNumbers(this.token, this.grid.id)
-                        .then(grid => {
-                            this.grid = grid
+            ModalController.show('Draw the Numbers', DrawConfirmation, {
+                allSquaresClaimed: allClaimed,
+                isLocked: this.isLocked,
+            }, {
+                confirm: (lockPool) => {
+                    sqmgrClient.drawNumbers(this.token, this.grid.id, lockPool)
+                        .then(response => {
+                            this.grid = response
+                            if (response.poolLocks) {
+                                this.pool.locks = response.poolLocks
+                            }
                             ModalController.hide()
                         })
                         .catch(err => ModalController.showError(err))

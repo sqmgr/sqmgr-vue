@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,9 +17,17 @@ limitations under the License.
 <template>
     <section class="manual-draw">
         <form @submit.prevent="submit" class="standalone">
-            <p>Instead of letting SqMGR randomly draw the numbers, you can manually input them below. This action cannot be undone.</p>
+            <p>Instead of letting SqMGR randomly draw the numbers, you can manually input them below. This action cannot
+                be undone.</p>
 
-            <warning-box v-if="!allSquaresClaimed" warning="Not all squares have been claimed yet" />
+            <warning-box v-if="!allSquaresClaimed" warning="Not all squares have been claimed yet"/>
+
+            <div v-if="!isLocked" class="field checkbox-field">
+                <label>
+                    <input type="checkbox" v-model="lockPool"/>
+                    Lock squares to prevent further changes
+                </label>
+            </div>
 
             <!-- Single set mode (legacy "standard" config) -->
             <template v-if="isSingleSetMode">
@@ -52,7 +60,8 @@ limitations under the License.
                 <div class="tab-content" v-for="setType in setTypes" :key="setType" v-show="activeTab === setType">
                     <div class="field">
                         <label :style="homeTeamLabelStyle">{{ grid.homeTeamName }} ({{ getSetLabel(setType) }})</label>
-                        <manual-draw-numbers :ref="el => setNumberSetRef(setType, 'home', el)" v-model="numberSets[setType].home"/>
+                        <manual-draw-numbers :ref="el => setNumberSetRef(setType, 'home', el)"
+                                             v-model="numberSets[setType].home"/>
                     </div>
                     <div class="field">
                         <label :style="awayTeamLabelStyle">{{ grid.awayTeamName }} ({{ getSetLabel(setType) }})</label>
@@ -74,188 +83,219 @@ limitations under the License.
 </template>
 
 <script>
-    import ManualDrawNumbers from "@/components/ManualDrawNumbers";
-    import ModalController from "@/controllers/ModalController";
-    import WarningBox from "@/components/WarningBox";
+import ManualDrawNumbers from "@/components/ManualDrawNumbers"
+import ModalController from "@/controllers/ModalController"
+import WarningBox from "@/components/WarningBox"
 
-    export default {
-        name: "ManualDraw",
-        components: {WarningBox, ManualDrawNumbers},
-        props: {
-            allSquaresClaimed: {
-                type: Boolean,
-                required: true,
-            },
-            grid: {
-                type: Object,
-                required: true,
-            },
-            pool: {
-                type: Object,
-                required: true,
-            },
-            numberSetTypeInfos: {
-                type: Object,
-                default: () => ({})
-            }
+export default {
+    name: "ManualDraw",
+    components: {WarningBox, ManualDrawNumbers},
+    props: {
+        allSquaresClaimed: {
+            type: Boolean,
+            required: true,
         },
-        emits: ['draw', 'drawMultiSet'],
-        data() {
-            return {
-                // Single set mode
-                homeNumbers: {
-                    valid: false,
-                    numbers: ['', '', '', '', '', '', '', '', '', ''],
-                },
-                awayNumbers: {
-                    valid: false,
-                    numbers: ['', '', '', '', '', '', '', '', '', ''],
-                },
-                // Multi-set mode
-                activeTab: null,
-                numberSets: {},
-                numberSetRefs: {},
-            }
+        isLocked: {
+            type: Boolean,
+            required: true,
         },
-        computed: {
-            homeTeamLabelStyle() {
-                return this.labelStyle(this.grid.settings.homeTeamColor1, this.grid.settings.homeTeamColor2)
-            },
-            awayTeamLabelStyle() {
-                return this.labelStyle(this.grid.settings.awayTeamColor1, this.grid.settings.awayTeamColor2)
-            },
-            isSingleSetMode() {
-                return !this.pool.numberSetConfig || this.pool.numberSetConfig === 'standard'
-            },
-            setTypes() {
-                const config = this.pool.numberSetConfig
-                const configMap = {
-                    '1234': ['q1', 'q2', 'q3', 'q4'],
-                    '123f': ['q1', 'q2', 'q3', 'final'],
-                    'hf': ['half', 'final'],
-                    'h4': ['half', 'q4'],
-                }
-                return configMap[config] || []
-            },
-            canSubmit() {
-                if (this.isSingleSetMode) {
-                    return this.homeNumbers.valid && this.awayNumbers.valid
-                }
-                return this.completedSetsCount === this.setTypes.length
-            },
-            completedSetsCount() {
-                return this.setTypes.filter(st => this.isSetComplete(st)).length
-            }
+        grid: {
+            type: Object,
+            required: true,
         },
-        watch: {
-            setTypes: {
-                immediate: true,
-                handler(types) {
-                    if (!this.isSingleSetMode && types.length > 0) {
-                        // Initialize number sets for each type
-                        types.forEach(st => {
-                            if (!this.numberSets[st]) {
-                                this.numberSets[st] = {
-                                    home: {
-                                        valid: false,
-                                        numbers: ['', '', '', '', '', '', '', '', '', ''],
-                                    },
-                                    away: {
-                                        valid: false,
-                                        numbers: ['', '', '', '', '', '', '', '', '', ''],
-                                    }
-                                }
+        pool: {
+            type: Object,
+            required: true,
+        },
+        numberSetTypeInfos: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+    emits: ['draw', 'drawMultiSet'],
+    data() {
+        return {
+            // Single set mode
+            homeNumbers: {
+                valid: false,
+                numbers: ['', '', '', '', '', '', '', '', '', ''],
+            },
+            awayNumbers: {
+                valid: false,
+                numbers: ['', '', '', '', '', '', '', '', '', ''],
+            },
+            // Multi-set mode
+            activeTab: null,
+            numberSets: {},
+            numberSetRefs: {},
+            // Lock pool option
+            lockPool: true,
+        }
+    },
+    computed: {
+        homeTeamLabelStyle() {
+            return this.labelStyle(this.grid.settings.homeTeamColor1, this.grid.settings.homeTeamColor2)
+        },
+        awayTeamLabelStyle() {
+            return this.labelStyle(this.grid.settings.awayTeamColor1, this.grid.settings.awayTeamColor2)
+        },
+        isSingleSetMode() {
+            return !this.pool.numberSetConfig || this.pool.numberSetConfig === 'standard'
+        },
+        setTypes() {
+            const config = this.pool.numberSetConfig
+            const configMap = {
+                '1234': ['q1', 'q2', 'q3', 'q4'],
+                '123f': ['q1', 'q2', 'q3', 'final'],
+                'hf': ['half', 'final'],
+                'h4': ['half', 'q4'],
+            }
+            return configMap[config] || []
+        },
+        canSubmit() {
+            if (this.isSingleSetMode) {
+                return this.homeNumbers.valid && this.awayNumbers.valid
+            }
+            return this.completedSetsCount === this.setTypes.length
+        },
+        completedSetsCount() {
+            return this.setTypes.filter(st => this.isSetComplete(st)).length
+        },
+    },
+    watch: {
+        setTypes: {
+            immediate: true,
+            handler(types) {
+                if (!this.isSingleSetMode && types.length > 0) {
+                    // Initialize number sets for each type
+                    types.forEach(st => {
+                        if (!this.numberSets[st]) {
+                            this.numberSets[st] = {
+                                home: {
+                                    valid: false,
+                                    numbers: ['', '', '', '', '', '', '', '', '', ''],
+                                },
+                                away: {
+                                    valid: false,
+                                    numbers: ['', '', '', '', '', '', '', '', '', ''],
+                                },
                             }
-                        })
-                        // Set initial active tab
-                        if (!this.activeTab) {
-                            this.activeTab = types[0]
                         }
+                    })
+                    // Set initial active tab
+                    if (!this.activeTab) {
+                        this.activeTab = types[0]
                     }
                 }
-            }
+            },
         },
-        mounted() {
-            if (this.isSingleSetMode) {
-                this.$refs.homeNumbers.select()
-            }
-        },
-        methods: {
-            setNumberSetRef(setType, team, el) {
-                if (!this.numberSetRefs[setType]) {
-                    this.numberSetRefs[setType] = {}
-                }
-                this.numberSetRefs[setType][team] = el
-            },
-            cancel() {
-                ModalController.hide()
-            },
-            submit() {
-                if (this.isSingleSetMode) {
-                    this.$emit('draw', {
-                        homeNumbers: this.homeNumbers.numbers.map(n => parseInt(n, 10)),
-                        awayNumbers: this.awayNumbers.numbers.map(n => parseInt(n, 10)),
-                    })
-                } else {
-                    const numberSets = {}
-                    this.setTypes.forEach(st => {
-                        numberSets[st] = {
-                            homeTeamNumbers: this.numberSets[st].home.numbers.map(n => parseInt(n, 10)),
-                            awayTeamNumbers: this.numberSets[st].away.numbers.map(n => parseInt(n, 10)),
-                        }
-                    })
-                    this.$emit('drawMultiSet', numberSets)
-                }
-            },
-            labelStyle(c1, c2) {
-                return `background: linear-gradient(to bottom, ${c1}, ${c1} calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), ${c2} calc(50% + 1px))`;
-            },
-            isSetComplete(setType) {
-                const set = this.numberSets[setType]
-                return set && set.home.valid && set.away.valid
-            },
-            getSetLabel(setType) {
-                const labels = {
-                    'q1': '1st',
-                    'q2': '2nd',
-                    'q3': '3rd',
-                    'q4': '4th',
-                    'half': 'Half',
-                    'final': 'Final',
-                    'all': 'All'
-                }
-                return labels[setType] || setType
-            }
+    },
+    mounted() {
+        if (this.isSingleSetMode) {
+            this.$refs.homeNumbers.select()
         }
-    }
+    },
+    methods: {
+        setNumberSetRef(setType, team, el) {
+            if (!this.numberSetRefs[setType]) {
+                this.numberSetRefs[setType] = {}
+            }
+            this.numberSetRefs[setType][team] = el
+        },
+        cancel() {
+            ModalController.hide()
+        },
+        submit() {
+            if (this.isSingleSetMode) {
+                this.$emit('draw', {
+                    homeNumbers: this.homeNumbers.numbers.map(n => parseInt(n, 10)),
+                    awayNumbers: this.awayNumbers.numbers.map(n => parseInt(n, 10)),
+                }, this.lockPool)
+            } else {
+                const numberSets = {}
+                this.setTypes.forEach(st => {
+                    numberSets[st] = {
+                        homeTeamNumbers: this.numberSets[st].home.numbers.map(n => parseInt(n, 10)),
+                        awayTeamNumbers: this.numberSets[st].away.numbers.map(n => parseInt(n, 10)),
+                    }
+                })
+                this.$emit('drawMultiSet', numberSets, this.lockPool)
+            }
+        },
+        labelStyle(c1, c2) {
+            return `background: linear-gradient(to bottom, ${c1}, ${c1} calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), ${c2} calc(50% + 1px))`
+        },
+        isSetComplete(setType) {
+            const set = this.numberSets[setType]
+            return set && set.home.valid && set.away.valid
+        },
+        getSetLabel(setType) {
+            const labels = {
+                'q1': '1st',
+                'q2': '2nd',
+                'q3': '3rd',
+                'q4': '4th',
+                'half': 'Half',
+                'final': 'Final',
+                'all': 'All',
+            }
+            return labels[setType] || setType
+        },
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    @use '../variables.scss' as *;
+@use '../variables.scss' as *;
+
+label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size:   1.2em;
+    color:       #fff;
+    padding:     $minimal-spacing;
+    text-align:  center;
+    text-shadow: 0 0 3px rgba(black, 0.8);
+}
+
+.tab-content {
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.progress-indicator {
+    text-align:    center;
+    padding:       $minimal-spacing;
+    color:         $text-secondary;
+    font-size:     0.9em;
+    margin-bottom: $standard-spacing;
+}
+
+.checkbox-field {
+    margin: $standard-spacing 0;
 
     label {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size:   1.2em;
-        color:       #fff;
-        padding:     $minimal-spacing;
-        text-align:  center;
-        text-shadow: 0 0 3px rgba(black, 0.8);
-    }
+        display:     flex;
+        align-items: center;
+        gap:         $minimal-spacing;
+        cursor:      pointer;
+        font-size:   0.95em;
+        color:       $text-color;
+        font-family: inherit;
+        text-shadow: none;
+        padding:     0;
+        text-align:  left;
+        background:  none;
 
-    .tab-content {
-        animation: fadeIn 0.2s ease;
+        input[type="checkbox"] {
+            width:        18px;
+            height:       18px;
+            cursor:       pointer;
+            margin-right: $minimal-spacing;
+        }
     }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .progress-indicator {
-        text-align: center;
-        padding: $minimal-spacing;
-        color: $text-secondary;
-        font-size: 0.9em;
-        margin-bottom: $standard-spacing;
-    }
+}
 </style>
