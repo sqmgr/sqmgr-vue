@@ -191,7 +191,7 @@ limitations under the License.
                                 <div class="setting-item">
                                     <label>Numbers</label>
                                     <div class="setting-value">
-                                        <span v-if="!grid.homeNumbers && !grid.awayNumbers" class="numbers-pending">
+                                        <span v-if="!numbersAreDrawn" class="numbers-pending">
                                             <i class="fas fa-clock"></i> Pending
                                         </span>
                                         <span v-else-if="grid.manualDraw" class="numbers-manual">
