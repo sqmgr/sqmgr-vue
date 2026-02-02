@@ -36,9 +36,18 @@ limitations under the License.
                                 {{ isLocked ? 'Locked' : 'Open' }}
                             </span>
                             <span v-if="grid.bdlEvent" class="event-status-badge" :class="eventStatusClass">
-                                <i :class="eventStatusIcon"></i>
-                                {{ eventStatusText }}
-                                <span v-if="grid.bdlEvent.status === 'in_progress'" class="live-indicator">LIVE</span>
+                                <template v-if="grid.bdlEvent.status === 'in_progress'">
+                                    <span class="game-clock">{{ gameClockDisplay }}</span>
+                                    <span class="game-score">
+                                        {{ grid.bdlEvent.awayTeam?.abbreviation }} {{ grid.bdlEvent.awayScore ?? 0 }} -
+                                        {{ grid.bdlEvent.homeTeam?.abbreviation }} {{ grid.bdlEvent.homeScore ?? 0 }}
+                                    </span>
+                                    <span class="live-indicator">LIVE</span>
+                                </template>
+                                <template v-else>
+                                    <i :class="eventStatusIcon"></i>
+                                    {{ eventStatusText }}
+                                </template>
                             </span>
                         </div>
                     </div>
@@ -176,7 +185,9 @@ limitations under the License.
                                     <label>Linked Game</label>
                                     <div class="setting-value">
                                         <span class="linked-game">
-                                            {{ grid.bdlEvent.awayTeam?.abbreviation }} @ {{ grid.bdlEvent.homeTeam?.abbreviation }}
+                                            {{
+                                                grid.bdlEvent.awayTeam?.abbreviation
+                                            }} @ {{ grid.bdlEvent.homeTeam?.abbreviation }}
                                             <span class="league-badge">{{ grid.bdlEvent.league?.toUpperCase() }}</span>
                                         </span>
                                         <div v-if="bdlEventScores.length" class="linked-game-scores">
@@ -322,6 +333,7 @@ import sqmgrConfig from "@/models/sqmgrConfig"
 import ManualDraw from "@/components/ManualDraw"
 import DrawConfirmation from "@/components/DrawConfirmation"
 import normalizeColor from "@/utils/normalizeColor" // utility to normalize color values
+import { getShortLabelSync } from "@/models/periodLabels"
 
 const intColor = (color) => {
     if (!Array.isArray(color) || color.length !== 4) {
@@ -475,14 +487,13 @@ export default {
             return order.filter(key => this.grid.numberSets[key])
         },
         numberSetLabels() {
-            return {
-                'q1': '1st',
-                'q2': '2nd',
-                'q3': '3rd',
-                'q4': '4th',
-                'half': 'Half',
-                'final': 'Final',
+            // Use the centralized config for labels, with fallbacks
+            const labels = {}
+            const periods = ['q1', 'q2', 'q3', 'q4', 'half', 'final']
+            for (const period of periods) {
+                labels[period] = getShortLabelSync(this.config, period)
             }
+            return labels
         },
         isAdmin() {
             return this.pool.isAdmin
@@ -519,26 +530,85 @@ export default {
         eventStatusClass() {
             if (!this.grid?.bdlEvent) return ''
             switch (this.grid.bdlEvent.status) {
-                case 'in_progress': return 'live'
-                case 'final': return 'final'
-                default: return 'scheduled'
+                case 'in_progress':
+                    return 'live'
+                case 'final':
+                    return 'final'
+                default:
+                    return 'scheduled'
             }
         },
         eventStatusIcon() {
             if (!this.grid?.bdlEvent) return ''
             switch (this.grid.bdlEvent.status) {
-                case 'in_progress': return 'fas fa-circle'
-                case 'final': return 'fas fa-check-circle'
-                default: return 'fas fa-clock'
+                case 'in_progress':
+                    return 'fas fa-circle'
+                case 'final':
+                    return 'fas fa-check-circle'
+                default:
+                    return 'fas fa-clock'
             }
         },
         eventStatusText() {
             if (!this.grid?.bdlEvent) return ''
             switch (this.grid.bdlEvent.status) {
-                case 'in_progress': return ''
-                case 'final': return 'Final'
-                default: return 'Scheduled'
+                case 'in_progress':
+                    return ''
+                case 'final':
+                    return 'Final'
+                default:
+                    return 'Scheduled'
             }
+        },
+        periodLabel() {
+            const period = this.grid?.bdlEvent?.period
+            if (!period) return ''
+
+            const league = this.grid?.bdlEvent?.league
+
+            // College basketball uses halves
+            if (league === 'ncaab') {
+                if (period === 1) return '1st Half'
+                if (period === 2) return '2nd Half'
+                if (period > 2) return `OT${period - 2}`
+            }
+
+            // NBA, WNBA, NFL, NCAAF all use quarters
+            if (period === 1) return '1st'
+            if (period === 2) return '2nd'
+            if (period === 3) return '3rd'
+            if (period === 4) return '4th'
+            if (period > 4) return `OT${period - 4}`
+            return `${period}`
+        },
+        gameClockDisplay() {
+            const event = this.grid?.bdlEvent
+            if (!event) return ''
+
+            const detail = event.statusDetail?.toLowerCase() || ''
+
+            // Handle halftime
+            if (detail.includes('halftime')) {
+                return event.statusDetail
+            }
+
+            // Handle "End of Period" - enhance with specific period info
+            if (detail.includes('end of')) {
+                // If the statusDetail already has specific period (e.g., "End of 1st Quarter"), use it
+                // Otherwise, enhance "End of Period" with the actual period
+                if (detail.includes('1st') || detail.includes('2nd') || detail.includes('3rd') || detail.includes('4th') || detail.includes('ot')) {
+                    return event.statusDetail
+                }
+                // Generic "End of Period" - add specific period info
+                return `End of ${this.periodLabel}`
+            }
+
+            // Show clock + period during active play
+            if (event.clock) {
+                return `${event.clock} - ${this.periodLabel}`
+            }
+
+            return this.periodLabel
         },
         winningSquaresMap() {
             // Map from squareId -> array of winning period types
@@ -564,18 +634,26 @@ export default {
             const scores = []
             const status = event.status
             const period = event.period || 0
+            const detail = event.statusDetail?.toLowerCase() || ''
 
-            // Determine which quarters are complete based on status and period
-            // Period 1 = 1st qtr in progress (nothing complete)
-            // Period 2 = 2nd qtr in progress (Q1 complete)
+            // Check if we're at the end of a specific period via statusDetail
+            const atEndOfPeriod = detail.includes('end of')
+            const atHalftime = detail.includes('halftime')
+
+            // Determine which quarters are complete based on status, period, and statusDetail
+            // Period 1 = 1st qtr in progress (nothing complete, unless "End of 1st")
+            // Period 2 = 2nd qtr in progress (Q1 complete, unless "End of 2nd")
             // Period 3 = 3rd qtr in progress (Q1, Q2, Half complete)
             // Period 4 = 4th qtr in progress (Q1, Q2, Q3, Half complete)
             // Final = all complete
             const isFinal = status === 'final'
-            const q1Complete = isFinal || period >= 2
-            const q2Complete = isFinal || period >= 3
+            // Q1 is complete if: final, period >= 2, OR at end of period 1
+            const q1Complete = isFinal || period >= 2 || (period === 1 && atEndOfPeriod)
+            // Q2/Half is complete if: final, period >= 3, at halftime, OR at end of period 2
+            const q2Complete = isFinal || period >= 3 || atHalftime || (period === 2 && atEndOfPeriod)
             const halfComplete = q2Complete
-            const q3Complete = isFinal || period >= 4
+            // Q3 is complete if: final, period >= 4, OR at end of period 3
+            const q3Complete = isFinal || period >= 4 || (period === 3 && atEndOfPeriod)
 
             if (config === 'hf') {
                 // Half, Final
@@ -583,44 +661,39 @@ export default {
                     scores.push({
                         label: 'Half',
                         home: (event.homeQ1 || 0) + (event.homeQ2 || 0),
-                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0)
+                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0),
                     })
                 }
                 if (isFinal && event.homeScore != null) {
-                    scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
+                    scores.push({label: 'Final', home: event.homeScore, away: event.awayScore})
                 }
             } else if (config === '123f') {
                 // 1st, 2nd, 3rd, Final
                 if (q1Complete && event.homeQ1 != null) {
-                    scores.push({ label: '1st', home: event.homeQ1, away: event.awayQ1 })
+                    scores.push({label: '1st', home: event.homeQ1, away: event.awayQ1})
                 }
                 if (q2Complete && event.homeQ2 != null) {
                     scores.push({
                         label: '2nd',
                         home: (event.homeQ1 || 0) + (event.homeQ2 || 0),
-                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0)
+                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0),
                     })
                 }
                 if (q3Complete && event.homeQ3 != null) {
                     scores.push({
                         label: '3rd',
                         home: (event.homeQ1 || 0) + (event.homeQ2 || 0) + (event.homeQ3 || 0),
-                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0) + (event.awayQ3 || 0)
+                        away: (event.awayQ1 || 0) + (event.awayQ2 || 0) + (event.awayQ3 || 0),
                     })
                 }
                 if (isFinal && event.homeScore != null) {
-                    scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
+                    scores.push({label: 'Final', home: event.homeScore, away: event.awayScore})
                 }
             } else {
                 // Standard - final only
                 if (isFinal && event.homeScore != null) {
-                    scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
+                    scores.push({label: 'Final', home: event.homeScore, away: event.awayScore})
                 }
-            }
-
-            // Always show current score for in-progress games (regardless of config)
-            if (status === 'in_progress' && event.homeScore != null) {
-                scores.push({ label: 'Current', home: event.homeScore, away: event.awayScore })
             }
 
             return scores
@@ -837,10 +910,10 @@ export default {
 
 $expand-size: 8in;
 
-$q1-color:    #4477aa;
-$q2-color:    #ee6677;
-$q3-color:    #228833;
-$q4-color:    #ccbb44;
+$q1-color:    #33bbee;
+$q2-color:    #cc3311;
+$q3-color:    #ee7733;
+$q4-color:    #009988;
 
 
 section.grid {
@@ -886,7 +959,7 @@ div.grid-layout {
 }
 
 div.squares-container {
-    width:    100%;
+    width: 100%;
 
     @include mobile {
         overflow: auto;
@@ -1053,13 +1126,15 @@ div.square {
     border:          1px solid var(--grid-gray);
     display:         flex;
     font-family:     'Roboto Condensed', sans-serif;
-    font-size:       clamp(10px, 1.0vw, 20px);
+    font-size:       clamp(10px, 1.7cqmin, 20px);
     align-items:     center;
     justify-content: center;
     position:        relative;
     overflow:        hidden;
-    padding:         2px;
+    padding:         8px 2px;
     transition:      transform 100ms ease, box-shadow 100ms ease;
+    white-space:     nowrap;
+    container-type:  inline-size;
 
     :deep(i.owned) {
         color:     $yellow;
@@ -1222,10 +1297,10 @@ div.notes.notes-print {
 
 div.branding.branding-print {
     margin-bottom: var(--spacing);
-    text-align: center;
+    text-align:    center;
 
     img {
-        max-width: 300px;
+        max-width:  300px;
         max-height: 100px;
         object-fit: contain;
     }
@@ -1356,9 +1431,33 @@ p.add-note {
     &.live {
         background: rgba($red, 0.1);
         color:      $red;
+        gap:        $space-3;
 
         i {
             animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .game-clock {
+            font-weight: 600;
+        }
+
+        .game-score {
+            font-weight: 700;
+        }
+
+        .live-indicator {
+            display:     inline-flex;
+            align-items: center;
+            gap:         $space-1;
+
+            &::before {
+                content:       '';
+                width:         8px;
+                height:        8px;
+                background:    currentColor;
+                border-radius: 50%;
+                animation:     pulse 1.5s ease-in-out infinite;
+            }
         }
     }
 
@@ -1368,7 +1467,7 @@ p.add-note {
     }
 
     .live-indicator {
-        font-weight: 700;
+        font-weight:    700;
         letter-spacing: 0.5px;
     }
 }
@@ -1681,23 +1780,23 @@ p.add-note {
     }
 
     .linked-game-scores {
-        display:        flex;
-        flex-wrap:      wrap;
-        gap:            $space-2 $space-4;
-        margin-top:     $space-2;
-        font-size:      0.875rem;
+        display:    flex;
+        flex-wrap:  wrap;
+        gap:        $space-2 $space-4;
+        margin-top: $space-2;
+        font-size:  0.875rem;
 
         .score-item {
-            display:     flex;
-            gap:         $space-1;
+            display: flex;
+            gap:     $space-1;
         }
 
         .score-label {
-            color:       $text-secondary;
+            color: $text-secondary;
         }
 
         .score-value {
-            font-weight: 600;
+            font-weight:          600;
             font-variant-numeric: tabular-nums;
         }
     }
@@ -1814,8 +1913,8 @@ p.add-note {
         }
 
         .print-header-branding {
-            flex-shrink:  0;
-            margin-left:  var(--spacing);
+            flex-shrink: 0;
+            margin-left: var(--spacing);
 
             img {
                 max-width:  150px;

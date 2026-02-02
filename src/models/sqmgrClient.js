@@ -232,8 +232,9 @@ class sqmgrClient {
             })
     }
 
-    getSquareByTokenAndSquareId(token, squareId) {
-        return this.request(`/pool/${token}/square/${squareId}`)
+    getSquareByTokenAndSquareId(token, squareId, gridId = null) {
+        const query = gridId ? { gridId } : null
+        return this.request(`/pool/${token}/square/${squareId}`, query)
     }
 
     updateSquare(token, squareId, data) {

@@ -468,13 +468,13 @@ section.grid-customize {
     gap: var(--minimal-spacing);
     padding: var(--minimal-spacing) var(--spacing);
     background-color: #e8f5e9;
-    border: 1px solid #4caf50;
+    border: 1px solid $primary;
     border-radius: 4px;
     margin-top: var(--spacing);
     margin-bottom: $standard-spacing;
 
     i {
-        color: #4caf50;
+        color: $primary;
     }
 
     button {

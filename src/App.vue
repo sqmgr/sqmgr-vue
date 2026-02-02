@@ -302,7 +302,7 @@ header {
     }
 
     a {
-        color:           #4caf50;
+        color:           var(--primary);
         text-decoration: none;
     }
 

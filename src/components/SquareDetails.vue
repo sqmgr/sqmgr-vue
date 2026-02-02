@@ -85,8 +85,18 @@ limitations under the License.
             </tbody>
         </table>
 
-        <div class="annotation" v-if="computedAnnotation">
-            <i :class="`fas fa-${annotationIcon}`" v-if="annotationIcon"></i>
+        <div class="winning-periods"
+             v-if="square.winningPeriods && square.winningPeriods.length"
+             :style="winningPeriodsBoxStyle">
+            <strong>Winner</strong>
+            <div v-for="period in square.winningPeriods" :key="period.period"
+                 class="winning-period">
+                {{ period.label }}: {{ period.awayScore }}-{{ period.homeScore }}
+            </div>
+        </div>
+
+        <div class="annotation" v-if="computedAnnotation" :style="annotationStyle">
+            <i :class="`fas fa-${annotationIcon}`" v-if="annotationIcon" :style="annotationIconStyle"></i>
 
             <span>{{ computedAnnotation.annotation }}</span>
 
@@ -206,6 +216,49 @@ limitations under the License.
             },
             computedAnnotation() {
                 return typeof(this.localAnnotation) !== 'undefined' ? this.localAnnotation : this.annotation
+            },
+            primaryWinnerColor() {
+                if (!this.square.winningPeriods?.length) return null
+
+                const colors = {
+                    'q1': '#33bbee',
+                    'half': '#33bbee',
+                    'q2': '#cc3311',
+                    'q3': '#ee7733',
+                    'final': '#009988',
+                    'all': '#009988',
+                }
+                const priority = ['final', 'all', 'half', 'q3', 'q1', 'q2']
+                const periods = this.square.winningPeriods.map(p => p.period)
+
+                for (const p of priority) {
+                    if (periods.includes(p)) {
+                        return colors[p]
+                    }
+                }
+                return colors[periods[0]] || '#009988'
+            },
+            winningPeriodsBoxStyle() {
+                const color = this.primaryWinnerColor
+                if (!color) return {}
+                return {
+                    borderLeftColor: color,
+                    background: `${color}14`,
+                }
+            },
+            annotationStyle() {
+                const color = this.primaryWinnerColor
+                if (!color) return {}
+                return {
+                    borderLeftColor: color,
+                }
+            },
+            annotationIconStyle() {
+                const color = this.primaryWinnerColor
+                if (!color) return {}
+                return {
+                    color: color,
+                }
             }
         },
         methods: {
@@ -243,7 +296,7 @@ limitations under the License.
                 })
             },
             reloadData() {
-                sqmgrClient.getSquareByTokenAndSquareId(this.poolConfig.token, this.square.squareId)
+                sqmgrClient.getSquareByTokenAndSquareId(this.poolConfig.token, this.square.squareId, this.gridId)
                     .then(res => this.loadedData = res)
             },
             onKeyup(event) {
@@ -270,10 +323,11 @@ limitations under the License.
             showSquare(squareId) {
                 ModalController.hide()
                 setTimeout(() => {
-                    sqmgrClient.getSquareByTokenAndSquareId(this.poolConfig.token, squareId)
+                    sqmgrClient.getSquareByTokenAndSquareId(this.poolConfig.token, squareId, this.gridId)
                         .then(data => {
                             ModalController.show('Square Details', SquareDetails, {
                                 data,
+                                gridId: this.gridId,
                                 poolConfig: this.poolConfig,
                             })
                         })
@@ -344,6 +398,23 @@ limitations under the License.
     div.buttons {
         margin-top: $standard-spacing;
         text-align: center;
+    }
+
+    div.winning-periods {
+        border-left:   5px solid;
+        border-radius: 0 $minimal-spacing $minimal-spacing 0;
+        margin-top:    $standard-spacing;
+        padding:       $minimal-spacing $standard-spacing;
+
+        strong {
+            display:       block;
+            margin-bottom: $minimal-spacing;
+        }
+
+        .winning-period {
+            font-weight:          600;
+            font-variant-numeric: tabular-nums;
+        }
     }
 
     div.annotation {

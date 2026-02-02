@@ -86,6 +86,8 @@ limitations under the License.
 import ManualDrawNumbers from "@/components/ManualDrawNumbers"
 import ModalController from "@/controllers/ModalController"
 import WarningBox from "@/components/WarningBox"
+import sqmgrConfig from "@/models/sqmgrConfig"
+import { getShortLabelSync } from "@/models/periodLabels"
 
 export default {
     name: "ManualDraw",
@@ -130,6 +132,8 @@ export default {
             numberSetRefs: {},
             // Lock pool option
             lockPool: true,
+            // Config from API
+            sqmgrConfigData: null,
         }
     },
     computed: {
@@ -195,6 +199,9 @@ export default {
             this.$refs.homeNumbers.select()
         }
     },
+    created() {
+        sqmgrConfig().then(config => this.sqmgrConfigData = config)
+    },
     methods: {
         setNumberSetRef(setType, team, el) {
             if (!this.numberSetRefs[setType]) {
@@ -230,16 +237,7 @@ export default {
             return set && set.home.valid && set.away.valid
         },
         getSetLabel(setType) {
-            const labels = {
-                'q1': '1st',
-                'q2': '2nd',
-                'q3': '3rd',
-                'q4': '4th',
-                'half': 'Half',
-                'final': 'Final',
-                'all': 'All',
-            }
-            return labels[setType] || setType
+            return getShortLabelSync(this.sqmgrConfigData, setType)
         },
     },
 }
