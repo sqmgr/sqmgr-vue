@@ -545,7 +545,8 @@ export default {
                 return []
             }
 
-            const config = this.pool?.numberSetConfig || 'standard'
+            // Use grid's payout config if set, otherwise fall back to pool's numberSetConfig
+            const config = this.grid?.payoutConfig || this.pool?.numberSetConfig || 'standard'
             const scores = []
             const status = event.status
             const period = event.period || 0

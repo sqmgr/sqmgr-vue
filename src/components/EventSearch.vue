@@ -49,7 +49,7 @@ limitations under the License.
                     {{ event.awayTeam?.abbreviation || 'Away' }} @ {{ event.homeTeam?.abbreviation || 'Home' }}
                 </div>
                 <div class="event-names">
-                    {{ event.awayTeam?.name || 'Away Team' }} vs {{ event.homeTeam?.name || 'Home Team' }}
+                    {{ event.awayTeam?.fullName || event.awayTeam?.name || 'Away Team' }} vs {{ event.homeTeam?.fullName || event.homeTeam?.name || 'Home Team' }}
                 </div>
                 <div class="event-venue" v-if="event.venue">{{ event.venue }}</div>
             </div>
@@ -99,11 +99,15 @@ export default {
                 const awayTeam = event.awayTeam?.name?.toLowerCase() || ''
                 const homeAbbr = event.homeTeam?.abbreviation?.toLowerCase() || ''
                 const awayAbbr = event.awayTeam?.abbreviation?.toLowerCase() || ''
+                const homeFull = event.homeTeam?.fullName?.toLowerCase() || ''
+                const awayFull = event.awayTeam?.fullName?.toLowerCase() || ''
 
                 return homeTeam.includes(query) ||
                     awayTeam.includes(query) ||
                     homeAbbr.includes(query) ||
-                    awayAbbr.includes(query)
+                    awayAbbr.includes(query) ||
+                    homeFull.includes(query) ||
+                    awayFull.includes(query)
             })
         },
     },
@@ -125,7 +129,7 @@ export default {
             this.searchQuery = ''
 
             try {
-                const response = await sqmgrClient.getBDLEvents(this.selectedLeague, 'scheduled', 50)
+                const response = await sqmgrClient.getBDLEvents(this.selectedLeague, 'scheduled,in_progress', 500)
                 this.events = response.events || []
 
                 // If we have an initial event, make sure it's in the list
@@ -156,6 +160,11 @@ export default {
                 hour: 'numeric',
                 minute: '2-digit',
             })
+        },
+        resetToEvent(event) {
+            if (event) {
+                this.selectedEvent = event
+            }
         },
     },
 }

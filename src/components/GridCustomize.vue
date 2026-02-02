@@ -51,7 +51,8 @@ limitations under the License.
                 </div>
 
                 <EventSearch
-                    v-if="eventMode === 'live'"
+                    v-if="eventMode === 'live' && !form.bdlEventId"
+                    ref="eventSearch"
                     @selected="onEventSelected"
                     :initial-event="form.bdlEvent"
                 />
@@ -59,8 +60,21 @@ limitations under the License.
                 <p v-if="form.bdlEventId" class="linked-event-notice">
                     <i class="fas fa-link"></i>
                     Linked to: {{ linkedEventDescription }}
-                    <button type="button" class="sm destructive" @click="unlinkEvent">Unlink</button>
+                    <template v-if="isLinkedEventFinal">
+                        <span class="final-notice">This game has ended and cannot be unlinked</span>
+                    </template>
+                    <button v-else type="button" class="sm destructive" @click="unlinkEvent">Unlink</button>
                 </p>
+
+                <div v-if="form.bdlEventId" class="field">
+                    <label for="payout-config">Payout Periods</label>
+                    <select id="payout-config" v-model="form.payoutConfig">
+                        <option value="standard">Final only</option>
+                        <option value="hf">Half, Final</option>
+                        <option value="123f">1st, 2nd, 3rd, Final</option>
+                    </select>
+                    <small class="helper-text">Select which periods have payouts for this game.</small>
+                </div>
             </fieldset>
 
             <fieldset>
@@ -169,6 +183,7 @@ export default {
                 brandingImageAlt: '',
                 bdlEventId: null,
                 bdlEvent: null,
+                payoutConfig: 'standard',
                 awayTeam: {
                     name: '',
                     color1: '',
@@ -186,9 +201,24 @@ export default {
         linkedEventDescription() {
             if (!this.form.bdlEvent) return ''
             const event = this.form.bdlEvent
-            const away = event.awayTeam?.name || 'Away'
-            const home = event.homeTeam?.name || 'Home'
-            return `${away} @ ${home}`
+            const away = event.awayTeam?.fullName || event.awayTeam?.name || 'Away'
+            const home = event.homeTeam?.fullName || event.homeTeam?.name || 'Home'
+            let description = `${away} @ ${home}`
+            if (event.eventDate) {
+                const date = new Date(event.eventDate)
+                const dateStr = date.toLocaleDateString(undefined, {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                })
+                description += ` - ${dateStr}`
+            }
+            return description
+        },
+        isLinkedEventFinal() {
+            return this.form.bdlEvent?.status === 'final'
         },
     },
     created() {
@@ -217,6 +247,8 @@ export default {
                 this.form.bdlEventId = this.grid.bdlEventId
                 this.form.bdlEvent = this.grid.bdlEvent || null
                 this.eventMode = 'live'
+                // Load payout config if set, otherwise use pool default
+                this.form.payoutConfig = this.grid.payoutConfig || this.pool?.numberSetConfig || 'standard'
             }
         }
     },
@@ -268,6 +300,8 @@ export default {
                 brandingImageUrl: this.form.brandingImageUrl,
                 brandingImageAlt: this.form.brandingImageAlt,
                 bdlEventId: this.form.bdlEventId,
+                // Only save payoutConfig when an event is linked; clear it otherwise
+                payoutConfig: this.form.bdlEventId ? this.form.payoutConfig : '',
             }
 
             if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
@@ -295,6 +329,42 @@ export default {
             this.imageError = false
         },
         onEventSelected(event) {
+            // Block changing if current event is final
+            if (this.isLinkedEventFinal) {
+                // Reset EventSearch to show original event
+                this.$refs.eventSearch?.resetToEvent(this.form.bdlEvent)
+                return
+            }
+
+            // If already linked to a different event, confirm before changing
+            if (this.form.bdlEventId && this.form.bdlEventId !== event.id) {
+                const currentEventName = this.linkedEventDescription
+                const newAway = event.awayTeam?.name || 'Away'
+                const newHome = event.homeTeam?.name || 'Home'
+                const newEventName = `${newAway} @ ${newHome}`
+
+                ModalController.showPrompt(
+                    'Change Linked Event?',
+                    `You are about to change the linked event from "${currentEventName}" to "${newEventName}". This will affect score tracking.`,
+                    {
+                        cancelButton: 'Cancel',
+                        actionButton: 'Change Event',
+                        action: () => {
+                            ModalController.hide()
+                            this.applyEventSelection(event)
+                        },
+                        cancelAction: () => {
+                            // Reset EventSearch to show original event
+                            this.$refs.eventSearch?.resetToEvent(this.form.bdlEvent)
+                        },
+                    },
+                )
+                return
+            }
+
+            this.applyEventSelection(event)
+        },
+        applyEventSelection(event) {
             this.form.bdlEventId = event.id
             this.form.bdlEvent = event
 
@@ -311,10 +381,16 @@ export default {
                 const date = new Date(event.eventDate)
                 this.form.eventDate = date.toISOString().substr(0, 10)
             }
+
+            // Set default payout config from pool
+            if (!this.form.payoutConfig) {
+                this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
+            }
         },
         unlinkEvent() {
             this.form.bdlEventId = null
             this.form.bdlEvent = null
+            this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
             this.eventMode = 'manual'
         },
     },
@@ -351,6 +427,7 @@ section.grid-customize {
     border: 1px solid #4caf50;
     border-radius: 4px;
     margin-top: var(--spacing);
+    margin-bottom: $standard-spacing;
 
     i {
         color: #4caf50;
@@ -358,6 +435,13 @@ section.grid-customize {
 
     button {
         margin-left: auto;
+    }
+
+    .final-notice {
+        margin-left: auto;
+        font-size: 0.85em;
+        color: #666;
+        font-style: italic;
     }
 }
 
