@@ -37,16 +37,16 @@ limitations under the License.
                 </template>
             </template>
             <fieldset>
-                <legend>Link to Live Event (Optional)</legend>
+                <legend>Link to Event</legend>
 
                 <div class="event-mode-toggle">
                     <label>
-                        <input type="radio" v-model="eventMode" value="manual">
-                        Manual Entry
-                    </label>
-                    <label>
                         <input type="radio" v-model="eventMode" value="live">
-                        Link to Live Event
+                        Link to Event
+                    </label>
+                    <label :class="{ disabled: form.bdlEventId }">
+                        <input type="radio" v-model="eventMode" value="manual" :disabled="form.bdlEventId">
+                        Manual Entry
                     </label>
                 </div>
 
@@ -65,20 +65,19 @@ limitations under the License.
                     </template>
                     <button v-else type="button" class="sm destructive" @click="unlinkEvent">Unlink</button>
                 </p>
+            </fieldset>
 
-                <div v-if="form.bdlEventId" class="field">
-                    <label for="payout-config">Payout Periods</label>
-                    <select id="payout-config" v-model="form.payoutConfig">
-                        <option value="standard">Final only</option>
-                        <option value="hf">Half, Final</option>
-                        <option value="123f">1st, 2nd, 3rd, Final</option>
-                    </select>
-                    <small class="helper-text">Select which periods have payouts for this game.</small>
+            <fieldset>
+                <legend>Teams</legend>
+
+                <div class="teams-row">
+                    <GridCustomizeTeam name="Away Team" v-model="form.awayTeam"/>
+                    <GridCustomizeTeam name="Home Team" v-model="form.homeTeam"/>
                 </div>
             </fieldset>
 
             <fieldset>
-                <legend>General Settings</legend>
+                <legend>Event Details</legend>
 
                 <div class="field">
                     <label for="label" class="optional">Event Name</label>
@@ -88,6 +87,16 @@ limitations under the License.
                 <div class="field">
                     <label for="event-date" class="optional">Event Date</label>
                     <input type="date" id="event-date" name="event-date" v-model="form.eventDate">
+                </div>
+
+                <div v-if="form.bdlEventId" class="field">
+                    <label for="payout-config">Payout Periods</label>
+                    <select id="payout-config" v-model="form.payoutConfig">
+                        <option value="standard">Final only</option>
+                        <option value="hf">Half, Final</option>
+                        <option value="123f">1st, 2nd, 3rd, Final</option>
+                    </select>
+                    <small class="helper-text">Select which periods have payouts for this game.</small>
                 </div>
 
                 <div class="field radio" v-if="pool.gridType === 'roll100'">
@@ -128,12 +137,6 @@ limitations under the License.
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
-                <legend>Styling</legend>
-
-                <GridCustomizeTeam name="Away Team" v-model="form.awayTeam"/>
-                <GridCustomizeTeam name="Home Team" v-model="form.homeTeam"/>
-            </fieldset>
 
             <div class="buttons">
                 <button type="button" class="secondary" @click.prevent="didClickCancel">Cancel</button>
@@ -173,7 +176,7 @@ export default {
             errors: null,
             notesMaxLength: 200,
             imageError: false,
-            eventMode: 'manual',
+            eventMode: 'live',
             form: {
                 eventDate: '0000-00-00',
                 notes: '',
@@ -401,7 +404,6 @@ export default {
             this.form.bdlEventId = null
             this.form.bdlEvent = null
             this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
-            this.eventMode = 'manual'
         },
     },
 }
@@ -420,11 +422,34 @@ section.grid-customize {
     gap: var(--spacing);
     margin-bottom: var(--spacing);
 
+    @include mobile {
+        flex-direction: column;
+        gap: $minimal-spacing;
+    }
+
     label {
         display: flex;
         align-items: center;
         gap: var(--minimal-spacing);
         cursor: pointer;
+
+        &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.teams-row {
+    display: flex;
+    gap: $standard-spacing;
+
+    @include mobile {
+        flex-direction: column;
+    }
+
+    > :deep(*) {
+        flex: 1;
     }
 }
 
