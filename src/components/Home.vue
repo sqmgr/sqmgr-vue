@@ -46,6 +46,10 @@ limitations under the License.
                     <li>Custom team colors</li>
                     <li>Add your own branding</li>
                 </ul>
+                <div class="new-callout">
+                    <span class="new-badge">New</span>
+                    <span>Live score syncing for football &amp; basketball</span>
+                </div>
             </div>
 
             <div class="feature-card persistence">
@@ -179,6 +183,28 @@ section.index {
                 color:       $primary;
                 font-size:   0.8em;
             }
+        }
+    }
+
+    .new-callout {
+        display:       flex;
+        align-items:   center;
+        gap:           $standard-spacing * 0.5;
+        margin-top:    $standard-spacing;
+        padding-top:   $standard-spacing;
+        border-top:    1px solid $light-gray;
+        font-size:     0.85em;
+        color:         $dark-gray;
+
+        .new-badge {
+            background:     $primary;
+            color:          white;
+            font-size:      0.7em;
+            font-weight:    600;
+            padding:        2px 6px;
+            border-radius:  $radius-sm;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     }
 }
