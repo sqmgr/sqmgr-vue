@@ -59,7 +59,7 @@ limitations under the License.
 
                 <p v-if="form.bdlEventId" class="linked-event-notice">
                     <i class="fas fa-link"></i>
-                    Linked to: {{ linkedEventDescription }}
+                    {{ linkedEventDescription }}
                     <template v-if="isLinkedEventFinal">
                         <span class="final-notice">This game has ended and cannot be unlinked</span>
                     </template>
@@ -206,7 +206,11 @@ export default {
             const event = this.form.bdlEvent
             const away = event.awayTeam?.fullName || event.awayTeam?.name || 'Away'
             const home = event.homeTeam?.fullName || event.homeTeam?.name || 'Home'
-            let description = `${away} @ ${home}`
+            const matchup = `${away} @ ${home}`
+
+            // Format: "Super Bowl LX: Team A @ Team B - Date" or "Team A @ Team B - Date"
+            let description = event.name ? `${event.name}: ${matchup}` : matchup
+
             if (event.eventDate) {
                 const date = new Date(event.eventDate)
                 const dateStr = date.toLocaleDateString(undefined, {
@@ -370,6 +374,11 @@ export default {
         applyEventSelection(event) {
             this.form.bdlEventId = event.id
             this.form.bdlEvent = event
+
+            // Auto-populate event name if available (e.g., "Super Bowl LX")
+            if (event.name) {
+                this.form.label = event.name
+            }
 
             // Auto-populate team names and colors from event
             if (event.homeTeam) {

@@ -53,11 +53,9 @@ limitations under the License.
                 :class="{ selected: selectedEvent?.id === event.id }"
                 @click="selectEvent(event)">
                 <div class="event-date">{{ formatDate(event.eventDate) }}</div>
-                <div class="event-teams">
-                    {{ event.awayTeam?.abbreviation || 'Away' }} @ {{ event.homeTeam?.abbreviation || 'Home' }}
-                </div>
-                <div class="event-names">
-                    {{ event.awayTeam?.fullName || event.awayTeam?.name || 'Away Team' }} vs {{ event.homeTeam?.fullName || event.homeTeam?.name || 'Home Team' }}
+                <div class="event-name" v-if="event.name">{{ event.name }}</div>
+                <div class="event-matchup">
+                    {{ event.awayTeam?.fullName || event.awayTeam?.name || 'Away Team' }} @ {{ event.homeTeam?.fullName || event.homeTeam?.name || 'Home Team' }}
                 </div>
                 <div class="event-venue" v-if="event.venue">{{ event.venue }}</div>
             </div>
@@ -259,6 +257,10 @@ export default {
         .event-date, .event-venue {
             color: rgba(255, 255, 255, 0.8);
         }
+
+        .event-name {
+            color: #fff;
+        }
     }
 }
 
@@ -268,13 +270,15 @@ export default {
     margin-bottom: 2px;
 }
 
-.event-teams {
+.event-name {
     font-weight: bold;
     font-size: 1.1em;
+    color: var(--primary);
 }
 
-.event-names {
-    font-size: 0.9em;
+.event-matchup {
+    font-weight: bold;
+    font-size: 1em;
 }
 
 .event-venue {
