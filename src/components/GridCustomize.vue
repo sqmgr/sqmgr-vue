@@ -368,12 +368,24 @@ export default {
             this.form.bdlEventId = event.id
             this.form.bdlEvent = event
 
-            // Auto-populate team names from event
+            // Auto-populate team names and colors from event
             if (event.homeTeam) {
-                this.form.homeTeam.name = event.homeTeam.name || event.homeTeam.fullName || ''
+                this.form.homeTeam.name = event.homeTeam.fullName || event.homeTeam.name || ''
+                if (event.homeTeam.color) {
+                    this.form.homeTeam.color1 = '#' + event.homeTeam.color
+                }
+                if (event.homeTeam.alternateColor) {
+                    this.form.homeTeam.color2 = '#' + event.homeTeam.alternateColor
+                }
             }
             if (event.awayTeam) {
-                this.form.awayTeam.name = event.awayTeam.name || event.awayTeam.fullName || ''
+                this.form.awayTeam.name = event.awayTeam.fullName || event.awayTeam.name || ''
+                if (event.awayTeam.color) {
+                    this.form.awayTeam.color1 = '#' + event.awayTeam.color
+                }
+                if (event.awayTeam.alternateColor) {
+                    this.form.awayTeam.color2 = '#' + event.awayTeam.alternateColor
+                }
             }
 
             // Auto-populate event date
@@ -382,10 +394,8 @@ export default {
                 this.form.eventDate = date.toISOString().substr(0, 10)
             }
 
-            // Set default payout config from pool
-            if (!this.form.payoutConfig) {
-                this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
-            }
+            // Set payout config to match pool's number rotation format
+            this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
         },
         unlinkEvent() {
             this.form.bdlEventId = null

@@ -21,6 +21,7 @@ limitations under the License.
             <input :id="`name-${id}`" :maxlength="teamNameMaxLength" :name="`name-${id}`" :placeholder="name"
                    @keydown="keydown"
                    @keyup="keyup" autocomplete="off" type="text" v-model="modelValue.name"
+                   @focus="hasFocus = true"
                    @blur="hideSuggestions">
 
             <div v-show="suggestTeams.length > 0" class="suggest">
@@ -51,8 +52,11 @@ export default {
     name: "GridCustomizeTeam",
     watch: {
         teamName(name) {
-            this.suggestTeams = findTeam(name)
-            this.suggestIdx = -1
+            // Only show suggestions when user is actively typing (input has focus)
+            if (this.hasFocus) {
+                this.suggestTeams = findTeam(name)
+                this.suggestIdx = -1
+            }
         },
     },
     computed: {
@@ -66,6 +70,7 @@ export default {
             teamNameMaxLength: 50, // real default will come from config
             suggestTeams: [],
             suggestIdx: -1,
+            hasFocus: false,
         }
     },
     created() {
@@ -146,6 +151,7 @@ export default {
         hideSuggestions() {
             // do this behind a timeout just in case user clicked something
             setTimeout(() => {
+                this.hasFocus = false
                 this.suggestIdx = -1
                 this.suggestTeams = []
             }, 250)

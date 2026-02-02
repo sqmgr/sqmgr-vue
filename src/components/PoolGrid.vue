@@ -200,6 +200,12 @@ limitations under the License.
                                     </div>
                                 </div>
                                 <div class="setting-item">
+                                    <label>Payouts</label>
+                                    <div class="setting-value">
+                                        <span class="badge">{{ payoutConfigLabel }}</span>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
                                     <label>State</label>
                                     <div class="setting-value">
                                         <span class="status-badge" :class="{ locked: isLocked, open: !isLocked }">
@@ -485,6 +491,11 @@ export default {
             const found = this.config?.numberSetConfigs?.find(c => c.key === this.pool.numberSetConfig)
             return found?.label || 'Standard'
         },
+        payoutConfigLabel() {
+            const config = this.grid?.payoutConfig || this.pool?.numberSetConfig || 'standard'
+            const found = this.config?.numberSetConfigs?.find(c => c.key === config)
+            return found?.label || 'Standard'
+        },
         numSquares() {
             return Object.values(this.squares).length
         },
@@ -602,6 +613,11 @@ export default {
                 if (isFinal && event.homeScore != null) {
                     scores.push({ label: 'Final', home: event.homeScore, away: event.awayScore })
                 }
+            }
+
+            // Always show current score for in-progress games (regardless of config)
+            if (status === 'in_progress' && event.homeScore != null) {
+                scores.push({ label: 'Current', home: event.homeScore, away: event.awayScore })
             }
 
             return scores
