@@ -386,8 +386,10 @@ class sqmgrClient {
         return this.request('/bdl/leagues', null, false)
     }
 
-    async getBDLEvents(league, status = 'scheduled', limit = 50) {
-        return this.request('/bdl/events', { league, status, limit }, false)
+    async getBDLEvents(league, status = 'scheduled', limit = 50, offset = 0, search = '') {
+        const query = { league, status, limit, offset }
+        if (search && search.length >= 2) query.search = search
+        return this.request('/bdl/events', query, false)
     }
 
     async getBDLEvent(eventId) {

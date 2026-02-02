@@ -28,13 +28,21 @@ limitations under the License.
             </select>
         </div>
 
-        <div class="field" v-if="events.length > 0">
-            <label for="search">Filter Events</label>
-            <input type="text" id="search" v-model="searchQuery" placeholder="Filter by team name...">
+        <div class="field" v-if="events.length > 0 || searchQuery">
+            <label for="search">Search Events</label>
+            <input type="text" id="search" v-model="searchQuery" placeholder="Search by team name...">
         </div>
 
         <div class="loading" v-if="loading">
             Loading events...
+        </div>
+
+        <div class="searching" v-if="searching && !loading">
+            Searching...
+        </div>
+
+        <div class="results-count" v-if="!loading && !searching && totalEvents > 0">
+            Showing {{ filteredEvents.length }} of {{ totalEvents }} events
         </div>
 
         <div class="events-list" v-if="filteredEvents.length > 0 && !loading">
@@ -85,7 +93,28 @@ export default {
             searchQuery: '',
             selectedEvent: null,
             loading: false,
+            searching: false,
+            totalEvents: 0,
+            searchDebounceTimer: null,
         }
+    },
+    watch: {
+        searchQuery(newVal) {
+            // Clear any pending debounce
+            if (this.searchDebounceTimer) {
+                clearTimeout(this.searchDebounceTimer)
+            }
+
+            // If search is 2+ chars, debounce server search
+            if (newVal && newVal.length >= 2) {
+                this.searchDebounceTimer = setTimeout(() => {
+                    this.serverSearch(newVal)
+                }, 300)
+            } else if (newVal === '') {
+                // Reset to initial load when search is cleared
+                this.loadEvents()
+            }
+        },
     },
     computed: {
         filteredEvents() {
@@ -122,6 +151,7 @@ export default {
         async loadEvents() {
             if (!this.selectedLeague) {
                 this.events = []
+                this.totalEvents = 0
                 return
             }
 
@@ -129,8 +159,9 @@ export default {
             this.searchQuery = ''
 
             try {
-                const response = await sqmgrClient.getBDLEvents(this.selectedLeague, 'scheduled,in_progress', 500)
+                const response = await sqmgrClient.getBDLEvents(this.selectedLeague, 'scheduled,in_progress', 50)
                 this.events = response.events || []
+                this.totalEvents = response.total || this.events.length
 
                 // If we have an initial event, make sure it's in the list
                 if (this.selectedEvent && this.selectedEvent.league === this.selectedLeague) {
@@ -143,8 +174,26 @@ export default {
             } catch (err) {
                 ModalController.showError(err)
                 this.events = []
+                this.totalEvents = 0
             } finally {
                 this.loading = false
+            }
+        },
+        async serverSearch(query) {
+            if (!this.selectedLeague || query.length < 2) {
+                return
+            }
+
+            this.searching = true
+
+            try {
+                const response = await sqmgrClient.getBDLEvents(this.selectedLeague, 'scheduled,in_progress', 50, 0, query)
+                this.events = response.events || []
+                this.totalEvents = response.total || this.events.length
+            } catch (err) {
+                ModalController.showError(err)
+            } finally {
+                this.searching = false
             }
         },
         selectEvent(event) {
@@ -239,5 +288,17 @@ export default {
     text-align: center;
     color: #666;
     font-style: italic;
+}
+
+.searching {
+    padding: var(--minimal-spacing) var(--spacing);
+    color: #666;
+    font-style: italic;
+}
+
+.results-count {
+    padding: var(--minimal-spacing) var(--spacing);
+    font-size: 0.85em;
+    color: #666;
 }
 </style>
