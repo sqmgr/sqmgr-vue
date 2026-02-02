@@ -493,8 +493,11 @@ export default {
         },
         payoutConfigLabel() {
             const config = this.grid?.payoutConfig || this.pool?.numberSetConfig || 'standard'
+            if (config === 'standard') {
+                return 'Final'
+            }
             const found = this.config?.numberSetConfigs?.find(c => c.key === config)
-            return found?.label || 'Standard'
+            return found?.label || 'Final'
         },
         numSquares() {
             return Object.values(this.squares).length
