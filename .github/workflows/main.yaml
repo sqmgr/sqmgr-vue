@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [master]
   push:
-    branches: [master]
+    branches: [master, beta]
     tags: ['v*']
   workflow_dispatch:
 
@@ -16,9 +16,6 @@ env:
   NODE_VERSION: '20'
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
-permissions:
-  contents: read
 
 jobs:
   test:
@@ -70,6 +67,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=beta,enable=${{ github.ref == 'refs/heads/beta' }}
       - uses: docker/build-push-action@v6
         with:
           context: .
@@ -108,3 +106,19 @@ jobs:
           kubectl set image deployment/sqmgr-vue \
             nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
           kubectl rollout status deployment/sqmgr-vue --timeout=300s
+
+  deploy-beta:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/beta'
+    steps:
+      - uses: azure/setup-kubectl@v4
+      - name: Configure kubectl
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+      - name: Deploy to beta
+        run: |
+          kubectl rollout restart deployment/sqmgr-vue-beta
+          kubectl rollout status deployment/sqmgr-vue-beta --timeout=300s

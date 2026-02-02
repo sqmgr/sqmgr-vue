@@ -380,6 +380,25 @@ class sqmgrClient {
         if (sortDir) query.sortDir = sortDir
         return this.request('/admin/users', query)
     }
+
+    // BDL (Ball Don't Lie) API methods
+    async getBDLLeagues() {
+        return this.request('/bdl/leagues', null, false)
+    }
+
+    async getBDLEvents(league, status = 'scheduled', limit = 50, offset = 0, search = '') {
+        const query = { league, status, limit, offset }
+        if (search && search.length >= 2) query.search = search
+        return this.request('/bdl/events', query, false)
+    }
+
+    async getBDLEvent(eventId) {
+        return this.request(`/bdl/events/${eventId}`, null, false)
+    }
+
+    async getBDLTeams(league) {
+        return this.request('/bdl/teams', { league }, false)
+    }
 }
 
 export default new sqmgrClient()

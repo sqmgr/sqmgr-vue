@@ -37,6 +37,47 @@ limitations under the License.
                 </template>
             </template>
             <fieldset>
+                <legend>Link to Live Event (Optional)</legend>
+
+                <div class="event-mode-toggle">
+                    <label>
+                        <input type="radio" v-model="eventMode" value="manual">
+                        Manual Entry
+                    </label>
+                    <label>
+                        <input type="radio" v-model="eventMode" value="live">
+                        Link to Live Event
+                    </label>
+                </div>
+
+                <EventSearch
+                    v-if="eventMode === 'live' && !form.bdlEventId"
+                    ref="eventSearch"
+                    @selected="onEventSelected"
+                    :initial-event="form.bdlEvent"
+                />
+
+                <p v-if="form.bdlEventId" class="linked-event-notice">
+                    <i class="fas fa-link"></i>
+                    Linked to: {{ linkedEventDescription }}
+                    <template v-if="isLinkedEventFinal">
+                        <span class="final-notice">This game has ended and cannot be unlinked</span>
+                    </template>
+                    <button v-else type="button" class="sm destructive" @click="unlinkEvent">Unlink</button>
+                </p>
+
+                <div v-if="form.bdlEventId" class="field">
+                    <label for="payout-config">Payout Periods</label>
+                    <select id="payout-config" v-model="form.payoutConfig">
+                        <option value="standard">Final only</option>
+                        <option value="hf">Half, Final</option>
+                        <option value="123f">1st, 2nd, 3rd, Final</option>
+                    </select>
+                    <small class="helper-text">Select which periods have payouts for this game.</small>
+                </div>
+            </fieldset>
+
+            <fieldset>
                 <legend>General Settings</legend>
 
                 <div class="field">
@@ -104,13 +145,14 @@ limitations under the License.
 
 <script>
 import GridCustomizeTeam from './GridCustomizeTeam.vue'
+import EventSearch from './EventSearch.vue'
 import ModalController from '@/controllers/ModalController'
 import sqmgrClient from "@/models/sqmgrClient"
 import sqmgrConfig from "@/models/sqmgrConfig"
 
 export default {
     name: "GridCustomize",
-    components: {GridCustomizeTeam},
+    components: {GridCustomizeTeam, EventSearch},
     props: {
         token: {
             type: String,
@@ -131,6 +173,7 @@ export default {
             errors: null,
             notesMaxLength: 200,
             imageError: false,
+            eventMode: 'manual',
             form: {
                 eventDate: '0000-00-00',
                 notes: '',
@@ -138,6 +181,9 @@ export default {
                 label: '',
                 brandingImageUrl: '',
                 brandingImageAlt: '',
+                bdlEventId: null,
+                bdlEvent: null,
+                payoutConfig: 'standard',
                 awayTeam: {
                     name: '',
                     color1: '',
@@ -150,6 +196,30 @@ export default {
                 },
             },
         }
+    },
+    computed: {
+        linkedEventDescription() {
+            if (!this.form.bdlEvent) return ''
+            const event = this.form.bdlEvent
+            const away = event.awayTeam?.fullName || event.awayTeam?.name || 'Away'
+            const home = event.homeTeam?.fullName || event.homeTeam?.name || 'Home'
+            let description = `${away} @ ${home}`
+            if (event.eventDate) {
+                const date = new Date(event.eventDate)
+                const dateStr = date.toLocaleDateString(undefined, {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                })
+                description += ` - ${dateStr}`
+            }
+            return description
+        },
+        isLinkedEventFinal() {
+            return this.form.bdlEvent?.status === 'final'
+        },
     },
     created() {
         sqmgrConfig()
@@ -171,6 +241,15 @@ export default {
             this.form.homeTeam.name = this.grid.homeTeamName
             this.form.homeTeam.color1 = this.grid.settings.homeTeamColor1
             this.form.homeTeam.color2 = this.grid.settings.homeTeamColor2
+
+            // Load BDL event if linked
+            if (this.grid.bdlEventId) {
+                this.form.bdlEventId = this.grid.bdlEventId
+                this.form.bdlEvent = this.grid.bdlEvent || null
+                this.eventMode = 'live'
+                // Load payout config if set, otherwise use pool default
+                this.form.payoutConfig = this.grid.payoutConfig || this.pool?.numberSetConfig || 'standard'
+            }
         }
     },
     methods: {
@@ -220,6 +299,9 @@ export default {
                 awayTeamColor2: this.form.awayTeam.color2,
                 brandingImageUrl: this.form.brandingImageUrl,
                 brandingImageAlt: this.form.brandingImageAlt,
+                bdlEventId: this.form.bdlEventId,
+                // Only save payoutConfig when an event is linked; clear it otherwise
+                payoutConfig: this.form.bdlEventId ? this.form.payoutConfig : '',
             }
 
             if (this.pool.gridType === 'roll100') data.rollover = this.form.rollover
@@ -246,6 +328,81 @@ export default {
         onImageLoad() {
             this.imageError = false
         },
+        onEventSelected(event) {
+            // Block changing if current event is final
+            if (this.isLinkedEventFinal) {
+                // Reset EventSearch to show original event
+                this.$refs.eventSearch?.resetToEvent(this.form.bdlEvent)
+                return
+            }
+
+            // If already linked to a different event, confirm before changing
+            if (this.form.bdlEventId && this.form.bdlEventId !== event.id) {
+                const currentEventName = this.linkedEventDescription
+                const newAway = event.awayTeam?.name || 'Away'
+                const newHome = event.homeTeam?.name || 'Home'
+                const newEventName = `${newAway} @ ${newHome}`
+
+                ModalController.showPrompt(
+                    'Change Linked Event?',
+                    `You are about to change the linked event from "${currentEventName}" to "${newEventName}". This will affect score tracking.`,
+                    {
+                        cancelButton: 'Cancel',
+                        actionButton: 'Change Event',
+                        action: () => {
+                            ModalController.hide()
+                            this.applyEventSelection(event)
+                        },
+                        cancelAction: () => {
+                            // Reset EventSearch to show original event
+                            this.$refs.eventSearch?.resetToEvent(this.form.bdlEvent)
+                        },
+                    },
+                )
+                return
+            }
+
+            this.applyEventSelection(event)
+        },
+        applyEventSelection(event) {
+            this.form.bdlEventId = event.id
+            this.form.bdlEvent = event
+
+            // Auto-populate team names and colors from event
+            if (event.homeTeam) {
+                this.form.homeTeam.name = event.homeTeam.fullName || event.homeTeam.name || ''
+                if (event.homeTeam.color) {
+                    this.form.homeTeam.color1 = '#' + event.homeTeam.color
+                }
+                if (event.homeTeam.alternateColor) {
+                    this.form.homeTeam.color2 = '#' + event.homeTeam.alternateColor
+                }
+            }
+            if (event.awayTeam) {
+                this.form.awayTeam.name = event.awayTeam.fullName || event.awayTeam.name || ''
+                if (event.awayTeam.color) {
+                    this.form.awayTeam.color1 = '#' + event.awayTeam.color
+                }
+                if (event.awayTeam.alternateColor) {
+                    this.form.awayTeam.color2 = '#' + event.awayTeam.alternateColor
+                }
+            }
+
+            // Auto-populate event date
+            if (event.eventDate) {
+                const date = new Date(event.eventDate)
+                this.form.eventDate = date.toISOString().substr(0, 10)
+            }
+
+            // Set payout config to match pool's number rotation format
+            this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
+        },
+        unlinkEvent() {
+            this.form.bdlEventId = null
+            this.form.bdlEvent = null
+            this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
+            this.eventMode = 'manual'
+        },
     },
 }
 </script>
@@ -256,6 +413,46 @@ export default {
 section.grid-customize {
     position: relative;
     width:    70vw;
+}
+
+.event-mode-toggle {
+    display: flex;
+    gap: var(--spacing);
+    margin-bottom: var(--spacing);
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: var(--minimal-spacing);
+        cursor: pointer;
+    }
+}
+
+.linked-event-notice {
+    display: flex;
+    align-items: center;
+    gap: var(--minimal-spacing);
+    padding: var(--minimal-spacing) var(--spacing);
+    background-color: #e8f5e9;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    margin-top: var(--spacing);
+    margin-bottom: $standard-spacing;
+
+    i {
+        color: #4caf50;
+    }
+
+    button {
+        margin-left: auto;
+    }
+
+    .final-notice {
+        margin-left: auto;
+        font-size: 0.85em;
+        color: #666;
+        font-style: italic;
+    }
 }
 
 .helper-text {
