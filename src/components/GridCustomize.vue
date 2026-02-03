@@ -71,8 +71,8 @@ limitations under the License.
                 <legend>Teams</legend>
 
                 <div class="teams-row">
-                    <GridCustomizeTeam name="Away Team" v-model="form.awayTeam"/>
-                    <GridCustomizeTeam name="Home Team" v-model="form.homeTeam"/>
+                    <GridCustomizeTeam name="Away Team" v-model="form.awayTeam" :disabled="!!form.bdlEventId"/>
+                    <GridCustomizeTeam name="Home Team" v-model="form.homeTeam" :disabled="!!form.bdlEventId"/>
                 </div>
             </fieldset>
 
@@ -86,7 +86,7 @@ limitations under the License.
 
                 <div class="field">
                     <label for="event-date" class="optional">Event Date</label>
-                    <input type="date" id="event-date" name="event-date" v-model="form.eventDate">
+                    <input type="date" id="event-date" name="event-date" v-model="form.eventDate" :disabled="!!form.bdlEventId">
                 </div>
 
                 <div v-if="form.bdlEventId" class="field">
@@ -504,6 +504,11 @@ section.grid-customize {
     margin-top: 4px;
     color:      #f44336;
     font-size:  0.85em;
+}
+
+input#event-date:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .branding-section {

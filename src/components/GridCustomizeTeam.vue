@@ -22,9 +22,10 @@ limitations under the License.
                    @keydown="keydown"
                    @keyup="keyup" autocomplete="off" type="text" v-model="modelValue.name"
                    @focus="hasFocus = true"
-                   @blur="hideSuggestions">
+                   @blur="hideSuggestions"
+                   :disabled="disabled">
 
-            <div v-show="suggestTeams.length > 0" class="suggest">
+            <div v-show="suggestTeams.length > 0 && !disabled" class="suggest">
                 <div class="suggest-item" v-for="(team, idx) in suggestTeams"
                      v-bind:class="{ selected: idx === suggestIdx }" :key="team.name">
                     <a href="#" @click.prevent="selectTeam(team)" @mouseover="suggestIdx=idx">{{ team.name }}
@@ -87,6 +88,10 @@ export default {
         },
         modelValue: {
             type: Object,
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
         },
     },
     mounted() {
@@ -163,6 +168,11 @@ export default {
 <style scoped lang="scss">
 div.customize-team {
     position: relative;
+
+    input[type="text"]:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
 }
 
 div.suggest {
