@@ -180,6 +180,10 @@ class sqmgrClient {
                 data: { lockPool }
             })
         })
+        .then(res => {
+            EventBus.emit('grid-updated', true)
+            return res
+        })
     }
 
     drawManualNumbers(token, gridId, homeTeamNumbers, awayTeamNumbers, lockPool = true) {
@@ -197,6 +201,10 @@ class sqmgrClient {
                 }
             })
         })
+        .then(res => {
+            EventBus.emit('grid-updated', true)
+            return res
+        })
     }
 
     drawManualNumbersMultiSet(token, gridId, numberSets, lockPool = true) {
@@ -212,6 +220,10 @@ class sqmgrClient {
                     lockPool,
                 }
             })
+        })
+        .then(res => {
+            EventBus.emit('grid-updated', true)
+            return res
         })
     }
 
