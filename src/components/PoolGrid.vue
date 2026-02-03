@@ -852,6 +852,12 @@ export default {
 
             const squares = this.$refs.squares
             if (squares) {
+                // Set all four team colors at container level for owned square animation
+                squares.style.setProperty('--home-primary', this.grid.settings.homeTeamColor1)
+                squares.style.setProperty('--home-secondary', this.grid.settings.homeTeamColor2)
+                squares.style.setProperty('--away-primary', this.grid.settings.awayTeamColor1)
+                squares.style.setProperty('--away-secondary', this.grid.settings.awayTeamColor2)
+
                 squares.querySelectorAll('[data-team="home"]').forEach(el => {
                     el.style.setProperty('--team-primary', this.grid.settings.homeTeamColor1)
                     el.style.setProperty('--team-secondary', this.grid.settings.homeTeamColor2)
@@ -880,6 +886,12 @@ export default {
 </script>
 
 <style>
+@property --spin-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
 :root {
     --team-primary:    #000;
     --team-secondary:  #666;
@@ -1142,6 +1154,10 @@ div.square {
         position:  absolute;
         top:       2px;
         left:      2px;
+
+        @media not print {
+            display: none;
+        }
     }
 
     &:hover {
@@ -1168,6 +1184,37 @@ div.square {
     @keyframes subtle-pulse {
         0%, 100% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f7f7f7 5px, #f7f7f7 10px); }
         50% { background: repeating-linear-gradient(135deg, #fff, #fff 5px, #f0f7f0 5px, #f0f7f0 10px); }
+    }
+
+    @media not print {
+        &.owned {
+            position: relative;
+            overflow: visible;
+
+            &::before {
+                content:       '';
+                position:      absolute;
+                inset:         -2px;
+                border-radius: 2px;
+                padding:       2px;
+                background:    conic-gradient(
+                    from var(--spin-angle, 0deg),
+                    var(--home-primary),
+                    var(--home-secondary),
+                    var(--away-primary),
+                    var(--away-secondary),
+                    var(--home-primary)
+                );
+                mask:          linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: exclude;
+                animation:     spin-border 3s linear infinite;
+                pointer-events: none;
+            }
+        }
+    }
+
+    @keyframes spin-border {
+        to { --spin-angle: 360deg; }
     }
 
     &.paid-full::after {
