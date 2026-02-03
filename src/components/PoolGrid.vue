@@ -1189,13 +1189,12 @@ div.square {
     @media not print {
         &.owned {
             position: relative;
-            overflow: visible;
 
             &::before {
                 content:       '';
                 position:      absolute;
-                inset:         -2px;
-                border-radius: 2px;
+                inset:         0;
+                border-radius: 0px;
                 padding:       2px;
                 background:    conic-gradient(
                     from var(--spin-angle, 0deg),
