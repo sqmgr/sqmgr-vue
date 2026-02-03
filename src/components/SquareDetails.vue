@@ -88,10 +88,10 @@ limitations under the License.
         <div class="winning-periods"
              v-if="square.winningPeriods && square.winningPeriods.length"
              :style="winningPeriodsBoxStyle">
-            <strong>Winner</strong>
             <div v-for="period in square.winningPeriods" :key="period.period"
                  class="winning-period">
-                {{ period.label }}: {{ period.awayScore }}-{{ period.homeScore }}
+                <div class="winning-period-label">{{ period.label }}</div>
+                <div class="winning-period-score">{{ period.awayTeamName }} {{ period.awayScore }} - {{ period.homeTeamName }} {{ period.homeScore }}</div>
             </div>
         </div>
 
@@ -406,14 +406,19 @@ limitations under the License.
         margin-top:    $standard-spacing;
         padding:       $minimal-spacing $standard-spacing;
 
-        strong {
-            display:       block;
-            margin-bottom: $minimal-spacing;
-        }
-
         .winning-period {
-            font-weight:          600;
-            font-variant-numeric: tabular-nums;
+            &:not(:first-child) {
+                margin-top: $minimal-spacing;
+            }
+
+            .winning-period-label {
+                font-weight: 600;
+            }
+
+            .winning-period-score {
+                font-weight:          600;
+                font-variant-numeric: tabular-nums;
+            }
         }
     }
 
