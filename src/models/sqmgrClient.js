@@ -394,6 +394,17 @@ class sqmgrClient {
         return this.request('/admin/users', query)
     }
 
+    async getAdminEvents(offset = 0, limit = 25, sortBy = '', sortDir = 'desc') {
+        const query = { offset, limit }
+        if (sortBy) query.sortBy = sortBy
+        if (sortDir) query.sortDir = sortDir
+        return this.request('/admin/events', query)
+    }
+
+    async getAdminEventGrids(eventId, offset = 0, limit = 25) {
+        return this.request(`/admin/events/${eventId}/grids`, { offset, limit })
+    }
+
     // BDL (Ball Don't Lie) API methods
     async getBDLLeagues() {
         return this.request('/bdl/leagues', null, false)

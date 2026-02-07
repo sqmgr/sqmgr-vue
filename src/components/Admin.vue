@@ -78,6 +78,14 @@ limitations under the License.
                     <i class="fas fa-users"></i>
                     Users
                 </button>
+                <button
+                    type="button"
+                    :class="['tab-btn', { active: activeTab === 'events' }]"
+                    @click="switchTab('events')"
+                >
+                    <i class="fas fa-calendar-alt"></i>
+                    Events
+                </button>
             </div>
 
             <div v-if="activeTab === 'pools'" class="tab-content">
@@ -226,6 +234,104 @@ limitations under the License.
                 </div>
                 <div v-else class="no-pools">No users found.</div>
             </div>
+
+            <div v-if="activeTab === 'events'" class="tab-content">
+                <h2>Linked Events</h2>
+
+                <div v-if="eventsLoading" class="loading">Loading events...</div>
+                <div v-else-if="eventsError" class="error">{{ eventsError }}</div>
+                <div v-else-if="events && events.events && events.events.length > 0">
+                    <table class="pools-table events-table">
+                        <thead>
+                        <tr>
+                            <th class="expand-col"></th>
+                            <th class="sortable" @click="sortEvents('eventDate')">
+                                Date
+                                <span class="sort-icon" v-if="eventsSortColumn === 'eventDate'">
+                                    {{ eventsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                </span>
+                            </th>
+                            <th>League</th>
+                            <th>Event</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                            <th class="sortable" @click="sortEvents('gridCount')">
+                                Grids
+                                <span class="sort-icon" v-if="eventsSortColumn === 'gridCount'">
+                                    {{ eventsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                </span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template v-for="event in events.events" :key="event.id">
+                            <tr @click="toggleEventExpand(event)" class="clickable-row">
+                                <td class="expand-col">
+                                    <i :class="['fas', expandedEvents[event.id] ? 'fa-chevron-down' : 'fa-chevron-right']"></i>
+                                </td>
+                                <td>{{ formatDate(event.eventDate) }}</td>
+                                <td>{{ event.league.toUpperCase() }}</td>
+                                <td>{{ formatEventName(event) }}</td>
+                                <td>{{ formatScore(event) }}</td>
+                                <td>
+                                    <span :class="['status', eventStatusClass(event.status)]">
+                                        {{ formatEventStatus(event) }}
+                                    </span>
+                                </td>
+                                <td>{{ formatNumber(event.gridCount) }}</td>
+                            </tr>
+                            <tr v-if="expandedEvents[event.id]" class="expanded-row">
+                                <td :colspan="7">
+                                    <div v-if="eventGridsLoading[event.id]" class="loading">Loading grids...</div>
+                                    <div v-else-if="eventGrids[event.id] && eventGrids[event.id].grids && eventGrids[event.id].grids.length > 0">
+                                        <table class="sub-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Grid</th>
+                                                <th>Pool</th>
+                                                <th>Created By</th>
+                                                <th>Created</th>
+                                                <th>State</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="grid in eventGrids[event.id].grids" :key="grid.gridId">
+                                                <td>{{ grid.gridName || 'Grid #' + grid.gridId }}</td>
+                                                <td>
+                                                    <router-link :to="`/pool/${grid.poolToken}`">{{ grid.poolName }}</router-link>
+                                                </td>
+                                                <td>{{ grid.creatorEmail || '-' }}</td>
+                                                <td>{{ formatDate(grid.created) }}</td>
+                                                <td>{{ grid.gridState }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <pagination
+                                            v-if="eventGrids[event.id].total > eventGridsPerPage"
+                                            :total="eventGrids[event.id].total"
+                                            :per-page="eventGridsPerPage"
+                                            :current-page="eventGridsPage[event.id] || 1"
+                                            @page="(page) => goToEventGridsPage(event.id, page)"
+                                        />
+                                    </div>
+                                    <div v-else class="no-pools">No grids found.</div>
+                                </td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+
+                    <pagination
+                        v-if="events.total > eventsPerPage"
+                        :total="events.total"
+                        :per-page="eventsPerPage"
+                        :current-page="currentPage"
+                        @page="goToPage"
+                    />
+                </div>
+                <div v-else class="no-pools">No events with linked grids found.</div>
+            </div>
         </div>
     </section>
 </template>
@@ -268,6 +374,16 @@ export default {
             usersPerPage: 25,
             usersFetched: false,
 
+            events: null,
+            eventsLoading: false,
+            eventsError: null,
+            eventsPerPage: 25,
+            expandedEvents: {},
+            eventGrids: {},
+            eventGridsLoading: {},
+            eventGridsPage: {},
+            eventGridsPerPage: 25,
+
             // Local input state for responsive typing
             searchInput: '',
             usersSearchInput: '',
@@ -277,7 +393,10 @@ export default {
     },
     computed: {
         activeTab() {
-            return this.$route.query.tab === 'users' ? 'users' : 'pools'
+            const tab = this.$route.query.tab
+            if (tab === 'users') return 'users'
+            if (tab === 'events') return 'events'
+            return 'pools'
         },
         currentPage() {
             const page = parseInt(this.$route.query.page, 10)
@@ -291,6 +410,13 @@ export default {
             return ['poolsOwned', 'poolsJoined', 'created'].includes(col) ? col : 'created'
         },
         usersSortDirection() {
+            return this.$route.query.dir === 'asc' ? 'asc' : 'desc'
+        },
+        eventsSortColumn() {
+            const col = this.$route.query.sort
+            return ['eventDate', 'gridCount'].includes(col) ? col : 'eventDate'
+        },
+        eventsSortDirection() {
             return this.$route.query.dir === 'asc' ? 'asc' : 'desc'
         },
     },
@@ -341,8 +467,10 @@ export default {
         fetchDataForCurrentTab() {
             if (this.activeTab === 'pools') {
                 this.fetchPools()
-            } else {
+            } else if (this.activeTab === 'users') {
                 this.fetchUsers()
+            } else if (this.activeTab === 'events') {
+                this.fetchEvents()
             }
         },
 
@@ -456,6 +584,94 @@ export default {
             this.usersSearchTimeout = setTimeout(() => {
                 this.updateUrl({ search: this.usersSearchInput, page: 1 }, true)
             }, 300)
+        },
+
+        async fetchEvents() {
+            this.eventsLoading = true
+            this.eventsError = null
+            const offset = (this.currentPage - 1) * this.eventsPerPage
+            try {
+                this.events = await sqmgrClient.getAdminEvents(
+                    offset,
+                    this.eventsPerPage,
+                    this.eventsSortColumn,
+                    this.eventsSortDirection
+                )
+            } catch (err) {
+                this.eventsError = this.getErrorMessage(err)
+            } finally {
+                this.eventsLoading = false
+            }
+        },
+
+        sortEvents(column) {
+            let newDir = 'desc'
+            if (this.eventsSortColumn === column) {
+                newDir = this.eventsSortDirection === 'asc' ? 'desc' : 'asc'
+            }
+            this.updateUrl({ sort: column, dir: newDir, page: 1 })
+        },
+
+        async toggleEventExpand(event) {
+            const id = event.id
+            if (this.expandedEvents[id]) {
+                this.expandedEvents = { ...this.expandedEvents, [id]: false }
+                return
+            }
+            this.expandedEvents = { ...this.expandedEvents, [id]: true }
+            if (!this.eventGrids[id]) {
+                await this.fetchEventGrids(id, 1)
+            }
+        },
+
+        async fetchEventGrids(eventId, page) {
+            this.eventGridsLoading = { ...this.eventGridsLoading, [eventId]: true }
+            const offset = (page - 1) * this.eventGridsPerPage
+            try {
+                const result = await sqmgrClient.getAdminEventGrids(eventId, offset, this.eventGridsPerPage)
+                this.eventGrids = { ...this.eventGrids, [eventId]: result }
+                this.eventGridsPage = { ...this.eventGridsPage, [eventId]: page }
+            } catch (err) {
+                ModalController.showError(this.getErrorMessage(err))
+            } finally {
+                this.eventGridsLoading = { ...this.eventGridsLoading, [eventId]: false }
+            }
+        },
+
+        goToEventGridsPage(eventId, page) {
+            this.fetchEventGrids(eventId, page)
+        },
+
+        formatEventName(event) {
+            if (event.name) return event.name
+            const away = event.awayTeam ? event.awayTeam.abbreviation : event.awayTeamId
+            const home = event.homeTeam ? event.homeTeam.abbreviation : event.homeTeamId
+            return `${away} @ ${home}`
+        },
+
+        formatScore(event) {
+            if (event.homeScore == null || event.awayScore == null) return '-'
+            const away = event.awayTeam ? event.awayTeam.abbreviation : 'AWAY'
+            const home = event.homeTeam ? event.homeTeam.abbreviation : 'HOME'
+            return `${away} ${event.awayScore} - ${home} ${event.homeScore}`
+        },
+
+        formatEventStatus(event) {
+            if (event.statusDetail) return event.statusDetail
+            switch (event.status) {
+                case 'scheduled': return 'Scheduled'
+                case 'in_progress': return 'In Progress'
+                case 'final': return 'Final'
+                default: return event.status
+            }
+        },
+
+        eventStatusClass(status) {
+            switch (status) {
+                case 'final': return 'archived'
+                case 'in_progress': return 'active'
+                default: return ''
+            }
         },
 
         formatDate(dateStr) {
@@ -696,6 +912,47 @@ button.small {
 
 .error {
     @include alert-error;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.expand-col {
+    width:     30px;
+    min-width: 30px;
+}
+
+.expanded-row > td {
+    background: #f8f9fa;
+    padding:    0 12px 12px 12px;
+}
+
+.sub-table {
+    width:           100%;
+    border-collapse: collapse;
+    margin-top:      8px;
+
+    th, td {
+        padding:       8px 12px;
+        text-align:    left;
+        border-bottom: 1px solid #e8e8e8;
+        font-size:     0.9em;
+    }
+
+    th {
+        background:  #f0f0f0;
+        font-weight: 600;
+    }
+
+    a {
+        color:           var(--primary);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 @include tablet {
