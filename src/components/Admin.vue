@@ -300,7 +300,12 @@ limitations under the License.
                                                 <td>
                                                     <router-link :to="`/pool/${grid.poolToken}`">{{ grid.poolName }}</router-link>
                                                 </td>
-                                                <td>{{ grid.creatorEmail || '-' }}</td>
+                                                <td>
+                                                    <router-link v-if="grid.creatorId" :to="`/admin/user/${grid.creatorId}`">
+                                                        {{ grid.creatorEmail || '-' }}
+                                                    </router-link>
+                                                    <span v-else>-</span>
+                                                </td>
                                                 <td>{{ formatDate(grid.created) }}</td>
                                                 <td>{{ grid.gridState }}</td>
                                             </tr>
