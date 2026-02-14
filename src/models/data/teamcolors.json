@@ -292,10 +292,10 @@
     "league": "NFL"
   },
   {
-    "name": "Washington Football Team",
+    "name": "Washington Commanders",
     "colors": [
-      "#651C32",
-      "#FFB81C",
+      "#5A1414",
+      "#FFB612",
       "#FFFFFF"
     ],
     "league": "NFL"
@@ -328,10 +328,10 @@
     "league": "MLB"
   },
   {
-    "name": "Cleveland Indians",
+    "name": "Cleveland Guardians",
     "colors": [
+      "#E31937",
       "#0C2340",
-      "#D50032",
       "#FFFFFF"
     ],
     "league": "MLB"
@@ -983,6 +983,33 @@
     "league": "WNBA"
   },
   {
+    "name": "Golden State Valkyries",
+    "colors": [
+      "#AD96DC",
+      "#010101",
+      "#FFFFFF"
+    ],
+    "league": "WNBA"
+  },
+  {
+    "name": "Toronto Tempo",
+    "colors": [
+      "#612C51",
+      "#B8CCEA",
+      "#FFFFFF"
+    ],
+    "league": "WNBA"
+  },
+  {
+    "name": "Portland Fire",
+    "colors": [
+      "#C8102E",
+      "#4E3629",
+      "#FFFFFF"
+    ],
+    "league": "WNBA"
+  },
+  {
     "name": "Anaheim Ducks",
     "colors": [
       "#010101",
@@ -993,11 +1020,10 @@
     "league": "NHL"
   },
   {
-    "name": "Arizona Coyotes",
+    "name": "Utah Mammoth",
     "colors": [
-      "#862633",
-      "#010101",
-      "#DDCBA4",
+      "#000000",
+      "#69B3E7",
       "#FFFFFF"
     ],
     "league": "NHL"
@@ -1416,7 +1442,7 @@
     "league": "MLS"
   },
   {
-    "name": "Montreal Impact",
+    "name": "CF Montréal",
     "colors": [
       "#003DA5",
       "#010101",
@@ -1538,6 +1564,42 @@
       "#13294B",
       "#8BB8E8",
       "#97999B",
+      "#FFFFFF"
+    ],
+    "league": "MLS"
+  },
+  {
+    "name": "Austin FC",
+    "colors": [
+      "#00B140",
+      "#010101",
+      "#FFFFFF"
+    ],
+    "league": "MLS"
+  },
+  {
+    "name": "Charlotte FC",
+    "colors": [
+      "#0085CA",
+      "#010101",
+      "#FFFFFF"
+    ],
+    "league": "MLS"
+  },
+  {
+    "name": "St. Louis City SC",
+    "colors": [
+      "#E0004D",
+      "#0C2340",
+      "#FFFFFF"
+    ],
+    "league": "MLS"
+  },
+  {
+    "name": "San Diego FC",
+    "colors": [
+      "#F5DF4D",
+      "#004236",
       "#FFFFFF"
     ],
     "league": "MLS"
@@ -3759,5 +3821,165 @@
       "#010101"
     ],
     "league": "NCAA"
+  },
+  {
+    "name": "Bellarmine University",
+    "colors": [
+      "#752936",
+      "#C8C8C8",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "East Texas A&M University",
+    "colors": [
+      "#00386C",
+      "#FFC333",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Le Moyne College",
+    "colors": [
+      "#00452A",
+      "#FCE300",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Lindenwood University",
+    "colors": [
+      "#010101",
+      "#B3A369",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Mercyhurst University",
+    "colors": [
+      "#07594D",
+      "#182752",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Queens University of Charlotte",
+    "colors": [
+      "#192C66",
+      "#857040",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Stonehill College",
+    "colors": [
+      "#2F2975",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "University of Southern Indiana",
+    "colors": [
+      "#002856",
+      "#CF102D",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "University of St. Thomas",
+    "colors": [
+      "#512773",
+      "#98999B",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "University of West Georgia",
+    "colors": [
+      "#0656A5",
+      "#DA2128",
+      "#FFFFFF"
+    ],
+    "league": "NCAA"
+  },
+  {
+    "name": "Birmingham Stallions",
+    "colors": [
+      "#9D2235",
+      "#C5B783",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "DC Defenders",
+    "colors": [
+      "#C8102E",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "St. Louis Battlehawks",
+    "colors": [
+      "#002677",
+      "#A2AAAD",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "Dallas Renegades",
+    "colors": [
+      "#69B3E7",
+      "#010101",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "Houston Gamblers",
+    "colors": [
+      "#010101",
+      "#E4002B",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "Columbus Aviators",
+    "colors": [
+      "#0C2340",
+      "#69B3E7",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "Louisville Kings",
+    "colors": [
+      "#183029",
+      "#97D700",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
+  },
+  {
+    "name": "Orlando Storm",
+    "colors": [
+      "#FE5000",
+      "#252A36",
+      "#FFFFFF"
+    ],
+    "league": "UFL"
   }
 ]

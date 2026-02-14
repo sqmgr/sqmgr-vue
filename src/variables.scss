@@ -1,10 +1,217 @@
-$border-color:     #ccc;
-$dark-gray:        #888;
-$gray:             #bbb;
-$light-gray:       #eee;
+// Color System
+$border-color:     #d4d6db;
+$dark-gray:        #6b7280;
+$gray:             #9ca3af;
+$light-gray:       #e8eaed;
 $minimal-spacing:  4px;
-$primary:          #4caf50;
-$red:              #f44336;
+$primary:          #2e8b3e;
+$primary-light:    #4caf50;
+$primary-dark:     #1e6b2e;
+$primary-50:       rgba(46, 139, 62, 0.05);
+$primary-100:      rgba(46, 139, 62, 0.1);
+$red:              #dc3545;
 $standard-spacing: 20px;
-$text-color:       #272727;
-$yellow:           #fdd835;
+$text-color:       #1a1d23;
+$text-secondary:   #4b5563;
+$yellow:           #f5a623;
+$accent:           #f5a623;
+
+// Surface colors for depth
+$surface-elevated: #fff;
+$surface-sunken:   #f4f5f7;
+
+// 8-point spacing system
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  20px;
+$space-6:  24px;
+$space-8:  32px;
+$space-10: 40px;
+$space-12: 48px;
+$space-16: 64px;
+
+// Border Radius
+$radius-sm:   4px;
+$radius-md:   6px;
+$radius-lg:   8px;
+$radius-xl:   12px;
+$radius-2xl:  16px;
+$radius-full: 9999px;
+
+// Alert Colors
+$alert-error-bg:     #f8d7da;
+$alert-error-text:   #721c24;
+$alert-success-bg:   #d4edda;
+$alert-success-text: #155724;
+
+// Shadows (SCSS versions matching CSS vars)
+$shadow-card:   0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+$shadow-button: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// Breakpoints
+$breakpoint-sm: 540px;
+$breakpoint-md: 600px;
+$breakpoint-lg: 800px;
+
+// Utility Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin card-base($radius: $radius-lg) {
+  background: $surface-elevated;
+  border: 1px solid $light-gray;
+  border-radius: $radius;
+  box-shadow: $shadow-card;
+}
+
+@mixin alert-error {
+  background: $alert-error-bg;
+  color: $alert-error-text;
+  padding: $space-4;
+  border-radius: $radius-lg;
+}
+
+@mixin alert-success {
+  background: $alert-success-bg;
+  color: $alert-success-text;
+  padding: $space-4;
+  border-radius: $radius-lg;
+}
+
+@mixin mobile { @media (max-width: $breakpoint-md) { @content; } }
+@mixin tablet { @media (max-width: $breakpoint-lg) { @content; } }
+
+// Card system
+@mixin card-header {
+  display: flex;
+  align-items: center;
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid $light-gray;
+  background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+}
+
+@mixin card-footer {
+  padding: $space-4 $space-5;
+  border-top: 1px solid $light-gray;
+  background: #fafafa;
+}
+
+// Badges
+@mixin status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+@mixin badge {
+  display: inline-block;
+  padding: $space-1 $space-3;
+  background: $light-gray;
+  border-radius: $radius-full;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+// Buttons
+@mixin icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: $radius-md;
+  background: $light-gray;
+  color: $text-secondary;
+  border: 1px solid transparent;
+  box-shadow: none;
+  min-height: auto;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    background: $light-gray;
+    color: $primary;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Numbers status
+@mixin numbers-status {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 0.875rem;
+
+  i { font-size: 0.75rem; }
+}
+
+// Empty state
+@mixin empty-state {
+  padding: $space-10 $space-5;
+  text-align: center;
+  color: $text-secondary;
+
+  i {
+    font-size: 2.5rem;
+    color: $gray;
+    margin-bottom: $space-4;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+}
+
+// Profile
+@mixin profile-header-card {
+  display: flex;
+  align-items: center;
+  gap: $space-6;
+  background: $surface-elevated;
+  padding: $space-6;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-card;
+  margin-bottom: $space-6;
+}
+
+@mixin avatar($size: 72px) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: $text-color;
+  color: #fff;
+  @include flex-center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+@mixin stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-6;
+}
+
+@mixin stat-card {
+  background: $surface-elevated;
+  border: 1px solid $light-gray;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}

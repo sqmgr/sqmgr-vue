@@ -1,66 +1,59 @@
 /*
 Copyright 2019 Tom Peters
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-   http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import AuthPlugin from './plugins/auth'
-import Home from "@/components/Home"
-import Auth0Callback from "@/components/Auth0Callback"
-import HomeHeader from "@/components/HomeHeader"
-import About from "@/components/About"
-import TermsOfService from "@/components/TermsOfService"
-import PrivacyPolicy from "@/components/PrivacyPolicy"
-import YourAccount from "@/components/YourAccount"
-import LogIn from "@/components/LogIn"
-import TipJar from "@/components/TipJar.vue"
-import Pool from "@/components/Pool"
-import PoolGrid from "@/components/PoolGrid"
-import CreatePool from "@/components/CreatePool"
 import accessTokenManager from "@/models/accessTokenManager"
 import sqmgrClient from "@/models/sqmgrClient"
-import PoolJoin from "@/components/PoolJoin"
-import CookiesPolicy from "@/components/CookiesPolicy"
-import GuestAccount from "@/components/GuestAccount"
-import loadingBar from "@/utils/loadingBar.ts"
-import Vuex from 'vuex'
-import PoolGridAll from "@/components/PoolGridAll"
 import authService from "@/models/authService"
-import './register-service-worker'
+import './assets/forms.css'
 
-Vue.config.productionTip = false
+// Keep eager: Home, HomeHeader, Auth0Callback (critical path)
+import Home from "@/components/pages/Home"
+import HomeHeader from "@/components/pages/HomeHeader"
+import Auth0Callback from "@/components/auth/Auth0Callback"
 
-Vue.use(AuthPlugin)
-Vue.use(VueRouter)
-Vue.use(Vuex)
+// Lazy load everything else
+const About = () => import("@/components/pages/About")
+const HowItWorks = () => import("@/components/pages/HowItWorks")
+const TermsOfService = () => import("@/components/pages/TermsOfService")
+const PrivacyPolicy = () => import("@/components/pages/PrivacyPolicy")
+const CookiesPolicy = () => import("@/components/pages/CookiesPolicy")
+const LogIn = () => import("@/components/auth/LogIn")
+const TipJar = () => import("@/components/pages/TipJar.vue")
+const YourAccount = () => import("@/components/auth/YourAccount")
+const GuestAccount = () => import("@/components/auth/GuestAccount")
+const CreatePool = () => import("@/components/pool/CreatePool")
+const Pool = () => import("@/components/pool/Pool")
+const PoolJoin = () => import("@/components/pool/PoolJoin")
+const PoolGrid = () => import("@/components/pool/PoolGrid")
+const PoolGridAll = () => import("@/components/pool/PoolGridAll")
+const Admin = () => import("@/components/admin/Admin")
+const AdminUser = () => import("@/components/admin/AdminUser")
+const NotFound = () => import("@/components/pages/NotFound")
 
-const store = new Vuex.Store({
-    state: {
-        primarySquare: null,
-        highlightSquares: {},
-    },
-    mutations: {
-        primarySquare(state, data) {
-            state.primarySquare = data
-        },
-        highlightSquares(state, data) {
-            state.highlightSquares = {...data}
-        },
-    },
-})
+// Unregister any existing service workers from previous versions
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(registration => registration.unregister())
+    })
+}
 
 const routes = [
     {
@@ -75,11 +68,12 @@ const routes = [
     },
     {path: '/callback', component: Auth0Callback},
     {path: '/about', component: About, meta: {title: 'About'}},
+    {path: '/how-it-works', component: HowItWorks, meta: {title: 'How It Works'}},
     {path: '/terms', component: TermsOfService, meta: {title: 'Terms of Service'}},
     {path: '/privacy', component: PrivacyPolicy, meta: {title: 'Privacy Policy'}},
     {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
     {path: '/login', component: LogIn, meta: {title: 'Login'}},
-    {path: '/tipjar', component: TipJar, meta: {title: 'tipjar'}},
+    {path: '/tipjar', component: TipJar, meta: {title: 'Tip Jar'}},
     {path: '/account', component: YourAccount, meta: {requireLogin: true, title: 'Your Account'}},
     {path: '/guest-account', component: GuestAccount, meta: {requireGuestAccount: true, title: 'Guest Account'}},
     {path: '/create', component: CreatePool, meta: {requireLogin: true, title: 'Create Squares Pool'}},
@@ -87,22 +81,24 @@ const routes = [
     {path: '/pool/:token/join', component: PoolJoin, props: true},
     {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: {requirePoolMembership: true}},
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
+    {path: '/admin', component: Admin, meta: {requireAdmin: true, title: 'Admin'}},
+    {path: '/admin/user/:userId', component: AdminUser, props: true, meta: {requireAdmin: true, title: 'Admin - User Details'}},
+    {path: '/:pathMatch(.*)*', component: NotFound, meta: {title: 'Page Not Found'}},
 ]
 
-const router = new VueRouter({
-    mode: 'history',
+const router = createRouter({
+    history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
-            return {x: 0, y: 0}
+            return {left: 0, top: 0}
         }
     },
 })
 
-router.beforeEach(async (to, from, next) => {
-    loadingBar.start()
+router.beforeEach(async (to) => {
     if (to.meta.title) {
         document.title = `${to.meta.title} - SqMGR`
     } else {
@@ -116,42 +112,51 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.requireLogin) {
         try {
             await authService.loadProfile()
-        } catch (e) {
-            return next(`/login?target=${encodeURIComponent(to.path)}`)
+        } catch {
+            return `/login?target=${encodeURIComponent(to.path)}`
         }
 
-        return next()
+        return true
+    }
+
+    if (to.meta.requireAdmin) {
+        try {
+            await authService.loadProfile()
+            const user = await sqmgrClient.getUser()
+            if (!user.is_admin) {
+                return '/'
+            }
+        } catch {
+            return '/'
+        }
+
+        return true
     }
 
     if (to.meta.requireGuestAccount) {
         if (!accessTokenManager.getGuestAccessToken()) {
-            return next(`/`)
+            return '/'
         }
 
-        return next()
+        return true
     }
 
     if (to.meta.requirePoolMembership) {
         try {
             await accessTokenManager.getAccessToken(true)
             to.params.initialPool = await sqmgrClient.getPoolByToken(to.params.token)
-        } catch (e) {
-            return next(`/pool/${to.params.token}/join?target=${encodeURIComponent(to.path)}`)
+        } catch {
+            return `/pool/${to.params.token}/join?target=${encodeURIComponent(to.path)}`
         }
     }
 
-    return next()
-})
-
-router.afterEach(() => {
-    loadingBar.stop()
+    return true
 })
 
 authService.initAuth0()
     .then(() => {
-        new Vue({
-            router,
-            store,
-            render: h => h(App),
-        }).$mount('#app')
+        const app = createApp(App)
+        app.use(router)
+        app.use(AuthPlugin)
+        app.mount('#app')
     })

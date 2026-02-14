@@ -1,17 +1,18 @@
 /*
 Copyright 2019 Tom Peters
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
 <template>
@@ -22,16 +23,14 @@ limitations under the License.
                     <router-link to="/">
                         <img
                             class="logo"
-                            src="./assets/logo@2x.png"
-                            srcset="./assets/logo.png,
-                                     ./assets/logo@2x.png 2x,
-                                     ./assets/logo@3x.png 3x"
+                            src="/images/logo@2x.png"
+                            srcset="/images/logo.png,
+                                     /images/logo@2x.png 2x,
+                                     /images/logo@3x.png 3x"
                             alt="SqMGR"
                         />
                     </router-link>
                 </h1>
-                <router-view name="header"/>
-
                 <nav>
                     <ul>
                         <li>
@@ -56,10 +55,13 @@ limitations under the License.
                     </ul>
                 </nav>
             </div>
+            <router-view name="header"/>
         </header>
         <main>
             <div class="content">
-                <router-view/>
+                <router-view v-slot="{ Component }">
+                    <component :is="Component"/>
+                </router-view>
             </div>
         </main>
         <footer>
@@ -69,21 +71,18 @@ limitations under the License.
         </footer>
         <Modal/>
         <cookies-disclaimer/>
-        <loading-bar/>
     </div>
 </template>
 
 <script>
-import Footer from "@/components/Footer"
-import Modal from "@/components/Modal"
-import CookiesDisclaimer from "@/components/CookiesDisclaimer"
+import Footer from "@/components/ui/Footer"
+import Modal from "@/components/ui/Modal"
+import CookiesDisclaimer from "@/components/ui/CookiesDisclaimer"
 import accessTokenManager from "@/models/accessTokenManager"
-import LoadingBar from "@/components/LoadingBar"
 
 export default {
     name: 'app',
     components: {
-        LoadingBar,
         CookiesDisclaimer,
         Modal,
         Footer,
@@ -92,14 +91,13 @@ export default {
         return {
             isGuest: !!accessTokenManager.getGuestAccessToken(),
             isAuthenticated: this.$auth.isAuthenticated,
-            version: process.env.VUE_APP_VERSION,
+            version: __APP_VERSION__,
         }
     },
     async created() {
         try {
-            await this.$auth.getTokenSilently()
             await this.$auth.loadProfile()
-        } catch (e) {
+        } catch {
             // not logged in
         }
     },
@@ -124,46 +122,97 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Lobster|Alfa+Slab+One|Shadows+Into+Light|Roboto:400,700');
-@import 'variables.scss';
+@use "sass:color";
+@use 'variables.scss' as *;
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;800&family=Outfit:wght@100..900&display=swap');
 
 * {
     padding:    0;
     margin:     0;
-    outline:    none;
     box-sizing: border-box;
 }
 
-:root {
-    --minimal-spacing: 4px;
-    --spacing:         20px;
+/* Accessibility: Focus-visible styles for keyboard navigation */
+:focus {
+    outline: none;
+}
 
-    --midnight-gray:   #171717;
-    --light-gray:      #eee;
-    --gray:            #bbb;
-    --dark-gray:       #888;
-    --red:             #f44336;
-    --red-darker:      #e53935;
-    --border-color:    #ccc;
-    --hr-color:        #eee;
-    --font:            'Roboto';
-    --primary:         #4caf50;
-    --primary-darker:  #43a047;
-    --primary-darkest: #1b5e20;
-    --success:         #2196f3;
-    --warning:         #ffc107;
+:focus-visible {
+    outline:        2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a.btn:focus-visible {
+    outline:        2px solid var(--primary-darkest);
+    outline-offset: 2px;
+    box-shadow:     0 0 0 4px rgba(46, 139, 62, 0.25);
+}
+
+:root {
+    --minimal-spacing:    4px;
+    --spacing:            20px;
+
+    --midnight-gray:      #0f1218;
+    --light-gray:         #e8eaed;
+    --gray:               #9ca3af;
+    --dark-gray:          #6b7280;
+    --red:                #dc3545;
+    --red-darker:         #c82333;
+    --border-color:       #d4d6db;
+    --hr-color:           #e8eaed;
+    --font:               'Outfit';
+    --primary:            #2e8b3e;
+    --primary-light:      #4caf50;
+    --primary-darker:     #247032;
+    --primary-darkest:    #1a5427;
+    --accent:             #f5a623;
+    --success:            #2196f3;
+    --warning:            #f5a623;
+
+    /* Shadow System */
+    --shadow-xs:          0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm:          0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md:          0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg:          0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    --shadow-xl:          0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    --shadow-primary:     0 4px 14px rgba(46, 139, 62, 0.35);
+
+    /* Transition */
+    --transition-fast:    150ms ease;
+    --transition-base:    200ms ease;
+    --transition-slow:    300ms ease;
+
+    /* Border Radius */
+    --radius-sm:          4px;
+    --radius-md:          6px;
+    --radius-lg:          8px;
+    --radius-xl:          12px;
+    --radius-2xl:         16px;
+
+    /* Alert Colors */
+    --alert-error-bg:     #f8d7da;
+    --alert-error-text:   #721c24;
+    --alert-success-bg:   #d4edda;
+    --alert-success-text: #155724;
+
+    /* Card Shadow */
+    --shadow-card:        0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 html, body {
-    background-color: var(--primary);
-    color:            $text-color;
-    font-family:      'Roboto', sans-serif;
+    background-color:        var(--midnight-gray);
+    color:                   $text-color;
+    font-family:             'Outfit', sans-serif;
+    -webkit-font-smoothing:  antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 main {
-    background-color: #fff;
+    background-color: #f8f9fb;
     min-height:       400px;
-    padding:          var(--spacing) 0 calc(3 * var(--spacing));
+    padding:          calc(var(--spacing) * 1.5) 0 calc(3 * var(--spacing));
+    position:         relative;
 }
 
 main ul,
@@ -179,95 +228,49 @@ main ol ol {
 a {
     color:           var(--primary);
     text-decoration: none;
+    transition:      color var(--transition-fast);
 }
 
 a:hover {
     text-decoration: underline;
+    color:           var(--primary-darker);
 }
 
 footer {
-    color:       rgba(255, 255, 255, 0.4);
+    color:       rgba(255, 255, 255, 0.45);
     min-height:  100px;
     font-size:   0.9em;
-    padding-top: var(--spacing);
+    padding-top: calc(var(--spacing) * 1.5);
     position:    relative;
     text-align:  center;
+    background:  linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 100%);
 }
 
-footer p.version {
-    margin:   0;
-    position: absolute;
-    right:    var(--spacing);
-    top:      var(--spacing);
-}
-
-footer p.version a {
-    color:           rgba(0, 0, 0, 0.3);
-    text-decoration: underline;
-}
-
-footer nav ul {
-    list-style: none;
-}
-
-footer nav li {
-    display:     inline-block;
-    margin-left: var(--spacing);
-}
-
-footer nav li:first-child {
-    margin-left: 0;
-}
-
-footer nav a {
-    color:           #fff;
-    text-decoration: none;
-}
 
 header {
-    background-color: var(--midnight-gray);
-    color:            #fff;
-    padding:          var(--spacing) 0;
+    background:    linear-gradient(180deg, #0f1218 0%, #141820 100%);
+    color:         #fff;
+    padding:       calc(var(--spacing) * 1.1) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
     & > div {
-        position: relative;
+        position:        relative;
+        display:         flex;
+        justify-content: space-between;
+        align-items:     center;
     }
 
     img.logo {
-        height: 42px;
-        width:  158px;
-    }
-
-    nav {
-        position: absolute;
-        top:      0;
-        right:    var(--spacing);
-
-        ul {
-            list-style: none;
-        }
-
-        ul li {
-            display:     inline-block;
-            margin-left: var(--spacing);
-        }
-
-        ul li:first-child {
-            margin-left: 0;
-        }
-
-        a {
-            color:       #fff;
-            font-weight: bold;
-        }
+        display: block;
+        height:  42px;
     }
 
     h1 {
-        font-family: 'Alfa Slab One', sans-serif;
+        font-family: 'Anton', sans-serif;
+        font-weight: 400;
         font-size:   1.6em;
         text-shadow: 3px 3px var(--midnight-gray), 5px 5px var(--primary);
         margin:      0;
-        display:     inline-block;
 
         a {
             color: #fff;
@@ -278,16 +281,52 @@ header {
         }
     }
 
+    nav {
+        ul {
+            list-style:      none;
+            display:         flex;
+            flex-wrap:       wrap;
+            gap:             $space-1;
+            align-items:     center;
+            justify-content: center;
+        }
+
+        ul li a {
+            display:        block;
+            color:          rgba(255, 255, 255, 0.75);
+            font-weight:    500;
+            line-height:    42px;
+            padding:        0 $space-3;
+            border-radius:  $radius-md;
+            transition:     all var(--transition-fast);
+            font-size:      0.95em;
+            letter-spacing: 0.01em;
+
+            &:hover {
+                color:           #fff;
+                background:      rgba(255, 255, 255, 0.08);
+                text-decoration: none;
+            }
+
+            &.router-link-exact-active {
+                color:      #fff;
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+
     h2 {
         border:      none;
         font-size:   2.0em;
-        font-weight: normal;
+        font-weight: 400;
         margin:      0;
         text-align:  center;
+        font-family: 'Anton', sans-serif;
     }
 
     a {
-        color:           #4caf50;
+        color:           var(--primary-light);
         text-decoration: none;
     }
 
@@ -297,10 +336,16 @@ header {
     }
 }
 
-h1, h2, h3, h4, h5, h6, p {
-    margin-bottom: var(--spacing);
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom:  var(--spacing);
+    font-family:    'Anton', sans-serif;
+    font-weight:    400;
+    letter-spacing: -0.01em;
 }
 
+p {
+    margin-bottom: var(--spacing);
+}
 
 h1 {
     font-size: 2.2em;
@@ -311,22 +356,21 @@ h2 {
 }
 
 h3 {
-    font-size:   1.6em;
-    font-weight: normal;
+    font-size: 1.5em;
 }
 
 h4 {
-    font-size:   1.2em;
-    font-weight: normal;
+    font-size: 1.2em;
 }
 
 h5 {
-    font-size:   1.0em;
-    font-weight: normal;
+    font-size: 1.0em;
 }
 
 div.content {
-    padding: 0 var(--spacing);
+    padding:   0 var(--spacing);
+    max-width: 1280px;
+    margin:    0 auto;
 }
 
 hr {
@@ -369,22 +413,29 @@ div.error {
 }
 
 div.table-container {
-    width:    100%;
-    overflow: auto;
+    width:         100%;
+    overflow:      auto;
+    border-radius: $radius-lg;
+    border:        1px solid var(--light-gray);
 }
 
 table {
     border-collapse: collapse;
+    width:           100%;
 }
 
 th, td {
-    padding: calc(2 * var(--minimal-spacing));
+    padding: $space-3 $space-4;
 }
 
 th {
     background-color: var(--midnight-gray);
     color:            #fff;
     text-align:       left;
+    font-weight:      600;
+    font-size:        0.875em;
+    text-transform:   uppercase;
+    letter-spacing:   0.04em;
 }
 
 tr:nth-child(odd) td {
@@ -397,6 +448,7 @@ tr:nth-child(even) td {
 
 td {
     border-bottom: 1px solid var(--border-color);
+    font-size:     0.95em;
 }
 
 p.generated-by {
@@ -404,7 +456,7 @@ p.generated-by {
     color:     var(--gray);
 }
 
-@media (max-width: 800px) {
+@include tablet {
     div.columns {
         display: block;
     }
@@ -415,35 +467,23 @@ p.generated-by {
         margin-bottom: 0;
     }
 
-    header nav {
-        margin-top: var(--spacing);
-        position:   static;
-        text-align: center;
+    header > div {
+        flex-direction: column;
+        align-items:    center;
+        gap:            $standard-spacing;
+
+        & > nav {
+            a {
+                line-height: normal;
+            }
+        }
+
     }
 
     header h2 {
         font-size: 1.8em;
         margin:    var(--spacing) 0;
     }
-
-
-}
-
-a.btn {
-    border-radius:    8px;
-    background-color: var(--primary);
-    color:            #fff;
-    display:          inline-block;
-    padding:          calc(var(--minimal-spacing) + 3px);
-}
-
-a.btn:hover {
-    background:      var(--primary) linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-    text-decoration: none;
-}
-
-a.btn:active {
-    background: var(--primary-darker);
 }
 
 @keyframes spin {
@@ -471,33 +511,59 @@ a.btn:active {
 }
 
 @mixin sqmgrButton($color) {
-    border:           1px solid transparent;
-    border-radius:    3px;
-    color:            #fff;
-    font:             1em Roboto, sans-serif;
-    padding:          $minimal-spacing $standard-spacing;
-    background-color: $color;
-    box-shadow:       inset 0 -2px 0 darken($color, 12%);
+    border:         none;
+    border-radius:  $radius-lg;
+    color:          #fff;
+    font:           1em 'Outfit', sans-serif;
+    font-weight:    600;
+    padding:        $space-3 $space-6;
+    background:     $color;
+    box-shadow:     0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    cursor:         pointer;
+    transition:     all var(--transition-fast);
+    min-height:     42px;
+    letter-spacing: 0.01em;
 
     &:hover {
-        background-color: lighten($color, 5%);
-        border-color:     darken($color, 15%);
+        background:      color.adjust($color, $lightness: 6%);
+        color:           white;
+        transform:       translateY(-1px);
+        box-shadow:      0 4px 12px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+        text-decoration: none;
     }
 
     &:active {
-        background-color: darken($color, 5%);
+        transform:  translateY(0);
+        background: color.adjust($color, $lightness: -4%);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
     }
 
     &:disabled {
-        opacity:          0.2;
-        background-color: $color;
-        border-color:     transparent;
-        box-shadow:       none;
+        opacity:    0.5;
+        background: $color;
+        cursor:     not-allowed;
+        transform:  none;
+        box-shadow: none;
     }
 }
 
-button {
+button, .action-btn {
     @include sqmgrButton($primary);
+
+    &.sm {
+        padding:     $space-2 $space-3;
+        font-size:   0.8125rem;
+        display:     flex;
+        align-items: center;
+        gap:         $space-1;
+        min-height:  34px;
+    }
+
+    &.lg {
+        padding:    $space-4 $space-8;
+        font-size:  1.0625em;
+        min-height: 48px;
+    }
 
     &.small {
         box-shadow: none;
@@ -509,16 +575,67 @@ button.destructive {
 }
 
 button.secondary {
-    background-color: transparent;
-    color:            $primary;
-    box-shadow:       none;
+    background: transparent;
+    color:      $primary;
+    box-shadow: none;
+    border:     1.5px solid color.adjust($primary, $alpha: -0.6);
 
     &:hover {
         border-color: $primary;
+        background:   rgba($primary, 0.06);
+        transform:    translateY(-1px);
+        box-shadow:   none;
     }
 
     &:active {
-        background: linear-gradient(transparent, rgba(#000, 0.05));
+        background: rgba($primary, 0.1);
+        transform:  translateY(0);
     }
 }
+
+.tabs {
+    display:       flex;
+    gap:           $space-1;
+    margin-top:    $standard-spacing;
+    margin-bottom: $standard-spacing;
+    border-bottom: 2px solid #e5e7eb;
+
+    button {
+        all:           unset;
+        display:       inline-flex;
+        align-items:   center;
+        gap:           $space-2;
+        padding:       $space-3 $space-4;
+        font-size:     0.9375rem;
+        font-weight:   500;
+        color:         $dark-gray;
+        cursor:        pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        transition:    color var(--transition-fast), border-color var(--transition-fast);
+        border-radius: $radius-sm $radius-sm 0 0;
+
+        i {
+            font-size: 1em;
+        }
+
+        &:hover:not(.active) {
+            color:      $text-color;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        &.active {
+            color:        var(--primary);
+            border-color: var(--primary);
+            font-weight:  600;
+        }
+    }
+}
+
+@media print {
+    header { display: none; }
+    footer { display: none; }
+    html, body { background-color: #fff; }
+}
+
 </style>

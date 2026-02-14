@@ -1,31 +1,33 @@
 /*
 Copyright 2019 Tom Peters
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-   http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 /* Generic Forms */
 
 form {
-    border: 1px solid var(--border-color);
+    border:           1px solid var(--border-color);
     background-color: var(--light-gray);
-    padding: var(--spacing);
+    padding:          var(--spacing);
+    border-radius:    12px;
 }
 
 form.standalone {
     background-color: transparent;
-    border: none;
-    padding: 0;
+    border:           none;
+    padding:          0;
 }
 
 fieldset {
@@ -38,65 +40,108 @@ fieldset > p {
 
 p.note {
     font-size: 0.8em;
+    color:     var(--dark-gray);
 }
 
 legend {
-    display: block;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: var(--spacing);
-    width: 100%;
+    display:        block;
+    font-size:      1.1em;
+    font-weight:    600;
+    border-bottom:  1px solid var(--border-color);
+    margin-bottom:  var(--spacing);
+    width:          100%;
+    padding-bottom: var(--minimal-spacing);
+    font-family:    'Anton', sans-serif;
+    font-weight:    400;
 }
 
 label {
-    display: block;
-    margin-bottom: var(--minimal-spacing);
+    display:       block;
+    margin-bottom: 6px;
+    font-weight:   500;
+    color:         #374151;
+    font-size:     0.9em;
+}
+
+label.required::after {
+    content:     ' - Required';
+    color:       var(--red);
+    font-style:  italic;
+    font-size:   0.8em;
+    font-weight: normal;
 }
 
 label.optional::after {
-    content: ' - Optional';
-    color: var(--gray);
-    font-style: italic;
-    font-size: 0.8em;
+    content:     ' - Optional';
+    color:       var(--gray);
+    font-style:  italic;
+    font-size:   0.8em;
+    font-weight: normal;
 }
 
-input[type="radio"] {
-    width: auto;
+input[type="radio"],
+input[type="checkbox"] {
+    width:      auto;
+    min-height: auto;
 }
 
 input[type="radio"] + label {
-    display: inline-block;
+    display:     inline-block;
     margin-left: 5px;
+    font-weight: normal;
 }
 
 input,
 select,
 textarea {
-    border-radius: 3px;
-    border: 1px solid var(--border-color);
-    font: 1em var(--font), sans-serif;
-    padding: var(--minimal-spacing);
-    width: 100%;
+    border-radius:    8px;
+    border:           1.5px solid var(--border-color);
+    font:             1em var(--font), sans-serif;
+    padding:          10px 12px;
+    width:            100%;
+    min-height:       44px;
+    transition:       border-color var(--transition-fast), box-shadow var(--transition-fast);
+    background-color: #fff;
+    color:            #1a1d23;
 }
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--gray);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow:   0 0 0 3px rgba(46, 139, 62, 0.12);
+    outline:      none;
+}
+
 input[type="password"] + input[type="password"] {
     margin-top: var(--minimal-spacing);
 }
+
 textarea {
-    min-height: 80px;
+    min-height: 100px;
+    resize:     vertical;
 }
+
 div.field::after {
     content: '';
     display: block;
-    clear: both;
+    clear:   both;
 }
+
 input::placeholder {
-    color: var(--border-color);
+    color:      var(--gray);
+    font-style: normal;
 }
 
 div.field {
     margin-bottom: var(--spacing);
-    position: relative;
+    position:      relative;
 }
 
 fieldset.collapsed div.fields {
@@ -108,67 +153,74 @@ fieldset.collapsed legend a {
 }
 
 p.requirement {
-    font-style: italic;
-    font-size: 0.6em;
-    color: var(--gray);
+    font-style:    italic;
+    font-size:     0.6em;
+    color:         var(--gray);
     margin-bottom: var(--minimal-spacing);
 }
 
 form div.errors {
-    background-color: #f44336;
-    padding: var(--spacing);
-    margin-bottom: var(--spacing);
+    background-color: var(--red);
+    padding:          var(--spacing);
+    margin-bottom:    var(--spacing);
+    border-radius:    8px;
 }
+
 form div.errors ul {
-    font-weight: bold;
-    margin-left: 0;
+    font-weight:   bold;
+    margin-left:   0;
     margin-bottom: 0;
-    list-style: none;
+    list-style:    none;
 }
+
 form div.errors ul ul {
-    font-weight: normal;
-    margin-left: calc(2*var(--spacing));
+    font-weight:     normal;
+    margin-left:     calc(2 * var(--spacing));
     list-style-type: disc;
 }
 
 div.input-error {
-    background-color: #444;
-    padding: calc(2*var(--minimal-spacing));
-    position: absolute;
-    border-radius: 2px;
-    color: #fff;
-    font-size: 0.8em;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-    transform: translateX(calc(-1 * var(--minimal-spacing)));
+    background-color: #1a1d23;
+    padding:          8px 12px;
+    position:         absolute;
+    border-radius:    6px;
+    color:            #fff;
+    font-size:        0.8em;
+    box-shadow:       0 4px 12px rgba(0, 0, 0, 0.15);
+    transform:        translateX(calc(-1 * var(--minimal-spacing)));
 }
+
 div.input-error::before {
-    --size: 7px;
+    --size:           6px;
     background-color: transparent;
-    display: block;
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: var(--size) solid transparent;
-    border-right: var(--size) solid transparent;
-    border-bottom: var(--size) solid #444;
-    position: absolute;
-    top: calc(-1 * var(--size));
-    left: calc(var(--minimal-spacing) + 2px);
+    display:          block;
+    content:          '';
+    width:            0;
+    height:           0;
+    border-left:      var(--size) solid transparent;
+    border-right:     var(--size) solid transparent;
+    border-bottom:    var(--size) solid #1a1d23;
+    position:         absolute;
+    top:              calc(-1 * var(--size));
+    left:             calc(var(--minimal-spacing) + 2px);
 }
+
 input[type="color"] {
-    --size: 30px;
+    --size:           30px;
     background-color: #fff;
-    width: calc( 1.618 * var(--size) );
-    height: var(--size);
+    width:            calc(1.618 * var(--size));
+    height:           var(--size);
 }
+
 /* chrome doesn't like this combined with -moz */
 input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 2px;
+    border:        none;
+    border-radius: 4px;
 }
+
 input[type="color"]::-moz-color-swatch {
-    border: none;
-    border-radius: 2px;
+    border:        none;
+    border-radius: 4px;
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
@@ -180,24 +232,25 @@ input[type="password"]:invalid {
 }
 
 p.message {
-    color: #2196f3;
+    color:       #2196f3;
     font-weight: bold;
-    margin: 0 0 var(--spacing);
+    margin:      0 0 var(--spacing);
 }
 
 div.datetime {
-    display: grid;
+    display:               grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: var(--minimal-spacing);
+    grid-gap:              var(--minimal-spacing);
 }
+
 input[type="date"], input[type="time"] {
     display: inline-block;
-    width: auto;
+    width:   auto;
 }
 
 div.remaining {
-    color: var(--red);
-    font-size: 0.8em;
+    color:       var(--red);
+    font-size:   0.8em;
     font-weight: bold;
 }
 

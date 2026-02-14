@@ -1,28 +1,42 @@
 /*
 Copyright 2025 Tom Peters
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-   http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import EventEmitter from 'events'
+import mitt from 'mitt'
 import {createAuth0Client} from "@auth0/auth0-spa-js"
 import authConfig from "../../auth_config.json"
 
-class Auth0Service extends EventEmitter {
+class Auth0Service {
     auth0Client = null
     isAuthenticated = false
     profile = {}
     error = null
+    #emitter = mitt()
+
+    on(type, handler) {
+        this.#emitter.on(type, handler)
+    }
+
+    off(type, handler) {
+        this.#emitter.off(type, handler)
+    }
+
+    emit(type, event) {
+        this.#emitter.emit(type, event)
+    }
 
 
     async initAuth0() {
@@ -36,9 +50,30 @@ class Auth0Service extends EventEmitter {
                 redirect_uri: `${window.location.origin}/callback`,
             },
         })
+
+        // Restore auth state from cached session
+        this.isAuthenticated = await this.auth0Client.isAuthenticated()
+        if (this.isAuthenticated) {
+            this.profile = await this.auth0Client.getUser() || {}
+        }
     }
 
     async loadProfile() {
+        // Always verify we can get a token, not just that we have cached state
+        try {
+            await this.auth0Client.getTokenSilently()
+        } catch {
+            // Token refresh failed - clear cached state and notify UI
+            this.isAuthenticated = false
+            this.profile = {}
+            this.emit('loginEvent', {
+                loggedIn: false,
+                profile: {},
+                state: null,
+            })
+            throw new Error('not authenticated')
+        }
+
         if (this.profile && this.isAuthenticated) {
             return Promise.resolve()
         }
