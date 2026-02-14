@@ -17,75 +17,98 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
 <template>
     <div class="loading-wrapper">
-        <div class="loading-indicator"><span></span></div>
+        <div class="loading-indicator">
+            <span v-for="i in 8" :key="i"></span>
+        </div>
         <p v-if="text" class="loading-text">{{ text }}</p>
     </div>
 </template>
 
-<script>
-    export default {
-        name: "LoadingIndicator",
-        props: {
-            text: {
-                type: String,
-                default: ''
-            }
-        }
-    }
+<script setup>
+const props = defineProps({
+    text: {
+        type: String,
+        default: '',
+    },
+})
 </script>
 
 <style scoped lang="scss">
-    div.loading-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-    }
+@use '../../variables' as *;
 
-    p.loading-text {
-        color: var(--dark-gray);
-        font-size: 0.9em;
-        margin: 0;
-        animation: pulse 1.5s ease-in-out infinite;
-    }
+div.loading-wrapper {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            12px;
+}
 
-    @keyframes pulse {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 1; }
-    }
+p.loading-text {
+    color:     var(--dark-gray);
+    font-size: 0.9em;
+    margin:    0;
+    animation: pulse 1.5s ease-in-out infinite;
+}
 
-    div.loading-indicator {
-        $size: 40px;
-        animation:        spin 2.4s ease-in-out infinite, reveal .4s ease-in-out;
-        background-color: var(--midnight-gray);
-        border-radius:    $size;
-        color:            #fff;
-        display:          inline-block;
-        font-family:      'Anton', sans-serif;
-        font-size:        30px;
-        font-weight:      400;
-        height:           $size;
-        line-height:      $size;
-        text-align:       center;
-        text-shadow:      1px 1px var(--midnight-gray), 3px 2px var(--primary);
-        width:            $size;
-        z-index:          3;
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
 
-        span {
-            position: relative;
-            left: -1px;
-        }
-        span::after {
-            content: 'S';
+div.loading-indicator {
+    $size:                 40px;
+    display:               grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    width:                 $size;
+    height:                $size;
+    gap:                   2px;
+
+    span {
+        &:first-child {
+            grid-column: 2;
         }
 
-        &.small {
-            $size: 30px;
-            width: $size;
-            height: $size;
-            line-height: $size;
-            border-radius: $size;
-            font-size: 18px;
+        background-color: $logo-green;
+        animation: fall-wave 2s ease-in-out infinite;
+
+        // Create wave effect with staggered delays (bottom-right to top-left)
+        &:nth-child(1) { animation-delay: 0.25s; }
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.2s; }
+        &:nth-child(4) { animation-delay: 0.1s; }
+        &:nth-child(5) { animation-delay: 0.05s; }
+        &:nth-child(6) { animation-delay: 0.15s; }
+        &:nth-child(7) { animation-delay: 0.05s; }
+        &:nth-child(8) { animation-delay: 0s; }
+    }
+
+    &.small {
+        $size:         30px;
+        width:         $size;
+        height:        $size;
+        line-height:   $size;
+        border-radius: $size;
+        font-size:     18px;
+    }
+
+    @keyframes fall-wave {
+        0% {
+            transform: translateY(-$size/2);
+            opacity: 0;
+        }
+        15% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        85% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY($size/2);
+            opacity: 0;
         }
     }
+}
 </style>

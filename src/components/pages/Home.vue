@@ -77,10 +77,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
     </section>
 </template>
 
-<script>
-export default {
-    name: "Home",
-}
+<script setup>
 </script>
 
 <style lang="scss" scoped>
@@ -171,10 +168,10 @@ section.index {
         padding:    0;
 
         li {
-            padding:   $space-1 0 $space-1 $space-6;
-            position:  relative;
-            color:     $text-secondary;
-            font-size: 0.875em;
+            padding:     $space-1 0 $space-1 $space-6;
+            position:    relative;
+            color:       $text-secondary;
+            font-size:   0.875em;
             line-height: 1.5;
 
             &::before {
@@ -191,14 +188,14 @@ section.index {
     }
 
     .new-callout {
-        display:       flex;
-        align-items:   center;
-        gap:           $space-3;
-        margin-top:    $space-5;
-        padding-top:   $space-5;
-        border-top:    1px solid $light-gray;
-        font-size:     0.8em;
-        color:         $text-secondary;
+        display:     flex;
+        align-items: center;
+        gap:         $space-3;
+        margin-top:  $space-5;
+        padding-top: $space-5;
+        border-top:  1px solid $light-gray;
+        font-size:   0.8em;
+        color:       $text-secondary;
 
         .new-badge {
             background:     $accent;
