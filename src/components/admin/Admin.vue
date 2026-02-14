@@ -46,8 +46,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         <span class="stat-label">Active Pools</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-value">{{ formatNumber(stats.archivedPools) }}</span>
-                        <span class="stat-label">Archived Pools</span>
+                        <span class="stat-value">{{ formatNumber(stats.claimedSquares) }}</span>
+                        <span class="stat-label">Claimed Squares</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value">{{ formatNumber(stats.totalUsers) }}</span>
