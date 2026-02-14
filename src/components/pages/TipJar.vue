@@ -50,7 +50,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <p>SqMGR is open-source! If you're a developer, you can contribute by helping with the code or reporting issues.</p>
                 </div>
                 <div class="action-area">
-                    <a href="https://github.com/sqmgr/sqmgr" class="github-link">
+                    <a href="https://github.com/sqmgr" class="github-link">
                         View on GitHub <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
                 </div>
