@@ -38,16 +38,28 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </template>
             </template>
             <fieldset>
-                <legend>Link to Event</legend>
+                <legend>Event Setup</legend>
 
                 <div class="event-mode-toggle">
-                    <label>
+                    <label class="event-mode-card" :class="{ active: eventMode === 'live' }">
                         <input type="radio" v-model="eventMode" value="live">
-                        Link to Event
+                        <span class="event-mode-content">
+                            <span class="event-mode-icon"><i class="fas fa-satellite-dish"></i></span>
+                            <span class="event-mode-text">
+                                <span class="event-mode-title">Link to Event</span>
+                                <span class="event-mode-desc">Search for a real game &mdash; teams, colors, and scores update automatically</span>
+                            </span>
+                        </span>
                     </label>
-                    <label :class="{ disabled: form.bdlEventId }">
+                    <label class="event-mode-card" :class="{ active: eventMode === 'manual', disabled: form.bdlEventId }">
                         <input type="radio" v-model="eventMode" value="manual" :disabled="form.bdlEventId">
-                        Manual Entry
+                        <span class="event-mode-content">
+                            <span class="event-mode-icon"><i class="fas fa-pen"></i></span>
+                            <span class="event-mode-text">
+                                <span class="event-mode-title">Manual Entry</span>
+                                <span class="event-mode-desc">Enter team names and colors yourself &mdash; for custom or non-listed events</span>
+                            </span>
+                        </span>
                     </label>
                 </div>
 
@@ -485,25 +497,93 @@ section.grid-customize {
 }
 
 .event-mode-toggle {
-    display: flex;
-    gap: var(--spacing);
-    margin-bottom: var(--spacing);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-3;
+    margin-bottom: $space-4;
 
     @include mobile {
-        flex-direction: column;
-        gap: $minimal-spacing;
+        grid-template-columns: 1fr;
+        gap: $space-2;
+    }
+}
+
+.event-mode-card {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    border: 2px solid $light-gray;
+    border-radius: $radius-lg;
+    padding: $space-3 $space-4;
+    background: $surface-elevated;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+    @include mobile {
+        padding: $space-3;
     }
 
-    label {
-        display: flex;
-        align-items: center;
-        gap: var(--minimal-spacing);
-        cursor: pointer;
+    &:hover:not(.disabled) {
+        border-color: $gray;
+    }
 
-        &.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+    &.active {
+        border-color: $primary;
+        box-shadow: 0 0 0 1px $primary;
+        background: $primary-50;
+    }
+
+    &.disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+
+    input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .event-mode-content {
+        display: flex;
+        align-items: flex-start;
+        gap: $space-3;
+    }
+
+    .event-mode-icon {
+        @include flex-center;
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: $radius-md;
+        background: $light-gray;
+        color: $text-secondary;
+        font-size: 0.85em;
+        transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    &.active .event-mode-icon {
+        background: $primary;
+        color: #fff;
+    }
+
+    .event-mode-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    .event-mode-title {
+        font-weight: 600;
+        font-size: 0.95em;
+        color: $text-color;
+    }
+
+    .event-mode-desc {
+        font-size: 0.8em;
+        color: $text-secondary;
+        line-height: 1.4;
     }
 }
 
