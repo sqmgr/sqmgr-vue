@@ -1087,7 +1087,7 @@ div.square {
     border:          1px solid var(--grid-gray);
     display:         flex;
     font-family:     'Barlow Condensed', sans-serif;
-    font-size:       clamp(0.75rem, 1.9cqmin, 20px);
+    font-size:       clamp(0.75rem, 1.4cqmin, 20px);
     font-weight:     500;
     align-items:     center;
     justify-content: center;
@@ -1245,8 +1245,8 @@ div.square {
     :deep(span.square-id) {
         position:  absolute;
         top:       2px;
-        right:     2px;
-        font-size: 0.8em;
+        right:     3px;
+        font-size: 0.8rem;
         color:     var(--dark-gray);
         z-index:   1;
     }
