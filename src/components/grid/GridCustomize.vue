@@ -117,7 +117,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <select id="payout-config" v-model="form.payoutConfig">
                         <option value="standard">Final only</option>
                         <option value="hf">Half, Final</option>
-                        <option value="123f">1st, 2nd, 3rd, Final</option>
+                        <option v-if="!isNCAAB" value="123f">1st, 2nd, 3rd, Final</option>
                     </select>
                     <small class="helper-text">Select how many payouts for this event.</small>
                 </div>
@@ -268,6 +268,9 @@ export default {
         },
         isLinkedEventFinal() {
             return this.form.bdlEvent?.status === 'final'
+        },
+        isNCAAB() {
+            return this.form.bdlEvent?.league === 'ncaab'
         },
     },
     created() {
@@ -452,7 +455,14 @@ export default {
             }
 
             // Set payout config to match pool's number rotation format
-            this.form.payoutConfig = this.pool?.numberSetConfig || 'standard'
+            let payoutConfig = this.pool?.numberSetConfig || 'standard'
+
+            // For NCAAB, don't allow 123f (1st, 2nd, 3rd, Final)
+            if (event.league === 'ncaab' && payoutConfig === '123f') {
+                payoutConfig = 'hf' // Default to Half, Final for NCAAB
+            }
+
+            this.form.payoutConfig = payoutConfig
         },
         unlinkEvent() {
             this.form.bdlEventId = null
