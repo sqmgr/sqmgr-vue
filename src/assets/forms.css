@@ -105,9 +105,24 @@ textarea {
     color:            #1a1d23;
 }
 
-input:hover,
-select:hover,
-textarea:hover {
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background-color: #f4f5f7;
+    border-color:     #e8eaed;
+    color:            #9ca3af;
+    cursor:           not-allowed;
+}
+
+input:disabled:hover,
+select:disabled:hover,
+textarea:disabled:hover {
+    border-color: #e8eaed;
+}
+
+input:hover:not(:disabled),
+select:hover:not(:disabled),
+textarea:hover:not(:disabled) {
     border-color: var(--gray);
 }
 

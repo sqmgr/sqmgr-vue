@@ -105,9 +105,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <fieldset>
                 <legend>Teams</legend>
 
+                <div v-if="eventMode === 'live' && !form.bdlEventId" class="autofill-hint">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    Teams and colors will be filled in automatically when you select an event above. Or you can switch to Manual to choose these yourself.
+                </div>
+
                 <div class="teams-row">
-                    <GridCustomizeTeam name="Away Team" v-model="form.awayTeam" :disabled="!!form.bdlEventId"/>
-                    <GridCustomizeTeam name="Home Team" v-model="form.homeTeam" :disabled="!!form.bdlEventId"/>
+                    <GridCustomizeTeam name="Away Team" v-model="form.awayTeam" :disabled="eventMode === 'live'"/>
+                    <GridCustomizeTeam name="Home Team" v-model="form.homeTeam" :disabled="eventMode === 'live'"/>
                 </div>
             </fieldset>
 
@@ -121,7 +126,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
                 <div class="field">
                     <label for="event-date" class="optional">Event Date</label>
-                    <input type="date" id="event-date" name="event-date" v-model="form.eventDate" :disabled="!!form.bdlEventId">
+                    <input type="date" id="event-date" name="event-date" v-model="form.eventDate" :disabled="eventMode === 'live'">
                 </div>
 
                 <div v-if="form.bdlEventId" class="field">
@@ -587,6 +592,24 @@ section.grid-customize {
     }
 }
 
+.autofill-hint {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-3;
+    margin-bottom: $space-3;
+    background: $primary-50;
+    border: 1px solid $primary-100;
+    border-radius: $radius-md;
+    font-size: 0.85em;
+    color: $primary-dark;
+
+    i {
+        flex-shrink: 0;
+        font-size: 0.85em;
+    }
+}
+
 .teams-row {
     display: flex;
     gap: $standard-spacing;
@@ -738,11 +761,6 @@ section.grid-customize {
     margin-top: 4px;
     color:      #f44336;
     font-size:  0.85em;
-}
-
-input#event-date:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
 }
 
 .branding-section {

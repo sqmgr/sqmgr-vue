@@ -177,11 +177,6 @@ export default {
 <style scoped lang="scss">
 div.customize-team {
     position: relative;
-
-    input[type="text"]:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
 }
 
 div.suggest {
