@@ -101,7 +101,7 @@ div.loading-indicator {
 
     @keyframes fall-wave {
         0% {
-            transform: translateY(calc(-$size / 2));
+            transform: translateY(calc(-1 * $size / 2));
             opacity:   0;
         }
         15% {
