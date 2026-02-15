@@ -32,6 +32,15 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <span class="square-id" v-else>{{ sqId }}</span>
 
         <span class="name">{{ squareData.claimant }}</span>
+
+        <!-- Payment status badge (admin only, toggleable) -->
+        <span
+            v-if="paymentStateBadge"
+            class="payment-badge"
+            :style="{ backgroundColor: paymentStateBadge.color }"
+            :title="paymentStateBadge.tooltip">
+            {{ paymentStateBadge.label }}
+        </span>
     </div>
 </template>
 
@@ -72,6 +81,10 @@ export default {
         winningPeriods: {
             type: Array,
             default: () => [],
+        },
+        showPaymentStates: {
+            type: Boolean,
+            default: false,
         },
     },
     setup() {
@@ -242,6 +255,39 @@ export default {
 
             return {}
         },
+        paymentStateBadge() {
+            // Only show if admin has toggled the feature on
+            if (!this.showPaymentStates || !this.poolConfig.isAdmin) {
+                return null
+            }
+
+            const state = this.squareData.state
+
+            // No badge needed for unclaimed squares (handled by pulsing background)
+            if (state === 'unclaimed') {
+                return null
+            }
+
+            const badges = {
+                'claimed': {
+                    color: '#9ca3af',
+                    label: 'C',
+                    tooltip: 'Claimed - Payment pending'
+                },
+                'paid-partial': {
+                    color: '#f5a623',
+                    label: 'P',
+                    tooltip: 'Partially paid'
+                },
+                'paid-full': {
+                    color: 'var(--success)',
+                    label: '✓',
+                    tooltip: 'Fully paid'
+                },
+            }
+
+            return badges[state] || null
+        },
     },
     mounted() {
         sqmgrConfig()
@@ -367,6 +413,44 @@ span.name {
                 display: none;
             }
         }
+    }
+}
+
+.payment-badge {
+    position:         absolute;
+    bottom:           2px;
+    right:            2px;
+    width:            16px;
+    height:           16px;
+    display:          flex;
+    align-items:      center;
+    justify-content:  center;
+    border-radius:    50%;
+    font-size:        0.6rem;
+    font-weight:      700;
+    color:            #fff;
+    z-index:          3;
+    line-height:      1;
+
+    @include mobile {
+        width:      12px;
+        height:     12px;
+        font-size:  0.5rem;
+    }
+}
+
+// Hide payment badges on mobile when grid is in shrink mode
+.square:not(.expanded) {
+    @include mobile {
+        .payment-badge {
+            display: none;
+        }
+    }
+}
+
+@media print {
+    .payment-badge {
+        display: none !important;
     }
 }
 </style>

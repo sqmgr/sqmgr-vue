@@ -94,6 +94,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                         </div>
                                     </button>
 
+                                    <button type="button" class="action-btn" @click.prevent="showPaymentStates = !showPaymentStates">
+                                        <i class="fas fa-money-check-alt"></i>
+                                        <div class="action-text">
+                                            <span class="action-label">{{ showPaymentStates ? 'Hide' : 'Show' }} Payment Status</span>
+                                            <span class="action-desc">Toggle payment state indicators on squares</span>
+                                        </div>
+                                    </button>
+
                                     <button v-if="canAddGame" type="button" class="action-btn"
                                             @click.prevent="$emit('add-game')">
                                         <i class="fas fa-plus-circle"></i>
@@ -289,6 +297,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                         :annotation="annotationBySquareId(n)"
                                         :is-expanded="expandedGrid"
                                         :winning-periods="getWinningPeriodsForSquare(n)"
+                                        :show-payment-states="showPaymentStates"
                                     />
                                 </template>
                             </div>
@@ -422,6 +431,7 @@ export default {
 
             expandedGrid: false,
             config: null,
+            showPaymentStates: false,
         }
     },
     created() {
@@ -1165,47 +1175,6 @@ div.square {
         to { --spin-angle: 360deg; }
     }
 
-    &.paid-full::after {
-        content:          '';
-        position:         absolute;
-        left:             2px;
-        height:           4px;
-        background-color: var(--success);
-        bottom:           2px;
-        right:            2px;
-        font-size:        0.8em;
-        color:            var(--success);
-    }
-
-    &.paid-partial {
-    }
-
-    &.paid-partial::after {
-        content:    '';
-        position:   absolute;
-        left:       2px;
-        height:     4px;
-        background: linear-gradient(90deg, #ffc107, #ffc107 50%, var(--gray) 50%);
-        bottom:     2px;
-        right:      2px;
-        font-size:  0.8em;
-        color:      var(--gray);
-    }
-
-    &.claimed {
-    }
-
-    &.claimed::after {
-        content:          '';
-        position:         absolute;
-        left:             2px;
-        height:           4px;
-        background-color: var(--gray);
-        bottom:           2px;
-        right:            2px;
-        font-size:        0.8em;
-        color:            var(--gray);
-    }
 
     &.unclaimed.held {
         border-color: var(--primary);
