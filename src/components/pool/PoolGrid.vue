@@ -86,7 +86,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                     <h3>Admin Actions</h3>
                                 </div>
                                 <div class="admin-actions">
-                                    <button type="button" class="action-btn" :class="{ 'needs-setup': needsCustomization }" @click.prevent="customizeWasClicked">
+                                    <button type="button" class="action-btn"
+                                            :class="{ 'needs-setup': needsCustomization }"
+                                            @click.prevent="customizeWasClicked">
                                         <i class="fas fa-paint-brush"></i>
                                         <div class="action-text">
                                             <span class="action-label">Customize</span>
@@ -94,7 +96,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                         </div>
                                     </button>
 
-                                    <button type="button" class="action-btn" @click.prevent="showPaymentStates = !showPaymentStates">
+                                    <button type="button" class="action-btn"
+                                            @click.prevent="showPaymentStates = !showPaymentStates">
                                         <i class="fas fa-money-check-alt"></i>
                                         <div class="action-text">
                                             <span class="action-label">{{ showPaymentStates ? 'Hide' : 'Show' }} Payment Status</span>
@@ -200,9 +203,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                     <div class="setting-value">{{ eventDate }}</div>
                                 </div>
                                 <LinkedGameInfo v-if="grid.bdlEvent"
-                                    :bdl-event="grid.bdlEvent"
-                                    :payout-config="grid.payoutConfig"
-                                    :number-set-config="pool.numberSetConfig" />
+                                                :bdl-event="grid.bdlEvent"
+                                                :payout-config="grid.payoutConfig"
+                                                :number-set-config="pool.numberSetConfig"/>
                                 <div class="setting-item">
                                     <label>Grid Type</label>
                                     <div class="setting-value">
@@ -257,7 +260,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
                     <div class="grid-main">
                         <div class="squares-container">
-                            <div ref="squares" :class="{ squares: true, [gridType]: true, 'expanded-grid': expandedGrid }">
+                            <div ref="squares"
+                                 :class="{ squares: true, [gridType]: true, 'expanded-grid': expandedGrid }">
                                 <div class="spacer">&nbsp;</div>
 
                                 <div data-team="home" class="team home-team"><span>{{ grid.homeTeamName }}</span></div>
@@ -336,15 +340,15 @@ import Common from '../../common'
 import ModalController from '@/controllers/ModalController'
 import sqmgrClient from "@/models/sqmgrClient"
 import EventBus from "@/models/EventBus"
-import { SQUARE_UPDATED, GRID_UPDATED } from "@/constants/events"
+import {SQUARE_UPDATED, GRID_UPDATED} from "@/constants/events"
 import Pagination from "@/components/ui/Pagination"
 import sqmgrConfig from "@/models/sqmgrConfig"
 import ManualDraw from "@/components/grid/ManualDraw"
 import DrawConfirmation from "@/components/grid/DrawConfirmation"
 import normalizeColor from "@/utils/normalizeColor" // utility to normalize color values
-import { getShortLabelSync } from "@/models/periodLabels"
-import { useSquareHighlight } from "@/composables/useSquareHighlight"
-import { usePoolEvents } from "@/composables/usePoolEvents"
+import {getShortLabelSync} from "@/models/periodLabels"
+import {useSquareHighlight} from "@/composables/useSquareHighlight"
+import {usePoolEvents} from "@/composables/usePoolEvents"
 
 const intColor = (color) => {
     if (!Array.isArray(color) || color.length !== 4) {
@@ -380,12 +384,12 @@ const nonWhiteColor = (color) => {
 export default {
     name: "PoolGrid",
     setup(props) {
-        const { setPrimarySquare } = useSquareHighlight()
+        const {setPrimarySquare} = useSquareHighlight()
         // Only establish SSE when PoolGrid is a top-level route (not embedded in Pool.vue)
         if (!props.embedded) {
             usePoolEvents(props.token)
         }
-        return { setPrimarySquare }
+        return {setPrimarySquare}
     },
     components: {
         Pagination,
@@ -849,15 +853,15 @@ export default {
 
 <style>
 @property --spin-angle {
-    syntax: '<angle>';
-    inherits: false;
+    syntax:        '<angle>';
+    inherits:      false;
     initial-value: 0deg;
 }
 
 :root {
-    --team-primary:    #000;
-    --team-secondary:  #666;
-    --grid-gray:       #ddd;
+    --team-primary:   #000;
+    --team-secondary: #666;
+    --grid-gray:      #ddd;
 }
 </style>
 <style lang="scss" scoped>
@@ -1103,7 +1107,7 @@ div.square {
     justify-content: center;
     position:        relative;
     overflow:        hidden;
-    padding:         8px 2px;
+    padding:         3px;
     transition:      transform 100ms ease, box-shadow 100ms ease;
     container-type:  inline-size;
 
@@ -1150,22 +1154,22 @@ div.square {
             position: relative;
 
             &::before {
-                content:       '';
-                position:      absolute;
-                inset:         0;
-                border-radius: 0px;
-                padding:       2px;
-                background:    conic-gradient(
-                    from var(--spin-angle, 0deg),
-                    var(--home-primary),
-                    var(--home-secondary),
-                    var(--away-primary),
-                    var(--away-secondary),
-                    var(--home-primary)
-                );
-                mask:          linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                content:        '';
+                position:       absolute;
+                inset:          0;
+                border-radius:  0px;
+                padding:        2px;
+                background:     conic-gradient(
+                                        from var(--spin-angle, 0deg),
+                                        var(--home-primary),
+                                        var(--home-secondary),
+                                        var(--away-primary),
+                                        var(--away-secondary),
+                                        var(--home-primary)
+                                );
+                mask:           linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
                 mask-composite: exclude;
-                animation:     spin-border 3s linear infinite;
+                animation:      spin-border 3s linear infinite;
                 pointer-events: none;
             }
         }
@@ -1499,24 +1503,24 @@ p.add-note {
             overflow:     hidden;
 
             &::before {
-                content:       '';
-                position:      absolute;
-                top:           50%;
-                left:          50%;
-                width:         300%;
-                aspect-ratio:  1;
-                background:    conic-gradient(#7c3aed, #3b82f6, #06b6d4, #3b82f6, #7c3aed);
-                animation:     neon-shimmer 2.5s linear infinite;
+                content:        '';
+                position:       absolute;
+                top:            50%;
+                left:           50%;
+                width:          300%;
+                aspect-ratio:   1;
+                background:     conic-gradient(#7c3aed, #3b82f6, #06b6d4, #3b82f6, #7c3aed);
+                animation:      neon-shimmer 2.5s linear infinite;
                 pointer-events: none;
             }
 
             &::after {
-                content:       '';
-                position:      absolute;
-                inset:         2px;
-                z-index:       1;
-                background:    #fff;
-                border-radius: $radius-md;
+                content:        '';
+                position:       absolute;
+                inset:          2px;
+                z-index:        1;
+                background:     #fff;
+                border-radius:  $radius-md;
                 pointer-events: none;
             }
 
@@ -1537,7 +1541,7 @@ p.add-note {
 
         @keyframes neon-shimmer {
             from { transform: translate(-50%, -50%) rotate(0deg); }
-            to   { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         > i {
@@ -1841,7 +1845,7 @@ p.add-note {
 
             h3 {
                 font-size:     1.4em;
-                font-weight: bold;
+                font-weight:   bold;
                 margin-bottom: 0;
             }
 

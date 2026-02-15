@@ -70,16 +70,23 @@ div.loading-indicator {
         }
 
         background-color: $logo-green;
-        animation: fall-wave 2s ease-in-out infinite;
+        animation:        fall-wave 2s ease-in-out infinite;
 
         // Create wave effect with staggered delays (bottom-right to top-left)
         &:nth-child(1) { animation-delay: 0.25s; }
+
         &:nth-child(2) { animation-delay: 0.15s; }
+
         &:nth-child(3) { animation-delay: 0.2s; }
+
         &:nth-child(4) { animation-delay: 0.1s; }
+
         &:nth-child(5) { animation-delay: 0.05s; }
+
         &:nth-child(6) { animation-delay: 0.15s; }
+
         &:nth-child(7) { animation-delay: 0.05s; }
+
         &:nth-child(8) { animation-delay: 0s; }
     }
 
@@ -94,20 +101,20 @@ div.loading-indicator {
 
     @keyframes fall-wave {
         0% {
-            transform: translateY(-$size/2);
-            opacity: 0;
+            transform: translateY(calc(-$size / 2));
+            opacity:   0;
         }
         15% {
             transform: translateY(0);
-            opacity: 1;
+            opacity:   1;
         }
         85% {
             transform: translateY(0);
-            opacity: 1;
+            opacity:   1;
         }
         100% {
-            transform: translateY($size/2);
-            opacity: 0;
+            transform: translateY(calc($size / 2));
+            opacity:   0;
         }
     }
 }
