@@ -547,29 +547,6 @@ p.generated-by {
     }
 }
 
-button, .action-btn {
-    @include sqmgrButton($primary);
-
-    &.sm {
-        padding:     $space-2 $space-3;
-        font-size:   0.8125rem;
-        display:     flex;
-        align-items: center;
-        gap:         $space-1;
-        min-height:  34px;
-    }
-
-    &.lg {
-        padding:    $space-4 $space-8;
-        font-size:  1.0625em;
-        min-height: 48px;
-    }
-
-    &.small {
-        box-shadow: none;
-    }
-}
-
 button.destructive {
     @include sqmgrButton($red);
 }
@@ -581,6 +558,7 @@ button.secondary {
     border:     1.5px solid color.adjust($primary, $alpha: -0.6);
 
     &:hover {
+        color: $primary;
         border-color: $primary;
         background:   rgba($primary, 0.06);
         transform:    translateY(-1px);
@@ -590,6 +568,30 @@ button.secondary {
     &:active {
         background: rgba($primary, 0.1);
         transform:  translateY(0);
+    }
+}
+
+button, .action-btn {
+    @include sqmgrButton($primary);
+
+
+    &.lg {
+        padding:    $space-4 $space-8;
+        font-size:  1.0625em;
+        min-height: 48px;
+    }
+
+    &.small {
+        box-shadow: none;
+    }
+
+    &.sm {
+        padding:     $space-2 $space-3;
+        font-size:   0.8125rem;
+        display:     flex;
+        align-items: center;
+        gap:         $space-1;
+        min-height:  34px;
     }
 }
 

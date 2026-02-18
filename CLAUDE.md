@@ -23,6 +23,14 @@ color.adjust($color, $lightness: 15%)
 ### Nesting
 Nest SCSS selectors to mirror the DOM hierarchy of the component template.
 
+## Button Styles
+Global button styles are defined in `src/App.vue` using the `sqmgrButton` mixin. Always use the existing global button classes rather than writing custom button styles in components:
+- Default `<button>` — green primary button (`$primary`)
+- `button.destructive` — red button (`$red`)
+- `button.secondary` — outlined primary button
+- `button.sm` — smaller variant
+- `button.lg` — larger variant
+
 ## Build Commands
 - `npm run dev` - Start development server
 - `npm run build` - Production build
