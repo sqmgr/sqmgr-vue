@@ -35,6 +35,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <li>
                     <router-link to="/cookies">Cookies Policy</router-link>
                 </li>
+                <li>
+                    <router-link to="/release-notes">Release Notes</router-link>
+                </li>
             </ul>
         </nav>
 

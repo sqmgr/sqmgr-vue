@@ -35,6 +35,7 @@ const HowItWorks = () => import("@/components/pages/HowItWorks")
 const TermsOfService = () => import("@/components/pages/TermsOfService")
 const PrivacyPolicy = () => import("@/components/pages/PrivacyPolicy")
 const CookiesPolicy = () => import("@/components/pages/CookiesPolicy")
+const ReleaseNotes = () => import("@/components/pages/ReleaseNotes")
 const LogIn = () => import("@/components/auth/LogIn")
 const TipJar = () => import("@/components/pages/TipJar.vue")
 const YourAccount = () => import("@/components/auth/YourAccount")
@@ -72,6 +73,7 @@ const routes = [
     {path: '/terms', component: TermsOfService, meta: {title: 'Terms of Service'}},
     {path: '/privacy', component: PrivacyPolicy, meta: {title: 'Privacy Policy'}},
     {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
+    {path: '/release-notes', component: ReleaseNotes, meta: {title: 'Release Notes'}},
     {path: '/login', component: LogIn, meta: {title: 'Login'}},
     {path: '/tipjar', component: TipJar, meta: {title: 'Tip Jar'}},
     {path: '/account', component: YourAccount, meta: {requireLogin: true, title: 'Your Account'}},
