@@ -269,7 +269,7 @@ export default {
 
             const badges = {
                 'claimed': {
-                    color: '#9ca3af',
+                    color: '#d1d5db',
                     icon: 'fas fa-circle-user',
                     tooltip: 'Claimed - Payment pending'
                 },

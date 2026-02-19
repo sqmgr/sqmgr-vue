@@ -495,7 +495,7 @@ table {
 
     &.claimed {
         background: #f3f4f6;
-        color:      #9ca3af;
+        color:      #6b7280;
     }
 
     &.paid-partial {
