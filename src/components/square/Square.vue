@@ -34,13 +34,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <span class="name">{{ squareData.claimant }}</span>
 
         <!-- Payment status badge (admin only, toggleable) -->
-        <span
+        <i
             v-if="paymentStateBadge"
-            class="payment-badge"
-            :style="{ backgroundColor: paymentStateBadge.color }"
+            :class="['payment-badge', paymentStateBadge.icon]"
+            :style="{ color: paymentStateBadge.color }"
             :title="paymentStateBadge.tooltip">
-            {{ paymentStateBadge.label }}
-        </span>
+        </i>
     </div>
 </template>
 
@@ -271,17 +270,17 @@ export default {
             const badges = {
                 'claimed': {
                     color: '#9ca3af',
-                    label: 'C',
+                    icon: 'fas fa-circle-user',
                     tooltip: 'Claimed - Payment pending'
                 },
                 'paid-partial': {
                     color: '#f5a623',
-                    label: 'P',
+                    icon: 'fas fa-adjust',
                     tooltip: 'Partially paid'
                 },
                 'paid-full': {
-                    color: 'var(--success)',
-                    label: '✓',
+                    color: '#1e6b2e',
+                    icon: 'fas fa-check-circle',
                     tooltip: 'Fully paid'
                 },
             }
@@ -417,25 +416,15 @@ span.name {
 }
 
 .payment-badge {
-    position:         absolute;
-    bottom:           2px;
-    right:            2px;
-    width:            16px;
-    height:           16px;
-    display:          flex;
-    align-items:      center;
-    justify-content:  center;
-    border-radius:    50%;
-    font-size:        0.6rem;
-    font-weight:      700;
-    color:            #fff;
-    z-index:          3;
-    line-height:      1;
+    position:   absolute;
+    bottom:     2px;
+    right:      2px;
+    font-size:  0.7rem;
+    z-index:    3;
+    line-height: 1;
 
     @include mobile {
-        width:      12px;
-        height:     12px;
-        font-size:  0.5rem;
+        font-size: 0.55rem;
     }
 }
 

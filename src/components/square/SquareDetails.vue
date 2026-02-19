@@ -313,7 +313,7 @@ export default {
         stateIcon() {
             const icons = {
                 'unclaimed': 'far fa-square',
-                'claimed': 'fas fa-user',
+                'claimed': 'fas fa-circle-user',
                 'paid-partial': 'fas fa-adjust',
                 'paid-full': 'fas fa-check-circle',
             }
@@ -494,13 +494,13 @@ table {
     }
 
     &.claimed {
-        background: #e8f0fe;
-        color:      #1a73e8;
+        background: #f3f4f6;
+        color:      #9ca3af;
     }
 
     &.paid-partial {
         background: #fef3e0;
-        color:      #e65100;
+        color:      #f5a623;
     }
 
     &.paid-full {
