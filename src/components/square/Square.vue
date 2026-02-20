@@ -87,8 +87,8 @@ export default {
         },
     },
     setup() {
-        const { state: highlightState, setPrimarySquare, setHighlightSquares } = useSquareHighlight()
-        return { highlightState, setPrimarySquare, setHighlightSquares }
+        const { state: highlightState, setPrimarySquare, setHighlightSquares, toggleSquareSelection } = useSquareHighlight()
+        return { highlightState, setPrimarySquare, setHighlightSquares, toggleSquareSelection }
     },
     data() {
         return {
@@ -117,6 +117,9 @@ export default {
         isHighlighted() {
             return this.highlightState.highlightSquares[this.sqId]
         },
+        isBulkSelected() {
+            return this.highlightState.selectedSquares.has(this.sqId)
+        },
         isOwned() {
             return this.squareData.userId === this.poolConfig.userId
         },
@@ -130,6 +133,7 @@ export default {
                 expanded: this.isExpanded,
                 owned: this.isOwned,
                 winner: this.winningPeriods.length > 0,
+                'bulk-selected': this.isBulkSelected,
             }
 
             // Add specific winner classes for each period
@@ -314,6 +318,11 @@ export default {
             this.updateHighlightSquares(false)
         },
         didClickSquare() {
+            if (this.highlightState.bulkMode) {
+                this.toggleSquareSelection(this.sqId)
+                return
+            }
+
             if (this.isHeld) {
                 this.setPrimarySquare(null)
                 return
@@ -413,6 +422,12 @@ span.name {
             }
         }
     }
+}
+
+.bulk-selected {
+    outline:    3px solid #7c3aed !important;
+    background: rgba(124, 58, 237, 0.12) !important;
+    animation:  none !important;
 }
 
 .payment-badge {

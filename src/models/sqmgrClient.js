@@ -285,6 +285,17 @@ class sqmgrClient {
         return this.updateSquare(token, squareId, {state, note})
     }
 
+    bulkUpdateSquares(token, data) {
+        return this.request(`/pool/${token}/squares/bulk`, null, true, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            body: JSON.stringify(data),
+        }).then(res => {
+            EventBus.emit(SQUARE_UPDATED, true)
+            return res
+        })
+    }
+
     getPoolLogs(token, offset = 0, limit = 100) {
         return this.request(`/pool/${token}/log`, {offset, limit})
     }

@@ -105,6 +105,16 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                         </div>
                                     </button>
 
+                                    <button type="button" class="action-btn"
+                                            :class="{ active: highlightState.bulkMode }"
+                                            @click.prevent="toggleBulkMode">
+                                        <i class="fas fa-tasks"></i>
+                                        <div class="action-text">
+                                            <span class="action-label">{{ highlightState.bulkMode ? 'Exit Bulk Edit' : 'Bulk Edit' }}</span>
+                                            <span class="action-desc">Select multiple squares to claim, unclaim, or update payment</span>
+                                        </div>
+                                    </button>
+
                                     <button v-if="canAddGame" type="button" class="action-btn"
                                             @click.prevent="$emit('add-game')">
                                         <i class="fas fa-plus-circle"></i>
@@ -259,6 +269,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </aside>
 
                     <div class="grid-main">
+                        <BulkEditToolbar
+                            v-if="highlightState.bulkMode && isAdmin"
+                            :token="token"
+                            :selected-squares="highlightState.selectedSquares"
+                            :squares-data="squares"
+                            @cancel="toggleBulkMode"
+                        />
                         <div class="squares-container">
                             <div ref="squares"
                                  :class="{ squares: true, [gridType]: true, 'expanded-grid': expandedGrid }">
@@ -307,6 +324,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             </div>
                         </div>
 
+                        <!-- Bulk selection count badge (fixed bottom-right) -->
+                        <div v-if="highlightState.bulkMode && isAdmin" class="bulk-selection-badge">
+                            <i class="fas fa-check-square"></i>
+                            {{ highlightState.selectedSquares.size }}
+                        </div>
+
                         <!-- Activity Log Card -->
                         <div v-if="isAdmin" class="card logs-card">
                             <div class="card-header">
@@ -335,6 +358,7 @@ import Square from '../square/Square.vue'
 import Logs from './Logs.vue'
 import GridCustomize from '../grid/GridCustomize.vue'
 import LinkedGameInfo from '../grid/LinkedGameInfo.vue'
+import BulkEditToolbar from './BulkEditToolbar.vue'
 import Common from '../../common'
 
 import ModalController from '@/controllers/ModalController'
@@ -384,18 +408,19 @@ const nonWhiteColor = (color) => {
 export default {
     name: "PoolGrid",
     setup(props) {
-        const {setPrimarySquare} = useSquareHighlight()
+        const {state: highlightState, setPrimarySquare, toggleBulkMode, clearSelection} = useSquareHighlight()
         // Only establish SSE when PoolGrid is a top-level route (not embedded in Pool.vue)
         if (!props.embedded) {
             usePoolEvents(props.token)
         }
-        return {setPrimarySquare}
+        return {highlightState, setPrimarySquare, toggleBulkMode, clearSelection}
     },
     components: {
         Pagination,
         Square,
         Logs,
         LinkedGameInfo,
+        BulkEditToolbar,
     },
     props: {
         token: {
@@ -448,6 +473,10 @@ export default {
     beforeUnmount() {
         EventBus.off(SQUARE_UPDATED, this.squareUpdated)
         EventBus.off(GRID_UPDATED, this.gridUpdated)
+        // Exit bulk mode when leaving the grid
+        if (this.highlightState.bulkMode) {
+            this.toggleBulkMode()
+        }
     },
     beforeMount() {
         // ensure store is fresh
@@ -1497,6 +1526,12 @@ p.add-note {
             box-shadow:   none;
         }
 
+        &.active {
+            background:   rgba($primary, 0.08);
+            border-color: rgba($primary, 0.4);
+            color:        $primary-dark;
+        }
+
         &.needs-setup {
             position:     relative;
             border-color: transparent;
@@ -1791,6 +1826,25 @@ p.add-note {
     @media (min-width: 8.5in) {
         display: none;
     }
+}
+
+// Bulk selection badge (fixed bottom-right corner of viewport)
+.bulk-selection-badge {
+    position:      fixed;
+    bottom:        $space-4;
+    right:         $space-4;
+    background:    #7c3aed;
+    color:         #fff;
+    border-radius: $radius-full;
+    padding:       $space-2 $space-4;
+    font-weight:   600;
+    font-size:     0.875rem;
+    display:       flex;
+    align-items:   center;
+    gap:           $space-2;
+    box-shadow:    0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index:       100;
+    pointer-events: none;
 }
 
 // Logs Card

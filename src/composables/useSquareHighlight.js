@@ -20,6 +20,8 @@ import { reactive } from 'vue'
 const state = reactive({
     primarySquare: null,
     highlightSquares: {},
+    bulkMode: false,
+    selectedSquares: new Set(),
 })
 
 export function useSquareHighlight() {
@@ -31,9 +33,33 @@ export function useSquareHighlight() {
         state.highlightSquares = { ...data }
     }
 
+    function toggleBulkMode() {
+        state.bulkMode = !state.bulkMode
+        if (!state.bulkMode) {
+            state.selectedSquares = new Set()
+        }
+    }
+
+    function toggleSquareSelection(id) {
+        const next = new Set(state.selectedSquares)
+        if (next.has(id)) {
+            next.delete(id)
+        } else {
+            next.add(id)
+        }
+        state.selectedSquares = next
+    }
+
+    function clearSelection() {
+        state.selectedSquares = new Set()
+    }
+
     return {
         state,
         setPrimarySquare,
         setHighlightSquares,
+        toggleBulkMode,
+        toggleSquareSelection,
+        clearSelection,
     }
 }
