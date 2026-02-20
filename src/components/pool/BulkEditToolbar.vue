@@ -73,6 +73,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </button>
         </div>
 
+        <span class="selected-count">
+            <i class="fas fa-check-square"></i>
+            {{ selectedSquares.size }}
+        </span>
+
         <div v-if="results.length" class="bulk-results">
             <span class="result-ok">{{ successCount }} succeeded</span>
             <span v-if="errorCount" class="result-err">{{ errorCount }} failed</span>
@@ -112,6 +117,9 @@ export default {
         }
     },
     computed: {
+        selectedCount() {
+            return this.selectedSquares.size
+        },
         hasUnclaimedSelected() {
             for (const id of this.selectedSquares) {
                 const sq = this.squaresData[id]
@@ -204,6 +212,7 @@ export default {
 @use '../../variables' as *;
 
 .bulk-toolbar {
+    position:      relative;
     background:    #7c3aed;
     color:         #fff;
     padding:       $space-3 $space-4;
@@ -293,6 +302,20 @@ export default {
         background: rgba(255, 255, 255, 0.1);
         color:      #fff;
     }
+}
+
+.selected-count {
+    position:      absolute;
+    bottom:        $space-2;
+    right:         $space-3;
+    display:       flex;
+    align-items:   center;
+    gap:           $space-1;
+    font-size:     0.75rem;
+    font-weight:   600;
+    white-space:   nowrap;
+    opacity:       0.75;
+    pointer-events: none;
 }
 
 .unclaimed-warning {

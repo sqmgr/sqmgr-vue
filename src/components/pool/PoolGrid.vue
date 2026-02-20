@@ -336,12 +336,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             </div>
                         </div>
 
-                        <!-- Bulk selection count badge (fixed bottom-right) -->
-                        <div v-if="highlightState.bulkMode && isAdmin" class="bulk-selection-badge">
-                            <i class="fas fa-check-square"></i>
-                            {{ highlightState.selectedSquares.size }}
-                        </div>
-
                         <!-- Activity Log Card -->
                         <div v-if="isAdmin" class="card logs-card">
                             <div class="card-header">
@@ -1849,24 +1843,6 @@ p.add-note {
     }
 }
 
-// Bulk selection badge (fixed bottom-right corner of viewport)
-.bulk-selection-badge {
-    position:       fixed;
-    bottom:         $space-4;
-    right:          $space-4;
-    background:     #7c3aed;
-    color:          #fff;
-    border-radius:  $radius-full;
-    padding:        $space-2 $space-4;
-    font-weight:    600;
-    font-size:      0.875rem;
-    display:        flex;
-    align-items:    center;
-    gap:            $space-2;
-    box-shadow:     0 2px 8px rgba(0, 0, 0, 0.25);
-    z-index:        100;
-    pointer-events: none;
-}
 
 // Logs Card
 .logs-card {
