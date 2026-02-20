@@ -120,6 +120,10 @@ export default {
         isBulkSelected() {
             return this.highlightState.selectedSquares.has(this.sqId)
         },
+        isBulkSelectable() {
+            if (!this.highlightState.bulkMode) return true
+            return !(this.poolConfig.gridType === 'roll100' && this.isSecondary)
+        },
         isOwned() {
             return this.squareData.userId === this.poolConfig.userId
         },
@@ -134,6 +138,7 @@ export default {
                 owned: this.isOwned,
                 winner: this.winningPeriods.length > 0,
                 'bulk-selected': this.isBulkSelected,
+                'bulk-not-selectable': !this.isBulkSelectable,
             }
 
             // Add specific winner classes for each period
@@ -319,6 +324,9 @@ export default {
         },
         didClickSquare() {
             if (this.highlightState.bulkMode) {
+                if (!this.isBulkSelectable) {
+                    return
+                }
                 this.toggleSquareSelection(this.sqId)
                 return
             }
@@ -428,6 +436,11 @@ span.name {
     outline:    3px solid #7c3aed !important;
     background: rgba(124, 58, 237, 0.12) !important;
     animation:  none !important;
+}
+
+.bulk-not-selectable {
+    cursor:  not-allowed !important;
+    opacity: 0.4 !important;
 }
 
 .payment-badge {
