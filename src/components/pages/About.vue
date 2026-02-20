@@ -41,8 +41,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="card tech">
                 <h2><i class="fas fa-code"></i> Technology</h2>
-                <p>SqMGR is built with Vue.js on the frontend and Go on the backend, backed by PostgreSQL. Concurrency is handled at the database level—<code>UNIQUE</code> constraints and explicit transactions on all write paths mean two people racing to claim the same square at the same instant will always produce exactly one winner, guaranteed by PostgreSQL, not application logic.</p>
-                <p>Live scores sync from ESPN via a rate-limited, retry-safe CronJob running on Kubernetes, and are pushed to every connected grid in real time via Server-Sent Events (SSE)—no polling, no page refresh required.</p>
+                <p>SqMGR is built with Vue.js on the frontend and Go on the backend, backed by PostgreSQL and deployed on Kubernetes.</p>
+                <p>The real-time score pipeline avoids the usual overhead of a dedicated message broker entirely. When a scheduled job writes an updated score, PostgreSQL fires a <code>NOTIFY</code> event on a named channel. The Go server holds an active <code>LISTEN</code> connection and, on receipt, fans the event out to every affected pool's connected clients via Server-Sent Events (SSE). Scores appear on your grid instantly—no polling, no page refresh, no Redis.</p>
             </div>
         </div>
 
