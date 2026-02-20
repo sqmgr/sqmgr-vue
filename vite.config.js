@@ -34,6 +34,13 @@ export default defineConfig({
       dynamicRoutes: [
         '/',
         '/about',
+        '/resources',
+        '/resources/how-football-squares-work',
+        '/resources/setting-up-a-pool',
+        '/resources/linking-live-events-and-payouts',
+        '/resources/multiple-games-and-rollover',
+        '/resources/best-numbers-in-football-squares',
+        '/resources/super-bowl-squares',
         '/terms',
         '/privacy',
         '/cookies',

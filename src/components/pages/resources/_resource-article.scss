@@ -1,0 +1,549 @@
+/*
+Copyright 2019 Tom Peters
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+@use '../../../variables.scss' as *;
+@use "sass:color";
+
+article.resource-article {
+    max-width:  800px;
+    margin:     0 auto;
+    padding:    $space-8 $space-5;
+    color:      $text-color;
+    font-size:  1rem;
+    line-height: 1.7;
+}
+
+// Breadcrumb
+nav.breadcrumb {
+    margin-bottom: $space-6;
+
+    ol {
+        list-style:      none;
+        padding:         0;
+        margin:          0;
+        display:         flex;
+        flex-wrap:       wrap;
+        gap:             $space-2;
+        align-items:     center;
+        font-size:       0.85em;
+        color:           $dark-gray;
+
+        li {
+            display:     flex;
+            align-items: center;
+            gap:         $space-2;
+
+            &:not(:last-child)::after {
+                content: '/';
+                color:   $gray;
+            }
+
+            &:last-child {
+                color: $text-secondary;
+            }
+
+            a {
+                color:           $dark-gray;
+                text-decoration: none;
+                transition:      color 0.15s ease;
+
+                &:hover {
+                    color:           $primary;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+// Article header
+div.article-header {
+    margin-bottom: $space-10;
+    padding-bottom: $space-8;
+    border-bottom: 2px solid $light-gray;
+
+    h1 {
+        font-size:      2.4em;
+        color:          $text-color;
+        margin-bottom:  $space-3;
+        letter-spacing: -0.02em;
+        line-height:    1.15;
+    }
+
+    .article-meta {
+        font-size:     0.875em;
+        color:         $dark-gray;
+        margin-bottom: $space-5;
+
+        a {
+            color:           $dark-gray;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+    }
+
+    .article-lead {
+        font-size:   1.1em;
+        color:       $text-secondary;
+        line-height: 1.7;
+        margin:      0;
+    }
+}
+
+// Table of contents
+.article-toc {
+    background:    $surface-sunken;
+    border:        1px solid $light-gray;
+    border-radius: $radius-xl;
+    padding:       $space-6;
+    margin-bottom: $space-10;
+
+    h2 {
+        font-size:     1em;
+        color:         $text-secondary;
+        margin-bottom: $space-3;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-family:   'Outfit', sans-serif;
+        font-weight:   700;
+        display:       flex;
+        align-items:   center;
+        gap:           $space-2;
+
+        i {
+            font-size: 0.9em;
+            color:     $primary;
+        }
+    }
+
+    ol {
+        margin:      0;
+        padding-left: $space-5;
+
+        li {
+            margin-bottom: $space-2;
+            font-size:     0.9em;
+
+            a {
+                color:           $text-secondary;
+                text-decoration: none;
+                transition:      color 0.15s ease;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+    }
+}
+
+// Article sections
+section {
+    margin-bottom: $space-12;
+    scroll-margin-top: $space-8;
+
+    h2 {
+        font-size:      1.6em;
+        color:          $text-color;
+        margin-bottom:  $space-4;
+        padding-bottom: $space-3;
+        border-bottom:  2px solid $light-gray;
+        letter-spacing: -0.01em;
+    }
+
+    h3 {
+        font-size:     1.15em;
+        color:         $text-color;
+        margin-bottom: $space-3;
+        margin-top:    $space-6;
+    }
+
+    p {
+        color:         $text-secondary;
+        margin-bottom: $space-4;
+
+        &:last-child { margin-bottom: 0; }
+    }
+
+    ul, ol {
+        color:        $text-secondary;
+        padding-left: $space-6;
+        margin-bottom: $space-4;
+
+        li {
+            margin-bottom: $space-2;
+            line-height:   1.65;
+        }
+    }
+
+    strong {
+        color:       $text-color;
+        font-weight: 600;
+    }
+
+    em {
+        font-style: italic;
+    }
+}
+
+// Callout / example boxes
+.example-box,
+.tip-box,
+.warning-box {
+    border-radius: $radius-xl;
+    padding:       $space-6;
+    margin:        $space-6 0;
+
+    h3 {
+        font-size:     0.95em;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-family:   'Outfit', sans-serif;
+        font-weight:   700;
+        margin-bottom: $space-3;
+        margin-top:    0;
+        display:       flex;
+        align-items:   center;
+        gap:           $space-2;
+
+        i { font-size: 0.9em; }
+    }
+
+    p:last-child { margin-bottom: 0; }
+}
+
+.example-box {
+    background: rgba($primary, 0.05);
+    border:     1px solid rgba($primary, 0.2);
+
+    h3 { color: $primary; }
+    p  { color: $text-secondary; }
+}
+
+.tip-box {
+    background: rgba($accent, 0.08);
+    border:     1px solid rgba($accent, 0.3);
+
+    h3 { color: color.adjust($accent, $lightness: -15%); }
+    p  { color: $text-secondary; }
+}
+
+.warning-box {
+    background: rgba($red, 0.05);
+    border:     1px solid rgba($red, 0.2);
+
+    h3 { color: $red; }
+    p  { color: $text-secondary; }
+}
+
+// Number grid illustration
+.number-grid-demo {
+    overflow-x: auto;
+    margin:     $space-6 0;
+
+    table {
+        border-collapse: collapse;
+        font-size:        0.85em;
+        min-width:        300px;
+
+        th, td {
+            width:      36px;
+            height:     36px;
+            text-align: center;
+            padding:    0;
+            font-size:  0.9em;
+        }
+
+        th {
+            background:     var(--midnight-gray);
+            color:          #fff;
+            font-weight:    600;
+            font-family:    'Outfit', sans-serif;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        td {
+            border:     1px solid $light-gray;
+            background: $surface-elevated;
+            color:      $text-secondary;
+
+            &.highlighted {
+                background: rgba($primary, 0.12);
+                color:      $primary;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+// Step cards
+.steps-list {
+    display:        flex;
+    flex-direction: column;
+    gap:            $space-4;
+    margin:         $space-6 0;
+}
+
+.step-card {
+    display:       flex;
+    gap:           $space-5;
+    background:    $surface-elevated;
+    border:        1px solid $light-gray;
+    border-radius: $radius-xl;
+    padding:       $space-5 $space-6;
+    box-shadow:    $shadow-card;
+
+    .step-num {
+        width:           36px;
+        height:          36px;
+        min-width:       36px;
+        background:      $primary;
+        color:           #fff;
+        border-radius:   $radius-lg;
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+        font-family:     'Anton', sans-serif;
+        font-size:       1em;
+    }
+
+    .step-body {
+        flex: 1;
+
+        h3 {
+            font-size:     1em;
+            font-family:   'Outfit', sans-serif;
+            font-weight:   700;
+            color:         $text-color;
+            margin-bottom: $space-2;
+            margin-top:    0;
+        }
+
+        p {
+            font-size:   0.9em;
+            line-height: 1.6;
+            margin:      0;
+        }
+    }
+}
+
+// FAQ section
+.faq-section {
+    .faq-item {
+        border-bottom: 1px solid $light-gray;
+        padding:       $space-5 0;
+
+        &:first-of-type { padding-top: 0; }
+        &:last-of-type  { border-bottom: none; }
+
+        h3 {
+            font-size:     1em;
+            font-family:   'Outfit', sans-serif;
+            font-weight:   700;
+            color:         $text-color;
+            margin-bottom: $space-2;
+            margin-top:    0;
+        }
+
+        p {
+            font-size:   0.9em;
+            color:       $text-secondary;
+            margin:      0;
+            line-height: 1.65;
+        }
+    }
+}
+
+// Numbers table (best/worst numbers article)
+.numbers-table {
+    overflow-x:    auto;
+    border-radius: $radius-xl;
+    border:        1px solid $light-gray;
+    margin:        $space-6 0;
+
+    table {
+        width:           100%;
+        border-collapse: collapse;
+
+        th {
+            background:     var(--midnight-gray);
+            color:          #fff;
+            text-align:     left;
+            padding:        $space-3 $space-4;
+            font-size:      0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding:       $space-3 $space-4;
+            border-bottom: 1px solid $light-gray;
+            font-size:     0.9em;
+            color:         $text-secondary;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:nth-child(odd)  td { background: $surface-elevated; }
+        tr:nth-child(even) td { background: $surface-sunken; }
+
+        .good  { color: #2e8b3e; font-weight: 600; }
+        .okay  { color: #d97706; font-weight: 600; }
+        .bad   { color: #dc3545; font-weight: 600; }
+    }
+}
+
+// CTA section
+.article-cta {
+    background:    $surface-sunken;
+    border:        1px solid $light-gray;
+    border-radius: $radius-xl;
+    padding:       $space-8 $space-6;
+    text-align:    center;
+    margin:        $space-12 0 $space-8;
+
+    p {
+        font-size:     1.1em;
+        color:         $text-secondary;
+        margin-bottom: $space-5;
+    }
+
+    .btn.cta-primary {
+        display:         inline-block;
+        font-family:     'Outfit', sans-serif;
+        font-size:       0.875em;
+        padding:         $space-4 $space-8;
+        border-radius:   $radius-full;
+        text-transform:  uppercase;
+        letter-spacing:  0.04em;
+        font-weight:     700;
+        background:      $primary;
+        color:           #fff;
+        text-decoration: none;
+        transition:      all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow:      0 2px 12px rgba($primary, 0.3);
+
+        &:hover {
+            transform:       translateY(-2px);
+            box-shadow:      0 8px 24px rgba($primary, 0.35);
+            background:      color.adjust($primary, $lightness: 6%);
+            text-decoration: none;
+        }
+    }
+}
+
+// Article navigation
+nav.article-nav {
+    display:         flex;
+    justify-content: space-between;
+    font-size:       0.9em;
+    color:           $dark-gray;
+    padding-top:     $space-6;
+    border-top:      1px solid $light-gray;
+
+    .article-nav-prev,
+    .article-nav-next {
+        a {
+            color:           $primary;
+            text-decoration: none;
+            font-weight:     600;
+            transition:      color 0.15s ease;
+
+            &:hover {
+                color:           $primary-dark;
+                text-decoration: none;
+            }
+
+            i {
+                font-size: 0.8em;
+                margin:    0 2px;
+            }
+        }
+    }
+}
+
+// Related articles
+.related-articles {
+    margin-top: $space-10;
+    padding-top: $space-8;
+    border-top: 2px solid $light-gray;
+
+    h2 {
+        font-size:     1.2em;
+        color:         $text-secondary;
+        margin-bottom: $space-5;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-family:   'Outfit', sans-serif;
+        font-weight:   700;
+    }
+
+    ul {
+        list-style: none;
+        padding:    0;
+        margin:     0;
+        display:    flex;
+        flex-wrap:  wrap;
+        gap:        $space-3;
+
+        li a {
+            display:         inline-flex;
+            align-items:     center;
+            gap:             $space-2;
+            padding:         $space-2 $space-4;
+            background:      $surface-elevated;
+            border:          1px solid $light-gray;
+            border-radius:   $radius-full;
+            font-size:       0.875em;
+            color:           $text-secondary;
+            text-decoration: none;
+            transition:      all 0.2s ease;
+
+            i {
+                color:     $primary;
+                font-size: 0.8em;
+            }
+
+            &:hover {
+                border-color:    $primary;
+                color:           $primary;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+@include mobile {
+    article.resource-article {
+        padding: $space-5 $space-4;
+    }
+
+    header.article-header h1 {
+        font-size: 1.8em;
+    }
+
+    .step-card {
+        flex-direction: column;
+        gap:            $space-3;
+    }
+
+    nav.article-nav {
+        flex-direction: column;
+        gap:            $space-3;
+    }
+}

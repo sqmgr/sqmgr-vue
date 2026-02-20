@@ -24,6 +24,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <router-link to="/about">About</router-link>
                 </li>
                 <li>
+                    <router-link to="/resources">Resources</router-link>
+                </li>
+                <li>
                     <router-link to="/tipjar">Tip Jar</router-link>
                 </li>
                 <li>

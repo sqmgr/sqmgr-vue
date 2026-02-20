@@ -30,6 +30,13 @@ import HomeHeader from "@/components/pages/HomeHeader"
 import Auth0Callback from "@/components/auth/Auth0Callback"
 
 // Lazy load everything else
+const ResourcesIndex = () => import("@/components/pages/resources/ResourcesIndex")
+const HowFootballSquaresWork = () => import("@/components/pages/resources/HowFootballSquaresWork")
+const SettingUpPool = () => import("@/components/pages/resources/SettingUpPool")
+const LinkedEventsAndPayouts = () => import("@/components/pages/resources/LinkedEventsAndPayouts")
+const MultipleGamesAndRollover = () => import("@/components/pages/resources/MultipleGamesAndRollover")
+const BestNumbers = () => import("@/components/pages/resources/BestNumbers")
+const SuperBowlSquares = () => import("@/components/pages/resources/SuperBowlSquares")
 const About = () => import("@/components/pages/About")
 const HowItWorks = () => import("@/components/pages/HowItWorks")
 const TermsOfService = () => import("@/components/pages/TermsOfService")
@@ -68,6 +75,13 @@ const routes = [
         },
     },
     {path: '/callback', component: Auth0Callback},
+    {path: '/resources', component: ResourcesIndex, meta: {title: 'Football Squares Resources', description: 'Guides covering how football squares work, setting up a pool on SqMGR, live event linking, payout configuration, and strategy.'}},
+    {path: '/resources/how-football-squares-work', component: HowFootballSquaresWork, meta: {title: 'How Football Squares Work', description: 'A complete guide to football squares: the 10x10 grid, claiming squares, drawing numbers, determining winners each quarter, and common payout structures.'}},
+    {path: '/resources/setting-up-a-pool', component: SettingUpPool, meta: {title: 'Setting Up a Pool on SqMGR', description: 'Step-by-step guide to creating a football squares pool on SqMGR, covering grid types, sharing links, drawing numbers, and marking winners.'}},
+    {path: '/resources/linking-live-events-and-payouts', component: LinkedEventsAndPayouts, meta: {title: 'Linking Live Events & Configuring Payouts', description: 'Learn how to link your grid to a live NFL or college football game for real-time scores and configure payout percentages per quarter.'}},
+    {path: '/resources/multiple-games-and-rollover', component: MultipleGamesAndRollover, meta: {title: 'Multiple Games & the Rollover Mechanic', description: 'How to add multiple game grids to one pool and how the rollover mechanic carries claimed squares forward from game to game.'}},
+    {path: '/resources/best-numbers-in-football-squares', component: BestNumbers, meta: {title: 'Best Numbers in Football Squares', description: 'Which digits win most often in football squares and why — the scoring math behind 0, 7, 3, and 4 being the best numbers to land.'}},
+    {path: '/resources/super-bowl-squares', component: SuperBowlSquares, meta: {title: 'Super Bowl Squares Guide', description: 'Everything you need to run a Super Bowl squares pool: planning timeline, payout structures, draw timing, tips for large pools, and game day advice.'}},
     {path: '/about', component: About, meta: {title: 'About'}},
     {path: '/how-it-works', component: HowItWorks, meta: {title: 'How It Works'}},
     {path: '/terms', component: TermsOfService, meta: {title: 'Terms of Service'}},
