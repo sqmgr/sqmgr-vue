@@ -49,6 +49,17 @@ export default {
         return {
             releases: [
                 {
+                    version: "v2.5",
+                    major: false,
+                    date: "February 20, 2026",
+                    title: "Bulk Square Editing",
+                    notes: [
+                        { type: "new", text: "Bulk edit mode — select multiple squares to claim, unclaim, or update payment status at once" },
+                        { type: "new", text: "Claimed squares count now shown on the admin dashboard" },
+                        { type: "improved", text: "Mobile grid view now shows Pool Details above Admin Actions for easier access" },
+                    ],
+                },
+                {
                     version: "v2.4",
                     major: false,
                     date: "February 18, 2026",
