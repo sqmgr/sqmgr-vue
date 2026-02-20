@@ -35,6 +35,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <li><strong>Privacy Focused:</strong> No selling user data. Your privacy matters.</li>
                     <li><strong>Open Source:</strong> The code is available for anyone to inspect and contribute to.</li>
                     <li><strong>Free Forever:</strong> The core service will always be free to use.</li>
+                    <li><strong>Compliance &amp; Ethics:</strong> SqMGR is a recreational tool for social pools. We do not facilitate wagering, process payments, or host real-money gambling of any kind.</li>
                 </ul>
             </div>
 
@@ -49,8 +50,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="developer-text">
                     <h2>Built by Tom Peters</h2>
                     <p class="developer-title">Sr. Director of Product &amp; Lifelong Buffalo Sports Fan</p>
-                    <p>SqMGR isn't the product of a faceless startup or an AI content farm. It was built and is actively maintained by Tom Peters—a product management leader with over a decade of experience shipping software used by millions. Tom has run football squares pools with friends and family for years and built SqMGR because every other option was either broken, expensive, or both.</p>
-                    <p>As a die-hard fan of the Bills, Sabres, and Buffaloes, Tom knows exactly what game day looks like—and exactly what a squares pool manager needs to do.</p>
+                    <p>I'm Tom Peters, a product management leader with two decades (yeesh) of experience building and shipping software used by millions. I've run football squares pools with friends for years and I got tired of managing them using spreadsheets. As a result, I built SqMGR as a fun side project back in 2019 and here we are.</p>
+                    <p>Go Bills</p>
                     <div class="developer-links">
                         <a href="https://www.linkedin.com/in/thomas-peters/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
                             <i class="fab fa-linkedin"></i> Connect on LinkedIn
