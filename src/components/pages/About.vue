@@ -41,7 +41,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="card tech">
                 <h2><i class="fas fa-code"></i> Technology</h2>
-                <p>SqMGR is built with modern web technologies to ensure a fast and responsive experience. It uses Vue.js for the frontend and Go for the backend, ensuring reliability and speed during the big game.</p>
+                <p>SqMGR is built with Vue.js on the frontend and Go on the backend, backed by PostgreSQL. The stack is deliberately straightforward—chosen for reliability under load, not to impress a résumé.</p>
+                <p>High-traffic moments like Super Bowl Sunday put real pressure on square-claiming. SqMGR handles this with database-level <code>UNIQUE</code> constraints on every square, combined with explicit transactions on all write paths. Two people racing to claim the same square at the same instant will always produce exactly one winner—guaranteed by PostgreSQL, not application logic.</p>
+                <p>Live score syncing pulls from ESPN via a rate-limited, retry-safe client and runs as a scheduled Kubernetes CronJob, keeping game data fresh without hammering upstream APIs or impacting user-facing response times.</p>
             </div>
         </div>
 
@@ -50,7 +52,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="developer-text">
                     <h2>Built by Tom Peters</h2>
                     <p class="developer-title">Sr. Director of Product &amp; Lifelong Buffalo Sports Fan</p>
-                    <p>I'm Tom Peters, a product management leader with two decades (yeesh) of experience building and shipping software used by millions. I've run football squares pools with friends for years and I got tired of managing them using spreadsheets. As a result, I built SqMGR as a fun side project back in 2019 and here we are.</p>
+                    <p>I'm Tom Peters, a product management leader with two decades (yeesh) of experience building and shipping software used by millions. I've run football and basketball squares pools with friends for years and I got tired of managing them using spreadsheets. As a result, I built SqMGR as a fun side project back in 2019 and here we are.</p>
                     <p>Go Bills</p>
                     <div class="developer-links">
                         <a href="https://www.linkedin.com/in/thomas-peters/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
@@ -177,6 +179,15 @@ section.about {
     }
 }
 
+
+.card.tech code {
+    font-family:      monospace;
+    font-size:        0.88em;
+    background:       rgba($primary, 0.08);
+    color:            $primary;
+    padding:          1px 5px;
+    border-radius:    $radius-sm;
+}
 
 .content-grid {
     display: grid;
