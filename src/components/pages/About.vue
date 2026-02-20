@@ -41,10 +41,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="card tech">
                 <h2><i class="fas fa-code"></i> Technology</h2>
-                <p>SqMGR is built with Vue.js on the frontend and Go on the backend, backed by PostgreSQL. The stack is deliberately straightforward—chosen for reliability under load, not to impress a résumé.</p>
-                <p>High-traffic moments like Super Bowl Sunday put real pressure on square-claiming. SqMGR handles this with database-level <code>UNIQUE</code> constraints on every square, combined with explicit transactions on all write paths. Two people racing to claim the same square at the same instant will always produce exactly one winner—guaranteed by PostgreSQL, not application logic.</p>
-                <p>Live score syncing pulls from ESPN via a rate-limited, retry-safe client and runs as a scheduled Kubernetes CronJob, keeping game data fresh without hammering upstream APIs or impacting user-facing response times.</p>
-                <p>Score updates are pushed to connected clients in real time using Server-Sent Events (SSE). When a game score changes, every open pool grid updates instantly—no polling, no page refresh required.</p>
+                <p>SqMGR is built with Vue.js on the frontend and Go on the backend, backed by PostgreSQL. Concurrency is handled at the database level—<code>UNIQUE</code> constraints and explicit transactions on all write paths mean two people racing to claim the same square at the same instant will always produce exactly one winner, guaranteed by PostgreSQL, not application logic.</p>
+                <p>Live scores sync from ESPN via a rate-limited, retry-safe CronJob running on Kubernetes, and are pushed to every connected grid in real time via Server-Sent Events (SSE)—no polling, no page refresh required.</p>
             </div>
         </div>
 
