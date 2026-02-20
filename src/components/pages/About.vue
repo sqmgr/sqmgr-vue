@@ -69,7 +69,48 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
 <script>
     export default {
-        name: "About"
+        name: "About",
+        mounted() {
+            this._jsonLd = document.createElement('script')
+            this._jsonLd.type = 'application/ld+json'
+            this._jsonLd.text = JSON.stringify([
+                {
+                    "@context": "https://schema.org",
+                    "@type": "Person",
+                    "@id": "https://sqmgr.com/about#tom-peters",
+                    "name": "Tom Peters",
+                    "jobTitle": "Sr. Director of Product",
+                    "url": "https://sqmgr.com/about",
+                    "sameAs": [
+                        "https://www.linkedin.com/in/thomas-peters/",
+                        "https://github.com/weters"
+                    ]
+                },
+                {
+                    "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "SqMGR",
+                    "url": "https://sqmgr.com/",
+                    "applicationCategory": "SportsApplication",
+                    "operatingSystem": "Web",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD"
+                    },
+                    "author": {
+                        "@type": "Person",
+                        "@id": "https://sqmgr.com/about#tom-peters"
+                    }
+                }
+            ])
+            document.head.appendChild(this._jsonLd)
+        },
+        unmounted() {
+            if (this._jsonLd) {
+                document.head.removeChild(this._jsonLd)
+            }
+        }
     }
 </script>
 
