@@ -351,7 +351,7 @@ export default {
         },
         copyInviteLink(event) {
             const url = this.localPasswordRequired
-                ? `${window.location.origin}/pool/${this.token}/join#${this.inviteToken}`
+                ? `${window.location.origin}/pool/${this.token}/join?invite=${this.inviteToken}`
                 : `${window.location.origin}/pool/${this.token}`
             toClipboard(url)
             this.$emit('copied', event)

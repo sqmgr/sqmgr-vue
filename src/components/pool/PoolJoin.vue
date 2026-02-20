@@ -69,12 +69,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             }
         },
         created() {
-            if (window.location.hash) {
-                const hash = window.location.hash.substr(1)
-                if (hash) {
-                    this.tryingHash = true
-                    this.joinPool(hash, true)
-                }
+            const invite = this.$route.query.invite || (window.location.hash && window.location.hash.substr(1))
+            if (invite) {
+                this.tryingHash = true
+                this.joinPool(invite, true)
             }
         },
         methods: {
