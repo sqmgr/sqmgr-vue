@@ -55,8 +55,7 @@ export default {
                     title: "Bulk Square Editing",
                     notes: [
                         { type: "new", text: "Bulk edit mode — select multiple squares to claim, unclaim, or update payment status at once" },
-                        { type: "new", text: "Claimed squares count now shown on the admin dashboard" },
-                        { type: "improved", text: "Mobile grid view now shows Pool Details above Admin Actions for easier access" },
+                        { type: "improved", text: "Mobile grid view now shows Admin Actions closer to the grid for easier access" },
                     ],
                 },
                 {
