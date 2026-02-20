@@ -45,6 +45,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                               :title="versionFull">{{ versionFull }}</a>
         </p>
 
+        <p class="disclaimer">SqMGR is a free, recreational tool intended for social pools among friends. We do not facilitate wagering, process payments, or host real-money gambling of any kind.</p>
+
         <p class="copyright">© 2019–{{year}} <a href="https://tompeters.me">Tom Peters</a>. All rights reserved.</p>
     </section>
 </template>
@@ -112,14 +114,25 @@ section.footer {
         }
     }
 
+    p.disclaimer {
+        width:      100%;
+        text-align: center;
+        color:      rgba(255, 255, 255, 0.25);
+        font-size:  0.75rem;
+        margin-top: $space-6;
+        padding-top: $space-6;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        line-height: 1.5;
+    }
+
     p.copyright {
         width:       100%;
         text-align:  center;
         color:       rgba(255, 255, 255, 0.3);
         font-size:   0.8rem;
-        margin-top:  $space-6;
-        padding-top: $space-6;
-        border-top:  1px solid rgba(255, 255, 255, 0.06);
+        margin-top:  $space-4;
+        padding-top: 0;
+        border-top:  none;
 
         a {
             color:           rgba(255, 255, 255, 0.4);
