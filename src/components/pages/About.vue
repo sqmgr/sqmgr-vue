@@ -22,28 +22,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p class="lead">The best way to manage your football squares pools online.</p>
         </div>
 
-        <div class="developer">
-            <div class="developer-bio">
-                <div class="developer-avatar">
-                    <i class="fas fa-user-circle"></i>
-                </div>
-                <div class="developer-text">
-                    <h2>Built by Tom Peters</h2>
-                    <p class="developer-title">Sr. Director of Product &amp; Lifelong Buffalo Sports Fan</p>
-                    <p>SqMGR isn't the product of a faceless startup or an AI content farm. It was built and is actively maintained by Tom Peters—a product management leader with over a decade of experience shipping software used by millions. Tom has run football squares pools with friends and family for years and built SqMGR because every other option was either broken, expensive, or both.</p>
-                    <p>As a die-hard fan of the Bills, Sabres, and Buffaloes, Tom knows exactly what game day looks like—and exactly what a squares pool manager needs to do.</p>
-                    <div class="developer-links">
-                        <a href="https://www.linkedin.com/in/thomas-peters/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
-                            <i class="fab fa-linkedin"></i> Connect on LinkedIn
-                        </a>
-                        <a href="https://github.com/weters" target="_blank" rel="noopener noreferrer" class="github-link">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="content-grid">
             <div class="card origin">
                 <h2><i class="fas fa-history"></i> Origin Story</h2>
@@ -63,6 +41,25 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <div class="card tech">
                 <h2><i class="fas fa-code"></i> Technology</h2>
                 <p>SqMGR is built with modern web technologies to ensure a fast and responsive experience. It uses Vue.js for the frontend and Go for the backend, ensuring reliability and speed during the big game.</p>
+            </div>
+        </div>
+
+        <div class="developer">
+            <div class="developer-bio">
+                <div class="developer-text">
+                    <h2>Built by Tom Peters</h2>
+                    <p class="developer-title">Sr. Director of Product &amp; Lifelong Buffalo Sports Fan</p>
+                    <p>SqMGR isn't the product of a faceless startup or an AI content farm. It was built and is actively maintained by Tom Peters—a product management leader with over a decade of experience shipping software used by millions. Tom has run football squares pools with friends and family for years and built SqMGR because every other option was either broken, expensive, or both.</p>
+                    <p>As a die-hard fan of the Bills, Sabres, and Buffaloes, Tom knows exactly what game day looks like—and exactly what a squares pool manager needs to do.</p>
+                    <div class="developer-links">
+                        <a href="https://www.linkedin.com/in/thomas-peters/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+                        </a>
+                        <a href="https://github.com/weters" target="_blank" rel="noopener noreferrer" class="github-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -100,28 +97,15 @@ section.about {
 }
 
 .developer {
-    margin-bottom: $standard-spacing * 2;
+    margin-top: $standard-spacing * 2;
 }
 
 .developer-bio {
-    display:       flex;
-    gap:           $standard-spacing * 1.5;
-    align-items:   flex-start;
     background:    $surface-elevated;
     border:        1px solid $light-gray;
     border-radius: $radius-lg;
     box-shadow:    $shadow-card;
     padding:       $standard-spacing * 1.5;
-}
-
-.developer-avatar {
-    flex-shrink: 0;
-
-    i {
-        font-size: 5em;
-        color:     $primary;
-        opacity:   0.85;
-    }
 }
 
 .developer-text {
@@ -192,17 +176,6 @@ section.about {
     }
 }
 
-@media (max-width: 600px) {
-    .developer-bio {
-        flex-direction: column;
-        align-items:    center;
-        text-align:     center;
-    }
-
-    .developer-text h2 {
-        font-size: 1.4em;
-    }
-}
 
 .content-grid {
     display: grid;
