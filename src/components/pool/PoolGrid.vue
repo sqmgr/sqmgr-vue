@@ -926,7 +926,16 @@ div.grid-layout {
 }
 
 .grid-sidebar {
-    flex-shrink: 0;
+    flex-shrink:    0;
+    display:        flex;
+    flex-direction: column;
+}
+
+// Mobile: reorder so Pool Details appears above Admin Actions, both above the grid
+@media (max-width: calc(100vmin + $standard-spacing + 415px - 1px)) {
+    .grid-sidebar .sidebar-extra {
+        order: -1;
+    }
 }
 
 // Side-by-side when viewport is wide enough
