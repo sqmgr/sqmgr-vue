@@ -96,6 +96,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                         </div>
                                     </button>
 
+                                    <div class="action-divider">
+                                        <span>Square Management</span>
+                                    </div>
+
                                     <button type="button" class="action-btn"
                                             @click.prevent="showPaymentStates = !showPaymentStates">
                                         <i class="fas fa-money-check-alt"></i>
@@ -110,19 +114,27 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                             @click.prevent="toggleBulkMode">
                                         <i class="fas fa-tasks"></i>
                                         <div class="action-text">
-                                            <span class="action-label">{{ highlightState.bulkMode ? 'Exit Bulk Edit' : 'Bulk Edit' }}</span>
+                                            <span class="action-label">{{
+                                                    highlightState.bulkMode ? 'Exit Bulk Edit' : 'Bulk Edit'
+                                                }}</span>
                                             <span class="action-desc">Select multiple squares to claim, unclaim, or update payment</span>
                                         </div>
                                     </button>
 
-                                    <button v-if="canAddGame" type="button" class="action-btn"
-                                            @click.prevent="$emit('add-game')">
-                                        <i class="fas fa-plus-circle"></i>
-                                        <div class="action-text">
-                                            <span class="action-label">Add Another Game</span>
-                                            <span class="action-desc">Add a second game to this pool</span>
+                                    <template v-if="canAddGame">
+                                        <div class="action-divider">
+                                            <span>Pool Management</span>
                                         </div>
-                                    </button>
+
+                                        <button type="button" class="action-btn"
+                                                @click.prevent="$emit('add-game')">
+                                            <i class="fas fa-plus-circle"></i>
+                                            <div class="action-text">
+                                                <span class="action-label">Add Another Game</span>
+                                                <span class="action-desc">Add a second game to this pool</span>
+                                            </div>
+                                        </button>
+                                    </template>
 
                                     <template v-if="!numbersAreDrawn">
                                         <div class="action-divider">
@@ -1839,20 +1851,20 @@ p.add-note {
 
 // Bulk selection badge (fixed bottom-right corner of viewport)
 .bulk-selection-badge {
-    position:      fixed;
-    bottom:        $space-4;
-    right:         $space-4;
-    background:    #7c3aed;
-    color:         #fff;
-    border-radius: $radius-full;
-    padding:       $space-2 $space-4;
-    font-weight:   600;
-    font-size:     0.875rem;
-    display:       flex;
-    align-items:   center;
-    gap:           $space-2;
-    box-shadow:    0 2px 8px rgba(0, 0, 0, 0.25);
-    z-index:       100;
+    position:       fixed;
+    bottom:         $space-4;
+    right:          $space-4;
+    background:     #7c3aed;
+    color:          #fff;
+    border-radius:  $radius-full;
+    padding:        $space-2 $space-4;
+    font-weight:    600;
+    font-size:      0.875rem;
+    display:        flex;
+    align-items:    center;
+    gap:            $space-2;
+    box-shadow:     0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index:        100;
     pointer-events: none;
 }
 
