@@ -22,6 +22,23 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p class="lead">The best way to manage your football squares pools online.</p>
         </div>
 
+        <div class="developer">
+            <div class="developer-bio">
+                <div class="developer-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="developer-text">
+                    <h2>Built by Tom Peters</h2>
+                    <p class="developer-title">Sr. Director of Product &amp; Lifelong Buffalo Sports Fan</p>
+                    <p>SqMGR isn't the product of a faceless startup or an AI content farm. It was built and is actively maintained by Tom Peters—a product management leader with over a decade of experience shipping software used by millions. Tom has run football squares pools with friends and family for years and built SqMGR because every other option was either broken, expensive, or both.</p>
+                    <p>As a die-hard fan of the Bills, Sabres, and Buffaloes, Tom knows exactly what game day looks like—and exactly what a squares pool manager needs to do.</p>
+                    <a href="https://www.linkedin.com/in/thomas-peters/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                        <i class="fab fa-linkedin"></i> Connect on LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="content-grid">
             <div class="card origin">
                 <h2><i class="fas fa-history"></i> Origin Story</h2>
@@ -74,6 +91,90 @@ section.about {
     .lead {
         font-size: 1.2em;
         color: $dark-gray;
+    }
+}
+
+.developer {
+    margin-bottom: $standard-spacing * 2;
+}
+
+.developer-bio {
+    display:       flex;
+    gap:           $standard-spacing * 1.5;
+    align-items:   flex-start;
+    background:    $surface-elevated;
+    border:        1px solid $light-gray;
+    border-radius: $radius-lg;
+    box-shadow:    $shadow-card;
+    padding:       $standard-spacing * 1.5;
+}
+
+.developer-avatar {
+    flex-shrink: 0;
+
+    i {
+        font-size: 5em;
+        color:     $primary;
+        opacity:   0.85;
+    }
+}
+
+.developer-text {
+    h2 {
+        font-size:     1.6em;
+        margin-bottom: calc($standard-spacing / 4);
+        color:         $text-color;
+    }
+
+    p.developer-title {
+        font-size:     0.95em;
+        font-weight:   600;
+        color:         $primary;
+        margin-bottom: $standard-spacing;
+    }
+
+    p {
+        color:       $text-secondary;
+        line-height: 1.65;
+        font-size:   0.95em;
+    }
+}
+
+.linkedin-link {
+    display:        inline-flex;
+    align-items:    center;
+    gap:            8px;
+    margin-top:     calc($standard-spacing / 2);
+    padding:        $space-2 $space-5;
+    background:     #0a66c2;
+    color:          #fff;
+    border-radius:  $radius-md;
+    font-size:      0.9em;
+    font-weight:    600;
+    text-decoration: none;
+    transition:     background 200ms ease, transform 150ms ease;
+
+    i {
+        font-size: 1.1em;
+    }
+
+    &:hover {
+        background:      #004182;
+        color:           #fff;
+        text-decoration: none;
+        transform:       translateY(-1px);
+    }
+}
+
+@media (max-width: 600px) {
+    .developer-bio {
+        flex-direction: column;
+        align-items:    center;
+        text-align:     center;
+    }
+
+    .developer-text h2 {
+        font-size: 1.4em;
     }
 }
 
