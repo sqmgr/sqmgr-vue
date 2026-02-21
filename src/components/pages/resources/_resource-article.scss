@@ -224,12 +224,48 @@ figure.article-img {
         font-style:  italic;
         text-align:  center;
         line-height: 1.5;
+
+        em {
+            font-weight: bold;
+        }
     }
 
     // Diagram-style images
     &.no-chrome {
         border-color: transparent;
         box-shadow:   none;
+    }
+}
+
+// Side-by-side section + image layout
+.section-with-aside-img {
+    display: flex;
+    gap:     $space-8;
+    align-items: flex-start;
+
+    .section-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    figure.section-aside-img {
+        flex:      0 0 260px;
+        width:     260px;
+        margin:    0;
+        position:  sticky;
+        top:       $space-8;
+    }
+}
+
+@include mobile {
+    .section-with-aside-img {
+        flex-direction: column;
+
+        figure.section-aside-img {
+            flex:     none;
+            width:    100%;
+            position: static;
+        }
     }
 }
 

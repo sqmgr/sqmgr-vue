@@ -47,7 +47,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <li><a href="#use-cases">Use Cases</a></li>
                 <li><a href="#rollover-mechanic">The Rollover Mechanic</a></li>
                 <li><a href="#rollover-how">How Rollover Works Step-by-Step</a></li>
-                <li><a href="#viewing-all-games">Viewing All Games in a Pool</a></li>
                 <li><a href="#faq">Frequently Asked Questions</a></li>
             </ol>
         </div>
@@ -59,51 +58,47 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 important part is that each game will have unique numbers drawn.</p>
             <p>This allows you to manage participants, payment tracking, and history all
                 in one place.</p>
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: Pool dashboard showing multiple game grids listed with their status and linked events</p>
-            </div>
+            <figure class="article-img">
+                <img src="/images/resources/multigame.png"
+                     srcset="/images/resources/multigame.png 1x, /images/resources/multigame@2x.png 2x"
+                     alt="Pool dashboard showing multiple game grids"
+                     loading="lazy">
+                <figcaption>Pool dashboard showing multiple game grids. You'll only see this view <em>after</em> you add your second game to the pool.</figcaption>
+            </figure>
         </section>
 
         <section id="adding-games">
             <h2>Adding Multiple Games</h2>
-            <p>Adding a new game grid to an existing pool:</p>
-            <div class="steps-list">
-                <div class="step-card">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <h3>Open Your Pool</h3>
-                        <p>Navigate to your pool dashboard. You'll see all existing game grids listed along with their
-                            status.</p>
+            <div class="section-with-aside-img">
+                <div class="section-content">
+                    <p>Adding a new game grid to an existing pool:</p>
+                    <div class="steps-list">
+                        <div class="step-card">
+                            <div class="step-num">1</div>
+                            <div class="step-body">
+                                <h3>Open Your Pool</h3>
+                                <p>Navigate to your pool. If you only have one game, you'll see your grid. If you already have multiple games, you'll see a dashboard like above.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">2</div>
+                            <div class="step-body">
+                                <h3>Add a New Game</h3>
+                                <p>Click the button "Add Another Game". Configure the grid type, payout structure, and
+                                    optionally link it to a live event from SqMGR's sports database.</p>
+                            </div>
+                        </div>
                     </div>
+                    <p>Each game grid shares the claimed squares but has its own settings like teams and colors, number assignment and winners.</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <h3>Add a New Game</h3>
-                        <p>Click the option to add a new game grid. Configure the grid type, payout structure, and
-                            optionally link it to a live event from SqMGR's sports database.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <h3>Participants Claim Squares</h3>
-                        <p>Existing pool members can immediately start claiming squares on the new grid. Since they're
-                            already in the pool, no new invite link is needed.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <h3>Draw Numbers and Play</h3>
-                        <p>Draw numbers for the new grid independently. Each grid has its own draw, its own numbers, and
-                            its own set of winners.</p>
-                    </div>
-                </div>
+                <figure class="article-img section-aside-img">
+                    <img src="/images/resources/add-game.png"
+                         srcset="/images/resources/add-game.png 1x, /images/resources/add-game@2x.png 2x"
+                         alt="Add game button on the pool dashboard"
+                         loading="lazy">
+                    <figcaption>You can use the "Add Game" option on your pool dashboard to convert your pool into a multi-game pool</figcaption>
+                </figure>
             </div>
-            <p>Each game grid is completely independent — its own number assignment, its own winners, its own payout
-                tracking — while sharing the same pool membership and participant list.</p>
         </section>
 
         <section id="use-cases">
@@ -130,22 +125,20 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         </section>
 
         <section id="rollover-mechanic">
-            <h2>The Rollover Mechanic</h2>
-            <p>Not every game fills all 100 squares — mid-season pools especially tend to have a few go unclaimed.</p>
-            <p>The rollover mechanic handles this: <strong>squares claimed in Game 1 automatically carry over to Game
-                2</strong>. Participants don't need to re-claim squares or re-pay — their existing squares carry forward
-                to the next game in the pool.</p>
+            <h2>The Rollover Format</h2>
 
-            <div class="example-box">
-                <h3><i class="fas fa-sync-alt"></i> How Rollover Helps</h3>
-                <p>Imagine 80 of your 100 squares were claimed in Week 1. For Week 2, those same 80 participants are
-                    automatically entered with the same squares. You only need to sell the remaining 20. The pool pot
-                    grows week over week as more squares are filled in.</p>
-            </div>
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: A new game grid with squares already pre-filled from the previous game's rollover</p>
-            </div>
+            <p>SqMGR has the concept of a rollover grid. You sell 50 squares and each participant claims a primary square and a secondary square.
+            For games designated as a "rollover," the secondary square is empty. If the winning number lands on an empty square, the pot will rollover to the next game.</p>
+
+            <p>This builds excitement as the whole group roots for a rollover if they don't have a chance of winning. The final game like the Super Bowl puts all squares into play to ensure a winner.</p>
+
+            <figure class="article-img section-aside-img">
+                <img src="/images/resources/grid-with-roll.png"
+                     srcset="/images/resources/grid-with-roll.png 1x, /images/resources/grid-with-roll@2x.png 2x"
+                     alt="A grid showing a game with a rollover"
+                     loading="lazy">
+                <figcaption>This game was designated as a rollover game and the winning square hit an empty square. This game's pot will roll to the next game for a bigger pot!</figcaption>
+            </figure>
         </section>
 
         <section id="rollover-how">
@@ -154,32 +147,22 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="step-card">
                     <div class="step-num">1</div>
                     <div class="step-body">
-                        <h3>Game 1 Concludes</h3>
-                        <p>Winners are paid out. Some squares may have been unclaimed during the game.</p>
+                        <h3>Create the Rollover Pool</h3>
+                        <p>When creating your pool, choose the "Rollover, 100 squares" format.</p>
                     </div>
                 </div>
                 <div class="step-card">
                     <div class="step-num">2</div>
                     <div class="step-body">
-                        <h3>New Game Grid Is Added</h3>
-                        <p>When you add the next game to the pool, SqMGR carries all existing square claims forward into
-                            the new grid. The grid opens with those squares already claimed.</p>
+                        <h3>Add a New Game</h3>
+                        <p>Add one or more games to your pool.</p>
                     </div>
                 </div>
                 <div class="step-card">
                     <div class="step-num">3</div>
                     <div class="step-body">
-                        <h3>Remaining Squares Go on Sale</h3>
-                        <p>Any previously unclaimed squares are now available for new participants to claim in the new
-                            game. The rollover doesn't block new entrants — it just fills the grid head start.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <h3>New Numbers Are Drawn</h3>
-                        <p>Each game gets a fresh random number draw. Rolled-over squares are in the same positions but
-                            with new numbers — so no one has a permanent advantage from game to game.</p>
+                        <h3>Specify the Rollover Games</h3>
+                        <p>Click the gear icon from the pool dashboard or click the "Customize" button. Specify if that game will be a rollover game or not. It is strongly recommended that the last game is not a rollover game.</p>
                     </div>
                 </div>
             </div>
@@ -189,19 +172,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <p>Because numbers are redrawn for each new game, the rollover mechanic is completely fair. Having the
                     same physical square position in Game 2 as Game 1 doesn't give you any statistical advantage — the
                     number assignment is fresh each time.</p>
-            </div>
-        </section>
-
-        <section id="viewing-all-games">
-            <h2>Viewing All Games in a Pool</h2>
-            <p>SqMGR's pool dashboard gives you a summary of every game grid — status, linked event, draw state, and
-                winners. For a season-long pool it's the fastest way to see where things stand.</p>
-            <p>Individual game grids can be accessed directly from the pool dashboard. Each grid shows its own
-                participants, drawn numbers, and winner history independently.</p>
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: All-games summary view showing each grid's draw status, linked event, and winner
-                    history</p>
             </div>
         </section>
 
@@ -216,22 +186,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Do rolled-over participants need to pay again for the next game?</h3>
-                <p>That's entirely up to your pool rules — SqMGR doesn't enforce payment terms. Many pool managers
-                    charge per game, so rolled-over participants would pay for each new grid. Others charge a flat
-                    season fee upfront. The payment tracking tools in SqMGR support either approach.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Can I opt out of rollover and start fresh each game?</h3>
-                <p>Yes. The rollover is a feature you choose to use when setting up the next game grid. You can always
-                    start with a completely empty grid for each new game if you prefer everyone to re-claim squares.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>What happens to squares that were claimed but not paid in the previous game?</h3>
-                <p>SqMGR tracks payment status separately from square ownership. Unpaid squares from Game 1 will roll
-                    over to Game 2 just like paid squares. How you handle unpaid participants is your call as the pool
-                    manager.</p>
+                <p>That's entirely up to your pool rules — SqMGR doesn't enforce payment terms. Most pools will charge a
+                    fee up front and use that to fund each game's winner.</p>
             </div>
         </section>
 
