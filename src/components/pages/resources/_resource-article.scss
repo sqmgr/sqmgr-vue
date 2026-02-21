@@ -200,6 +200,30 @@ section {
     }
 }
 
+// Image placeholders
+.img-placeholder {
+    background:    $surface-sunken;
+    border:        2px dashed $light-gray;
+    border-radius: $radius-xl;
+    padding:       $space-10 $space-6;
+    margin:        $space-6 0;
+    text-align:    center;
+    color:         $text-secondary;
+
+    i {
+        font-size:     2em;
+        color:         $gray;
+        margin-bottom: $space-3;
+        display:       block;
+    }
+
+    p {
+        font-size:  0.85em;
+        margin:     0;
+        font-style: italic;
+    }
+}
+
 // Callout / example boxes
 .example-box,
 .tip-box,

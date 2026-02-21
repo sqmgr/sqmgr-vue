@@ -78,6 +78,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
             <p>Once you click Create, your pool is live.</p>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Create pool form showing the pool name, grid type, and optional password fields</p>
+            </div>
         </section>
 
         <section id="grid-types">
@@ -106,6 +110,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <h3><i class="fas fa-lightbulb"></i> Pro Tip</h3>
                 <p>If you're running a pool with fewer than 25 people, the 25-square grid is a great choice. Everyone gets more coverage, and the game is just as fun. For larger events like a Super Bowl party, go with the standard 100-square grid.</p>
             </div>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: A claimed 100-square grid next to a claimed 25-square grid for comparison</p>
+            </div>
         </section>
 
         <section id="share-link">
@@ -133,6 +141,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <div class="example-box">
                 <h3><i class="fas fa-info-circle"></i> Note on Timing</h3>
                 <p>Numbers should be drawn <strong>after</strong> all squares are claimed (or as close to kickoff as possible). Drawing numbers before the grid is filled allows participants to strategically pick squares knowing which digits are already assigned — defeating the purpose of the random draw.</p>
+            </div>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: The number draw screen showing digits being assigned to each axis</p>
             </div>
         </section>
 

@@ -48,6 +48,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>What Is a Multi-Game Pool?</h2>
             <p>In SqMGR, a <strong>pool</strong> is the top-level container. Within a pool, you can add multiple <strong>game grids</strong> — each one a separate 10×10 (or 25-square) board for a different game. All participants in the pool have access to all game grids, making it easy to run a continuing season pool under one roof.</p>
             <p>Instead of creating a new pool for every game, you manage participants, payment tracking, and history all in one place.</p>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Pool dashboard showing multiple game grids listed with their status and linked events</p>
+            </div>
         </section>
 
         <section id="adding-games">
@@ -111,6 +115,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <h3><i class="fas fa-sync-alt"></i> How Rollover Helps</h3>
                 <p>Imagine 80 of your 100 squares were claimed in Week 1. For Week 2, those same 80 participants are automatically entered with the same squares. You only need to sell the remaining 20. The pool pot grows week over week as more squares are filled in.</p>
             </div>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: A new game grid with squares already pre-filled from the previous game's rollover</p>
+            </div>
         </section>
 
         <section id="rollover-how">
@@ -156,6 +164,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>Viewing All Games in a Pool</h2>
             <p>SqMGR's pool dashboard gives you a summary of every game grid — status, linked event, draw state, and winners. For a season-long pool it's the fastest way to see where things stand.</p>
             <p>Individual game grids can be accessed directly from the pool dashboard. Each grid shows its own participants, drawn numbers, and winner history independently.</p>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: All-games summary view showing each grid's draw status, linked event, and winner history</p>
+            </div>
         </section>
 
         <section id="faq" class="faq-section">

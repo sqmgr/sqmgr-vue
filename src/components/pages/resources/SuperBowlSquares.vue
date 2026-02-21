@@ -89,6 +89,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </div>
                 </div>
             </div>
+
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: A fully claimed Super Bowl squares pool with all 100 squares filled and participants' names visible</p>
+            </div>
         </section>
 
         <section id="payout-structures">
@@ -140,6 +145,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <h3><i class="fas fa-dollar-sign"></i> Bonus Payout Idea</h3>
                 <p>Some pools add a "reverse" bonus — if the Q3 or Final score is the exact reverse of Q1 or Halftime (same last digits, teams flipped), the winner of that period gets an extra bonus. It adds excitement for those holding the "reverse" of a strong early winner square.</p>
             </div>
+
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Payout configuration screen showing the percentage split across Q1, Halftime, Q3, and Final</p>
+            </div>
         </section>
 
         <section id="draw-timing">
@@ -176,6 +186,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <li><strong>Have your payout plan ready.</strong> Know how you're paying winners — cash on hand, Venmo, etc. Don't be the pool manager who owes people money for weeks.</li>
                 <li><strong>Take a photo of the final grid.</strong> A screenshot or photo of the completed grid with winners marked is a fun keepsake and proof of results.</li>
             </ul>
+
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: SqMGR pool displayed on a TV browser with live score and current winning square highlighted</p>
+            </div>
 
             <div class="warning-box">
                 <h3><i class="fas fa-exclamation-triangle"></i> Reminder</h3>

@@ -21,14 +21,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <ol>
                 <li><router-link to="/">Home</router-link></li>
                 <li><router-link to="/resources">Resources</router-link></li>
-                <li aria-current="page">How Football Squares Work</li>
+                <li aria-current="page">How Squares Work</li>
             </ol>
         </nav>
 
         <div class="article-header">
-            <h1>How Football Squares Work</h1>
+            <h1>How Squares Work</h1>
             <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">Football squares — also called a squares pool or a football pool — is one of the most popular social sports games in the United States. You don't need to know anything about football to play, and there's no skill involved: it's pure luck. That's what makes it so fun for everyone from die-hard fans to casual viewers just watching for the commercials.</p>
+            <p class="article-lead">Football squares (aka, squares pool, football pool, etc.) is one of the most popular sports games in the America. You don't need to know anything about football to play, and there's no skill involved: it's pure luck. That's what makes it so fun for everyone from die-hard fans to casual viewers just watching for the commercials.</p>
         </div>
 
         <div class="article-toc">
@@ -48,6 +48,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>The 10×10 Grid</h2>
             <p>A standard football squares grid is a 10-column by 10-row table, creating 100 individual squares. The top of the grid is labeled with one team's name (typically the home team or your preferred team), and the left side is labeled with the other team's name. The columns and rows are each numbered 0 through 9 — but those numbers aren't assigned until <em>after</em> all the squares are claimed.</p>
             <p>Each square on the grid represents a unique combination of a ones digit from each team's score. For example, a square at column 7 and row 3 means you're rooting for a score where Team A's final digit is 7 and Team B's final digit is 3 (like 17-13, 27-3, 7-23, etc.).</p>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Empty 10×10 grid before numbers are drawn, showing blank squares and unlabeled axes</p>
+            </div>
         </section>
 
         <section id="claiming-squares">
@@ -75,6 +79,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <h3><i class="fas fa-lightbulb"></i> Example</h3>
                 <p>Suppose the score after the first quarter is <strong>Chiefs 7, Eagles 3</strong>. You look for the column labeled "7" under the Chiefs and the row labeled "3" under the Eagles. The person who claimed that intersection wins the Q1 payout.</p>
                 <p>If the final score is <strong>Chiefs 24, Eagles 20</strong>, the winning square at the end of the game would be the one at column "4" and row "0".</p>
+            </div>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Grid with a winning square highlighted at the Q1 score intersection</p>
             </div>
 
             <p>This is checked at the end of each scoring period — typically after Q1, at halftime (end of Q2), after Q3, and at the final whistle. Each period has its own payout.</p>
@@ -129,6 +137,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <li><strong>Multiple boards:</strong> Large events sometimes run 2 or 3 boards simultaneously, letting more people participate or allowing players to buy in at different price points.</li>
                 <li><strong>Double action:</strong> Pays out both at the end of the quarter and at the end of the previous quarter using a second axis. Less common.</li>
             </ul>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Side-by-side comparison of the 100-square and 25-square grid layouts</p>
+            </div>
         </section>
 
         <section id="faq" class="faq-section">
@@ -185,7 +197,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     "@context": "https://schema.org",
                     "@type": "Article",
                     "@id": "https://sqmgr.com/resources/how-squares-work",
-                    "headline": "How Football Squares Work",
+                    "headline": "How Squares Work",
                     "description": "A complete guide to football squares: the 10x10 grid, how to claim squares, how numbers are drawn, how winners are determined each quarter, and common payout structures.",
                     "url": "https://sqmgr.com/resources/how-squares-work",
                     "datePublished": "2026-02-20",
@@ -207,7 +219,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     "itemListElement": [
                         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sqmgr.com/"},
                         {"@type": "ListItem", "position": 2, "name": "Resources", "item": "https://sqmgr.com/resources"},
-                        {"@type": "ListItem", "position": 3, "name": "How Football Squares Work", "item": "https://sqmgr.com/resources/how-squares-work"}
+                        {"@type": "ListItem", "position": 3, "name": "How Squares Work", "item": "https://sqmgr.com/resources/how-squares-work"}
                     ]
                 },
                 {

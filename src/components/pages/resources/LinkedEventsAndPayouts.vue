@@ -76,6 +76,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </div>
                 </div>
             </div>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: The game search interface showing a list of upcoming NFL games to link</p>
+            </div>
         </section>
 
         <section id="supported-leagues">
@@ -97,6 +101,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <div class="tip-box">
                 <h3><i class="fas fa-wifi"></i> Real-Time, Not Polling</h3>
                 <p>SqMGR's score updates are push-based, not poll-based. Your browser doesn't repeatedly check for updates — the server sends them to you the moment they're available. This means lower data usage and instant updates for everyone in the pool.</p>
+            </div>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Grid with a live score overlay showing the current winning square highlighted in real time</p>
             </div>
         </section>
 
@@ -163,6 +171,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>Marking Winners</h2>
             <p>At the end of each period, SqMGR determines the winning square by looking at the last digit of each team's current score and finding the intersection on the grid. If you've linked to a live event, this is shown automatically on the grid in real time.</p>
             <p>As the pool manager, you confirm and log each winner from the admin panel. You can track payment status per participant — marking squares as paid or unpaid — which is especially useful for in-person pools where people settle up after the game.</p>
+            <div class="img-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Screenshot: Admin panel showing period winners logged with payment status tracked per square</p>
+            </div>
         </section>
 
         <section id="faq" class="faq-section">
