@@ -204,7 +204,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <div class="article-cta">
             <p>Ready to run your own football squares pool?</p>
-            <router-link to="/create" class="btn cta-primary">Create a Free Pool on SqMGR</router-link>
+            <router-link to="/create" class="btn cta-primary">Create a Free Pool</router-link>
         </div>
 
         <nav class="article-nav">

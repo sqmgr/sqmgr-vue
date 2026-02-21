@@ -19,14 +19,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
     <section class="resources-index">
         <div class="intro">
             <h1>Football Squares Resources</h1>
-            <p class="lead">Guides for running football squares pools — how the game works, setting up on SqMGR, and getting the most out of every feature.</p>
+            <p class="lead">Guides for running football and basketball squares pools. How the game works, setting up on SqMGR, and getting the most out of every feature.</p>
         </div>
 
         <div class="articles-grid">
             <router-link to="/resources/how-squares-work" class="article-card">
                 <div class="article-icon"><i class="fas fa-th"></i></div>
-                <h2>How Football Squares Work</h2>
-                <p>New to football squares? Learn the complete rules, how the grid works, how numbers are drawn, and how winners are determined each quarter.</p>
+                <h2>How Squares Work</h2>
+                <p>New to football or basketball squares? Learn the complete rules, how the grid works, how numbers are drawn, and how winners are determined each quarter.</p>
                 <span class="read-more">Read article <i class="fas fa-arrow-right"></i></span>
             </router-link>
 

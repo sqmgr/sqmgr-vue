@@ -226,16 +226,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="mark-winners">
             <h2>Marking Winners</h2>
-            <p>After each quarter, check the score and find the winning square on your grid. From your pool's admin
-                view, you can mark that square as a winner for that period. SqMGR tracks winners across all four payout
-                periods (Q1, Halftime, Q3, Final).</p>
             <p>If you've
                 <router-link to="/resources/linking-live-events-and-payouts">linked your grid to a live game
                 </router-link>
                 , SqMGR can display real-time scores directly on the grid, making it easy to see the current winning
                 square at a glance without leaving the page.
             </p>
-            <p>You can also track payment status for each square (unpaid, partially paid, paid in full) to keep things
+            <p>If you manually set up your game, you can mark individual squares with a unique symbol. Tap on the square and hit the "Add Symbol" button.</p>
+            <p>You can also add notes to that square, track payment status (claimed, paid partially, paid full) to keep things
                 organized, especially for larger pools.</p>
         </section>
 
@@ -259,12 +257,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </div>
 
             <div class="faq-item">
-                <h3>Can I change the grid type after creating a pool?</h3>
-                <p>The grid type is set when you add a game to your pool. If you need a different format, you can add a
-                    new game grid with a different type within the same pool.</p>
-            </div>
-
-            <div class="faq-item">
                 <h3>Can I run multiple games in one pool?</h3>
                 <p>Yes! SqMGR supports multiple game grids within a single pool. This is great for playoff pools or
                     weekly games. See our guide on
@@ -272,12 +264,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </router-link>
                     for details.
                 </p>
-            </div>
-
-            <div class="faq-item">
-                <h3>What happens to unclaimed squares?</h3>
-                <p>Unclaimed squares remain empty. The pool manager can claim them manually, or you can use the rollover
-                    feature to carry unclaimed squares into the next game in your pool.</p>
             </div>
         </section>
 
