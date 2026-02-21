@@ -417,6 +417,7 @@ div.table-container {
     overflow:      auto;
     border-radius: $radius-lg;
     border:        1px solid var(--light-gray);
+    margin-bottom: var(--spacing);
 }
 
 table {

@@ -28,7 +28,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="article-header">
             <h1>Super Bowl Squares: The Complete Party Guide</h1>
             <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">The Super Bowl is the biggest day of the year for football squares. More pools run on that Sunday than any other day, from small friend groups to office pools in the hundreds.</p>
+            <p class="article-lead">The Super Bowl is the biggest day of the year for football squares. More pools run on that Sunday than any other day, from small friend groups to large pools that have been running for decades.</p>
         </div>
 
         <div class="article-toc">
@@ -49,7 +49,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p>Football squares thrive at the Super Bowl for several reasons:</p>
             <ul>
                 <li><strong>Everyone's watching.</strong> Even casual fans and non-football viewers tune in for the halftime show and commercials, making it the most inclusive sports event to run a pool for.</li>
-                <li><strong>Four distinct payouts.</strong> Q1, Halftime, Q3, and Final give participants four chances to win, keeping energy high throughout all four hours of game coverage.</li>
                 <li><strong>No picks required.</strong> Unlike bracket pools or prop bets, squares requires zero football knowledge. It's immediately accessible to anyone.</li>
                 <li><strong>Easy to organize online.</strong> With an online tool you can manage hundreds of participants without printing anything.</li>
             </ul>
@@ -78,21 +77,16 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <div class="step-num">3</div>
                     <div class="step-body">
                         <h3>Day Before or Morning of the Game</h3>
-                        <p>Close square claims and draw your numbers. If you're doing a live draw at your party, save the draw until everyone is assembled. If you're managing a remote pool, draw via SqMGR's random draw and share the result.</p>
+                        <p>Lock the squares and draw your numbers. If you're doing a live draw at your party, save the draw until everyone is assembled. If you're managing a remote pool, draw via SqMGR's random draw and share the result.</p>
                     </div>
                 </div>
                 <div class="step-card">
                     <div class="step-num">4</div>
                     <div class="step-body">
                         <h3>Game Day</h3>
-                        <p>Share the pool link with all participants so they can watch the live score on their phones. At each quarter end, announce the winner and handle payouts.</p>
+                        <p>Share the pool link with all participants so they can watch the live score on their phones. SqMGR will automatically sync the scores every five minutes (no need to refresh your page).</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: A fully claimed Super Bowl squares pool with all 100 squares filled and participants' names visible</p>
             </div>
         </section>
 
@@ -140,16 +134,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </div>
 
             <p>For Super Bowl parties, the <strong>Halftime-Heavy</strong> split is popular because the halftime show creates natural buzz and energy around the halftime payout. The <strong>Final-Heavy</strong> split is common in larger pools where the biggest prize should go to whoever survives until the end.</p>
-
-            <div class="tip-box">
-                <h3><i class="fas fa-dollar-sign"></i> Bonus Payout Idea</h3>
-                <p>Some pools add a "reverse" bonus — if the Q3 or Final score is the exact reverse of Q1 or Halftime (same last digits, teams flipped), the winner of that period gets an extra bonus. It adds excitement for those holding the "reverse" of a strong early winner square.</p>
-            </div>
-
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: Payout configuration screen showing the percentage split across Q1, Halftime, Q3, and Final</p>
-            </div>
         </section>
 
         <section id="draw-timing">
@@ -163,34 +147,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </ul>
         </section>
 
-        <section id="large-pools">
-            <h2>Running Large Pools</h2>
-            <p>Super Bowl pools sometimes outgrow a single 100-square grid. If you have more than 100 participants (or want to offer multiple price points), there are a few approaches:</p>
-
-            <h3>Multiple Boards in One Pool</h3>
-            <p>SqMGR supports multiple game grids within a single pool. You can add two or three identical boards for the same Super Bowl game. Each board has its own independent number draw and its own set of winners — but all boards are managed from one pool dashboard. Participants can claim squares on one board or multiple boards at different price points.</p>
-
-            <h3>Different Price Points</h3>
-            <p>A common large-pool strategy: create a $10/square board and a $25/square board for the same game. Some participants play one, some play both. Winnings scale proportionally. SqMGR tracks payment status per square on each board.</p>
-
-            <h3>25-Square Format for Small Groups</h3>
-            <p>If you're running a smaller Super Bowl party (under 25 people) and don't expect to fill 100 squares, consider the 25-square grid. Each of the 25 squares covers 4 score combinations, so everyone has four times the coverage. Payouts are the same — just split 25 ways instead of 100.</p>
-        </section>
-
         <section id="game-day">
             <h2>Game Day Tips</h2>
             <ul>
                 <li><strong>Share the pool link early.</strong> Text or email the link to all participants before the game so they can pull it up on their phones during the party.</li>
-                <li><strong>Display the grid on a TV.</strong> If you're hosting, put SqMGR up on a TV screen via a browser. The grid updates in real time as scores change.</li>
-                <li><strong>Announce quarter winners publicly.</strong> Whether via a group chat or in person, announce each quarter winner loudly. It builds excitement even for non-winners.</li>
-                <li><strong>Have your payout plan ready.</strong> Know how you're paying winners — cash on hand, Venmo, etc. Don't be the pool manager who owes people money for weeks.</li>
-                <li><strong>Take a photo of the final grid.</strong> A screenshot or photo of the completed grid with winners marked is a fun keepsake and proof of results.</li>
+                <li><strong>Have your payout plan ready.</strong> Know how you're paying winners (cash on hand, Venmo, etc.). Don't be the pool manager who owes people money for weeks.</li>
+                <li><strong>Take a photo of the final grid.</strong> A screenshot or photo of the completed grid with winners marked is a fun keepsake and proof of results. You can also print the results from SqMGR.</li>
             </ul>
-
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: SqMGR pool displayed on a TV browser with live score and current winning square highlighted</p>
-            </div>
 
             <div class="warning-box">
                 <h3><i class="fas fa-exclamation-triangle"></i> Reminder</h3>
@@ -203,7 +166,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>How many squares should each person buy for a Super Bowl pool?</h3>
-                <p>It depends on your pool size. For a 10-person pool, each person might buy 10 squares. For a 25-person pool, 4 squares each. There's no rule — some participants buy more squares for more chances. Just ensure you have a plan for any squares that go unsold.</p>
+                <p>It depends on your pool size. For a 10-person pool, each person might buy 10 squares. For a 25-person pool, 4 squares each. There's no rule. Some participants buy more squares for more chances. Just ensure you have a plan for any squares that go unsold.</p>
             </div>
 
             <div class="faq-item">
@@ -213,7 +176,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>What if the Super Bowl goes to overtime?</h3>
-                <p>In overtime, the final winner is determined by the final score when the game ends, including overtime. If your pool only pays out the Q1, Halftime, Q3, and Final periods, overtime doesn't change anything — the "Final" payout covers the actual end of the game regardless of when it ends.</p>
+                <p>In overtime, the final winner is determined by the final score when the game ends, including overtime. If your pool only pays out the Q1, Halftime, Q3, and Final periods, overtime doesn't change anything. The "Final" payout covers the actual end of the game regardless of when it ends.</p>
             </div>
 
             <div class="faq-item">
@@ -304,7 +267,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         {
                             "@type": "Question",
                             "name": "Can I run a Super Bowl squares pool online?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "Yes. SqMGR is designed specifically for this — participants can claim squares from anywhere via a shared link, and everyone can follow live scores in real time during the game."}
+                            "acceptedAnswer": {"@type": "Answer", "text": "Yes. SqMGR is designed specifically for this. Participants can claim squares from anywhere via a shared link, and everyone can follow live scores in real time during the game."}
                         }
                     ]
                 }
