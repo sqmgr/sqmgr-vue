@@ -259,10 +259,10 @@ export default {
                 "mainEntity": [
                     {
                         "@type": "Question",
-                        "name": "What is the rollover mechanic in football squares?",
+                        "name": "What is the rollover format in football squares?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "The rollover mechanic automatically carries claimed squares forward from one game to the next within the same pool. Participants keep their squares without re-claiming them, and a fresh number draw happens for each new game.",
+                            "text": "The rollover format uses 50 squares. Each participant claims a primary square and a secondary square. In games designated as rollover games, the secondary square is empty — if the winning number lands on an empty secondary square, the pot rolls over to the next game. The final game puts all squares into play to guarantee a winner.",
                         },
                     },
                     {
@@ -270,7 +270,15 @@ export default {
                         "name": "Is there a limit to how many games I can add to a pool?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "There is no enforced limit on the number of game grids in a single pool on SqMGR.",
+                            "text": "There is no enforced limit. You can add as many game grids as you need to a single pool.",
+                        },
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Do rolled-over participants need to pay again for the next game?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "That's entirely up to your pool rules — SqMGR doesn't enforce payment terms. Most pools charge a fee up front and use that to fund each game's winner.",
                         },
                     },
                 ],

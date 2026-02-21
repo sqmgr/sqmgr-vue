@@ -217,8 +217,18 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         },
                         {
                             "@type": "Question",
-                            "name": "Which periods can have payouts in SqMGR?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "You can configure any combination of quarters or periods to have a payout — Q1, halftime, Q3, and final are all optional. The most common setup is to pay out at all four periods."}
+                            "name": "Can I change which periods have payouts after the pool starts?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "It's strongly recommended to set and communicate your payout structure before participants claim squares. Changing periods mid-pool could create disputes. SqMGR does allow updating grid settings, but use good judgment."}
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "What happens if the same square wins more than one quarter?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "Each period pays out independently — the winner of each period gets that period's payout regardless of whether the same square wins multiple periods. It's entirely possible for the same person to win multiple quarters."}
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Does SqMGR handle overtime?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "If a game goes to overtime, the final winner is determined by the final score at the end of the game, including overtime. SqMGR tracks the live score through the end of the game."}
                         }
                     ]
                 }

@@ -526,18 +526,28 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     "mainEntity": [
                         {
                             "@type": "Question",
-                            "name": "What are the best numbers in football squares?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "The best individual digits in NFL football squares are 0 (17.4%), 7 (15.7%), 4 (12.8%), and 3 (12.0%), based on 3,315 NFL games from 2015-2025. These correspond to the most common scoring increments: touchdowns (+7), field goals (+3), and multiples thereof."}
+                            "name": "Can knowing the best numbers help me win?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "Not directly. Numbers are assigned randomly after squares are claimed, so you can't choose which digits you get. However, the information is useful for understanding your odds after the draw. If you end up with 0 and 7, you're in great shape. If you get 2 and 5, you know it's a long shot."}
                         },
                         {
                             "@type": "Question",
-                            "name": "What are the worst numbers in football squares?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "The worst digits are 5 (4.7%), 2 (5.3%), and 9 (6.4%). These require unusual scoring combinations to reach and appear far less frequently in NFL game scores."}
+                            "name": "What is the single best square in football squares?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "For final scores, the best single square is 7-0 (or 0-7), appearing in 3.89% of final scores across 3,315 NFL games (2015-2025). For first-quarter payouts, 0-0 is overwhelmingly the best at 15.6%. The right answer depends on your pool's payout structure."}
                         },
                         {
                             "@type": "Question",
-                            "name": "What is the best square combination in football squares?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "For final scores, the best square is 7-0 (or 0-7), appearing in 3.89% of NFL final scores from 2015-2025 (3,315 games). The commonly-cited 0-0 square is actually 11th for final scores (2.08%), though it dominates first-quarter payouts at 15.6%."}
+                            "name": "Are the numbers the same for every quarter?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "In SqMGR, that's up to you. The most common format is to keep the numbers the same for the whole game. But you can change between Same, Half/Final, and 1st/2nd/3rd/Final."}
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Why is 4 better than 3 if field goals are so common?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "It seems counterintuitive, but 14, 24, and 34 — the most common scores ending in 4 — require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.0%."}
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "If I always get bad numbers, is the draw rigged?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "Almost certainly not. Variance is real and runs of bad luck happen. Over a large enough sample, the random draw is fair to all participants. Everyone has an equal chance of landing any number before the draw occurs."}
                         }
                     ]
                 }

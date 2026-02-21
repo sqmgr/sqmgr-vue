@@ -272,18 +272,18 @@ export default {
                     },
                     {
                         "@type": "Question",
-                        "name": "What are the best numbers to have in football squares?",
+                        "name": "What happens if the grid isn't fully claimed before the game?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "The numbers 0, 7, 3, and 4 are historically the most common ones digit combinations in NFL scoring. The pairs 0-0, 7-0, 0-7, 3-0, and 0-3 appear most frequently.",
+                            "text": "It's up to the pool manager. If the pool is for charity, they may specify unclaimed square winnings go to the fund. Otherwise, they may randomly assign a winner.",
                         },
                     },
                     {
                         "@type": "Question",
-                        "name": "What happens if the grid isn't fully claimed before the game?",
+                        "name": "Is this only for pro football?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "The pool manager can fill remaining squares themselves, leave them unclaimed, or use a rollover mechanic to carry unclaimed squares into a future game.",
+                            "text": "No. Many use SqMGR for college football as well as basketball (both NBA and the NCAA).",
                         },
                     },
                     {

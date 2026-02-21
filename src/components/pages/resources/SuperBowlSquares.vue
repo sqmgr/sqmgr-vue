@@ -257,17 +257,27 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         {
                             "@type": "Question",
                             "name": "How many squares should each person buy for a Super Bowl pool?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "It depends on pool size. For a 10-person pool, 10 squares each works well. For 25 people, 4 squares each. Common prices range from $5 to $25 per square."}
+                            "acceptedAnswer": {"@type": "Answer", "text": "It depends on your pool size. For a 10-person pool, each person might buy 10 squares. For a 25-person pool, 4 squares each. There's no rule — some participants buy more squares for more chances. Just ensure you have a plan for any squares that go unsold."}
                         },
                         {
                             "@type": "Question",
-                            "name": "What is the best payout structure for Super Bowl squares?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "The most common split is 20% Q1, 30% Halftime, 20% Q3, 30% Final. For Super Bowl parties, some prefer weighting halftime higher (40%) because of the halftime show, or the final higher (45%) for maximum drama."}
+                            "name": "What's a good price per square for a Super Bowl pool?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "Common prices range from $5 to $25 per square depending on your group. $10/square (a $1,000 total pot) is popular for medium-sized groups. For workplace pools with mixed participation, $5/square keeps it accessible."}
                         },
                         {
                             "@type": "Question",
-                            "name": "Can I run a Super Bowl squares pool online?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "Yes. SqMGR is designed specifically for this. Participants can claim squares from anywhere via a shared link, and everyone can follow live scores in real time during the game."}
+                            "name": "What if the Super Bowl goes to overtime?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "The final winner is determined by the final score when the game ends, including overtime. The 'Final' payout covers the actual end of the game regardless of when it ends."}
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Can I run a Super Bowl squares pool online for remote participants?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. Participants can claim squares from anywhere via the pool link. Everyone can watch the live score grid in real time during the game on their own devices."}
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "When should I close the pool for new participants?",
+                            "acceptedAnswer": {"@type": "Answer", "text": "Most pool managers close claims (or draw numbers) just before kickoff. Some close 24 hours in advance. The key rule: numbers must be drawn after squares are filled, or simultaneously, to maintain fairness."}
                         }
                     ]
                 }

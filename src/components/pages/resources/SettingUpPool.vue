@@ -403,10 +403,10 @@ export default {
                     },
                     {
                         "@type": "Question",
-                        "name": "What grid types does SqMGR support?",
+                        "name": "Can I run multiple games in one pool?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "SqMGR supports four grid types: the standard 100-square (10×10) grid, a 50-square (10×5) grid where each square covers two score combinations, a 25-square (5×5) grid where each square covers four combinations, and a Rollover format for multi-week playoff pools.",
+                            "text": "Yes. SqMGR supports multiple game grids within a single pool. This is great for playoff pools or weekly games where participants share the same squares across different game grids.",
                         },
                     },
                 ],
