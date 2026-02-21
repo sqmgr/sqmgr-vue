@@ -28,7 +28,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="article-header">
             <h1>Best Numbers in Football Squares</h1>
             <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">Football squares is a game of luck — you don't get to choose your numbers after the draw. But knowing which digits historically win more often adds a fun layer of math to the conversation. Some numbers are dramatically better than others, and the reason comes down to how football is scored.</p>
+            <p class="article-lead">Football squares is a game of luck (you don't get to choose your numbers after the draw). But knowing which digits historically win more often adds a fun layer of math to the conversation. Some numbers are dramatically better than others, and the reason comes down to how football is scored.</p>
         </div>
 
         <div class="article-toc">
@@ -48,12 +48,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="why-numbers-matter">
             <h2>Why the Numbers Matter</h2>
-            <p>Each square on a football grid corresponds to the <strong>last digit (ones digit)</strong> of each team's score at the end of a period. NFL football scores are not uniformly distributed — the way the game is scored means certain last digits appear far more often than others.</p>
+            <p>Each square on a football grid corresponds to the <strong>last digit (ones digit)</strong> of each team's score at the end of a period. NFL football scores are not uniformly distributed. The way the game is scored means certain last digits appear far more often than others.</p>
             <p>Since numbers are drawn randomly after squares are claimed, you can't choose your numbers strategically. But after the draw, you'll definitely feel better (or worse) about your chances based on what you landed.</p>
 
             <div class="tip-box">
                 <h3><i class="fas fa-database"></i> About This Data</h3>
-                <p>These numbers come from <strong>3,315 NFL regular season and playoff games</strong> spanning the 2015–2025 seasons — every game played since the NFL moved the extra point kick back to the 15-yard line in 2015, through Super Bowl LX (Seattle Seahawks 29, New England Patriots 13, February 8, 2026). That rule change slightly reduced the success rate of extra points (from ~99% to ~94%), making 2-point conversions modestly more common. The dataset represents 6,630 individual team score observations for final results, plus per-quarter breakdowns.</p>
+                <p>These numbers come from <strong>3,315 NFL regular season and playoff games</strong> spanning the 2015–2025 seasons. This is every game played since the NFL moved the extra point kick back to the 15-yard line in 2015, through Super Bowl LX (Seattle Seahawks 29, New England Patriots 13, February 8, 2026). That rule change slightly reduced the success rate of extra points (from ~99% to ~94%), making 2-point conversions modestly more common. The dataset represents 6,630 individual team score observations for final results, plus per-quarter breakdowns.</p>
             </div>
         </section>
 
@@ -126,7 +126,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td><strong>1</strong></td>
                             <td class="okay">9.3%</td>
                             <td class="okay">Okay</td>
-                            <td>Appears via 21 (3 TDs), 31, 41 — less common than the top tier</td>
+                            <td>Appears via 21 (3 TDs), 31, 41. Less common than the top tier</td>
                         </tr>
                         <tr>
                             <td><strong>8</strong></td>
@@ -138,7 +138,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td><strong>9</strong></td>
                             <td class="bad">6.4%</td>
                             <td class="bad">Below Average</td>
-                            <td>Hard to reach; requires specific combinations — nearly tied with 8</td>
+                            <td>Hard to reach. Requires specific combinations, nearly tied with 8</td>
                         </tr>
                         <tr>
                             <td><strong>2</strong></td>
@@ -150,20 +150,20 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td><strong>5</strong></td>
                             <td class="bad">4.7%</td>
                             <td class="bad">Worst</td>
-                            <td>The rarest digit — requires very unusual scoring combinations</td>
+                            <td>The rarest digit. Requires very unusual scoring combinations</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <p>Worth noting: <strong>4 slightly outperforms 3</strong> in final NFL scores (12.8% vs 12.1%). This surprises many people because field goals feel ubiquitous, but 14, 24, and 34 all require a very common two-touchdown-plus-field-goal structure that shows up constantly in real games. Also notable: <strong>8 and 9 are nearly tied</strong> and both qualify as "below average" rather than "poor" — only 5 and 2 are truly rare.</p>
+            <p>Worth noting: <strong>4 slightly outperforms 3</strong> in final NFL scores (12.8% vs 12.1%). This surprises many people because field goals feel ubiquitous, but 14, 24, and 34 all require a very common two-touchdown-plus-field-goal structure that shows up constantly in real games. Also notable: <strong>8 and 9 are nearly tied</strong> and both qualify as "below average" rather than "poor." Only 5 and 2 are truly rare.</p>
         </section>
 
         <section id="worst-numbers">
             <h2>The Worst Numbers</h2>
             <p>Getting a score that ends in <strong>2</strong>, <strong>5</strong>, or <strong>9</strong> takes some unusual combinations:</p>
             <ul>
-                <li><strong>5 (4.7% — rarest):</strong> Very specific unusual combinations — 15 requires 1 TD + 2-pt conversion + 2 FGs with no other scoring</li>
+                <li><strong>5 (4.7% — rarest):</strong> Very specific unusual combinations. 15 requires 1 TD + 2-pt conversion + 2 FGs with no other scoring</li>
                 <li><strong>2 (5.3%):</strong> A safety, or a specific 2-point conversion at just the right time (e.g., 12 = 1 TD + 2-pt conversion + FG)</li>
                 <li><strong>9 (6.4%):</strong> Requires non-standard scoring runs; 19 = 2 TDs + safety + extra point, for example</li>
             </ul>
@@ -198,18 +198,18 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </table>
                 </div>
                 <div class="heatmap-legend">
-                    <span class="legend-item tier-best">≥ 3.0% — Best</span>
-                    <span class="legend-item tier-great">2.0–2.9% — Great</span>
-                    <span class="legend-item tier-good">1.0–1.9% — Good</span>
-                    <span class="legend-item tier-avg">0.5–0.9% — Average</span>
-                    <span class="legend-item tier-poor">&lt; 0.5% — Rare</span>
+                    <span class="legend-item tier-best">≥ 3.0% (Best)</span>
+                    <span class="legend-item tier-great">2.0–2.9% (Great)</span>
+                    <span class="legend-item tier-good">1.0–1.9% (Good)</span>
+                    <span class="legend-item tier-avg">0.5–0.9% (Average)</span>
+                    <span class="legend-item tier-poor">&lt; 0.5% (Rare)</span>
                 </div>
             </div>
         </section>
 
         <section id="best-pairs">
             <h2>Best Number Pairs</h2>
-            <p>A square's value is determined by <em>both</em> numbers — one from each axis. The best squares are the ones where both digits are high-frequency. Here are the top pairs by actual frequency in 3,315 NFL final scores:</p>
+            <p>A square's value is determined by <em>both</em> numbers, one from each axis. The best squares are the ones where both digits are high-frequency. Here are the top pairs by actual frequency in 3,315 NFL final scores:</p>
 
             <div class="numbers-table">
                 <table>
@@ -232,7 +232,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td>2</td>
                             <td><strong>0 – 7</strong></td>
                             <td class="good">3.50%</td>
-                            <td>Same as above with teams reversed — nearly as common</td>
+                            <td>Same as above with teams reversed. Nearly as common</td>
                         </tr>
                         <tr>
                             <td>3</td>
@@ -244,7 +244,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td>4</td>
                             <td><strong>3 – 0</strong></td>
                             <td class="good">2.93%</td>
-                            <td>Early FG advantage, other team scoreless — frequent Q1 result and common final</td>
+                            <td>Early FG advantage, other team scoreless. Frequent Q1 result and common final</td>
                         </tr>
                         <tr>
                             <td>5</td>
@@ -268,7 +268,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td>8</td>
                             <td><strong>6 – 0</strong></td>
                             <td class="okay">2.32%</td>
-                            <td>16–0, 26–0, 26–10 — teams with two-plus scores vs. scoreless opponent</td>
+                            <td>16–0, 26–0, 26–10 teams with two-plus scores vs. scoreless opponent</td>
                         </tr>
                         <tr>
                             <td>9</td>
@@ -280,7 +280,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td>10</td>
                             <td><strong>3 – 7</strong></td>
                             <td class="okay">2.14%</td>
-                            <td>TD vs. FG lead — one of the most common final structures</td>
+                            <td>TD vs. FG lead. One of the most common final structures</td>
                         </tr>
                         <tr>
                             <td>11</td>
@@ -294,7 +294,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="tip-box">
                 <h3><i class="fas fa-lightbulb"></i> The 0–0 Myth</h3>
-                <p>Many guides claim 0–0 is the best square because "both teams start at 0." While 0–0 is <em>dominant in the first quarter</em> (15.6% of Q1 scores), it finishes 11th for final scores at just 2.08%. The game's most common final-score pair is <strong>7–0 at 3.89%</strong> — nearly double 0–0. If you play a winner-take-all game that only pays on the final, 0–0 is good but not the best.</p>
+                <p>Many guides claim 0–0 is the best square because "both teams start at 0." While 0–0 is <em>dominant in the first quarter</em> (15.6% of Q1 scores), it finishes 11th for final scores at just 2.08%. The game's most common final-score pair is <strong>7–0 at 3.89%</strong>, which is nearly double 0–0. If you play a winner-take-all game that only pays on the final, 0–0 is good but not the best.</p>
             </div>
         </section>
 
@@ -390,64 +390,24 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <p>A few things stand out in this data:</p>
             <ul>
-                <li><strong>Q1 is dominated by 0, 7, and 3</strong> — together these three digits account for nearly 90% of all Q1 score last digits. If your pool pays quarterly, the Q1 prize is heavily concentrated.</li>
-                <li><strong>4 starts slow but finishes strong</strong> — just 5.6% after Q1 but 12.8% at the final. It needs more scoring to reach multiples like 14, 24, 34.</li>
+                <li><strong>Q1 is dominated by 0, 7, and 3</strong>. Together these three digits account for nearly 90% of all Q1 score last digits. If your pool pays quarterly, the Q1 prize is heavily concentrated.</li>
+                <li><strong>4 starts slow but finishes strong</strong>. Just 5.6% after Q1 but 12.8% at the final. It needs more scoring to reach multiples like 14, 24, 34.</li>
                 <li><strong>1 barely exists in Q1</strong> (0.4%) but climbs to 9.3% by game's end. If you have a 1, your patience is rewarded in later quarters.</li>
-                <li><strong>8 and 9 converge at the final</strong> — both under 1% through most of the game, both landing near 6.5% at the final as higher-scoring totals reach 28, 38, 29, 39.</li>
+                <li><strong>8 and 9 converge at the final</strong>. Both under 1% through most of the game, both landing near 6.5% at the final as higher-scoring totals reach 28, 38, 29, 39.</li>
             </ul>
-
-            <div class="numbers-table">
-                <h3 style="margin-bottom: 0.5rem; font-size: 1em;">Top Pairs by Quarter</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Quarter</th>
-                            <th>#1 Pair</th>
-                            <th>#2 Pair</th>
-                            <th>#3 Pair</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Q1</strong></td>
-                            <td class="good">0–0 (15.6%)</td>
-                            <td class="good">7–0 (13.1%)</td>
-                            <td class="good">0–7 (11.0%)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Halftime</strong></td>
-                            <td class="good">0–0 (6.5%)</td>
-                            <td class="good">7–0 (6.1%)</td>
-                            <td class="good">0–3 (5.0%)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Q3</strong></td>
-                            <td class="okay">0–0 (4.6%)</td>
-                            <td class="okay">7–0 (4.6%)</td>
-                            <td class="okay">0–7 (4.0%)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Final</strong></td>
-                            <td class="good">7–0 (3.86%)</td>
-                            <td class="good">0–7 (3.46%)</td>
-                            <td class="good">7–4 (3.00%)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </section>
 
         <section id="college-football">
             <h2>College Football Differences</h2>
             <p>College football tends to produce higher scores than the NFL, and the distribution of digits shifts slightly as a result. The key differences:</p>
             <ul>
-                <li><strong>0 and 7</strong> remain excellent — still the most common, just at higher absolute scores (28, 35, 42, etc.)</li>
-                <li><strong>4</strong> stays strong — 14, 21, 24, 28, 35, 42 are all common in college games</li>
+                <li><strong>0 and 7</strong> remain excellent. Still the most common, just at higher absolute scores (28, 35, 42, etc.)</li>
+                <li><strong>4</strong> stays strong as 14, 21, 24, 28, 35, 42 are all common in college games</li>
                 <li><strong>3</strong> remains good but field goals are slightly less dominant relative to TDs in high-scoring college games</li>
-                <li><strong>Blowouts are more common</strong> — late garbage-time touchdowns shift the final digits more unpredictably in lopsided games</li>
+                <li><strong>Blowouts are more common:</strong> late garbage-time touchdowns shift the final digits more unpredictably in lopsided games</li>
                 <li><strong>2-point conversions</strong> are attempted far more frequently in college football, making 8 a slightly better number than in the NFL</li>
             </ul>
-            <p>For NCAAB (college basketball), the entire number distribution changes dramatically — higher scores mean a wider spread across all digits, with 0 still favorable but the gap between best and worst narrowing considerably.</p>
+            <p>For NCAAB (college basketball), the entire number distribution changes dramatically. Higher scores mean a wider spread across all digits, with 0 still favorable but the gap between best and worst narrowing considerably.</p>
         </section>
 
         <section id="faq" class="faq-section">
@@ -455,7 +415,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Can knowing the best numbers help me win?</h3>
-                <p>Not directly. Numbers are assigned randomly after squares are claimed, so you can't choose which digits you get. However, the information is useful for understanding your odds after the draw — if you end up with 0 and 7, you're in great shape. If you get 2 and 5, you know it's a long shot.</p>
+                <p>Not directly. Numbers are assigned randomly after squares are claimed, so you can't choose which digits you get. However, the information is useful for understanding your odds after the draw. If you end up with 0 and 7, you're in great shape. If you get 2 and 5, you know it's a long shot.</p>
             </div>
 
             <div class="faq-item">
@@ -465,17 +425,17 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Are the numbers the same for every quarter?</h3>
-                <p>The number assignment on the grid doesn't change between quarters — your square has the same digits all game. However, certain digit pairs are more common at certain points in the game. For example, 0–0 and 0–3 are especially common in Q1 (when few scores have been recorded), while 7–4 and 7–0 dominate final scores. This is why games that pay all four quarters can reward a "mediocre" pair in an early quarter while a "great" pair like 4–7 shines late.</p>
+                <p>In SqMGR, that's up to you. The most common format is to keep the numbers the same for the whole game. But you can change between Same, Half/Final, and 1st/2nd/3rd/Final.</p>
             </div>
 
             <div class="faq-item">
                 <h3>Why is 4 better than 3 if field goals are so common?</h3>
-                <p>It seems counterintuitive, but 14, 24, and 34 — the most common scores ending in 4 — require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. While field goals alone produce 3, 6, 9 (and then back to 12, etc.), the combination of touchdowns and field goals that builds to 14-point totals happens even more often. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.0%.</p>
+                <p>It seems counterintuitive, but 14, 24, and 34 (the most common scores ending in 4) require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. While field goals alone produce 3, 6, 9 (and then back to 12, etc.), the combination of touchdowns and field goals that builds to 14-point totals happens even more often. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.0%.</p>
             </div>
 
             <div class="faq-item">
                 <h3>If I always get bad numbers, is the draw rigged?</h3>
-                <p>Almost certainly not — variance is real and runs of bad luck happen. Over a large enough sample (many games), the random draw is fair to all participants. Individual games will always produce winner and loser squares, and the randomness of the draw means everyone has an equal chance of landing any number before the draw occurs.</p>
+                <p>Almost certainly not. Variance is real and runs of bad luck happen. Over a large enough sample (many games), the random draw is fair to all participants. Individual games will always produce winner and loser squares, and the randomness of the draw means everyone has an equal chance of landing any number before the draw occurs.</p>
             </div>
         </section>
 
@@ -668,6 +628,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         &.tier-good  { background: #fef9c3; color: #713f12; border: 1px solid #fde68a; }
         &.tier-avg   { background: #f9fafb; color: #6b7280; border: 1px solid #e5e7eb; }
         &.tier-poor  { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    }
+}
+
+#best-numbers, #best-pairs {
+    .numbers-table {
+        td:nth-child(2), td:nth-child(3) {
+            white-space: nowrap;
+        }
     }
 }
 </style>
