@@ -46,13 +46,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="why-link">
             <h2>Why Link to a Live Event?</h2>
-            <p>Linking your grid to a live game unlocks two key features: <strong>real-time score display</strong> and <strong>automatic period tracking</strong>. Without linking, your grid is just a static squares board — you have to manually check scores elsewhere and announce results yourself.</p>
-            <p>With a linked game, everyone viewing the pool can see the current score overlaid on the grid, the current winning square highlighted, and which period is active. It makes game day significantly more engaging for your participants.</p>
+            <p>Linking your grid to a live game adds <strong>real-time score display</strong> and <strong>automatic period tracking</strong>. Without linking, your grid is just a static squares board — you have to manually check scores elsewhere and announce results yourself.</p>
+            <p>With a linked game, everyone viewing the pool can see the current score overlaid on the grid, the current winning square highlighted, and which period is active. Everyone watching can see what's happening without checking scores on another tab.</p>
         </section>
 
         <section id="finding-game">
             <h2>Finding &amp; Selecting Your Game</h2>
-            <p>When you add a new game grid to your pool, you have the option to link it to a scheduled or in-progress game from SqMGR's sports database. Here's how:</p>
+            <p>When you add a new game grid to your pool, you have the option to link it to a scheduled or in-progress game from SqMGR's sports database.</p>
             <div class="steps-list">
                 <div class="step-card">
                     <div class="step-num">1</div>
@@ -92,7 +92,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <section id="live-scores">
             <h2>How Live Scores Work</h2>
             <p>SqMGR uses a real-time score pipeline built on PostgreSQL's <code>LISTEN</code>/<code>NOTIFY</code> mechanism and Server-Sent Events (SSE). A scheduled background job fetches the latest game scores and writes them to the database. When a score changes, PostgreSQL fires a notification event. The SqMGR server receives this instantly and fans the update out to all connected clients watching that pool.</p>
-            <p>The result: scores appear on your grid within seconds of the actual play, with no page refreshes required. All participants watching the pool see the update simultaneously.</p>
+            <p>Scores show up on the grid within seconds of the actual play, with no refresh needed. Everyone watching sees it at the same time.</p>
 
             <div class="tip-box">
                 <h3><i class="fas fa-wifi"></i> Real-Time, Not Polling</h3>
@@ -155,7 +155,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <li>Q3 winner receives $200</li>
                     <li>Final winner receives $300</li>
                 </ul>
-                <p>SqMGR shows these amounts on the grid so every participant knows exactly what each period pays out.</p>
+                <p>SqMGR shows these amounts on the grid.</p>
             </div>
         </section>
 

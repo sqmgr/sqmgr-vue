@@ -53,7 +53,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="tip-box">
                 <h3><i class="fas fa-database"></i> About This Data</h3>
-                <p>The statistics on this page are derived from <strong>3,315 NFL regular season and playoff games</strong> spanning the 2015–2025 seasons — every game played since the NFL moved the extra point kick back to the 15-yard line in 2015, through Super Bowl LX (Seattle Seahawks 29, New England Patriots 13, February 8, 2026). That rule change slightly reduced the success rate of extra points (from ~99% to ~94%), making 2-point conversions modestly more common. The dataset represents 6,630 individual team score observations for final results, plus per-quarter breakdowns.</p>
+                <p>These numbers come from <strong>3,315 NFL regular season and playoff games</strong> spanning the 2015–2025 seasons — every game played since the NFL moved the extra point kick back to the 15-yard line in 2015, through Super Bowl LX (Seattle Seahawks 29, New England Patriots 13, February 8, 2026). That rule change slightly reduced the success rate of extra points (from ~99% to ~94%), making 2-point conversions modestly more common. The dataset represents 6,630 individual team score observations for final results, plus per-quarter breakdowns.</p>
             </div>
         </section>
 
@@ -79,7 +79,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="best-numbers">
             <h2>The Best Numbers</h2>
-            <p>Based on 3,315 NFL games (2015–2025, including Super Bowl LX), here is how often each digit appeared as the final score last digit across all teams:</p>
+            <p>Based on 3,315 NFL games (2015–2025, including Super Bowl LX), here's how often each digit appeared as the final score's last digit:</p>
 
             <div class="numbers-table">
                 <table>
@@ -156,18 +156,18 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </table>
             </div>
 
-            <p>One note worth highlighting from the data: <strong>4 slightly outperforms 3</strong> in final NFL scores (12.8% vs 12.1%). This surprises many people because field goals feel ubiquitous, but 14, 24, and 34 all require a very common two-touchdown-plus-field-goal structure that shows up constantly in real games. Also notable: <strong>8 and 9 are nearly tied</strong> and both qualify as "below average" rather than "poor" — only 5 and 2 are truly rare.</p>
+            <p>Worth noting: <strong>4 slightly outperforms 3</strong> in final NFL scores (12.8% vs 12.1%). This surprises many people because field goals feel ubiquitous, but 14, 24, and 34 all require a very common two-touchdown-plus-field-goal structure that shows up constantly in real games. Also notable: <strong>8 and 9 are nearly tied</strong> and both qualify as "below average" rather than "poor" — only 5 and 2 are truly rare.</p>
         </section>
 
         <section id="worst-numbers">
             <h2>The Worst Numbers</h2>
-            <p>The digits <strong>2</strong>, <strong>5</strong>, and to a lesser extent <strong>9</strong> are consistently the worst in NFL football squares. Reaching a score with one of these as the last digit typically requires:</p>
+            <p>Getting a score that ends in <strong>2</strong>, <strong>5</strong>, or <strong>9</strong> takes some unusual combinations:</p>
             <ul>
                 <li><strong>5 (4.7% — rarest):</strong> Very specific unusual combinations — 15 requires 1 TD + 2-pt conversion + 2 FGs with no other scoring</li>
                 <li><strong>2 (5.3%):</strong> A safety, or a specific 2-point conversion at just the right time (e.g., 12 = 1 TD + 2-pt conversion + FG)</li>
                 <li><strong>9 (6.4%):</strong> Requires non-standard scoring runs; 19 = 2 TDs + safety + extra point, for example</li>
             </ul>
-            <p>That said, these numbers <em>do</em> win. It's just rare enough that many seasons pass without seeing 5–2 or 9–5 at the end of a quarter. When they do hit, they're often a pleasant surprise for a lucky square holder.</p>
+            <p>These numbers <em>do</em> win. It's just rare enough that many seasons pass without seeing 5–2 or 9–5 at the end of a quarter. When they do hit, they're often a pleasant surprise for a lucky square holder.</p>
         </section>
 
         <section id="heatmap">

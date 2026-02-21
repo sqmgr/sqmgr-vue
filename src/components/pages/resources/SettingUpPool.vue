@@ -28,7 +28,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="article-header">
             <h1>Setting Up a Football Squares Pool on SqMGR</h1>
             <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">SqMGR makes it easy to set up and manage a football squares pool entirely online — no paper, no spreadsheets. This walkthrough covers everything from creating your pool to drawing numbers, including the different grid types available.</p>
+            <p class="article-lead">SqMGR lets you run a football squares pool entirely online — no paper, no spreadsheets. This covers everything from creating your pool to drawing numbers.</p>
         </div>
 
         <div class="article-toc">
@@ -47,7 +47,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="create-account">
             <h2>Create an Account</h2>
-            <p>To create and manage a pool, you'll need a free SqMGR account. Sign up using your email or a social login — it takes about 30 seconds. Once logged in, you're ready to set up your first pool.</p>
+            <p>To create and manage a pool, you'll need a free SqMGR account. Sign up with your email or a social login. Once logged in, you're ready to set up your first pool.</p>
             <p>Participants who join your pool <strong>do not need an account</strong>. They can claim squares as a guest using just the pool link you share with them.</p>
         </section>
 
@@ -59,7 +59,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <div class="step-num">1</div>
                     <div class="step-body">
                         <h3>Pool Name</h3>
-                        <p>Give your pool a recognizable name. Something like "Super Bowl LVIX Office Pool" or "Peters Family Playoff Pool" works great.</p>
+                        <p>Give your pool a name people will recognize — something like "Super Bowl Office Pool" or "Friday Night Playoff Pool".</p>
                     </div>
                 </div>
                 <div class="step-card">
@@ -77,7 +77,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </div>
                 </div>
             </div>
-            <p>Once you click Create, your pool is live and ready for participants.</p>
+            <p>Once you click Create, your pool is live.</p>
         </section>
 
         <section id="grid-types">
@@ -116,7 +116,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="claim-squares">
             <h2>How Participants Claim Squares</h2>
-            <p>When a participant opens your pool link, they'll see the grid. Empty squares are available to claim. They click a square, enter their name, and submit. It's that simple.</p>
+            <p>When a participant opens your pool link, they'll see the grid. They click an empty square, enter their name, and submit.</p>
             <p>Participants can claim multiple squares if you allow it. As the pool manager, you can see all claimed squares in real time from your admin view. You can also claim squares on behalf of other players directly from the grid.</p>
         </section>
 

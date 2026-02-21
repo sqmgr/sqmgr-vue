@@ -46,13 +46,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="the-grid">
             <h2>The 10×10 Grid</h2>
-            <p>A standard football squares grid is a 10-column by 10-row table, creating 100 individual squares. The top of the grid is labeled with one team's name (typically the home team or your preferred team), and the left side is labeled with the other team's name. The columns and rows are each numbered 0 through 9 — but the key twist is that those numbers aren't filled in until <em>after</em> all the squares are claimed.</p>
+            <p>A standard football squares grid is a 10-column by 10-row table, creating 100 individual squares. The top of the grid is labeled with one team's name (typically the home team or your preferred team), and the left side is labeled with the other team's name. The columns and rows are each numbered 0 through 9 — but those numbers aren't assigned until <em>after</em> all the squares are claimed.</p>
             <p>Each square on the grid represents a unique combination of a ones digit from each team's score. For example, a square at column 7 and row 3 means you're rooting for a score where Team A's final digit is 7 and Team B's final digit is 3 (like 17-13, 27-3, 7-23, etc.).</p>
         </section>
 
         <section id="claiming-squares">
             <h2>Claiming Squares</h2>
-            <p>Before numbers are drawn, participants choose one or more squares on the grid. Think of it like picking a seat at a concert — no one knows which seats are in the front row yet. Participants typically pay a set amount per square (often $5, $10, or $20 in friendly pools), with the total pot split among the winners.</p>
+            <p>Before numbers are drawn, participants choose one or more squares on the grid. Participants typically pay a set amount per square (often $5, $10, or $20 in friendly pools), with the total pot split among the winners.</p>
             <p>A pool manager sets up the grid and shares a link with friends, family, or coworkers. Each person picks whichever squares they want. Once all 100 squares are claimed (or the game is about to start), the numbers are drawn.</p>
         </section>
 
@@ -61,10 +61,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p>After squares are filled, digits 0 through 9 are randomly assigned to each column and each row — giving you the unique combination for your square. The random draw is the key to keeping the game fair. Nobody can strategically pick a "winning" square before the draw.</p>
             <p>There are two common methods:</p>
             <ul>
-                <li><strong>Random draw:</strong> The pool manager (or a tool like SqMGR) randomly shuffles the digits and assigns them. Fast and fair.</li>
+                <li><strong>Random draw:</strong> The pool manager (or a tool like SqMGR) randomly shuffles the digits and assigns them.</li>
                 <li><strong>Live draw:</strong> Digits are written on slips of paper, shuffled in a hat, and drawn one by one in front of participants. Adds a fun ceremony to game day.</li>
             </ul>
-            <p>SqMGR supports both methods — instant random assignment or a manual draw where you enter numbers yourself.</p>
+            <p>SqMGR supports both — instant random assignment or a manual draw where you enter numbers yourself.</p>
         </section>
 
         <section id="determining-winners">
@@ -125,7 +125,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>Grid Variations</h2>
             <p>While 100 squares is standard, other formats exist:</p>
             <ul>
-                <li><strong>25-square grid (5×5):</strong> Each square covers four digit combinations instead of one. Good for smaller groups where filling 100 squares isn't feasible. In SqMGR, these are supported via the 25-square grid type where each "super square" maps to a 2×2 block on the underlying 10×10 grid.</li>
+                <li><strong>25-square grid (5×5):</strong> Each square covers four digit combinations instead of one. Good for smaller groups where filling 100 squares isn't feasible.</li>
                 <li><strong>Multiple boards:</strong> Large events sometimes run 2 or 3 boards simultaneously, letting more people participate or allowing players to buy in at different price points.</li>
                 <li><strong>Double action:</strong> Pays out both at the end of the quarter and at the end of the previous quarter using a second axis. Less common.</li>
             </ul>
@@ -156,7 +156,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Can football squares be played for college football?</h3>
-                <p>Absolutely. The rules are identical. SqMGR supports college football leagues including the FBS and NCAAB. College games tend to have higher scores, which changes the winning number distribution slightly — see our <router-link to="/resources/best-numbers-in-football-squares">Best Numbers</router-link> article for details.</p>
+                <p>Yes — the rules are identical. SqMGR supports college football including FBS and NCAAB. College games tend to have higher scores, which changes the winning number distribution slightly — see our <router-link to="/resources/best-numbers-in-football-squares">Best Numbers</router-link> article for details.</p>
             </div>
         </section>
 

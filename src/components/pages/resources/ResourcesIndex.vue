@@ -19,7 +19,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
     <section class="resources-index">
         <div class="intro">
             <h1>Football Squares Resources</h1>
-            <p class="lead">Everything you need to run a great football squares pool — from the basics to advanced features.</p>
+            <p class="lead">Guides for running football squares pools — how the game works, setting up on SqMGR, and getting the most out of every feature.</p>
         </div>
 
         <div class="articles-grid">
@@ -33,7 +33,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <router-link to="/resources/setting-up-a-pool" class="article-card">
                 <div class="article-icon"><i class="fas fa-plus-circle"></i></div>
                 <h2>Setting Up a Pool on SqMGR</h2>
-                <p>A step-by-step walkthrough of creating your pool, choosing a grid type, sharing with participants, and drawing numbers using SqMGR.</p>
+                <p>How to create your pool, choose a grid type, share with participants, and draw numbers on SqMGR.</p>
                 <span class="read-more">Read article <i class="fas fa-arrow-right"></i></span>
             </router-link>
 
@@ -47,7 +47,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <router-link to="/resources/multiple-games-and-rollover" class="article-card">
                 <div class="article-icon"><i class="fas fa-layer-group"></i></div>
                 <h2>Multiple Games &amp; the Rollover Mechanic</h2>
-                <p>Run a season-long pool with multiple grids. Learn how to add games and how the rollover mechanic keeps unused squares active across weeks.</p>
+                <p>Run a season-long pool with multiple grids. How to add games to a pool and carry unclaimed squares forward from week to week.</p>
                 <span class="read-more">Read article <i class="fas fa-arrow-right"></i></span>
             </router-link>
 

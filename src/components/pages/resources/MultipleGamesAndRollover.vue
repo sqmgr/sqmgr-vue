@@ -47,12 +47,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <section id="multi-game-overview">
             <h2>What Is a Multi-Game Pool?</h2>
             <p>In SqMGR, a <strong>pool</strong> is the top-level container. Within a pool, you can add multiple <strong>game grids</strong> — each one a separate 10×10 (or 25-square) board for a different game. All participants in the pool have access to all game grids, making it easy to run a continuing season pool under one roof.</p>
-            <p>This is a step up from a single-game setup: instead of creating a new pool for every game, you manage everything — participants, payment tracking, history — in one place.</p>
+            <p>Instead of creating a new pool for every game, you manage participants, payment tracking, and history all in one place.</p>
         </section>
 
         <section id="adding-games">
             <h2>Adding Multiple Games</h2>
-            <p>Adding a new game grid to an existing pool is straightforward:</p>
+            <p>Adding a new game grid to an existing pool:</p>
             <div class="steps-list">
                 <div class="step-card">
                     <div class="step-num">1</div>
@@ -104,8 +104,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="rollover-mechanic">
             <h2>The Rollover Mechanic</h2>
-            <p>In a perfect world, all 100 squares are claimed before every game. In practice, it's common for a few squares to go unclaimed — especially in mid-season pools where attendance might dip.</p>
-            <p>The rollover mechanic solves this elegantly: <strong>squares claimed in Game 1 automatically roll over to Game 2</strong>. Participants don't need to re-claim squares or re-pay — their existing squares carry forward to the next game in the pool.</p>
+            <p>Not every game fills all 100 squares — mid-season pools especially tend to have a few go unclaimed.</p>
+            <p>The rollover mechanic handles this: <strong>squares claimed in Game 1 automatically carry over to Game 2</strong>. Participants don't need to re-claim squares or re-pay — their existing squares carry forward to the next game in the pool.</p>
 
             <div class="example-box">
                 <h3><i class="fas fa-sync-alt"></i> How Rollover Helps</h3>
@@ -154,7 +154,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="viewing-all-games">
             <h2>Viewing All Games in a Pool</h2>
-            <p>SqMGR provides an "All Games" view within each pool, giving you a summary of every game grid — its status, linked event, draw status, and winners. This is particularly useful for season-long pools where you want a quick overview of the entire run.</p>
+            <p>SqMGR's pool dashboard gives you a summary of every game grid — status, linked event, draw state, and winners. For a season-long pool it's the fastest way to see where things stand.</p>
             <p>Individual game grids can be accessed directly from the pool dashboard. Each grid shows its own participants, drawn numbers, and winner history independently.</p>
         </section>
 

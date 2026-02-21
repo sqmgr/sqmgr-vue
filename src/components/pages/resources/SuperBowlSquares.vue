@@ -28,7 +28,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="article-header">
             <h1>Super Bowl Squares: The Complete Party Guide</h1>
             <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">The Super Bowl is the biggest day of the year for football squares. More pools are run on Super Bowl Sunday than any other day — from small friend groups to massive office pools. This guide walks you through everything you need to run a memorable, well-organized Super Bowl squares experience.</p>
+            <p class="article-lead">The Super Bowl is the biggest day of the year for football squares. More pools run on that Sunday than any other day, from small friend groups to office pools in the hundreds.</p>
         </div>
 
         <div class="article-toc">
@@ -51,7 +51,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <li><strong>Everyone's watching.</strong> Even casual fans and non-football viewers tune in for the halftime show and commercials, making it the most inclusive sports event to run a pool for.</li>
                 <li><strong>Four distinct payouts.</strong> Q1, Halftime, Q3, and Final give participants four chances to win, keeping energy high throughout all four hours of game coverage.</li>
                 <li><strong>No picks required.</strong> Unlike bracket pools or prop bets, squares requires zero football knowledge. It's immediately accessible to anyone.</li>
-                <li><strong>Easy to organize online.</strong> Tools like SqMGR mean you can manage hundreds of participants without a single piece of paper.</li>
+                <li><strong>Easy to organize online.</strong> With an online tool you can manage hundreds of participants without printing anything.</li>
             </ul>
         </section>
 
@@ -93,7 +93,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="payout-structures">
             <h2>Popular Super Bowl Payout Structures</h2>
-            <p>The Super Bowl warrants a slightly different payout approach than a regular-season game. The halftime show makes halftime a bigger deal, and the final score carries the most anticipation. Common Super Bowl splits:</p>
+            <p>Super Bowl pools are worth tweaking from the usual split. The halftime show makes halftime a bigger deal, and the final score carries the most anticipation. Common Super Bowl splits:</p>
 
             <div class="table-container">
                 <table>
@@ -144,7 +144,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="draw-timing">
             <h2>When to Draw Numbers</h2>
-            <p>Timing the number draw adds ceremony to your Super Bowl party. The general rule: <strong>draw after all squares are claimed</strong>, and ideally in a way that lets everyone see or participate in the draw.</p>
+            <p>Timing the number draw can add a bit of ceremony. The rule is simple: <strong>draw after all squares are claimed</strong>, ideally where everyone can see or take part.</p>
             <p>Popular approaches for Super Bowl parties:</p>
             <ul>
                 <li><strong>Pre-game draw:</strong> Do the draw while everyone is gathering, before kickoff. Use SqMGR's random draw feature and display the result on a TV or screen. Everyone sees their numbers before the first play.</li>
@@ -203,7 +203,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Can I run a Super Bowl squares pool online for remote participants?</h3>
-                <p>Absolutely — that's exactly what SqMGR is built for. Participants can claim squares from anywhere via the pool link. Share the link via text, email, or group chat. Everyone can watch the live score grid in real time during the game on their own devices.</p>
+                <p>Absolutely. Participants can claim squares from anywhere via the pool link. Share the link via text, email, or group chat. Everyone can watch the live score grid in real time during the game on their own devices.</p>
             </div>
 
             <div class="faq-item">
