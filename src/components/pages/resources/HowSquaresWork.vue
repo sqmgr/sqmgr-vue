@@ -89,7 +89,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p>On SqMGR, we offer two ways to assign numbers:</p>
             <ul>
                 <li><strong>Random draw:</strong> SqMGR randomly shuffles the digits and assigns them.</li>
-                <li><strong>Manual draw:</strong> The pool admin will manually enter the numbers. You can get creative
+                <li><strong>Manual draw:</strong> The pool manager will manually enter the numbers. You can get creative
                     with how you randomly pick the numbers. Some like to do an in-person event where people pick random
                     cards. I've also seen large parties with the sole purpose of picking the numbers.
                 </li>
@@ -184,7 +184,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>What happens if the grid isn't fully claimed before the game?</h3>
-                <p>It's up to the pool admin. If the pool is for charity, they may specify that it goes to the fund. Otherwise, they may randomly assign a winner.</p>
+                <p>It's up to the pool manager. If the pool is for charity, they may specify that it goes to the fund. Otherwise, they may randomly assign a winner.</p>
             </div>
 
             <div class="faq-item">

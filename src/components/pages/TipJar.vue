@@ -28,7 +28,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="card-body">
                     <h3>Important Reminder</h3>
                     <p><strong>Do not pay for your squares here!</strong></p>
-                    <p>Payments for squares should be sent directly to your pool administrator. Tips sent here go toward the hosting and development of the site.</p>
+                    <p>Payments for squares should be sent directly to your pool manager. Tips sent here go toward the hosting and development of the site.</p>
                 </div>
             </div>
 
