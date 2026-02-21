@@ -19,16 +19,25 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
     <article class="resource-article">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <ol>
-                <li><router-link to="/">Home</router-link></li>
-                <li><router-link to="/resources">Resources</router-link></li>
+                <li>
+                    <router-link to="/">Home</router-link>
+                </li>
+                <li>
+                    <router-link to="/resources">Resources</router-link>
+                </li>
                 <li aria-current="page">How Squares Work</li>
             </ol>
         </nav>
 
         <div class="article-header">
             <h1>How Squares Work</h1>
-            <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">Football squares (aka, squares pool, football pool, etc.) is a popular way to add excitement to sporting events. You don't need to know anything about football or basketball to play, and there's no skill involved: it's pure luck. That's what makes it so fun for everyone from die-hard fans to casual viewers just watching for the commercials.</p>
+            <p class="article-meta">By
+                <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026
+            </p>
+            <p class="article-lead">Football squares (aka, squares pool, football pool, etc.) is a popular way to add
+                excitement to sporting events. You don't need to know anything about football or basketball to play, and
+                there's no skill involved: it's pure luck. That's what makes it so fun for everyone from die-hard fans
+                to casual viewers just watching for the commercials.</p>
         </div>
 
         <div class="article-toc">
@@ -46,48 +55,70 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <section id="the-grid">
             <h2>The 10×10 Grid</h2>
-            <p>A standard football squares grid is a 10-column by 10-row table, creating 100 individual squares. The top of the grid is labeled with one team's name (typically the home team or your preferred team), and the left side is labeled with the other team's name. The columns and rows are each numbered 0 through 9 — but those numbers aren't assigned until <em>after</em> all the squares are claimed.</p>
-            <p>Each square on the grid represents a unique combination of a ones digit from each team's score. For example, a square at column 7 and row 3 means you're rooting for a score where Team A's final digit is 7 and Team B's final digit is 3 (like 17-13, 27-3, 7-23, etc.).</p>
+            <p>A standard football squares grid is a 10-column by 10-row table, creating 100 individual squares. The top
+                of the grid is labeled with one team's name (typically the home team or your preferred team), and the
+                left side is labeled with the other team's name. The columns and rows are each numbered 0 through 9, but
+                those numbers aren't assigned until <em>after</em> all the squares are claimed.</p>
+            <p>Each square on the grid represents a unique combination of a ones digit from each team's score. For
+                example, a square at column 7 and row 3 means you're rooting for a score where the Home Team's final
+                digit is 7 and the Away Team's final digit is 3 (like 17-13, 27-3, 7-23, etc.).</p>
             <div class="article-img">
                 <img src="/images/resources/empty-10x10.png"
                      srcset="/images/resources/empty-10x10.png 1x, /images/resources/empty-10x10@2x.png 2x"
                      alt="An empty 10×10 football squares grid before numbers are drawn"
-                     loading="lazy">
+                     loading="lazy"
+                     class="no-border">
             </div>
         </section>
 
         <section id="claiming-squares">
             <h2>Claiming Squares</h2>
-            <p>Before numbers are drawn, participants choose one or more squares on the grid. Participants typically pay a set amount per square (often $5, $10, or $20 in friendly pools), with the total pot split among the winners.</p>
-            <p>A pool manager sets up the grid and shares a link with friends, family, or coworkers. Each person picks whichever squares they want. Once all 100 squares are claimed (or the game is about to start), the numbers are drawn.</p>
+            <p>Before numbers are drawn, participants choose one or more squares on the grid. Participants typically pay
+                a set amount per square (often $5, $10, or $20 in friendly pools), with the total pot split among the
+                winners.</p>
+            <p>A pool manager sets up the grid and shares a link with friends, family, or coworkers. Each person picks
+                whichever squares they want. Once all 100 squares are claimed (or the game is about to start), the
+                numbers are drawn.</p>
         </section>
 
         <section id="drawing-numbers">
             <h2>Drawing the Numbers</h2>
-            <p>After squares are filled, digits 0 through 9 are randomly assigned to each column and each row — giving you the unique combination for your square. The random draw is the key to keeping the game fair. Nobody can strategically pick a "winning" square before the draw.</p>
-            <p>There are two common methods:</p>
+            <p>After squares are filled, digits 0 through 9 are randomly assigned to each column and each row which
+                gives you the unique combination for your square. The random draw is the key to keeping the game fair.
+                Nobody can strategically pick a "winning" square before the draw.</p>
+            <p>On SqMGR, we offer two ways to assign numbers:</p>
             <ul>
-                <li><strong>Random draw:</strong> The pool manager (or a tool like SqMGR) randomly shuffles the digits and assigns them.</li>
-                <li><strong>Live draw:</strong> Digits are written on slips of paper, shuffled in a hat, and drawn one by one in front of participants. Adds a fun ceremony to game day.</li>
+                <li><strong>Random draw:</strong> SqMGR randomly shuffles the digits and assigns them.</li>
+                <li><strong>Manual draw:</strong> The pool admin will manually enter the numbers. You can get creative
+                    with how you randomly pick the numbers. Some like to do an in-person event where people pick random
+                    cards. I've also seen large parties with the sole purpose of picking the numbers.
+                </li>
             </ul>
-            <p>SqMGR supports both — instant random assignment or a manual draw where you enter numbers yourself.</p>
         </section>
 
         <section id="determining-winners">
             <h2>How Winners Are Determined</h2>
-            <p>Winners are determined by looking at the <strong>last digit (ones digit)</strong> of each team's score at the end of each quarter. You find that digit on the column header (one team) and the row header (the other team), and whoever owns the square at that intersection wins.</p>
+            <p>Winners are determined by looking at the <strong>last digit (ones digit)</strong> of each team's score at
+                the end of each quarter. You find that digit on the column header (one team) and the row header (the
+                other team), and whoever owns the square at that intersection wins.</p>
 
             <div class="example-box">
                 <h3><i class="fas fa-lightbulb"></i> Example</h3>
-                <p>Suppose the score after the first quarter is <strong>Chiefs 7, Eagles 3</strong>. You look for the column labeled "7" under the Chiefs and the row labeled "3" under the Eagles. The person who claimed that intersection wins the Q1 payout.</p>
-                <p>If the final score is <strong>Chiefs 24, Eagles 20</strong>, the winning square at the end of the game would be the one at column "4" and row "0".</p>
+                <p>Suppose the score after the first quarter is <strong>Chiefs 3, Bills 7</strong>. You look for the
+                    column labeled "7" under the Bills and the row labeled "3" under the Chiefs. The person who claimed
+                    that intersection wins the Q1 payout.</p>
+                <p>If the final score is <strong>Chiefs 20, Bills 24</strong>, the winning square at the end of the
+                    game would be the one at column "4" and row "0".</p>
             </div>
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: Grid with a winning square highlighted at the Q1 score intersection</p>
+            <div class="article-img">
+                <img src="/images/resources/winning-square.png"
+                     srcset="/images/resources/winning-square.png 1x, /images/resources/winning-square@2x.png 2x"
+                     alt="Grid with winning squares highlighted"
+                     loading="lazy"
+                     class="no-border">
             </div>
 
-            <p>This is checked at the end of each scoring period — typically after Q1, at halftime (end of Q2), after Q3, and at the final whistle. Each period has its own payout.</p>
+            <p>SqMGR lets you configure how many payout periods there are. Common options are for the final score only, half &amp; final, or Q1, Q2, Q3 and the final.</p>
         </section>
 
         <section id="payout-structures">
@@ -97,47 +128,48 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <div class="table-container">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Period</th>
-                            <th>Common Split</th>
-                            <th>Example (100 squares × $10)</th>
-                        </tr>
+                    <tr>
+                        <th>Period</th>
+                        <th>Common Split</th>
+                        <th>Example (100 squares × $10)</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>End of Q1</td>
-                            <td>20%</td>
-                            <td>$200</td>
-                        </tr>
-                        <tr>
-                            <td>Halftime (end of Q2)</td>
-                            <td>30%</td>
-                            <td>$300</td>
-                        </tr>
-                        <tr>
-                            <td>End of Q3</td>
-                            <td>20%</td>
-                            <td>$200</td>
-                        </tr>
-                        <tr>
-                            <td>Final</td>
-                            <td>30%</td>
-                            <td>$300</td>
-                        </tr>
+                    <tr>
+                        <td>End of Q1</td>
+                        <td>15%</td>
+                        <td>$150</td>
+                    </tr>
+                    <tr>
+                        <td>Halftime (end of Q2)</td>
+                        <td>30%</td>
+                        <td>$300</td>
+                    </tr>
+                    <tr>
+                        <td>End of Q3</td>
+                        <td>15%</td>
+                        <td>$150</td>
+                    </tr>
+                    <tr>
+                        <td>Final</td>
+                        <td>40%</td>
+                        <td>$400</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-
-            <p>Some pools also pay a bonus for the reverse score (flipping the two teams' digits) or run special "second chance" rules if the same square wins twice. The pool manager decides.</p>
         </section>
 
         <section id="grid-variations">
             <h2>Grid Variations</h2>
             <p>While 100 squares is standard, other formats exist:</p>
             <ul>
-                <li><strong>25-square grid (5×5):</strong> Each square covers four digit combinations instead of one. Good for smaller groups where filling 100 squares isn't feasible.</li>
-                <li><strong>Multiple boards:</strong> Large events sometimes run 2 or 3 boards simultaneously, letting more people participate or allowing players to buy in at different price points.</li>
-                <li><strong>Double action:</strong> Pays out both at the end of the quarter and at the end of the previous quarter using a second axis. Less common.</li>
+                <li><strong>25-square grid (5×5):</strong> Each square covers four digit combinations instead of one.
+                    Good for smaller groups where filling 100 squares isn't feasible.
+                </li>
+                <li><strong>50-square grid (10×5):</strong> Each square covers two digit combinations instead of one. Great for medium size groups.
+                </li>
+                <li><strong>Rollover (10×10):</strong> A multi-game format designed for playoff-style pools. Each participant claims <em>two</em> squares: a primary and a secondary. Earlier rounds are designated as rollover games, meaning only the primary square is in play. If the winning score lands on an empty square, the payout rolls over to the next game! With the last game everyone's secondary square is now in play.</li>
             </ul>
         </section>
 
@@ -146,27 +178,27 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Do I need to know about football to play squares?</h3>
-                <p>No. Football squares is entirely luck-based. Your winning square is determined by a random draw, so no football knowledge helps or hurts your chances.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>What are the best numbers to have in football squares?</h3>
-                <p>The numbers 0, 7, 3, and 4 are historically the most common ones digit combinations in NFL scoring. Read our full <router-link to="/resources/best-numbers-in-football-squares">Best Numbers in Football Squares</router-link> guide for the complete breakdown.</p>
+                <p>No. Football squares is entirely luck-based. Your winning square is determined by a random draw, so
+                    no football knowledge helps or hurts your chances.</p>
             </div>
 
             <div class="faq-item">
                 <h3>What happens if the grid isn't fully claimed before the game?</h3>
-                <p>The pool manager can either fill remaining squares themselves, leave them unclaimed (no winner for those squares if they hit), or use a <router-link to="/resources/multiple-games-and-rollover">rollover mechanic</router-link> to carry unclaimed squares into a future game.</p>
+                <p>It's up to the pool admin. If the pool is for charity, they may specify that it goes to the fund. Otherwise, they may randomly assign a winner.</p>
             </div>
 
             <div class="faq-item">
                 <h3>Is football squares gambling?</h3>
-                <p>Laws vary by location. In most friendly, informal settings among friends, family, or coworkers, squares pools are treated as social recreational activities. SqMGR is a free tool for managing the grid and tracking results — we don't process payments or facilitate wagering of any kind. Always check your local laws.</p>
+                <p>Laws vary by location. In most friendly, informal settings among friends, family, or coworkers,
+                    squares pools are treated as social recreational activities. SqMGR is a free tool for managing the
+                    grid and tracking results and we don't process payments or facilitate wagering of any kind. Always
+                    check your local laws.</p>
             </div>
 
             <div class="faq-item">
-                <h3>Can football squares be played for college football?</h3>
-                <p>Yes — the rules are identical. SqMGR supports college football including FBS and NCAAB. College games tend to have higher scores, which changes the winning number distribution slightly — see our <router-link to="/resources/best-numbers-in-football-squares">Best Numbers</router-link> article for details.</p>
+                <h3>Is this only for pro football?</h3>
+                <p>Nope. Many use SqMGR for college football as well as basketball (both NBA and the NCAA).
+                </p>
             </div>
         </section>
 
@@ -178,83 +210,101 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <nav class="article-nav">
             <div class="article-nav-next">
                 <span>Next: </span>
-                <router-link to="/resources/setting-up-a-pool">Setting Up a Pool on SqMGR <i class="fas fa-arrow-right"></i></router-link>
+                <router-link to="/resources/setting-up-a-pool">Setting Up a Pool on SqMGR <i
+                    class="fas fa-arrow-right"></i></router-link>
             </div>
         </nav>
     </article>
 </template>
 
 <script>
-    export default {
-        name: "HowSquaresWork",
-        mounted() {
-            this._jsonLd = document.createElement('script')
-            this._jsonLd.type = 'application/ld+json'
-            this._jsonLd.text = JSON.stringify([
-                {
-                    "@context": "https://schema.org",
-                    "@type": "Article",
-                    "@id": "https://sqmgr.com/resources/how-squares-work",
-                    "headline": "How Squares Work",
-                    "description": "A complete guide to football squares: the 10x10 grid, how to claim squares, how numbers are drawn, how winners are determined each quarter, and common payout structures.",
-                    "url": "https://sqmgr.com/resources/how-squares-work",
-                    "datePublished": "2026-02-20",
-                    "dateModified": "2026-02-20",
-                    "author": {
-                        "@type": "Person",
-                        "@id": "https://sqmgr.com/about#tom-peters",
-                        "name": "Tom Peters"
+export default {
+    name: "HowSquaresWork",
+    mounted() {
+        this._jsonLd = document.createElement('script')
+        this._jsonLd.type = 'application/ld+json'
+        this._jsonLd.text = JSON.stringify([
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "@id": "https://sqmgr.com/resources/how-squares-work",
+                "headline": "How Squares Work",
+                "description": "A complete guide to football squares: the 10x10 grid, how to claim squares, how numbers are drawn, how winners are determined each quarter, and common payout structures.",
+                "url": "https://sqmgr.com/resources/how-squares-work",
+                "datePublished": "2026-02-20",
+                "dateModified": "2026-02-20",
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://sqmgr.com/about#tom-peters",
+                    "name": "Tom Peters",
+                },
+                "publisher": {
+                    "@type": "Person",
+                    "@id": "https://sqmgr.com/about#tom-peters",
+                    "name": "Tom Peters",
+                },
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sqmgr.com/"},
+                    {"@type": "ListItem", "position": 2, "name": "Resources", "item": "https://sqmgr.com/resources"},
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "How Squares Work",
+                        "item": "https://sqmgr.com/resources/how-squares-work",
                     },
-                    "publisher": {
-                        "@type": "Person",
-                        "@id": "https://sqmgr.com/about#tom-peters",
-                        "name": "Tom Peters"
-                    }
-                },
-                {
-                    "@context": "https://schema.org",
-                    "@type": "BreadcrumbList",
-                    "itemListElement": [
-                        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sqmgr.com/"},
-                        {"@type": "ListItem", "position": 2, "name": "Resources", "item": "https://sqmgr.com/resources"},
-                        {"@type": "ListItem", "position": 3, "name": "How Squares Work", "item": "https://sqmgr.com/resources/how-squares-work"}
-                    ]
-                },
-                {
-                    "@context": "https://schema.org",
-                    "@type": "FAQPage",
-                    "mainEntity": [
-                        {
-                            "@type": "Question",
-                            "name": "Do I need to know about football to play squares?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "No. Football squares is entirely luck-based. Your winning square is determined by a random draw, so no football knowledge helps or hurts your chances."}
+                ],
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Do I need to know about football to play squares?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. Football squares is entirely luck-based. Your winning square is determined by a random draw, so no football knowledge helps or hurts your chances.",
                         },
-                        {
-                            "@type": "Question",
-                            "name": "What are the best numbers to have in football squares?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "The numbers 0, 7, 3, and 4 are historically the most common ones digit combinations in NFL scoring. The pairs 0-0, 7-0, 0-7, 3-0, and 0-3 appear most frequently."}
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What are the best numbers to have in football squares?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The numbers 0, 7, 3, and 4 are historically the most common ones digit combinations in NFL scoring. The pairs 0-0, 7-0, 0-7, 3-0, and 0-3 appear most frequently.",
                         },
-                        {
-                            "@type": "Question",
-                            "name": "What happens if the grid isn't fully claimed before the game?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "The pool manager can fill remaining squares themselves, leave them unclaimed, or use a rollover mechanic to carry unclaimed squares into a future game."}
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What happens if the grid isn't fully claimed before the game?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The pool manager can fill remaining squares themselves, leave them unclaimed, or use a rollover mechanic to carry unclaimed squares into a future game.",
                         },
-                        {
-                            "@type": "Question",
-                            "name": "Is football squares gambling?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "Laws vary by location. In most friendly, informal settings among friends, family, or coworkers, squares pools are treated as social recreational activities. Always check your local laws."}
-                        }
-                    ]
-                }
-            ])
-            document.head.appendChild(this._jsonLd)
-        },
-        unmounted() {
-            if (this._jsonLd) {
-                document.head.removeChild(this._jsonLd)
-            }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is football squares gambling?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Laws vary by location. In most friendly, informal settings among friends, family, or coworkers, squares pools are treated as social recreational activities. Always check your local laws.",
+                        },
+                    },
+                ],
+            },
+        ])
+        document.head.appendChild(this._jsonLd)
+    },
+    unmounted() {
+        if (this._jsonLd) {
+            document.head.removeChild(this._jsonLd)
         }
-    }
+    },
+}
 </script>
 
 <style lang="scss" scoped>

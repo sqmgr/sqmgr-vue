@@ -59,7 +59,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <div class="step-num">1</div>
                     <div class="step-body">
                         <h3>Pool Name</h3>
-                        <p>Give your pool a name people will recognize — something like "Super Bowl Office Pool" or "Friday Night Playoff Pool".</p>
+                        <p>Give your pool a name people will recognize — something like "Office Pool".</p>
                     </div>
                 </div>
                 <div class="step-card">

@@ -210,6 +210,10 @@ section {
         border-radius: $radius-xl;
         border:        1px solid $light-gray;
         display:       block;
+
+        &.no-border {
+            border-color: transparent;
+        }
     }
 }
 
