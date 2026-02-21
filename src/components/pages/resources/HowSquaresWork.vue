@@ -62,13 +62,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p>Each square on the grid represents a unique combination of a ones digit from each team's score. For
                 example, a square at column 7 and row 3 means you're rooting for a score where the Home Team's final
                 digit is 7 and the Away Team's final digit is 3 (like 17-13, 27-3, 7-23, etc.).</p>
-            <div class="article-img">
+            <figure class="article-img">
                 <img src="/images/resources/empty-10x10.png"
                      srcset="/images/resources/empty-10x10.png 1x, /images/resources/empty-10x10@2x.png 2x"
                      alt="An empty 10×10 football squares grid before numbers are drawn"
-                     loading="lazy"
-                     class="no-border">
-            </div>
+                     loading="lazy">
+                <figcaption>A blank 10×10 grid — squares are claimed before numbers are drawn, so no one can pick a strategically better position</figcaption>
+            </figure>
         </section>
 
         <section id="claiming-squares">
@@ -110,13 +110,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <p>If the final score is <strong>Chiefs 20, Bills 24</strong>, the winning square at the end of the
                     game would be the one at column "4" and row "0".</p>
             </div>
-            <div class="article-img">
+            <figure class="article-img">
                 <img src="/images/resources/winning-square.png"
                      srcset="/images/resources/winning-square.png 1x, /images/resources/winning-square@2x.png 2x"
                      alt="Grid with winning squares highlighted"
-                     loading="lazy"
-                     class="no-border">
-            </div>
+                     loading="lazy">
+                <figcaption>The winning square is found at the intersection of each team's last score digit — highlighted automatically when a live game is linked</figcaption>
+            </figure>
 
             <p>SqMGR lets you configure how many payout periods there are. Common options are for the final score only, half &amp; final, or Q1, Q2, Q3 and the final.</p>
         </section>

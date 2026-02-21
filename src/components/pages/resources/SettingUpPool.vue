@@ -88,6 +88,15 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             the password is required at any time after creation.</p>
                     </div>
                 </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <h3>Number Rotation</h3>
+                        <p>Choose whether your grid uses the same numbers all game or draws fresh numbers at different
+                            scoring periods. See the <a href="#number-rotation">Number Rotation section</a> below for a
+                            full breakdown of each option.</p>
+                    </div>
+                </div>
             </div>
             <p>Once you click Create, your pool is live.</p>
         </section>
@@ -143,13 +152,56 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     smaller gatherings, try the 50- or 25-square grid so everyone gets more coverage. Running a playoff
                     pool across multiple weeks? Rollover is built for that.</p>
             </div>
-            <div class="article-img">
+            <figure class="article-img">
                 <img src="/images/resources/side-by-side.png"
                      srcset="/images/resources/side-by-side.png 1x, /images/resources/side-by-side@2x.png 2x"
                      alt="100-square grid next to a 50-square and 25-square grid for comparison"
-                     loading="lazy"
-                     class="no-border">
+                     loading="lazy">
+                <figcaption>100-square, 50-square, and 25-square grids side by side — smaller grids give each participant more coverage with fewer squares to sell</figcaption>
+            </figure>
+        </section>
+
+        <section id="number-rotation">
+            <h3>Number Rotation Explained</h3>
+            <p>Number rotation controls whether your grid uses one fixed set of numbers for the entire game, or draws a
+                fresh set of numbers at different scoring periods. With rotation enabled, the axis numbers change at
+                halftime, each quarter, or each half — giving participants multiple chances to win and making different
+                quarters meaningful even if the same team dominates.</p>
+            <p>SqMGR supports five number rotation configurations:</p>
+
+            <div class="steps-list">
+                <div class="step-card">
+                    <div class="step-body">
+                        <h3>Same</h3>
+                        <p>One set of numbers is drawn and used from kickoff through the final score. This is the
+                            classic format most people are familiar with.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-body">
+                        <h3>1st, 2nd, 3rd, Final</h3>
+                        <p>Four separate draws — one for each of the first three quarters plus the final score. A common
+                            choice for NFL pools where four payouts are expected.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-body">
+                        <h3>Half, Final</h3>
+                        <p>Separate numbers are drawn for halftime and the final score. Each scoring period has its own
+                            axis numbers, giving two independent chances to win. A popular choice for basketball
+                            pools.</p>
+                    </div>
+                </div>
             </div>
+
+            <div class="tip-box">
+                <h3><i class="fas fa-lightbulb"></i> When to Choose Rotation</h3>
+                <p>Using the same numbers is the safest choice for casual pools. If your pool has multiple payouts and you don't
+                    want people to get stuck with the same numbers for the whole game, consider rotating the numbers.</p>
+            </div>
+
+            <p>You can change the number rotation setting any time <strong>up until you draw numbers for your first
+                game</strong>. After that the configuration is locked in for the pool.</p>
         </section>
 
         <section id="customize-pool">

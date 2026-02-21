@@ -200,20 +200,36 @@ section {
     }
 }
 
-// Article images
-.article-img {
-    margin: $space-6 0;
+// Article images — styled as screenshots
+figure.article-img {
+    margin:        $space-8 0;
+    border:        1px solid $light-gray;
+    border-radius: $radius-xl;
+    overflow:      hidden;
+    box-shadow: $shadow-card;
 
     img {
-        width:         100%;
-        height:        auto;
-        border-radius: $radius-xl;
-        border:        1px solid $light-gray;
-        display:       block;
+        width:   calc(100% - $space-3*2);
+        height:  auto;
+        display: block;
+        margin: $space-3;
+    }
 
-        &.no-border {
-            border-color: transparent;
-        }
+    figcaption {
+        background:  $surface-sunken;
+        border-top:  1px solid $light-gray;
+        padding:     $space-3 $space-5;
+        font-size:   0.8em;
+        color:       $text-secondary;
+        font-style:  italic;
+        text-align:  center;
+        line-height: 1.5;
+    }
+
+    // Diagram-style images
+    &.no-chrome {
+        border-color: transparent;
+        box-shadow:   none;
     }
 }
 
