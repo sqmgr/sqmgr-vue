@@ -318,6 +318,8 @@ export default {
                 this.eventMode = 'live'
                 // Load payout config if set, otherwise use pool default
                 this.form.payoutConfig = this.grid.payoutConfig || this.pool?.numberSetConfig || 'standard'
+            } else {
+                this.eventMode = 'manual'
             }
         }
     },
