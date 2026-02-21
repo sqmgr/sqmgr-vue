@@ -179,7 +179,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     <table class="heatmap-table">
                         <thead>
                             <tr>
-                                <th class="axis-label" rowspan="2" colspan="2">Home ↓ / Away →</th>
+                                <th class="axis-label">Away →<br>Home ↓</th>
                                 <th v-for="a in 10" :key="'ah-'+a" class="away-header">{{ a - 1 }}</th>
                             </tr>
                         </thead>
