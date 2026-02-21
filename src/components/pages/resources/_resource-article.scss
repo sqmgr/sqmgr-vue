@@ -200,6 +200,19 @@ section {
     }
 }
 
+// Article images
+.article-img {
+    margin: $space-6 0;
+
+    img {
+        width:         100%;
+        height:        auto;
+        border-radius: $radius-xl;
+        border:        1px solid $light-gray;
+        display:       block;
+    }
+}
+
 // Image placeholders
 .img-placeholder {
     background:    $surface-sunken;

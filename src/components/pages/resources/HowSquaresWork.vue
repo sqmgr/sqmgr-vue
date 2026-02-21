@@ -28,7 +28,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="article-header">
             <h1>How Squares Work</h1>
             <p class="article-meta">By <router-link to="/about">Tom Peters</router-link> &middot; Updated February 2026</p>
-            <p class="article-lead">Football squares (aka, squares pool, football pool, etc.) is one of the most popular sports games in the America. You don't need to know anything about football to play, and there's no skill involved: it's pure luck. That's what makes it so fun for everyone from die-hard fans to casual viewers just watching for the commercials.</p>
+            <p class="article-lead">Football squares (aka, squares pool, football pool, etc.) is a popular way to add excitement to sporting events. You don't need to know anything about football or basketball to play, and there's no skill involved: it's pure luck. That's what makes it so fun for everyone from die-hard fans to casual viewers just watching for the commercials.</p>
         </div>
 
         <div class="article-toc">
@@ -48,9 +48,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>The 10×10 Grid</h2>
             <p>A standard football squares grid is a 10-column by 10-row table, creating 100 individual squares. The top of the grid is labeled with one team's name (typically the home team or your preferred team), and the left side is labeled with the other team's name. The columns and rows are each numbered 0 through 9 — but those numbers aren't assigned until <em>after</em> all the squares are claimed.</p>
             <p>Each square on the grid represents a unique combination of a ones digit from each team's score. For example, a square at column 7 and row 3 means you're rooting for a score where Team A's final digit is 7 and Team B's final digit is 3 (like 17-13, 27-3, 7-23, etc.).</p>
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: Empty 10×10 grid before numbers are drawn, showing blank squares and unlabeled axes</p>
+            <div class="article-img">
+                <img src="/images/resources/empty-10x10.png"
+                     srcset="/images/resources/empty-10x10.png 1x, /images/resources/empty-10x10@2x.png 2x"
+                     alt="An empty 10×10 football squares grid before numbers are drawn"
+                     loading="lazy">
             </div>
         </section>
 
@@ -137,10 +139,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <li><strong>Multiple boards:</strong> Large events sometimes run 2 or 3 boards simultaneously, letting more people participate or allowing players to buy in at different price points.</li>
                 <li><strong>Double action:</strong> Pays out both at the end of the quarter and at the end of the previous quarter using a second axis. Less common.</li>
             </ul>
-            <div class="img-placeholder">
-                <i class="fas fa-image"></i>
-                <p>Screenshot: Side-by-side comparison of the 100-square and 25-square grid layouts</p>
-            </div>
         </section>
 
         <section id="faq" class="faq-section">
