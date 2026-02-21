@@ -49,6 +49,21 @@ export default {
         return {
             releases: [
                 {
+                    version: "v2.6",
+                    major: false,
+                    date: "February 21, 2026",
+                    title: "Resources & Real Data",
+                    notes: [
+                        { type: "new", text: "Resources section with six football squares guides covering rules, strategy, best numbers, Super Bowl squares, multi-game pools, and pool setup" },
+                        { type: "new", text: "Best Numbers heatmap powered by real NFL scoring data from 2015–2025, including Super Bowl LX" },
+                        { type: "improved", text: "About page now includes a developer bio, expanded technology section with SSE pipeline details, and a GitHub profile link" },
+                        { type: "improved", text: "Added a no-wagering disclaimer to the site footer" },
+                        { type: "improved", text: "Structured data (JSON-LD) added to the homepage, About page, and all resource articles for better search visibility" },
+                        { type: "fixed", text: "Fixed event mode defaulting to \"live\" when editing a manually-configured grid" },
+                        { type: "fixed", text: "Blocked selection of secondary squares in bulk edit mode for roll100 grids" },
+                    ],
+                },
+                {
                     version: "v2.5",
                     major: false,
                     date: "February 20, 2026",
