@@ -184,10 +184,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 {
                     "@context": "https://schema.org",
                     "@type": "Article",
-                    "@id": "https://sqmgr.com/resources/how-football-squares-work",
+                    "@id": "https://sqmgr.com/resources/how-squares-work",
                     "headline": "How Football Squares Work",
                     "description": "A complete guide to football squares: the 10x10 grid, how to claim squares, how numbers are drawn, how winners are determined each quarter, and common payout structures.",
-                    "url": "https://sqmgr.com/resources/how-football-squares-work",
+                    "url": "https://sqmgr.com/resources/how-squares-work",
                     "datePublished": "2026-02-20",
                     "dateModified": "2026-02-20",
                     "author": {
@@ -207,7 +207,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     "itemListElement": [
                         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sqmgr.com/"},
                         {"@type": "ListItem", "position": 2, "name": "Resources", "item": "https://sqmgr.com/resources"},
-                        {"@type": "ListItem", "position": 3, "name": "How Football Squares Work", "item": "https://sqmgr.com/resources/how-football-squares-work"}
+                        {"@type": "ListItem", "position": 3, "name": "How Football Squares Work", "item": "https://sqmgr.com/resources/how-squares-work"}
                     ]
                 },
                 {

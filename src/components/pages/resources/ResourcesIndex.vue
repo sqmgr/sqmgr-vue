@@ -23,7 +23,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         </div>
 
         <div class="articles-grid">
-            <router-link to="/resources/how-football-squares-work" class="article-card">
+            <router-link to="/resources/how-squares-work" class="article-card">
                 <div class="article-icon"><i class="fas fa-th"></i></div>
                 <h2>How Football Squares Work</h2>
                 <p>New to football squares? Learn the complete rules, how the grid works, how numbers are drawn, and how winners are determined each quarter.</p>

@@ -180,7 +180,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <nav class="article-nav">
             <div class="article-nav-prev">
                 <span>Previous: </span>
-                <router-link to="/resources/how-football-squares-work"><i class="fas fa-arrow-left"></i> How Football Squares Work</router-link>
+                <router-link to="/resources/how-squares-work"><i class="fas fa-arrow-left"></i> How Football Squares Work</router-link>
             </div>
             <div class="article-nav-next">
                 <span>Next: </span>

@@ -227,7 +227,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="related-articles">
             <h2>More Resources</h2>
             <ul>
-                <li><router-link to="/resources/how-football-squares-work"><i class="fas fa-th"></i> How Football Squares Work</router-link></li>
+                <li><router-link to="/resources/how-squares-work"><i class="fas fa-th"></i> How Football Squares Work</router-link></li>
                 <li><router-link to="/resources/setting-up-a-pool"><i class="fas fa-plus-circle"></i> Setting Up a Pool on SqMGR</router-link></li>
                 <li><router-link to="/resources/linking-live-events-and-payouts"><i class="fas fa-link"></i> Linking Live Events &amp; Payouts</router-link></li>
                 <li><router-link to="/resources/best-numbers-in-football-squares"><i class="fas fa-chart-bar"></i> Best Numbers in Football Squares</router-link></li>
