@@ -176,7 +176,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
 <script>
     export default {
-        name: "HowFootballSquaresWork",
+        name: "HowSquaresWork",
         mounted() {
             this._jsonLd = document.createElement('script')
             this._jsonLd.type = 'application/ld+json'
