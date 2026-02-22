@@ -71,9 +71,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="example-box">
                 <h3><i class="fas fa-football-ball"></i> Common Score Progressions</h3>
-                <p>A team starting at 0 follows these typical scoring paths:</p>
-                <p>0 → 3 (FG) → 6 (FG) → 7 (TD+XP) → 10 (FG) → 13 (FG) → 14 (TD+XP) → 17 (FG) → 20 (FG) → 21 (TD+XP) → 24 (FG)...</p>
-                <p>Notice how the ones digits cycle through: 0, 3, 6, 7, 0, 3, 4, 7, 0, 1, 4 — with 0, 3, 4, and 7 appearing repeatedly.</p>
+                <p>Here are the most common NFL final scores, listed in order:</p>
+                <p>0, 3, 6, 7, 10, 13, 14, 17, 20, 21, 24, 27, 28, 30, 31, 34…</p>
+                <p>Notice how the ones digits cycle through: 0, 3, 6, 7, 0, 3, 4, 7, 0, 1, 4, 7, 8, 0, 1, 4 — with 0, 3, 4, and 7 appearing repeatedly.</p>
             </div>
         </section>
 
@@ -163,9 +163,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <h2>The Worst Numbers</h2>
             <p>Getting a score that ends in <strong>2</strong>, <strong>5</strong>, or <strong>9</strong> takes some unusual combinations:</p>
             <ul>
-                <li><strong>5 (4.7% — rarest):</strong> Very specific unusual combinations. 15 requires 1 TD + 2-pt conversion + 2 FGs with no other scoring</li>
-                <li><strong>2 (5.3%):</strong> A safety, or a specific 2-point conversion at just the right time (e.g., 12 = 1 TD + 2-pt conversion + FG)</li>
-                <li><strong>9 (6.4%):</strong> Requires non-standard scoring runs; 19 = 2 TDs + safety + extra point, for example</li>
+                <li><strong>5 (4.7% — rarest):</strong> Very specific unusual combinations. 5 requires a FG + safety. 15 requires two TDs + a 2pt conversion, or 5 field goals</li>
+                <li><strong>2 (5.3%):</strong> A safety, or a specific 2-point conversion at just the right time (e.g., 12 = 1 TD + 2 FGs, or 4 FGs)</li>
+                <li><strong>9 (6.4%):</strong> Requires non-standard scoring runs; 9 requires a TD + a safety. 19 = 2 TDs + FG + safety (14 + 3 + 2), for example</li>
             </ul>
             <p>These numbers <em>do</em> win. It's just rare enough that many seasons pass without seeing 5–2 or 9–5 at the end of a quarter. When they do hit, they're often a pleasant surprise for a lucky square holder.</p>
         </section>
@@ -402,7 +402,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p>College football tends to produce higher scores than the NFL, and the distribution of digits shifts slightly as a result. The key differences:</p>
             <ul>
                 <li><strong>0 and 7</strong> remain excellent. Still the most common, just at higher absolute scores (28, 35, 42, etc.)</li>
-                <li><strong>4</strong> stays strong as 14, 21, 24, 28, 35, 42 are all common in college games</li>
+                <li><strong>4</strong> stays strong as 14, 24, 34, and 44 are all common in college games</li>
                 <li><strong>3</strong> remains good but field goals are slightly less dominant relative to TDs in high-scoring college games</li>
                 <li><strong>Blowouts are more common:</strong> late garbage-time touchdowns shift the final digits more unpredictably in lopsided games</li>
                 <li><strong>2-point conversions</strong> are attempted far more frequently in college football, making 8 a slightly better number than in the NFL</li>
@@ -430,7 +430,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="faq-item">
                 <h3>Why is 4 better than 3 if field goals are so common?</h3>
-                <p>It seems counterintuitive, but 14, 24, and 34 (the most common scores ending in 4) require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. While field goals alone produce 3, 6, 9 (and then back to 12, etc.), the combination of touchdowns and field goals that builds to 14-point totals happens even more often. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.0%.</p>
+                <p>It seems counterintuitive, but 14, 24, and 34 (the most common scores ending in 4) require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. While field goals alone produce 3, 6, 9 (and then back to 12, etc.), the combination of touchdowns and field goals that builds to 14-point totals happens even more often. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.1%.</p>
             </div>
 
             <div class="faq-item">
@@ -542,7 +542,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         {
                             "@type": "Question",
                             "name": "Why is 4 better than 3 if field goals are so common?",
-                            "acceptedAnswer": {"@type": "Answer", "text": "It seems counterintuitive, but 14, 24, and 34 — the most common scores ending in 4 — require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.0%."}
+                            "acceptedAnswer": {"@type": "Answer", "text": "It seems counterintuitive, but 14, 24, and 34 — the most common scores ending in 4 — require a scoring structure (multiple TDs + field goals) that appears very frequently in actual games. The data from 3,315 games confirms: 4 edges out 3 at 12.8% vs 12.1%."}
                         },
                         {
                             "@type": "Question",
