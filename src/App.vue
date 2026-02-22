@@ -28,6 +28,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                      /images/logo@2x.png 2x,
                                      /images/logo@3x.png 3x"
                             alt="SqMGR"
+                            width="135"
+                            height="42"
                         />
                     </router-link>
                 </h1>
@@ -124,7 +126,7 @@ export default {
 <style lang="scss">
 @use "sass:color";
 @use 'variables.scss' as *;
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;800&family=Outfit:wght@100..900&display=swap');
+
 
 * {
     padding:    0;
@@ -554,7 +556,7 @@ button.destructive {
 
 button.secondary {
     background: transparent;
-    color:      $primary;
+    color:      $primary-dark;
     box-shadow: none;
     border:     1.5px solid color.adjust($primary, $alpha: -0.6);
 
@@ -573,7 +575,7 @@ button.secondary {
 }
 
 button, .action-btn {
-    @include sqmgrButton($primary);
+    @include sqmgrButton($primary-dark);
 
 
     &.lg {

@@ -71,7 +71,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <p class="showcase-intro">See your pool come to life with a professional, easy-to-read grid</p>
             <div class="grid-image">
                 <img src="/images/grid.png"
-                     alt="Football Squares Grid Example"/>
+                     alt="Football Squares Grid Example"
+                     width="780"
+                     height="572"/>
             </div>
         </div>
     </section>
@@ -225,6 +227,7 @@ section.index {
         img {
             max-width:     100%;
             width:         780px;
+            height:        auto;
             transform:     rotateX(6deg) rotateY(-2deg) rotateZ(0.5deg);
             box-shadow:    0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 20px rgba(0, 0, 0, 0.06);
             border-radius: $radius-xl;
