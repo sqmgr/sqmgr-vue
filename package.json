@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint src",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "prerender": "node scripts/prerender.mjs"
   },
   "simple-git-hooks": {
     "pre-commit": "./git-hooks/pre-commit"
@@ -27,6 +28,8 @@
     "globals": "^17.0.0",
     "sass": "^1.83.4",
     "simple-git-hooks": "^2.13.1",
+    "mrmime": "^2.0.1",
+    "puppeteer": "^24.9.0",
     "vite": "^7.3.1",
     "vite-plugin-sitemap": "^0.8.2",
     "vuedraggable": "^4.1.0"

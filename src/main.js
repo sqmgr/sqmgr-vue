@@ -170,6 +170,9 @@ router.beforeEach(async (to) => {
 })
 
 authService.initAuth0()
+    .catch((err) => {
+        console.warn('Auth0 init failed:', err)
+    })
     .then(() => {
         const app = createApp(App)
         app.use(router)
