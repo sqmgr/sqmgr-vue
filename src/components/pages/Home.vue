@@ -70,10 +70,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <div class="grid-showcase">
             <p class="showcase-intro">See your pool come to life with a professional, easy-to-read grid</p>
             <div class="grid-image">
-                <img src="/images/grid.png"
-                     alt="Football Squares Grid Example"
-                     width="780"
-                     height="572"/>
+                <picture>
+                    <source srcset="/images/grid.webp" type="image/webp">
+                    <img src="/images/grid.png"
+                         alt="Football Squares Grid Example"
+                         width="780"
+                         height="572"/>
+                </picture>
             </div>
         </div>
     </section>

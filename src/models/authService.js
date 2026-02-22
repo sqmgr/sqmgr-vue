@@ -16,7 +16,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 import mitt from 'mitt'
-import {createAuth0Client} from "@auth0/auth0-spa-js"
 import authConfig from "../../auth_config.json"
 
 class Auth0Service {
@@ -40,6 +39,7 @@ class Auth0Service {
 
 
     async initAuth0() {
+        const {createAuth0Client} = await import("@auth0/auth0-spa-js")
         this.auth0Client = await createAuth0Client({
             domain: authConfig.domain,
             clientId: authConfig.clientId,
