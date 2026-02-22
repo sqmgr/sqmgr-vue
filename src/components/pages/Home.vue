@@ -225,7 +225,10 @@ section.index {
     }
 
     .grid-image {
-        perspective: 1200px;
+        picture {
+            perspective: 1200px;
+            display:     block;
+        }
 
         img {
             max-width:     100%;
