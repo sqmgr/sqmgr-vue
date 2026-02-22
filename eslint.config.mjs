@@ -1,5 +1,4 @@
 import pluginVue from 'eslint-plugin-vue'
-import babelParser from '@babel/eslint-parser'
 import globals from 'globals'
 
 export default [
@@ -18,10 +17,6 @@ export default [
         ...globals.browser,
         ...globals.node,
         ...globals.es2021
-      },
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false
       }
     },
     rules: {
@@ -44,10 +39,6 @@ export default [
         ...globals.node,
         ...globals.es2021,
         __APP_VERSION__: 'readonly',
-      },
-      parserOptions: {
-        parser: babelParser,
-        requireConfigFile: false
       }
     },
     rules: {
