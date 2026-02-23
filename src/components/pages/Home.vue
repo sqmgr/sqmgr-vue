@@ -53,16 +53,16 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
 
-            <div class="feature-card persistence">
+            <div class="feature-card easy">
                 <div class="icon-container">
-                    <i class="fas fa-calendar-alt"></i>
+                    <i class="fas fa-share-nodes"></i>
                 </div>
-                <h3>Season Persistence</h3>
-                <p>Run pools for an entire season or playoffs with the same claimed squares.</p>
+                <h3>Simple Setup</h3>
+                <p>Create a pool and share it with your group in just a few clicks. No spreadsheets required.</p>
                 <ul class="benefits">
-                    <li>Re-use claimed squares</li>
-                    <li>New numbers each week</li>
-                    <li>Track all games in one place</li>
+                    <li>No account needed to participate</li>
+                    <li>Shareable invite links</li>
+                    <li>Works on any device</li>
                 </ul>
             </div>
         </div>
