@@ -35,7 +35,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             >
                         </form>
                     </template>
-                    <template v-else-if="poolConfig.isAdmin && !isSecondary">
+                    <template v-else-if="poolConfig.isPoolAdmin && !isSecondary">
                         <a href="#" @click.prevent="editClaimant=true">{{ square.claimant }}</a>
                     </template>
                     <template v-else>
@@ -101,12 +101,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <span>{{ computedAnnotation.annotation }}</span>
 
-            <a class="delete-annotation" href="#" @click.prevent="deleteAnnotation" v-if="poolConfig.isAdmin"><i
+            <a class="delete-annotation" href="#" @click.prevent="deleteAnnotation" v-if="poolConfig.isPoolAdmin"><i
                 class="fas fa-times"></i><span>Delete</span></a>
         </div>
 
         <div class="admin-actions"
-             v-if="poolConfig.isAdmin && square.state !== 'unclaimed' && (poolConfig.gridType !== 'roll100' || !isSecondary)">
+             v-if="poolConfig.isPoolAdmin && square.state !== 'unclaimed' && (poolConfig.gridType !== 'roll100' || !isSecondary)">
             <div class="admin-actions-label">Square State</div>
             <div class="state-toggle">
                 <button type="button"
@@ -142,8 +142,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </div>
         </div>
 
-        <div class="buttons" v-if="canClaim || canUnclaim || poolConfig.isAdmin">
-            <button type="button" @click.prevent="annotate" v-if="poolConfig.isAdmin" class="secondary">Add Symbol
+        <div class="buttons" v-if="canClaim || canUnclaim || poolConfig.isPoolAdmin">
+            <button type="button" @click.prevent="annotate" v-if="poolConfig.isPoolAdmin" class="secondary">Add Symbol
             </button>
             <button type="button" @click.prevent="claimSquare" v-if="canClaim">Claim</button>
             <button type="button" class="destructive" @click.prevent="unclaimSquare" v-if="canUnclaim">Relinquish
@@ -151,7 +151,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </button>
         </div>
 
-        <template v-if="poolConfig.isAdmin">
+        <template v-if="poolConfig.isPoolAdmin">
             <Logs @note-added="reloadData"
                   :pool-config="poolConfig"
                   :square-id="this.square.squareId"
@@ -239,7 +239,7 @@ export default {
             return this.square.parentSquareId > 0
         },
         canClaim() {
-            return this.square.state === 'unclaimed' && (!this.poolConfig.isLocked || this.poolConfig.isAdmin)
+            return this.square.state === 'unclaimed' && (!this.poolConfig.isLocked || this.poolConfig.isPoolAdmin)
         },
         canUnclaim() {
             if (this.square.state !== 'claimed') return false

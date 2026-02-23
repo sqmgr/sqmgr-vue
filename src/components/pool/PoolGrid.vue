@@ -510,7 +510,8 @@ export default {
             return {
                 token: this.token,
                 isLocked: this.isLocked,
-                isAdmin: this.isAdmin,
+                isAdmin: this.pool.isAdmin,
+                isPoolAdmin: this.isAdmin,
                 userId: this.userId,
                 gridType: this.pool.gridType,
             }
@@ -567,7 +568,7 @@ export default {
             return labels
         },
         isAdmin() {
-            return this.pool.isAdmin
+            return this.pool.isPoolAdmin
         },
         needsCustomization() {
             return this.grid?.homeTeamName === 'Home Team' && this.grid?.awayTeamName === 'Away Team'

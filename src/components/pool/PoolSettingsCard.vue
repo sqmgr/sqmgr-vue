@@ -44,7 +44,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </template>
                     <template v-else>
                         <span class="pool-name-display">{{ pool.name }}</span>
-                        <button v-if="pool.isAdmin" class="edit-link"
+                        <button v-if="pool.isPoolAdmin" class="edit-link"
                                 @click.prevent="editPoolName=true">
                             <i class="fas fa-edit"></i>
                         </button>
@@ -52,7 +52,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
 
-            <div class="setting-item" v-if="pool.isAdmin">
+            <div class="setting-item" v-if="pool.isPoolAdmin">
                 <label>Invite Link</label>
                 <div class="setting-value">
                     <button type="button" class="sm" v-if="inviteToken" @click="copyInviteLink">
@@ -61,7 +61,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
 
-            <div class="setting-item" v-if="pool.isAdmin">
+            <div class="setting-item" v-if="pool.isPoolAdmin">
                 <label>Join Password</label>
                 <div class="setting-value">
                     <button type="button" class="sm secondary" @click="changeJoinPassword">
@@ -92,7 +92,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <label>Number Rotation</label>
                 <div class="setting-value">
                     <span class="badge number-set-badge">{{ numberSetConfigLabel }}</span>
-                    <button v-if="pool.isAdmin && pool.canChangeNumberSetConfig"
+                    <button v-if="pool.isPoolAdmin && pool.canChangeNumberSetConfig"
                             class="edit-link"
                             @click.prevent="openChangeNumberSetConfig">
                         <i class="fas fa-edit"></i>
@@ -144,7 +144,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
 
-            <div class="setting-item" v-if="pool.isAdmin">
+            <div class="setting-item" v-if="pool.isPoolAdmin">
                 <label>Password Required?</label>
                 <div class="setting-value">
                     <div class="radio-group">
@@ -158,7 +158,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
 
-            <div class="setting-item" v-if="pool.isAdmin">
+            <div class="setting-item" v-if="pool.isPoolAdmin">
                 <label>Password Required if Locked?</label>
                 <div class="setting-value">
                     <div class="radio-group">
@@ -182,7 +182,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </div>
         </div>
 
-        <div class="card-footer" v-if="pool.isAdmin">
+        <div class="card-footer" v-if="pool.isPoolAdmin">
             <button v-if="isLocked" type="button" class="secondary" @click="unlockSquares">
                 <i class="fas fa-lock-open"></i> Open Squares
             </button>
@@ -245,7 +245,7 @@ export default {
 
         sqmgrConfig().then(config => this.config = config)
 
-        if (this.pool.isAdmin) {
+        if (this.pool.isPoolAdmin) {
             this.getInviteToken()
         }
     },

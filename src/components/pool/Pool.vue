@@ -16,7 +16,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
 <template>
-    <section class="pool" :class="{ admin: this.pool.isAdmin, rollover }">
+    <section class="pool" :class="{ admin: this.pool.isPoolAdmin, rollover }">
         <template v-if="pool">
             <div class="pool-header">
                 <h1>{{ this.pool.name }}</h1>
@@ -58,11 +58,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                 <div class="event-date">Event Date</div>
                             </div>
 
-                            <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isAdmin"
+                            <draggable v-model="grids" @start="drag=true" @end="drag=false" :disabled="!pool.isPoolAdmin"
                                        handle=".handle" @change="change" item-key="id">
                                 <template #item="{ element: grid, index: i }">
                                     <div class="grid-row">
-                                        <span v-if="pool.isAdmin" class="handle"><i
+                                        <span v-if="pool.isPoolAdmin" class="handle"><i
                                             class="fas fa-grip-vertical"></i></span>
 
                                         <span class="index">{{ i + 1 }}</span>
@@ -81,7 +81,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                             <span v-else class="unknown">Not set</span>
                                         </div>
 
-                                        <div v-if="pool.isAdmin" class="actions">
+                                        <div v-if="pool.isPoolAdmin" class="actions">
                                             <button type="button" class="icon-btn" @click.prevent="customizeGrid(grid)"
                                                     title="Customize">
                                                 <i class="fas fa-cog"></i>
@@ -116,7 +116,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             </div>
                         </div>
 
-                        <div class="card-footer" v-if="pool.isAdmin">
+                        <div class="card-footer" v-if="pool.isPoolAdmin">
                             <button :disabled="!canAddGame" type="button" @click.prevent="createGrid">
                                 <i class="fas fa-plus"></i> Add Game
                             </button>
@@ -211,7 +211,7 @@ export default {
         },
         showGetStarted() {
             // return true if there is only one grid and the original team names are still showing
-            if (!this.pool.isAdmin || !this.grids || this.grids.length !== 1) return false
+            if (!this.pool.isPoolAdmin || !this.grids || this.grids.length !== 1) return false
             const grid = this.grids[0]
             return grid.awayTeamName === 'Away Team' && grid.homeTeamName === 'Home Team'
         },
