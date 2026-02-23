@@ -218,7 +218,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td>{{ formatNumber(user.poolsJoined) }}</td>
                             <td>{{ formatDate(user.created) }}</td>
                             <td>
-                                <span v-if="user.isAdmin" class="status active">Yes</span>
+                                <span v-if="user.isSiteAdmin" class="status active">Yes</span>
                                 <span v-else class="status-muted">No</span>
                             </td>
                         </tr>

@@ -35,7 +35,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <span class="separator">|</span>
                             <span class="user-id">User ID: {{ userData.user.id }}</span>
                         </div>
-                        <div v-if="userData.user.isAdmin" class="admin-badge">Site Admin</div>
+                        <div v-if="userData.user.isSiteAdmin" class="admin-badge">Site Admin</div>
                     </div>
                 </div>
 

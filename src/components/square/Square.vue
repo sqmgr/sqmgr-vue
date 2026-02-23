@@ -265,7 +265,7 @@ export default {
         },
         paymentStateBadge() {
             // Only show if admin has toggled the feature on
-            if (!this.showPaymentStates || !this.poolConfig.isAdmin) {
+            if (!this.showPaymentStates || !this.poolConfig.hasManagerVisibility) {
                 return null
             }
 

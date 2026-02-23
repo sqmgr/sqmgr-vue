@@ -35,7 +35,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             >
                         </form>
                     </template>
-                    <template v-else-if="poolConfig.isPoolAdmin && !isSecondary">
+                    <template v-else-if="poolConfig.isPoolManager && !isSecondary">
                         <a href="#" @click.prevent="editClaimant=true">{{ square.claimant }}</a>
                     </template>
                     <template v-else>
@@ -73,11 +73,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     }}
                 </td>
             </tr>
-            <tr v-if="poolConfig.isAdmin && square.userInfo">
+            <tr v-if="poolConfig.hasManagerVisibility && square.userInfo">
                 <td>User Type</td>
                 <td>{{ square.userInfo.userType === 'registered' ? 'Registered User' : 'Guest User' }}</td>
             </tr>
-            <tr v-if="poolConfig.isAdmin && square.userInfo && square.userInfo.userType === 'registered'">
+            <tr v-if="poolConfig.hasManagerVisibility && square.userInfo && square.userInfo.userType === 'registered'">
                 <td>Email</td>
                 <td>{{ square.userInfo.email || 'Not available' }}</td>
             </tr>
@@ -101,13 +101,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <span>{{ computedAnnotation.annotation }}</span>
 
-            <a class="delete-annotation" href="#" @click.prevent="deleteAnnotation" v-if="poolConfig.isPoolAdmin"><i
+            <a class="delete-annotation" href="#" @click.prevent="deleteAnnotation" v-if="poolConfig.isPoolManager"><i
                 class="fas fa-times"></i><span>Delete</span></a>
         </div>
 
-        <div class="admin-actions"
-             v-if="poolConfig.isPoolAdmin && square.state !== 'unclaimed' && (poolConfig.gridType !== 'roll100' || !isSecondary)">
-            <div class="admin-actions-label">Square State</div>
+        <div class="manager-actions"
+             v-if="poolConfig.isPoolManager && square.state !== 'unclaimed' && (poolConfig.gridType !== 'roll100' || !isSecondary)">
+            <div class="manager-actions-label">Square State</div>
             <div class="state-toggle">
                 <button type="button"
                         class="state-toggle-btn"
@@ -142,8 +142,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </div>
         </div>
 
-        <div class="buttons" v-if="canClaim || canUnclaim || poolConfig.isPoolAdmin">
-            <button type="button" @click.prevent="annotate" v-if="poolConfig.isPoolAdmin" class="secondary">Add Symbol
+        <div class="buttons" v-if="canClaim || canUnclaim || poolConfig.isPoolManager">
+            <button type="button" @click.prevent="annotate" v-if="poolConfig.isPoolManager" class="secondary">Add Symbol
             </button>
             <button type="button" @click.prevent="claimSquare" v-if="canClaim">Claim</button>
             <button type="button" class="destructive" @click.prevent="unclaimSquare" v-if="canUnclaim">Relinquish
@@ -151,7 +151,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </button>
         </div>
 
-        <template v-if="poolConfig.isPoolAdmin">
+        <template v-if="poolConfig.isPoolManager">
             <Logs @note-added="reloadData"
                   :pool-config="poolConfig"
                   :square-id="this.square.squareId"
@@ -239,7 +239,7 @@ export default {
             return this.square.parentSquareId > 0
         },
         canClaim() {
-            return this.square.state === 'unclaimed' && (!this.poolConfig.isLocked || this.poolConfig.isPoolAdmin)
+            return this.square.state === 'unclaimed' && (!this.poolConfig.isLocked || this.poolConfig.isPoolManager)
         },
         canUnclaim() {
             if (this.square.state !== 'claimed') return false
@@ -509,14 +509,14 @@ table {
     }
 }
 
-.admin-actions {
+.manager-actions {
     margin-top:    $space-5;
     padding:       $space-4;
     background:    $surface-sunken;
     border-radius: $radius-lg;
     border:        1px solid $light-gray;
 
-    .admin-actions-label {
+    .manager-actions-label {
         font-size:      0.75rem;
         font-weight:    600;
         text-transform: uppercase;

@@ -97,8 +97,8 @@ const routes = [
     {path: '/pool/:token/join', component: PoolJoin, props: true},
     {path: '/pool/:token/game/all', component: PoolGridAll, props: true, meta: {requirePoolMembership: true}},
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
-    {path: '/admin', component: Admin, meta: {requireAdmin: true, title: 'Admin'}},
-    {path: '/admin/user/:userId', component: AdminUser, props: true, meta: {requireAdmin: true, title: 'Admin - User Details'}},
+    {path: '/admin', component: Admin, meta: {requireSiteAdmin: true, title: 'Admin'}},
+    {path: '/admin/user/:userId', component: AdminUser, props: true, meta: {requireSiteAdmin: true, title: 'Admin - User Details'}},
     {path: '/:pathMatch(.*)*', component: NotFound, meta: {title: 'Page Not Found'}},
 ]
 
@@ -135,11 +135,11 @@ router.beforeEach(async (to) => {
         return true
     }
 
-    if (to.meta.requireAdmin) {
+    if (to.meta.requireSiteAdmin) {
         try {
             await authService.loadProfile()
             const user = await sqmgrClient.getUser()
-            if (!user.is_admin) {
+            if (!user.is_site_admin) {
                 return '/'
             }
         } catch {

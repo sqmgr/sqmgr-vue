@@ -79,13 +79,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="grid-layout">
                     <aside class="grid-sidebar">
                         <!-- Admin Menu Card -->
-                        <template v-if="isAdmin">
-                            <div class="card admin-card">
+                        <template v-if="isPoolManager">
+                            <div class="card manager-card">
                                 <div class="card-header">
                                     <i class="fas fa-cog"></i>
-                                    <h3>Admin Actions</h3>
+                                    <h3>Manager Actions</h3>
                                 </div>
-                                <div class="admin-actions">
+                                <div class="manager-actions">
                                     <button type="button" class="action-btn"
                                             :class="{ 'needs-setup': needsCustomization }"
                                             @click.prevent="customizeWasClicked">
@@ -282,7 +282,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
                     <div class="grid-main">
                         <BulkEditToolbar
-                            v-if="highlightState.bulkMode && isAdmin"
+                            v-if="highlightState.bulkMode && isPoolManager"
                             :token="token"
                             :selected-squares="highlightState.selectedSquares"
                             :squares-data="squares"
@@ -337,7 +337,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         </div>
 
                         <!-- Activity Log Card -->
-                        <div v-if="isAdmin" class="card logs-card">
+                        <div v-if="isPoolManager" class="card logs-card">
                             <div class="card-header">
                                 <i class="fas fa-history"></i>
                                 <h3>Activity Log</h3>
@@ -510,8 +510,8 @@ export default {
             return {
                 token: this.token,
                 isLocked: this.isLocked,
-                isAdmin: this.pool.isAdmin,
-                isPoolAdmin: this.isAdmin,
+                hasManagerVisibility: this.pool.hasManagerVisibility,
+                isPoolManager: this.isPoolManager,
                 userId: this.userId,
                 gridType: this.pool.gridType,
             }
@@ -567,8 +567,8 @@ export default {
             }
             return labels
         },
-        isAdmin() {
-            return this.pool.isPoolAdmin
+        isPoolManager() {
+            return this.pool.isPoolManager
         },
         needsCustomization() {
             return this.grid?.homeTeamName === 'Home Team' && this.grid?.awayTeamName === 'Away Team'
@@ -723,7 +723,7 @@ export default {
             return classes
         },
         fetchLogs() {
-            if (!this.isAdmin) {
+            if (!this.isPoolManager) {
                 return
             }
 
@@ -1511,9 +1511,9 @@ p.add-note {
     @include card-footer;
 }
 
-// Admin Actions Card
-.admin-card {
-    .admin-actions {
+// Manager Actions Card
+.manager-card {
+    .manager-actions {
         padding: $space-3;
     }
 
@@ -1924,7 +1924,7 @@ p.add-note {
     .page-header { display: none; }
     .notes-screen { display: none; }
     .branding-screen { display: none; }
-    .admin-card { display: none; }
+    .manager-card { display: none; }
     .sidebar-extra { display: none; }
     .settings-card { display: none; }
     .legend-card { display: none; }
