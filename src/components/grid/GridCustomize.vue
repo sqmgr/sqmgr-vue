@@ -319,7 +319,12 @@ export default {
                 // Load payout config if set, otherwise use pool default
                 this.form.payoutConfig = this.grid.payoutConfig || this.pool?.numberSetConfig || 'standard'
             } else {
-                this.eventMode = 'manual'
+                // Only switch to manual if the user has actually customized the grid
+                const hasCustomTeams = (this.grid.homeTeamName && this.grid.homeTeamName !== 'Home Team') ||
+                    (this.grid.awayTeamName && this.grid.awayTeamName !== 'Away Team')
+                if (hasCustomTeams) {
+                    this.eventMode = 'manual'
+                }
             }
         }
     },
