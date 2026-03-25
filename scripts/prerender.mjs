@@ -72,6 +72,9 @@ async function prerender() {
             const url = `http://localhost:${PORT}${route}`
             console.log(`Rendering ${route} ...`)
 
+            await page.evaluateOnNewDocument(() => {
+                localStorage.setItem('cookies', 'true')
+            })
             await page.goto(url, { waitUntil: 'networkidle0' })
             await page.waitForSelector('#app > *', { timeout: 10000 })
 

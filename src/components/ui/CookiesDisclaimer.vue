@@ -40,11 +40,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         name: "CookiesDisclaimer",
         data() {
             return {
-                allowed: true
+                allowed: cookiesGranter.isAllowed()
             }
-        },
-        mounted() {
-            this.allowed = cookiesGranter.isAllowed()
         },
         methods: {
             allowCookies() {
