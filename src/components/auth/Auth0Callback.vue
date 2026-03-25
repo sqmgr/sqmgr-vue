@@ -30,7 +30,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         name: "Auth0Callback",
         methods: {
             handleLoginEvent(data) {
-                console.log("handleLoginEvent")
+                if (!data.loggedIn || !data.state) return
                 this.$router.push(data.state.target || "/")
             }
         },

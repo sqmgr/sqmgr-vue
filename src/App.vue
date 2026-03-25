@@ -97,6 +97,7 @@ export default {
         }
     },
     async created() {
+        if (window.location.pathname === '/callback') return
         try {
             await this.$auth.loadProfile()
         } catch {
