@@ -49,6 +49,34 @@ export default {
         return {
             releases: [
                 {
+                    version: "v2.8",
+                    major: false,
+                    date: "March 25, 2026",
+                    title: "Sign-In & Setup Fixes",
+                    notes: [
+                        { type: "improved", text: "Pool admins are now called pool managers" },
+                        { type: "improved", text: "New grids now default to \"Link to Event\" instead of manual team entry" },
+                        { type: "improved", text: "Home page now highlights simple setup — no account needed, shareable links, works on any device" },
+                        { type: "fixed", text: "Fixed a redirect loop that could leave you stuck after signing in" },
+                        { type: "fixed", text: "Fixed the cookie banner briefly flashing on pre-rendered pages" },
+                    ],
+                },
+                {
+                    version: "v2.7",
+                    major: false,
+                    date: "February 22, 2026",
+                    title: "Performance & Accessibility",
+                    notes: [
+                        { type: "improved", text: "Pages load dramatically faster — Lighthouse performance score improved from 68 to 99" },
+                        { type: "improved", text: "Static pages are now pre-rendered so search engines see the full content without running JavaScript" },
+                        { type: "improved", text: "Smaller main bundle and a WebP hero image for quicker loads on mobile" },
+                        { type: "improved", text: "Darkened button colors to meet WCAG AA contrast, bringing the accessibility score to 100" },
+                        { type: "fixed", text: "Fixed a Forbidden error when site admins viewed the invite link for a pool they don't manage" },
+                        { type: "fixed", text: "Corrected several figures on the Best Numbers page" },
+                        { type: "fixed", text: "Fixed the home page grid image losing its perspective effect" },
+                    ],
+                },
+                {
                     version: "v2.6",
                     major: false,
                     date: "February 21, 2026",
