@@ -22,6 +22,7 @@ import AuthPlugin from './plugins/auth'
 import accessTokenManager from "@/models/accessTokenManager"
 import sqmgrClient from "@/models/sqmgrClient"
 import authService from "@/models/authService"
+import installChunkReload from "@/utils/chunkReload"
 import './assets/forms.css'
 
 // Keep eager: Home, HomeHeader, Auth0Callback (critical path)
@@ -113,6 +114,9 @@ const router = createRouter({
         }
     },
 })
+
+// Recover from stale lazy-loaded chunks after a deploy
+installChunkReload(router)
 
 router.beforeEach(async (to) => {
     if (to.meta.title) {
