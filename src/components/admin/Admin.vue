@@ -34,6 +34,36 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             {{ period.label }}
                         </button>
                     </div>
+
+                    <div class="custom-range" v-if="selectedPeriod === 'custom'">
+                        <div class="custom-range-inputs">
+                            <label class="custom-range-field">
+                                <span class="custom-range-label">Start</span>
+                                <input
+                                    type="date"
+                                    v-model="customStart"
+                                    :max="customEnd || undefined"
+                                />
+                            </label>
+                            <label class="custom-range-field">
+                                <span class="custom-range-label">End</span>
+                                <input
+                                    type="date"
+                                    v-model="customEnd"
+                                    :min="customStart || undefined"
+                                />
+                            </label>
+                            <button
+                                type="button"
+                                class="small apply-btn"
+                                :disabled="!customStart || !customEnd || statsLoading"
+                                @click="applyCustomRange"
+                            >
+                                Apply
+                            </button>
+                        </div>
+                        <div v-if="customRangeError" class="error custom-range-error">{{ customRangeError }}</div>
+                    </div>
                 </div>
 
                 <div class="stats" v-if="stats">
@@ -60,6 +90,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
                 <div v-else-if="statsLoading" class="loading">Loading statistics...</div>
                 <div v-else-if="statsError" class="error">{{ statsError }}</div>
+                <div v-else-if="selectedPeriod === 'custom'" class="stats-placeholder">Select a date range and click Apply</div>
             </div>
 
             <div class="tabs">
@@ -369,7 +400,11 @@ export default {
                 {value: 'week', label: 'Last Week'},
                 {value: 'month', label: 'Last Month'},
                 {value: 'year', label: 'Last Year'},
+                {value: 'custom', label: 'Custom'},
             ],
+            customStart: '',
+            customEnd: '',
+            customRangeError: null,
 
             pools: null,
             poolsLoading: true,
@@ -490,10 +525,18 @@ export default {
         },
 
         async fetchStats() {
+            if (this.selectedPeriod === 'custom') {
+                // Don't fire a request until both dates are present and valid.
+                if (!this.customStart || !this.customEnd || !this.validateCustomRange()) return
+            }
+
             this.statsLoading = true
             this.statsError = null
             try {
-                this.stats = await sqmgrClient.getAdminStats(this.selectedPeriod)
+                this.stats = await sqmgrClient.getAdminStats(this.selectedPeriod, {
+                    start: this.customStart,
+                    end: this.customEnd,
+                })
             } catch (err) {
                 this.statsError = this.getErrorMessage(err)
             } finally {
@@ -504,6 +547,27 @@ export default {
         selectPeriod(period) {
             if (this.selectedPeriod === period) return
             this.selectedPeriod = period
+            this.customRangeError = null
+            if (period === 'custom') {
+                // Wait for the user to pick both dates and click Apply.
+                this.stats = null
+                return
+            }
+            this.fetchStats()
+        },
+
+        validateCustomRange() {
+            if (this.customStart && this.customEnd && this.customStart > this.customEnd) {
+                this.customRangeError = 'Start date must be on or before the end date.'
+                return false
+            }
+            this.customRangeError = null
+            return true
+        },
+
+        applyCustomRange() {
+            if (!this.customStart || !this.customEnd) return
+            if (!this.validateCustomRange()) return
             this.fetchStats()
         },
 
@@ -805,6 +869,58 @@ h2 {
                 box-shadow:   0 2px 4px rgba(0, 0, 0, 0.1);
             }
         }
+
+        .custom-range {
+            margin-top: $space-3;
+        }
+
+        .custom-range-inputs {
+            display:     flex;
+            align-items: flex-end;
+            gap:         $space-3;
+            flex-wrap:   wrap;
+        }
+
+        .custom-range-field {
+            display:        flex;
+            flex-direction: column;
+            gap:            $minimal-spacing;
+
+            .custom-range-label {
+                font-weight:    600;
+                color:          var(--gray);
+                font-size:      0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            input[type="date"] {
+                border:        1px solid #e0e0e0;
+                border-radius: $radius-md;
+                padding:       5px 10px;
+                font-size:     0.9rem;
+                font-family:   inherit;
+                color:         $text-color;
+                background:    white;
+
+                &:focus {
+                    outline:      none;
+                    border-color: var(--primary);
+                }
+            }
+        }
+
+        .apply-btn {
+            &:disabled {
+                opacity:        0.5;
+                cursor:         not-allowed;
+            }
+        }
+
+        .custom-range-error {
+            margin-top: $space-2;
+            font-size:  0.85rem;
+        }
     }
 }
 
@@ -915,13 +1031,17 @@ button.small {
     font-size: 0.9em;
 }
 
-.loading, .error, .no-pools {
+.loading, .error, .no-pools, .stats-placeholder {
     padding:    var(--spacing);
     text-align: center;
 }
 
 .error {
     @include alert-error;
+}
+
+.stats-placeholder {
+    color: var(--gray);
 }
 
 .clickable-row {

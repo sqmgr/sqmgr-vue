@@ -371,10 +371,17 @@ class sqmgrClient {
     }
 
     // Admin methods
-    async getAdminStats(period = 'all') {
+    async getAdminStats(period = 'all', { start, end } = {}) {
         const query = {}
         if (period && period !== 'all') {
             query.period = period
+        }
+        if (period === 'custom') {
+            if (!start || !end) {
+                throw new Error('start and end are required for a custom period')
+            }
+            query.start = start
+            query.end = end
         }
         return this.request('/admin/stats', Object.keys(query).length > 0 ? query : null)
     }
