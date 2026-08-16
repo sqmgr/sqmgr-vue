@@ -240,9 +240,7 @@ export default {
     margin-bottom: var(--spacing);
 
     .loading {
-        padding: var(--spacing);
-        text-align: center;
-        color: var(--dark-gray);
+        @include picker-message;
     }
 
     .searching {
@@ -377,9 +375,7 @@ export default {
     }
 
     .no-events, .no-results {
-        padding: var(--spacing);
-        text-align: center;
-        color: var(--dark-gray);
+        @include picker-message;
         font-style: italic;
     }
 }

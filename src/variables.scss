@@ -84,6 +84,40 @@ $breakpoint-lg:      800px;
     border-radius: $radius-lg;
 }
 
+// Inline informational callout used above form controls
+@mixin hint-box {
+    display:       flex;
+    align-items:   center;
+    gap:           $space-2;
+    padding:       $space-2 $space-3;
+    margin-bottom: $space-3;
+    background:    $primary-50;
+    border:        1px solid $primary-100;
+    border-radius: $radius-md;
+    font-size:     0.85em;
+    color:         $primary-dark;
+
+    i {
+        flex-shrink: 0;
+        font-size:   0.85em;
+    }
+}
+
+// Small explanatory text below a form control
+@mixin helper-text {
+    display:    block;
+    margin-top: $space-1;
+    color:      $dark-gray;
+    font-size:  0.85em;
+}
+
+// Centered status message inside a picker (loading, no results)
+@mixin picker-message {
+    padding:    $standard-spacing;
+    text-align: center;
+    color:      $dark-gray;
+}
+
 @mixin mobile { @media (max-width: $breakpoint-md) { @content; } }
 
 @mixin tablet { @media (max-width: $breakpoint-lg) { @content; } }

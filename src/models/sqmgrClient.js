@@ -246,6 +246,22 @@ class sqmgrClient {
             })
     }
 
+    linkSeason(token, league, teamId) {
+        return this.request(`/pool/${token}/season`, null, true, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                league,
+                teamId,
+            })
+        })
+            // the request can fail after some grids were already created (e.g. the grid limit
+            // was reached), so the grid list has to be refreshed either way
+            .finally(() => EventBus.emit(GRID_UPDATED, true))
+    }
+
     getSquareByTokenAndSquareId(token, squareId, gridId = null) {
         const query = gridId ? { gridId } : null
         return this.request(`/pool/${token}/square/${squareId}`, query)

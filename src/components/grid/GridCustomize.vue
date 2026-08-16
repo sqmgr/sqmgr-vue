@@ -40,7 +40,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <fieldset>
                 <legend>Event Setup</legend>
 
-                <div class="event-mode-toggle">
+                <div class="event-mode-toggle" :class="{ 'three-up': canLinkSeason }">
                     <label class="event-mode-card" :class="{ active: eventMode === 'live' }">
                         <input type="radio" v-model="eventMode" value="live">
                         <span class="event-mode-content">
@@ -48,6 +48,16 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <span class="event-mode-text">
                                 <span class="event-mode-title">Link to Event</span>
                                 <span class="event-mode-desc">Search for a real game &mdash; teams, colors, and scores update automatically</span>
+                            </span>
+                        </span>
+                    </label>
+                    <label v-if="canLinkSeason" class="event-mode-card" :class="{ active: eventMode === 'season', disabled: form.bdlEventId }">
+                        <input type="radio" v-model="eventMode" value="season" :disabled="form.bdlEventId">
+                        <span class="event-mode-content">
+                            <span class="event-mode-icon"><i class="fas fa-calendar-days"></i></span>
+                            <span class="event-mode-text">
+                                <span class="event-mode-title">Link to Season</span>
+                                <span class="event-mode-desc">Pick a team &mdash; one grid is created for each of their remaining games</span>
                             </span>
                         </span>
                     </label>
@@ -63,6 +73,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </label>
                 </div>
 
+                <SeasonLink v-if="isSeasonMode" @change="onSeasonChanged"/>
+
                 <EventSearch
                     v-if="eventMode === 'live' && !form.bdlEventId"
                     ref="eventSearch"
@@ -70,7 +82,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     :initial-event="form.bdlEvent"
                 />
 
-                <div v-if="form.bdlEventId" class="linked-event-notice">
+                <div v-if="form.bdlEventId && !isSeasonMode" class="linked-event-notice">
                     <div class="linked-event-header">
                         <span class="linked-event-icon">
                             <i class="fas fa-link"></i>
@@ -102,7 +114,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset v-if="!isSeasonMode">
                 <legend>Teams</legend>
 
                 <div v-if="eventMode === 'live' && !form.bdlEventId" class="autofill-hint">
@@ -116,7 +128,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset v-if="!isSeasonMode">
                 <legend>Event Details</legend>
 
                 <div class="field">
@@ -180,7 +192,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="buttons">
                 <button type="button" class="secondary" @click.prevent="didClickCancel">Cancel</button>
-                <button type="submit" name="submit">Save</button>
+                <button type="submit" name="submit" :disabled="submitDisabled">{{ submitLabel }}</button>
             </div>
         </form>
     </section>
@@ -189,13 +201,14 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 <script>
 import GridCustomizeTeam from './GridCustomizeTeam.vue'
 import EventSearch from '../admin/EventSearch.vue'
+import SeasonLink from './SeasonLink.vue'
 import ModalController from '@/controllers/ModalController'
 import sqmgrClient from "@/models/sqmgrClient"
 import sqmgrConfig from "@/models/sqmgrConfig"
 
 export default {
     name: "GridCustomize",
-    components: {GridCustomizeTeam, EventSearch},
+    components: {GridCustomizeTeam, EventSearch, SeasonLink},
     props: {
         token: {
             type: String,
@@ -217,6 +230,11 @@ export default {
             notesMaxLength: 200,
             imageError: false,
             eventMode: 'live',
+            seasonSubmitting: false,
+            season: {
+                league: '',
+                teamId: '',
+            },
             form: {
                 eventDate: '0000-00-00',
                 notes: '',
@@ -241,6 +259,21 @@ export default {
         }
     },
     computed: {
+        // linking a season creates several grids at once, so it's only offered when creating a new grid
+        canLinkSeason() {
+            return !this.grid
+        },
+        isSeasonMode() {
+            return this.eventMode === 'season'
+        },
+        submitLabel() {
+            if (!this.isSeasonMode) return 'Save'
+            return this.seasonSubmitting ? 'Creating…' : 'Create Grids'
+        },
+        submitDisabled() {
+            if (!this.isSeasonMode) return false
+            return this.seasonSubmitting || !this.season.league || !this.season.teamId
+        },
         linkedEventDescription() {
             if (!this.form.bdlEvent) return ''
             const event = this.form.bdlEvent
@@ -290,6 +323,14 @@ export default {
             return this.form.bdlEvent?.league === 'ncaab'
         },
     },
+    watch: {
+        // SeasonLink is unmounted whenever the mode changes, so drop the selection it was holding.
+        // Otherwise switching away and back would leave a stale team selected behind empty selects.
+        eventMode() {
+            this.season.league = ''
+            this.season.teamId = ''
+        },
+    },
     created() {
         sqmgrConfig()
             .then(config => this.notesMaxLength = config.notesMaxLength)
@@ -330,6 +371,11 @@ export default {
     },
     methods: {
         submit() {
+            if (this.isSeasonMode) {
+                this.doLinkSeason()
+                return
+            }
+
             // Check if branding image URL is broken
             if (this.form.brandingImageUrl && this.imageError) {
                 ModalController.showPrompt(
@@ -393,6 +439,71 @@ export default {
 
                     ModalController.showError(err)
                 })
+        },
+        onSeasonChanged({league, teamId}) {
+            this.season.league = league
+            this.season.teamId = teamId
+        },
+        doLinkSeason() {
+            this.errors = null
+
+            if (!this.season.league || !this.season.teamId || this.seasonSubmitting) {
+                return
+            }
+
+            this.seasonSubmitting = true
+
+            sqmgrClient.linkSeason(this.token, this.season.league, this.season.teamId)
+                .then(res => {
+                    const result = res || {}
+                    ModalController.hide()
+                    ModalController.showPrompt('Season Linked', this.seasonSummary(result.created, result.skipped, result.replaced), {
+                        dismissButton: 'OK',
+                    })
+                })
+                .catch(err => {
+                    // the API rejects the request outright when the team has nothing left to schedule
+                    if (/no upcoming games/i.test(err.message || '')) {
+                        ModalController.showPrompt('No Upcoming Games', 'No upcoming games were found for that team.', {
+                            dismissButton: 'OK',
+                        })
+                        return
+                    }
+
+                    if (err.validationErrors) {
+                        this.errors = err.validationErrors
+                    }
+
+                    ModalController.showError(err)
+                })
+                .finally(() => this.seasonSubmitting = false)
+        },
+        seasonSummary(created, skipped, replaced) {
+            const createdCount = created || 0
+            const skippedCount = skipped || 0
+            const wasReplaced = !!replaced
+
+            if (createdCount === 0) {
+                return `Every upcoming game for that team is already in this pool. ${this.gridsLabel(skippedCount)} skipped.`
+            }
+
+            let summary
+            if (wasReplaced) {
+                const gamesLabel = createdCount === 1 ? '1 game' : `${createdCount} games`
+                const verbPhrase = createdCount === 1 ? 'A grid was set up' : 'Grids were set up'
+                summary = `${verbPhrase} for ${gamesLabel} (your existing empty grid was used for the first game).`
+            } else {
+                summary = `${this.gridsLabel(createdCount)} added for the rest of the season.`
+            }
+
+            if (skippedCount > 0) {
+                summary += ` ${this.gridsLabel(skippedCount)} skipped because the game was already in this pool.`
+            }
+
+            return summary
+        },
+        gridsLabel(count) {
+            return count === 1 ? '1 grid was' : `${count} grids were`
         },
         didClickCancel() {
             this.$emit('canceled')
@@ -514,6 +625,15 @@ section.grid-customize {
     gap: $space-3;
     margin-bottom: $space-4;
 
+    &.three-up {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        @include tablet {
+            grid-template-columns: 1fr;
+            gap: $space-2;
+        }
+    }
+
     @include mobile {
         grid-template-columns: 1fr;
         gap: $space-2;
@@ -600,21 +720,7 @@ section.grid-customize {
 }
 
 .autofill-hint {
-    display: flex;
-    align-items: center;
-    gap: $space-2;
-    padding: $space-2 $space-3;
-    margin-bottom: $space-3;
-    background: $primary-50;
-    border: 1px solid $primary-100;
-    border-radius: $radius-md;
-    font-size: 0.85em;
-    color: $primary-dark;
-
-    i {
-        flex-shrink: 0;
-        font-size: 0.85em;
-    }
+    @include hint-box;
 }
 
 .teams-row {
@@ -757,10 +863,7 @@ section.grid-customize {
 }
 
 .helper-text {
-    display:    block;
-    margin-top: 4px;
-    color:      #666;
-    font-size:  0.85em;
+    @include helper-text;
 }
 
 .error-text {
