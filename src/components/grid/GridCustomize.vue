@@ -57,7 +57,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <span class="event-mode-icon"><i class="fas fa-calendar-days"></i></span>
                             <span class="event-mode-text">
                                 <span class="event-mode-title">Link to Season</span>
-                                <span class="event-mode-desc">Pick a team &mdash; one grid is created for each of their remaining games</span>
+                                <span class="event-mode-desc">Pick a team &mdash; all events for the season are added</span>
                             </span>
                         </span>
                     </label>

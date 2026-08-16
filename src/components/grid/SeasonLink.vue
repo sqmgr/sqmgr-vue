@@ -19,8 +19,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
     <div class="season-link">
         <div class="season-hint">
             <i class="fas fa-wand-magic-sparkles"></i>
-            Pick a team and a grid will be created for each of their remaining games. Games already in this pool are
-            skipped.
+            Pick a team and a grid will be created for each of their remaining games.
         </div>
 
         <div class="field">
