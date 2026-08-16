@@ -54,10 +54,7 @@ export default {
                     date: "August 15, 2026",
                     title: "Link to Season",
                     notes: [
-                        { type: "new", text: "Link a whole season to your pool — pick an NFL or NCAAF team and a grid is created for each of their remaining games" },
-                        { type: "new", text: "A single \"Playoffs\" option creates grids for every remaining postseason game in the league" },
-                        { type: "improved", text: "Games already linked in your pool are skipped automatically, so linking a season only fills in the missing weeks" },
-                        { type: "improved", text: "Linking a season into a brand-new pool uses the untouched starter grid for the first game instead of leaving it empty" },
+                        { type: "new", text: "Link a whole season to your pool — pick an NFL or NCAAF team and a grid is created for each of their games" },
                     ],
                 },
                 {
