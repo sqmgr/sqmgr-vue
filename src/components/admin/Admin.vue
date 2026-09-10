@@ -1087,6 +1087,9 @@ h2 {
         display:        flex;
         flex-direction: column;
         gap:            $minimal-spacing;
+        // Global label styles add a bottom margin that would push the
+        // controls above the row's baseline.
+        margin-bottom:  0;
 
         .filter-label {
             font-weight:    600;
@@ -1111,6 +1114,11 @@ h2 {
                 border-color: var(--primary);
             }
         }
+    }
+
+    // Match the height of the controls so the button sits on the same line
+    button {
+        min-height: 44px;
     }
 }
 
