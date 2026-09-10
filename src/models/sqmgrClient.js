@@ -430,10 +430,13 @@ class sqmgrClient {
         return this.request('/admin/users', query)
     }
 
-    async getAdminEvents(offset = 0, limit = 25, sortBy = '', sortDir = 'desc') {
+    async getAdminEvents(offset = 0, limit = 25, sortBy = '', sortDir = 'desc', filters = {}) {
         const query = { offset, limit }
         if (sortBy) query.sortBy = sortBy
         if (sortDir) query.sortDir = sortDir
+        for (const key of ['league', 'status', 'start', 'end']) {
+            if (filters[key]) query[key] = filters[key]
+        }
         return this.request('/admin/events', query)
     }
 

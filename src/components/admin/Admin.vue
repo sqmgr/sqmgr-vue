@@ -270,6 +270,53 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <div v-if="activeTab === 'events'" class="tab-content">
                 <h2>Linked Events</h2>
 
+                <div class="events-filters">
+                    <label class="filter-field">
+                        <span class="filter-label">League</span>
+                        <select :value="eventsLeague" @change="setEventsFilter('league', $event.target.value)">
+                            <option value="">All Leagues</option>
+                            <option v-for="league in eventLeagues" :key="league.value" :value="league.value">
+                                {{ league.label }}
+                            </option>
+                        </select>
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Status</span>
+                        <select :value="eventsStatus" @change="setEventsFilter('status', $event.target.value)">
+                            <option value="">All Statuses</option>
+                            <option v-for="status in eventStatuses" :key="status.value" :value="status.value">
+                                {{ status.label }}
+                            </option>
+                        </select>
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">From</span>
+                        <input
+                            type="date"
+                            :value="eventsStart"
+                            :max="eventsEnd || undefined"
+                            @change="setEventsFilter('start', $event.target.value)"
+                        />
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">To</span>
+                        <input
+                            type="date"
+                            :value="eventsEnd"
+                            :min="eventsStart || undefined"
+                            @change="setEventsFilter('end', $event.target.value)"
+                        />
+                    </label>
+                    <button
+                        v-if="eventsFiltersActive"
+                        type="button"
+                        class="secondary sm"
+                        @click="clearEventsFilters"
+                    >
+                        Clear Filters
+                    </button>
+                </div>
+
                 <div v-if="eventsLoading" class="loading">Loading events...</div>
                 <div v-else-if="eventsError" class="error">{{ eventsError }}</div>
                 <div v-else-if="events && events.events && events.events.length > 0">
@@ -371,7 +418,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         @page="goToPage"
                     />
                 </div>
-                <div v-else class="no-pools">No events with linked grids found.</div>
+                <div v-else class="no-pools">
+                    {{ eventsFiltersActive ? 'No events match the selected filters.' : 'No events with linked grids found.' }}
+                </div>
             </div>
         </div>
     </section>
@@ -428,6 +477,18 @@ export default {
             eventGridsLoading: {},
             eventGridsPage: {},
             eventGridsPerPage: 25,
+            eventLeagues: [
+                {value: 'nfl', label: 'NFL'},
+                {value: 'nba', label: 'NBA'},
+                {value: 'wnba', label: 'WNBA'},
+                {value: 'ncaab', label: 'NCAAB'},
+                {value: 'ncaaf', label: 'NCAAF'},
+            ],
+            eventStatuses: [
+                {value: 'scheduled', label: 'Scheduled'},
+                {value: 'in_progress', label: 'In Progress'},
+                {value: 'final', label: 'Final'},
+            ],
 
             // Local input state for responsive typing
             searchInput: '',
@@ -463,6 +524,30 @@ export default {
         },
         eventsSortDirection() {
             return this.$route.query.dir === 'asc' ? 'asc' : 'desc'
+        },
+        eventsLeague() {
+            const league = this.$route.query.league
+            return this.eventLeagues.some(l => l.value === league) ? league : ''
+        },
+        eventsStatus() {
+            const status = this.$route.query.status
+            return this.eventStatuses.some(s => s.value === status) ? status : ''
+        },
+        eventsStart() {
+            return this.isoDateOrEmpty(this.$route.query.start)
+        },
+        eventsEnd() {
+            return this.isoDateOrEmpty(this.$route.query.end)
+        },
+        eventsFiltersActive() {
+            return !!(this.eventsLeague || this.eventsStatus || this.eventsStart || this.eventsEnd)
+        },
+        eventsDateRangeError() {
+            // ISO dates compare correctly as strings
+            if (this.eventsStart && this.eventsEnd && this.eventsStart > this.eventsEnd) {
+                return 'The From date must be on or before the To date.'
+            }
+            return null
         },
     },
     async beforeMount() {
@@ -521,7 +606,10 @@ export default {
 
         switchTab(tab) {
             if (this.activeTab === tab) return
-            this.updateUrl({ tab, page: null, search: null, sort: null, dir: null })
+            this.updateUrl({
+                tab, page: null, search: null, sort: null, dir: null,
+                league: null, status: null, start: null, end: null,
+            })
         },
 
         async fetchStats() {
@@ -661,6 +749,14 @@ export default {
         },
 
         async fetchEvents() {
+            if (this.eventsDateRangeError) {
+                // The API would reject this range, so surface the problem
+                // inline and wait for the user to fix it.
+                this.events = null
+                this.eventsError = this.eventsDateRangeError
+                return
+            }
+
             this.eventsLoading = true
             this.eventsError = null
             const offset = (this.currentPage - 1) * this.eventsPerPage
@@ -669,13 +765,31 @@ export default {
                     offset,
                     this.eventsPerPage,
                     this.eventsSortColumn,
-                    this.eventsSortDirection
+                    this.eventsSortDirection,
+                    {
+                        league: this.eventsLeague,
+                        status: this.eventsStatus,
+                        start: this.eventsStart,
+                        end: this.eventsEnd,
+                    }
                 )
             } catch (err) {
                 this.eventsError = this.getErrorMessage(err)
             } finally {
                 this.eventsLoading = false
             }
+        },
+
+        setEventsFilter(key, value) {
+            this.updateUrl({ [key]: value, page: 1 })
+        },
+
+        clearEventsFilters() {
+            this.updateUrl({ league: null, status: null, start: null, end: null, page: 1 })
+        },
+
+        isoDateOrEmpty(value) {
+            return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : ''
         },
 
         sortEvents(column) {
@@ -959,6 +1073,44 @@ h2 {
     input {
         width:     100%;
         max-width: 400px;
+    }
+}
+
+.events-filters {
+    display:       flex;
+    align-items:   flex-end;
+    gap:           $space-3;
+    flex-wrap:     wrap;
+    margin-bottom: var(--spacing);
+
+    .filter-field {
+        display:        flex;
+        flex-direction: column;
+        gap:            $minimal-spacing;
+
+        .filter-label {
+            font-weight:    600;
+            color:          var(--gray);
+            font-size:      0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select,
+        input[type="date"] {
+            border:        1px solid #e0e0e0;
+            border-radius: $radius-md;
+            padding:       5px 10px;
+            font-size:     0.9rem;
+            font-family:   inherit;
+            color:         $text-color;
+            background:    white;
+
+            &:focus {
+                outline:      none;
+                border-color: var(--primary);
+            }
+        }
     }
 }
 
