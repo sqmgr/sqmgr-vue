@@ -174,6 +174,23 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </div>
             </div>
 
+            <div class="setting-item" v-if="pool.isPoolManager && memberEmails">
+                <label>Member Emails</label>
+                <div class="setting-value member-emails">
+                    <div class="member-emails-actions">
+                        <button type="button" class="sm" :disabled="!memberEmails.emails.length"
+                                @click="copyMemberEmails">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button type="button" class="sm secondary" :disabled="!memberEmails.emails.length"
+                                @click="downloadMemberEmails">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                    <span class="member-emails-summary">{{ memberEmailsSummary }}</span>
+                </div>
+            </div>
+
             <div class="setting-item">
                 <label>Created</label>
                 <div class="setting-value">
@@ -198,6 +215,7 @@ import sqmgrClient from "@/models/sqmgrClient"
 import sqmgrConfig from "@/models/sqmgrConfig"
 import ModalController from "@/controllers/ModalController"
 import toClipboard from "@/utils/toClipboard"
+import downloadCSV from "@/utils/downloadCSV"
 import ManageMembership from "@/components/pool/ManageMembership"
 import ChangeNumberSetConfig from "@/components/grid/ChangeNumberSetConfig"
 import LinkedGameInfo from "@/components/grid/LinkedGameInfo"
@@ -235,6 +253,7 @@ export default {
             localPasswordRequired: this.pool.passwordRequired,
             localOpenAccessOnLock: this.pool.openAccessOnLock,
             inviteToken: null,
+            memberEmails: null,
             squares: null,
             config: null,
         }
@@ -247,6 +266,9 @@ export default {
 
         if (this.pool.isPoolManager) {
             this.getInviteToken()
+            // Loaded up front because copying to the clipboard must happen
+            // synchronously within the click, not after a network request.
+            this.getMemberEmails()
         }
     },
     computed: {
@@ -303,6 +325,15 @@ export default {
             const found = cfg?.numberSetConfigs?.find(c => c.key === config)
             return found?.label || 'Final'
         },
+        memberEmailsSummary() {
+            const count = this.memberEmails.emails.length
+            let summary = `${count} ${count === 1 ? 'email' : 'emails'}`
+            const missing = this.memberEmails.missing
+            if (missing > 0) {
+                summary += ` · ${missing} ${missing === 1 ? 'member has' : 'members have'} no email (e.g. guests)`
+            }
+            return summary
+        },
     },
     watch: {
         editPoolName(newVal) {
@@ -326,6 +357,20 @@ export default {
             sqmgrClient.getPoolInviteToken(this.token)
                 .then(res => this.inviteToken = res.token)
                 .catch(err => ModalController.showError(err))
+        },
+        getMemberEmails() {
+            // The row stays hidden on failure rather than interrupting the page with an error.
+            sqmgrClient.getPoolMemberEmails(this.token)
+                .then(res => this.memberEmails = {emails: res.emails || [], missing: res.missing || 0})
+                .catch(() => this.memberEmails = null)
+        },
+        copyMemberEmails(event) {
+            toClipboard(this.memberEmails.emails.join(', '))
+            this.$emit('copied', event)
+        },
+        downloadMemberEmails() {
+            const slug = this.pool.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'pool'
+            downloadCSV(`${slug}-member-emails.csv`, [['email'], ...this.memberEmails.emails.map(email => [email])])
         },
         undoEditPoolName() {
             this.localPoolName = this.origPoolName
@@ -477,6 +522,23 @@ export default {
         align-items: center;
         gap:         $space-2;
         min-height:  32px;
+
+        &.member-emails {
+            flex-direction: column;
+            align-items:    flex-start;
+            gap:            $space-1;
+
+            .member-emails-actions {
+                display:   flex;
+                flex-wrap: wrap;
+                gap:       $space-2;
+            }
+
+            .member-emails-summary {
+                font-size: 0.8125rem;
+                color:     $text-secondary;
+            }
+        }
     }
 }
 

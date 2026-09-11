@@ -340,6 +340,10 @@ class sqmgrClient {
         return this.request(`/pool/${token}/invitetoken`)
     }
 
+    getPoolMemberEmails(token) {
+        return this.request(`/pool/${token}/members/emails`)
+    }
+
     joinPool(token, passwordOrInvite, isInvite = false) {
         const data = {}
         if (isInvite) {
