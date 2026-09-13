@@ -49,6 +49,16 @@ export default {
         return {
             releases: [
                 {
+                    version: "v2.11",
+                    major: false,
+                    date: "September 11, 2026",
+                    title: "Member Emails",
+                    notes: [
+                        { type: "new", text: "Pool managers can copy every member's email address from pool settings — ready to paste into BCC — or download the list as a CSV" },
+                        { type: "new", text: "See at a glance how many members have no email on file, such as guest players" },
+                    ],
+                },
+                {
                     version: "v2.9",
                     major: false,
                     date: "August 15, 2026",
