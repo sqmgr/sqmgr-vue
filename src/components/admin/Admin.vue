@@ -369,6 +369,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                                 <th>Grid</th>
                                                 <th>Pool</th>
                                                 <th>Created By</th>
+                                                <th>Squares</th>
                                                 <th>Created</th>
                                                 <th>State</th>
                                             </tr>
@@ -389,6 +390,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                                     </router-link>
                                                     <span v-else>-</span>
                                                 </td>
+                                                <td>{{ formatNumber(grid.claimedSquares) }}/{{ formatNumber(grid.totalSquares) }}</td>
                                                 <td>{{ formatDate(grid.created) }}</td>
                                                 <td>{{ grid.gridState }}</td>
                                             </tr>
