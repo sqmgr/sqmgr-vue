@@ -390,6 +390,21 @@ class sqmgrClient {
         return this.request(`/user/self/stats`)
     }
 
+    // OAuth methods used by the /oauth/authorize page to let MCP clients connect
+    getOAuthClient(clientId) {
+        return this.request(`/oauth/client/${encodeURIComponent(clientId)}`)
+    }
+
+    authorizeOAuthClient(params) {
+        return this.request('/oauth/authorize', null, true, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        })
+    }
+
     // Admin methods
     async getAdminStats(period = 'all', { start, end } = {}) {
         const query = {}

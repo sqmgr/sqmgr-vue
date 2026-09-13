@@ -45,6 +45,7 @@ const PrivacyPolicy = () => import("@/components/pages/PrivacyPolicy")
 const CookiesPolicy = () => import("@/components/pages/CookiesPolicy")
 const ReleaseNotes = () => import("@/components/pages/ReleaseNotes")
 const LogIn = () => import("@/components/auth/LogIn")
+const OAuthAuthorize = () => import("@/components/auth/OAuthAuthorize")
 const TipJar = () => import("@/components/pages/TipJar.vue")
 const YourAccount = () => import("@/components/auth/YourAccount")
 const GuestAccount = () => import("@/components/auth/GuestAccount")
@@ -90,6 +91,7 @@ const routes = [
     {path: '/cookies', component: CookiesPolicy, meta: {title: 'Cookies Policy'}},
     {path: '/release-notes', component: ReleaseNotes, meta: {title: 'Release Notes'}},
     {path: '/login', component: LogIn, meta: {title: 'Login'}},
+    {path: '/oauth/authorize', component: OAuthAuthorize, meta: {title: 'Authorize Application'}},
     {path: '/tipjar', component: TipJar, meta: {title: 'Tip Jar'}},
     {path: '/account', component: YourAccount, meta: {requireLogin: true, title: 'Your Account'}},
     {path: '/guest-account', component: GuestAccount, meta: {requireGuestAccount: true, title: 'Guest Account'}},
