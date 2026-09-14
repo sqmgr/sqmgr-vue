@@ -124,6 +124,76 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </div>
                     <div v-else class="no-pools">No pools created by this user.</div>
                 </div>
+
+                <!-- Joined Pools Section -->
+                <div class="pools-section">
+                    <div class="pools-header">
+                        <h2>Pools Joined</h2>
+                        <label class="archive-toggle">
+                            <input type="checkbox" v-model="showArchivedJoined"/>
+                            include archived
+                        </label>
+                    </div>
+
+                    <div v-if="joinedPoolsLoading" class="loading">Loading pools...</div>
+                    <div v-else-if="joinedPoolsError" class="error">{{ joinedPoolsError }}</div>
+                    <div v-else-if="joinedPools && joinedPools.pools && joinedPools.pools.length > 0">
+                        <table class="pools-table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Owner</th>
+                                <th>Created</th>
+                                <th>Type</th>
+                                <th>Grids</th>
+                                <th>Members</th>
+                                <th>Claimed</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="pool in joinedPools.pools" :key="pool.token">
+                                <td>
+                                    <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                </td>
+                                <td>
+                                    <router-link :to="`/admin/user/${pool.ownerId}`">{{ pool.ownerEmail || `User ${pool.ownerId}` }}</router-link>
+                                </td>
+                                <td>{{ formatDate(pool.created) }}</td>
+                                <td>{{ pool.gridType }}</td>
+                                <td>{{ formatNumber(pool.gridCount) }}</td>
+                                <td>{{ formatNumber(pool.memberCount) }}</td>
+                                <td>{{ formatNumber(pool.claimedCount) }}</td>
+                                <td>
+                                    <span :class="['status', pool.archived ? 'archived' : 'active']">
+                                        {{ pool.archived ? 'Archived' : 'Active' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="small"
+                                        @click="confirmJoinPool(pool)"
+                                        :disabled="joiningPool === pool.token"
+                                    >
+                                        {{ joiningPool === pool.token ? 'Joining...' : 'Join' }}
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <pagination
+                            v-if="joinedPools.total > poolsPerPage"
+                            :total="joinedPools.total"
+                            :per-page="poolsPerPage"
+                            :current-page="joinedCurrentPage"
+                            @page="goToJoinedPage"
+                        />
+                    </div>
+                    <div v-else class="no-pools">This user has not joined any pools owned by someone else.</div>
+                </div>
             </template>
         </div>
     </section>
@@ -164,10 +234,29 @@ export default {
             fetchPools()
         })
 
+        const showArchivedJoined = ref(false)
+        const {
+            data: joinedPools,
+            loading: joinedPoolsLoading,
+            error: joinedPoolsError,
+            currentPage: joinedCurrentPage,
+            fetch: fetchJoinedPools,
+            goToPage: goToJoinedPage,
+        } = usePaginatedFetch(
+            (offset, perPage) => sqmgrClient.getAdminUserJoinedPools(props.userId, showArchivedJoined.value, offset, perPage),
+            poolsPerPage,
+        )
+
+        watch(showArchivedJoined, () => {
+            fetchJoinedPools()
+        })
+
         return {
             userData, displayName, initials, memberSince, authProvider,
             showArchived, pools, poolsLoading, poolsError, currentPage, poolsPerPage,
             fetchPools, goToPage,
+            showArchivedJoined, joinedPools, joinedPoolsLoading, joinedPoolsError, joinedCurrentPage,
+            fetchJoinedPools, goToJoinedPage,
         }
     },
     data() {
@@ -180,6 +269,7 @@ export default {
     async beforeMount() {
         await this.fetchUser()
         this.fetchPools()
+        this.fetchJoinedPools()
     },
     methods: {
         async fetchUser() {
@@ -345,6 +435,10 @@ export default {
     border-radius: $radius-xl;
     padding: $space-5;
     box-shadow: $shadow-card;
+
+    & + .pools-section {
+        margin-top: $space-5;
+    }
 }
 
 .pools-header {

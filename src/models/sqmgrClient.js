@@ -441,6 +441,12 @@ class sqmgrClient {
         return this.request(`/admin/user/${userId}/pools`, query)
     }
 
+    async getAdminUserJoinedPools(userId, includeArchived = false, offset = 0, limit = 25) {
+        const query = { offset, limit }
+        if (includeArchived) query.includeArchived = 'true'
+        return this.request(`/admin/user/${userId}/joined-pools`, query)
+    }
+
     async getAdminUsers(search = '', offset = 0, limit = 25, sortBy = '', sortDir = 'desc') {
         const query = { offset, limit }
         if (search) query.search = search
