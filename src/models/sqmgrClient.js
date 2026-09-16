@@ -63,14 +63,22 @@ class sqmgrClient {
             })
     }
 
-    async getUserOwnedPools(includeArchived = false, offset = 0, limit = 10) {
+    async getUserOwnedPools(includeArchived = false, offset = 0, limit = 10, search = '') {
         const user = await this.getUser()
-        return this.request(`/user/${user.id}/pool/own`, {offset, limit, includeArchived})
+        const query = {offset, limit, includeArchived}
+        if (search) {
+            query.search = search
+        }
+        return this.request(`/user/${user.id}/pool/own`, query)
     }
 
-    async getUserJoinedPools(offset = 0, limit = 10) {
+    async getUserJoinedPools(offset = 0, limit = 10, search = '') {
         const user = await this.getUser()
-        return this.request(`/user/${user.id}/pool/belong`, {offset, limit})
+        const query = {offset, limit}
+        if (search) {
+            query.search = search
+        }
+        return this.request(`/user/${user.id}/pool/belong`, query)
     }
 
     getPoolByToken(token) {

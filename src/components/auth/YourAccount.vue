@@ -63,6 +63,15 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         </label>
                     </div>
 
+                    <div class="pool-search">
+                        <input
+                            type="search"
+                            v-model="owned.searchInput"
+                            placeholder="Search pools you created..."
+                            aria-label="Search pools you created"
+                        />
+                    </div>
+
                     <template v-if="owned.loading">
                         <div class="loading-state">Loading...</div>
                     </template>
@@ -73,6 +82,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             :current-page="owned.currentPage"
                             :data="owned.pools"
                             :per-page="poolsPerPage"
+                            :search="owned.search"
                             @page="goToOwnedPoolsPage"
                         />
                     </template>
@@ -82,6 +92,15 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="pool-column">
                     <div class="pool-column-header">
                         <h2>Pools You Joined</h2>
+                    </div>
+
+                    <div class="pool-search">
+                        <input
+                            type="search"
+                            v-model="joined.searchInput"
+                            placeholder="Search pools you joined..."
+                            aria-label="Search pools you joined"
+                        />
                     </div>
 
                     <template v-if="joined.loading">
@@ -94,6 +113,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             :current-page="joined.currentPage"
                             :data="joined.pools"
                             :per-page="poolsPerPage"
+                            :search="joined.search"
                             @page="goToJoinedPoolsPage"
                         />
                     </template>
@@ -110,6 +130,7 @@ import sqmgrClient from "@/models/sqmgrClient"
 import YourAccountPoolList from "@/components/pool/YourAccountPoolList"
 import { useUserProfile } from "@/composables/useUserProfile"
 import { usePaginatedFetch } from "@/composables/usePaginatedFetch"
+import { useDebouncedSearch } from "@/composables/useDebouncedSearch"
 
 export default {
     name: "YourAccount",
@@ -120,19 +141,26 @@ export default {
 
         const poolsPerPage = 10
         const ownedShowArchived = ref(false)
+        const ownedSearch = useDebouncedSearch()
+        const joinedSearch = useDebouncedSearch()
 
         const ownedFetch = usePaginatedFetch(
-            (offset, perPage) => sqmgrClient.getUserOwnedPools(ownedShowArchived.value, offset, perPage),
+            (offset, perPage) => sqmgrClient.getUserOwnedPools(ownedShowArchived.value, offset, perPage, ownedSearch.search.value),
             poolsPerPage,
         )
 
         const joinedFetch = usePaginatedFetch(
-            (offset, perPage) => sqmgrClient.getUserJoinedPools(offset, perPage),
+            (offset, perPage) => sqmgrClient.getUserJoinedPools(offset, perPage, joinedSearch.search.value),
             poolsPerPage,
         )
 
-        watch(ownedShowArchived, () => {
+        // any filter change restarts from the first page
+        watch([ownedShowArchived, ownedSearch.search], () => {
             ownedFetch.fetch()
+        })
+
+        watch(joinedSearch.search, () => {
+            joinedFetch.fetch()
         })
 
         return {
@@ -140,12 +168,16 @@ export default {
             poolsPerPage,
             owned: reactive({
                 showArchived: ownedShowArchived,
+                searchInput: ownedSearch.input,
+                search: ownedSearch.search,
                 pools: ownedFetch.data,
                 loading: ownedFetch.loading,
                 currentPage: ownedFetch.currentPage,
                 error: ownedFetch.error,
             }),
             joined: reactive({
+                searchInput: joinedSearch.input,
+                search: joinedSearch.search,
                 pools: joinedFetch.data,
                 loading: joinedFetch.loading,
                 currentPage: joinedFetch.currentPage,
@@ -301,6 +333,15 @@ export default {
             width:  auto;
             margin: 0;
         }
+    }
+}
+
+.pool-search {
+    margin-bottom: $space-4;
+
+    input {
+        width:  100%;
+        margin: 0;
     }
 }
 

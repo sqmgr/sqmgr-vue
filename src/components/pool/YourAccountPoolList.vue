@@ -22,9 +22,15 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             <div class="empty-icon">
                 <i class="fas fa-folder-open"></i>
             </div>
-            <p class="empty-message">No pools yet</p>
-            <p class="empty-hint" v-if="canArchive">Create your first squares pool to get started!</p>
-            <p class="empty-hint" v-else>Join a pool to see it here.</p>
+            <template v-if="search">
+                <p class="empty-message">No pools match "{{ search }}"</p>
+                <p class="empty-hint">Try a different search term.</p>
+            </template>
+            <template v-else>
+                <p class="empty-message">No pools yet</p>
+                <p class="empty-hint" v-if="canArchive">Create your first squares pool to get started!</p>
+                <p class="empty-hint" v-else>Join a pool to see it here.</p>
+            </template>
         </div>
 
         <!-- Pool Cards Grid -->
@@ -118,6 +124,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             canLeave: {
                 type: Boolean,
                 required: false,
+            },
+            search: {
+                type: String,
+                required: false,
+                default: '',
             },
         },
         data() {
