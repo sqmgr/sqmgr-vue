@@ -34,7 +34,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 </span>
                 </p>
                 <h2>The <span class="highlight">Easiest Way</span> to Run Your Football and Basketball Squares Pool</h2>
-                <p class="subtitle">Create professional pools in minutes. Share with friends. No spreadsheets required.</p>
+                <p class="subtitle">Create professional pools in minutes. Share with friends. No spreadsheets
+                    required.</p>
 
                 <div class="cta-container">
                     <router-link class="btn cta-primary" to="/create">Create Your Pool</router-link>
@@ -55,11 +56,10 @@ const trustedByList = [
     "Football Fanatics Everywhere",
     "My Brother",
     "Almost All of My Friends",
-    "Stat Nerds Everywhere",
-    "Prop Bet Experts Everywhere",
-    "Tailgate Legends Everywhere",
-    "Scoreboard Watchers Everywhere",
-    "Bandwagon Fans Everywhere",
+    "Stat Nerds",
+    "Prop Bet Experts",
+    "Scoreboard Watchers",
+    "Bandwagon Fans",
     "My Mom and Dad",
     "Your One Friend From High School",
     "That One Dude on Your Street",
@@ -70,7 +70,14 @@ const trustedByList = [
     "Guys Who Bet on the Coin Toss",
     "That Guy Who Always Claims the Same Square",
     "AI, at Least for Now",
-    "9 out of 10 Dentists"
+    "9 out of 10 Dentists",
+    "Guys Named Gary",
+    "Your Fantasy Football Group Chat",
+    "Your Uncle Who Definitely Has a System",
+    "Someone's Cousin, Probably",
+    "Halftime Snack Table Enthusiasts",
+    "People Who Only Know Two Player Names",
+    "Your Lucky Friend Who Wins Everything",
 ]
 const trustedBy = ref(trustedByList[0])
 
@@ -116,9 +123,9 @@ section.home-header {
     position:   relative;
 
     &::before {
-        content:    '';
-        position:   absolute;
-        inset:      0;
+        content:        '';
+        position:       absolute;
+        inset:          0;
         pointer-events: none;
     }
 
@@ -129,22 +136,23 @@ section.home-header {
     }
 
     p.credibility-badge {
-        display:         inline-flex;
-        align-items:     center;
-        gap:             $space-1;
-        background:      rgba(255, 255, 255, 0.07);
-        color:           rgba(255, 255, 255, 0.8);
-        padding:         $space-2 $space-5;
-        border-radius:   $radius-full;
-        font-size:       0.8em;
-        font-weight:     500;
-        letter-spacing:  0.03em;
-        margin-bottom:   $space-6;
-        border:          1px solid rgba(255, 255, 255, 0.08);
+        display:        inline-flex;
+        align-items:    center;
+        gap:            $space-1;
+        background:     rgba(255, 255, 255, 0.07);
+        color:          rgba(255, 255, 255, 0.8);
+        padding:        $space-2 $space-5;
+        border-radius:  $radius-full;
+        font-size:      0.8em;
+        font-weight:    500;
+        letter-spacing: 0.03em;
+        margin-bottom:  $space-6;
+        border:         1px solid rgba(255, 255, 255, 0.08);
 
         .trusted-by {
             white-space: nowrap;
         }
+
         .trusted-wrapper {
             display:        inline-block;
             position:       relative;
@@ -160,12 +168,12 @@ section.home-header {
     }
 
     h2 {
-        font-size:     3em;
-        margin-bottom: $space-5;
-        font-weight:   400;
+        font-size:      3em;
+        margin-bottom:  $space-5;
+        font-weight:    400;
         letter-spacing: -0.025em;
-        line-height: 1.4;
-        font-family:   'Anton', sans-serif;
+        line-height:    1.4;
+        font-family:    'Anton', sans-serif;
 
         .highlight {
             color:    $accent;
@@ -187,12 +195,12 @@ section.home-header {
     }
 
     p.subtitle {
-        font-size:     1.2em;
-        color:         rgba(255, 255, 255, 0.7);
-        margin: $space-6 auto;
-        font-weight:   400;
-        line-height:   1.6;
-        max-width:     560px;
+        font-size:   1.2em;
+        color:       rgba(255, 255, 255, 0.7);
+        margin:      $space-6 auto;
+        font-weight: 400;
+        line-height: 1.6;
+        max-width:   560px;
     }
 
     .cta-container {
@@ -203,17 +211,17 @@ section.home-header {
     }
 
     .btn {
-        font-family:    'Outfit', sans-serif;
-        padding:        $space-4 $space-8;
-        border-radius:  $radius-full;
-        border:         none;
-        font-weight:    700;
-        transition:     all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        font-size:      0.875em;
-        display: flex;
-        align-items: center;
+        font-family:     'Outfit', sans-serif;
+        padding:         $space-4 $space-8;
+        border-radius:   $radius-full;
+        border:          none;
+        font-weight:     700;
+        transition:      all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        letter-spacing:  0.04em;
+        text-transform:  uppercase;
+        font-size:       0.875em;
+        display:         flex;
+        align-items:     center;
         justify-content: center;
 
         &.cta-primary {
@@ -235,9 +243,9 @@ section.home-header {
         }
 
         &.cta-secondary {
-            background:  rgba(255, 255, 255, 0.06);
-            border:      1.5px solid rgba(255, 255, 255, 0.2);
-            color:       rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.06);
+            border:     1.5px solid rgba(255, 255, 255, 0.2);
+            color:      rgba(255, 255, 255, 0.9);
 
             &:hover {
                 background:      rgba(255, 255, 255, 0.12);
@@ -272,7 +280,7 @@ section.home-header {
         }
 
         p.subtitle {
-            font-size:     1.05em;
+            font-size: 1.05em;
         }
 
         .cta-container {
