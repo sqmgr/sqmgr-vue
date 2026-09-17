@@ -216,9 +216,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                     </router-link>
                                 </td>
                                 <td>
-                                    <span v-if="member.isOwner" class="status active">Owner</span>
-                                    <span v-if="member.isManager && !member.isOwner" class="status neutral">Manager</span>
-                                    <span v-if="!member.isOwner && !member.isManager" class="muted">Member</span>
+                                    <span :class="['status', member.isOwner ? 'active' : 'neutral']">{{ memberRole(member) }}</span>
                                 </td>
                                 <td>{{ formatDate(member.joined) }}</td>
                                 <td class="numeric">{{ formatNumber(member.squaresClaimed) }}</td>
@@ -584,6 +582,12 @@ export default {
             this.showNote('You have joined this pool.')
             await this.refreshPool()
             this.fetchMembers()
+        },
+
+        memberRole(member) {
+            if (member.isOwner) return 'Owner'
+            if (member.isManager) return 'Manager'
+            return 'Member'
         },
 
         gridName(grid) {
