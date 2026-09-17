@@ -88,7 +88,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <tbody>
                             <tr v-for="pool in pools.pools" :key="pool.token">
                                 <td>
-                                    <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                    <router-link :to="`/admin/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                    <router-link :to="`/pool/${pool.token}`" class="secondary-link">Open</router-link>
                                 </td>
                                 <td>{{ formatDate(pool.created) }}</td>
                                 <td>{{ pool.gridType }}</td>
@@ -155,7 +156,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <tbody>
                             <tr v-for="pool in joinedPools.pools" :key="pool.token">
                                 <td>
-                                    <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                    <router-link :to="`/admin/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                    <router-link :to="`/pool/${pool.token}`" class="secondary-link">Open</router-link>
                                 </td>
                                 <td>
                                     <router-link :to="`/admin/user/${pool.ownerId}`">{{ pool.ownerEmail || `User ${pool.ownerId}` }}</router-link>
@@ -203,14 +205,15 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 import { ref, computed, watch } from 'vue'
 import sqmgrClient from "@/models/sqmgrClient"
 import Pagination from "@/components/ui/Pagination"
-import ModalController from "@/controllers/ModalController"
 import ResponseError from "@/models/ResponseError"
-import Common from "@/common"
+import { formatDate, formatNumber, getErrorMessage } from "@/utils/adminFormat"
+import adminJoinPoolMixin from "@/components/admin/adminJoinPoolMixin"
 import { useUserProfile } from "@/composables/useUserProfile"
 import { usePaginatedFetch } from "@/composables/usePaginatedFetch"
 
 export default {
     name: "AdminUser",
+    mixins: [adminJoinPoolMixin],
     components: {Pagination},
     props: {
         userId: {
@@ -263,7 +266,6 @@ export default {
         return {
             loading: true,
             error: null,
-            joiningPool: null,
         }
     },
     async beforeMount() {
@@ -288,48 +290,9 @@ export default {
             }
         },
 
-        confirmJoinPool(pool) {
-            ModalController.showPrompt(
-                'Join Pool',
-                `Are you sure you want to join the pool "${pool.name}"?`,
-                {
-                    actionButton: 'Join Pool',
-                    action: () => {
-                        this.joinPool(pool)
-                        ModalController.hide()
-                    },
-                },
-            )
-        },
-
-        async joinPool(pool) {
-            this.joiningPool = pool.token
-            try {
-                await sqmgrClient.adminJoinPool(pool.token)
-                this.$router.push(`/pool/${pool.token}`)
-            } catch (err) {
-                ModalController.showError(this.getErrorMessage(err))
-            } finally {
-                this.joiningPool = null
-            }
-        },
-
-        formatDate(dateStr) {
-            const date = new Date(dateStr)
-            return date.toLocaleString(undefined, Common.DateTimeOptions)
-        },
-
-        formatNumber(num) {
-            if (num === undefined || num === null) return '0'
-            return num.toLocaleString()
-        },
-
-        getErrorMessage(err) {
-            if (err instanceof ResponseError) {
-                return err.message
-            }
-            return 'An unexpected error occurred. Please try again.'
-        },
+        formatDate,
+        formatNumber,
+        getErrorMessage,
     },
 }
 </script>
@@ -496,6 +459,12 @@ export default {
         &:hover {
             text-decoration: underline;
         }
+    }
+
+    .secondary-link {
+        margin-left: $space-2;
+        font-size:   0.8em;
+        color:       $dark-gray;
     }
 }
 

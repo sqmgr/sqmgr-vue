@@ -1,0 +1,313 @@
+// Shared styling for the site-admin pages. Every admin component pulls the
+// same table, badge, filter and message treatment from here so the pages
+// read as one system.
+@use '../../variables' as *;
+
+@mixin admin-table {
+    width:           100%;
+    border-collapse: collapse;
+    margin-bottom:   var(--spacing);
+
+    th, td {
+        padding:       12px;
+        text-align:    left;
+        border-bottom: 1px solid #e0e0e0;
+        vertical-align: middle;
+    }
+
+    th {
+        background:  #f8f9fa;
+        color:       $text-color;
+        font-weight: 600;
+
+        &.sortable {
+            padding:     0;
+            user-select: none;
+
+            &:hover {
+                background: #eee;
+            }
+
+            .sort-btn {
+                all:         unset;
+                display:     flex;
+                align-items: center;
+                gap:         4px;
+                width:       100%;
+                padding:     12px;
+                box-sizing:  border-box;
+                cursor:      pointer;
+                font:        inherit;
+                color:       inherit;
+
+                &:focus-visible {
+                    outline:        2px solid var(--primary);
+                    outline-offset: -2px;
+                }
+            }
+
+            &.numeric .sort-btn {
+                justify-content: flex-end;
+            }
+
+            .sort-icon {
+                font-size: 0.75em;
+                color:     var(--primary);
+            }
+        }
+    }
+
+    td.numeric,
+    th.numeric {
+        text-align:           right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    a {
+        color:           var(--primary);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .secondary-link {
+        margin-left: $space-2;
+        font-size:   0.8em;
+        color:       $dark-gray;
+    }
+
+    .muted {
+        color: $gray;
+    }
+
+    code {
+        font-family: monospace;
+        font-size:   0.9em;
+    }
+}
+
+@mixin admin-status {
+    display:       inline-block;
+    padding:       4px 8px;
+    border-radius: $radius-sm;
+    font-size:     0.85em;
+    font-weight:   500;
+    white-space:   nowrap;
+
+    &.active,
+    &.success {
+        background: $alert-success-bg;
+        color:      $alert-success-text;
+    }
+
+    &.archived,
+    &.failed {
+        background: $alert-error-bg;
+        color:      $alert-error-text;
+    }
+
+    &.warning {
+        background: #fff3cd;
+        color:      #856404;
+    }
+
+    &.neutral {
+        background: $light-gray;
+        color:      $text-secondary;
+    }
+
+    & + & {
+        margin-left: $space-1;
+    }
+}
+
+@mixin admin-messages {
+    .loading, .error, .no-data, .no-pools {
+        padding:    var(--spacing);
+        text-align: center;
+    }
+
+    .no-data, .no-pools {
+        color: $text-secondary;
+    }
+
+    .error {
+        @include alert-error;
+    }
+
+    .success-note {
+        @include alert-success;
+        margin-bottom: var(--spacing);
+    }
+}
+
+@mixin admin-filter-bar {
+    display:       flex;
+    align-items:   flex-end;
+    gap:           $space-3;
+    flex-wrap:     wrap;
+    margin-bottom: var(--spacing);
+
+    .filter-field {
+        display:        flex;
+        flex-direction: column;
+        gap:            $minimal-spacing;
+        // Global label styles add a bottom margin that would push the
+        // controls above the row's baseline.
+        margin-bottom:  0;
+
+        .filter-label {
+            font-weight:    600;
+            color:          var(--gray);
+            font-size:      0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select,
+        input {
+            border:        1px solid #e0e0e0;
+            border-radius: $radius-md;
+            padding:       5px 10px;
+            font-size:     0.9rem;
+            font-family:   inherit;
+            color:         $text-color;
+            background:    white;
+            min-height:    36px;
+            width:         auto;
+
+            &:focus {
+                outline:      none;
+                border-color: var(--primary);
+                box-shadow:   none;
+            }
+        }
+
+        input[type="text"] {
+            min-width: 200px;
+        }
+
+        input[type="number"] {
+            width: 90px;
+        }
+    }
+
+    // Match the height of the controls so the button sits on the same line
+    button {
+        min-height: 36px;
+    }
+}
+
+@mixin admin-section {
+    background:    $surface-elevated;
+    border-radius: $radius-xl;
+    padding:       $space-5;
+    box-shadow:    $shadow-card;
+    margin-bottom: $space-5;
+
+    .section-header {
+        display:         flex;
+        justify-content: space-between;
+        align-items:     center;
+        gap:             $space-3;
+        flex-wrap:       wrap;
+        margin-bottom:   $space-4;
+
+        h2, h3 {
+            font-size: 1.25rem;
+            color:     $text-color;
+            margin:    0;
+        }
+
+        .toggle {
+            font-size:   0.85rem;
+            color:       $text-secondary;
+            cursor:      pointer;
+            display:     flex;
+            align-items: center;
+            gap:         $space-1;
+            margin:      0;
+
+            input {
+                width:  auto;
+                margin: 0;
+            }
+        }
+    }
+}
+
+@mixin admin-stat-tiles {
+    display:               grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap:                   $space-3;
+    margin-bottom:         $space-5;
+
+    .stat-card {
+        @include stat-card;
+        padding: $space-4;
+
+        .stat-value {
+            font-size:   1.75rem;
+            font-weight: 700;
+            color:       $primary;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color:     $text-secondary;
+        }
+
+        .stat-sub {
+            font-size: 0.75rem;
+            color:     $gray;
+        }
+    }
+}
+
+@mixin admin-period-buttons {
+    display:   flex;
+    gap:       8px;
+    flex-wrap: wrap;
+
+    .period-btn {
+        background:    transparent;
+        border:        1px solid #e0e0e0;
+        border-radius: $radius-md;
+        padding:       6px 14px;
+        font-size:     0.9rem;
+        color:         #666;
+        cursor:        pointer;
+        transition:    all 0.2s;
+        font-family:   inherit;
+        box-shadow:    none;
+        min-height:    auto;
+
+        &:hover {
+            background:   #f8f9fa;
+            border-color: #d0d0d0;
+            color:        #333;
+            transform:    none;
+            box-shadow:   none;
+        }
+
+        &.active {
+            background:   var(--primary);
+            border-color: var(--primary);
+            color:        white;
+            font-weight:  500;
+            box-shadow:   0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+@mixin admin-small-button {
+    padding:    6px 12px;
+    font-size:  0.9em;
+    min-height: auto;
+}

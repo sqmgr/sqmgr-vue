@@ -429,10 +429,124 @@ class sqmgrClient {
         return this.request('/admin/stats', Object.keys(query).length > 0 ? query : null)
     }
 
-    async getAdminPools(search = '', offset = 0, limit = 25) {
-        const query = { offset, limit }
-        if (search) query.search = search
+    // compactQuery drops empty values so only meaningful params reach the URL
+    compactQuery(query) {
+        const out = {}
+        Object.entries(query).forEach(([key, value]) => {
+            if (value !== null && value !== undefined && value !== '') {
+                out[key] = value
+            }
+        })
+        return Object.keys(out).length > 0 ? out : null
+    }
+
+    jsonInit(method, body) {
+        const init = {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+        if (body !== undefined) {
+            init.body = JSON.stringify(body)
+        }
+        return init
+    }
+
+    async getAdminPools(filters = {}, offset = 0, limit = 25) {
+        const query = this.compactQuery({
+            offset,
+            limit,
+            search: filters.search,
+            ownerEmail: filters.ownerEmail,
+            gridType: filters.gridType,
+            archived: filters.archived,
+            start: filters.start,
+            end: filters.end,
+            minFill: filters.minFill,
+            maxFill: filters.maxFill,
+            sortBy: filters.sortBy,
+            sortDir: filters.sortDir,
+        })
         return this.request('/admin/pools', query)
+    }
+
+    async getAdminPool(token) {
+        return this.request(`/admin/pool/${token}`)
+    }
+
+    async getAdminPoolMembers(token) {
+        return this.request(`/admin/pool/${token}/members`)
+    }
+
+    async getAdminPoolActivity(token, offset = 0, limit = 50) {
+        return this.request(`/admin/pool/${token}/activity`, { offset, limit })
+    }
+
+    async getAdminPoolSquares(token, includeUnclaimed = false) {
+        return this.request(`/admin/pool/${token}/squares`, { includeUnclaimed: includeUnclaimed ? 'true' : 'false' })
+    }
+
+    async adminPoolAction(token, action, { reason, password, userId } = {}) {
+        const body = { action }
+        if (reason) body.reason = reason
+        if (password !== undefined && password !== null && password !== '') body.password = password
+        if (userId !== undefined && userId !== null && userId !== '') body.userId = parseInt(userId, 10)
+        return this.request(`/admin/pool/${token}/action`, null, true, this.jsonInit('POST', body))
+    }
+
+    // Admin analytics
+    async getAdminAnalyticsTimeSeries(metric, interval = 'day', { start, end } = {}) {
+        return this.request('/admin/analytics/timeseries', this.compactQuery({ metric, interval, start, end }))
+    }
+
+    async getAdminAnalyticsFillRates({ start, end, gridType, archived } = {}) {
+        return this.request('/admin/analytics/fill-rates', this.compactQuery({ start, end, gridType, archived }))
+    }
+
+    async getAdminAnalyticsBreakdown(dimension, { start, end } = {}) {
+        return this.request('/admin/analytics/breakdown', this.compactQuery({ dimension, start, end }))
+    }
+
+    async getAdminAnalyticsEngagement({ start, end } = {}) {
+        return this.request('/admin/analytics/engagement', this.compactQuery({ start, end }))
+    }
+
+    async getAdminAnalyticsTopCreators({ start, end, limit } = {}) {
+        return this.request('/admin/analytics/top-creators', this.compactQuery({ start, end, limit }))
+    }
+
+    // Admin sports sync
+    async getAdminSportsStatus() {
+        return this.request('/admin/sports/status')
+    }
+
+    async getAdminSportsSyncRuns({ syncType, limit } = {}) {
+        return this.request('/admin/sports/sync-runs', this.compactQuery({ syncType, limit }))
+    }
+
+    async adminStartSportsSync(syncType, league = '') {
+        const body = { syncType }
+        if (league) body.league = league
+        return this.request('/admin/sports/sync', null, true, this.jsonInit('POST', body))
+    }
+
+    // Admin event overrides
+    async adminRefreshEvent(eventId) {
+        return this.request(`/admin/events/${eventId}/refresh`, null, true, { method: 'POST' })
+    }
+
+    async adminOverrideEvent(eventId, data) {
+        return this.request(`/admin/events/${eventId}/override`, null, true, this.jsonInit('POST', data))
+    }
+
+    async adminClearEventOverride(eventId) {
+        return this.request(`/admin/events/${eventId}/override`, null, true, { method: 'DELETE' })
+    }
+
+    // Admin audit log
+    async getAdminAuditLog({ action, targetType, targetId } = {}, offset = 0, limit = 25) {
+        return this.request('/admin/audit', this.compactQuery({ offset, limit, action, targetType, targetId }))
     }
 
     async adminJoinPool(token) {

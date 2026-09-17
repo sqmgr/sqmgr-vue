@@ -55,8 +55,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             </label>
                             <button
                                 type="button"
-                                class="small apply-btn"
-                                :disabled="!customStart || !customEnd || statsLoading"
+                                class="apply-btn"
+                                :disabled="!customStart || !customEnd"
                                 @click="applyCustomRange"
                             >
                                 Apply
@@ -95,93 +95,165 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
             <div class="tabs">
                 <button
+                    v-for="tab in tabs"
+                    :key="tab.value"
                     type="button"
-                    :class="['tab-btn', { active: activeTab === 'pools' }]"
-                    @click="switchTab('pools')"
+                    :class="['tab-btn', { active: activeTab === tab.value }]"
+                    @click="switchTab(tab.value)"
                 >
-                    <i class="fas fa-th-large"></i>
-                    Pools
-                </button>
-                <button
-                    type="button"
-                    :class="['tab-btn', { active: activeTab === 'users' }]"
-                    @click="switchTab('users')"
-                >
-                    <i class="fas fa-users"></i>
-                    Users
-                </button>
-                <button
-                    type="button"
-                    :class="['tab-btn', { active: activeTab === 'events' }]"
-                    @click="switchTab('events')"
-                >
-                    <i class="fas fa-calendar-alt"></i>
-                    Events
+                    <i :class="['fas', tab.icon]"></i>
+                    {{ tab.label }}
                 </button>
             </div>
 
             <div v-if="activeTab === 'pools'" class="tab-content">
                 <h2>All Pools</h2>
 
-                <div class="search-bar">
-                    <input
-                        type="text"
-                        v-model="searchInput"
-                        placeholder="Search pools by name..."
-                        @input="debouncedSearch"
-                    />
+                <div class="pools-filters">
+                    <label class="filter-field">
+                        <span class="filter-label">Name or Token</span>
+                        <input
+                            type="text"
+                            v-model="searchInput"
+                            placeholder="Search pools..."
+                            @input="debouncedSearch"
+                        />
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Owner Email</span>
+                        <input
+                            type="text"
+                            v-model="ownerInput"
+                            placeholder="Owner email contains..."
+                            @input="debouncedOwnerSearch"
+                        />
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Grid Type</span>
+                        <select :value="poolsGridType" @change="setPoolsFilter('gridType', $event.target.value)">
+                            <option value="">All Types</option>
+                            <option v-for="type in gridTypes" :key="type" :value="type">{{ type }}</option>
+                        </select>
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Status</span>
+                        <select :value="poolsStatus" @change="setPoolsFilter('status', $event.target.value)">
+                            <option value="">All</option>
+                            <option value="active">Active</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Created From</span>
+                        <input
+                            type="date"
+                            :value="poolsStart"
+                            :max="poolsEnd || undefined"
+                            @change="setPoolsFilter('start', $event.target.value)"
+                        />
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Created To</span>
+                        <input
+                            type="date"
+                            :value="poolsEnd"
+                            :min="poolsStart || undefined"
+                            @change="setPoolsFilter('end', $event.target.value)"
+                        />
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Min Fill %</span>
+                        <input
+                            type="number"
+                            min="0"
+                            max="100"
+                            :value="poolsMinFill"
+                            placeholder="0"
+                            @change="setPoolsFilter('minFill', $event.target.value)"
+                        />
+                    </label>
+                    <label class="filter-field">
+                        <span class="filter-label">Max Fill %</span>
+                        <input
+                            type="number"
+                            min="0"
+                            max="100"
+                            :value="poolsMaxFill"
+                            placeholder="100"
+                            @change="setPoolsFilter('maxFill', $event.target.value)"
+                        />
+                    </label>
+                    <button
+                        v-if="poolsFiltersActive"
+                        type="button"
+                        class="secondary sm"
+                        @click="clearPoolsFilters"
+                    >
+                        Clear Filters
+                    </button>
                 </div>
 
                 <div v-if="poolsLoading" class="loading">Loading pools...</div>
                 <div v-else-if="poolsError" class="error">{{ poolsError }}</div>
-                <div v-else-if="pools && pools.pools">
-                    <table class="pools-table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Created By</th>
-                            <th>Created</th>
-                            <th>Type</th>
-                            <th>Number Set</th>
-                            <th>Grids</th>
-                            <th>Members</th>
-                            <th>Claimed</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="pool in pools.pools" :key="pool.token">
-                            <td>
-                                <router-link :to="`/pool/${pool.token}`">{{ pool.name }}</router-link>
-                            </td>
-                            <td>
-                                <router-link :to="`/admin/user/${pool.ownerId}`">{{ formatOwner(pool) }}</router-link>
-                            </td>
-                            <td>{{ formatDate(pool.created) }}</td>
-                            <td>{{ pool.gridType }}</td>
-                            <td>{{ pool.numberSetConfig }}</td>
-                            <td>{{ formatNumber(pool.gridCount) }}</td>
-                            <td>{{ formatNumber(pool.memberCount) }}</td>
-                            <td>{{ formatNumber(pool.claimedCount) }}</td>
-                            <td>
-                                <span :class="['status', pool.archived ? 'archived' : 'active']">
-                                    {{ pool.archived ? 'Archived' : 'Active' }}
-                                </span>
-                            </td>
-                            <td>
-                                <button
-                                    type="button"
-                                    class="small"
-                                    @click="confirmJoinPool(pool)"
-                                    :disabled="joiningPool === pool.token"
+                <div v-else-if="pools && pools.pools && pools.pools.length > 0">
+                    <div class="table-wrap">
+                        <table class="pools-table">
+                            <thead>
+                            <tr>
+                                <th
+                                    v-for="column in poolColumns"
+                                    :key="column.key"
+                                    :class="{ sortable: !!column.sort, numeric: column.numeric }"
+                                    :aria-sort="column.sort ? ariaSort(poolsSortColumn === column.sort, poolsSortDirection) : undefined"
                                 >
-                                    {{ joiningPool === pool.token ? 'Joining...' : 'Join' }}
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                    <button v-if="column.sort" type="button" class="sort-btn" @click="sortPools(column.sort)">
+                                        {{ column.label }}
+                                        <span class="sort-icon" v-if="poolsSortColumn === column.sort">
+                                            {{ poolsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                        </span>
+                                    </button>
+                                    <template v-else>{{ column.label }}</template>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="pool in pools.pools" :key="pool.token">
+                                <td>
+                                    <router-link :to="`/admin/pool/${pool.token}`">{{ pool.name }}</router-link>
+                                    <router-link :to="`/pool/${pool.token}`" class="secondary-link">Open</router-link>
+                                </td>
+                                <td>
+                                    <router-link :to="`/admin/user/${pool.ownerId}`">{{ formatOwner(pool) }}</router-link>
+                                </td>
+                                <td>{{ formatDate(pool.created) }}</td>
+                                <td>{{ pool.gridType }}</td>
+                                <td>{{ pool.numberSetConfig }}</td>
+                                <td class="numeric">{{ formatNumber(pool.gridCount) }}</td>
+                                <td class="numeric">{{ formatNumber(pool.memberCount) }}</td>
+                                <td class="numeric">{{ formatNumber(pool.claimedSquares) }}</td>
+                                <td class="numeric fill-cell">
+                                    <span class="fill-count">{{ formatNumber(pool.claimedSquares) }}/{{ formatNumber(pool.totalSquares) }}</span>
+                                    <span class="fill-percent">{{ formatPercent(pool.fillPercent, 0) }}</span>
+                                </td>
+                                <td>
+                                    <span :class="['status', pool.archived ? 'archived' : 'active']">
+                                        {{ pool.archived ? 'Archived' : 'Active' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="small"
+                                        @click="confirmJoinPool(pool)"
+                                        :disabled="joiningPool === pool.token"
+                                    >
+                                        {{ joiningPool === pool.token ? 'Joining...' : 'Join' }}
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <pagination
                         v-if="pools.total > poolsPerPage"
@@ -191,7 +263,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         @page="goToPage"
                     />
                 </div>
-                <div v-else class="no-pools">No pools found.</div>
+                <div v-else class="no-pools">
+                    {{ poolsFiltersActive ? 'No pools match the selected filters.' : 'No pools found.' }}
+                </div>
             </div>
 
             <div v-if="activeTab === 'users'" class="tab-content">
@@ -215,23 +289,29 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <th>ID</th>
                             <th>Email</th>
                             <th>Type</th>
-                            <th class="sortable" @click="sortUsers('poolsOwned')">
-                                Pools Owned
-                                <span class="sort-icon" v-if="usersSortColumn === 'poolsOwned'">
-                                    {{ usersSortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
+                            <th class="sortable" :aria-sort="ariaSort(usersSortColumn === 'poolsOwned', usersSortDirection)">
+                                <button type="button" class="sort-btn" @click="sortUsers('poolsOwned')">
+                                    Pools Owned
+                                    <span class="sort-icon" v-if="usersSortColumn === 'poolsOwned'">
+                                        {{ usersSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                    </span>
+                                </button>
                             </th>
-                            <th class="sortable" @click="sortUsers('poolsJoined')">
-                                Pools Joined
-                                <span class="sort-icon" v-if="usersSortColumn === 'poolsJoined'">
-                                    {{ usersSortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
+                            <th class="sortable" :aria-sort="ariaSort(usersSortColumn === 'poolsJoined', usersSortDirection)">
+                                <button type="button" class="sort-btn" @click="sortUsers('poolsJoined')">
+                                    Pools Joined
+                                    <span class="sort-icon" v-if="usersSortColumn === 'poolsJoined'">
+                                        {{ usersSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                    </span>
+                                </button>
                             </th>
-                            <th class="sortable" @click="sortUsers('created')">
-                                Created
-                                <span class="sort-icon" v-if="usersSortColumn === 'created'">
-                                    {{ usersSortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
+                            <th class="sortable" :aria-sort="ariaSort(usersSortColumn === 'created', usersSortDirection)">
+                                <button type="button" class="sort-btn" @click="sortUsers('created')">
+                                    Created
+                                    <span class="sort-icon" v-if="usersSortColumn === 'created'">
+                                        {{ usersSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                    </span>
+                                </button>
                             </th>
                             <th>Admin</th>
                         </tr>
@@ -244,7 +324,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <td>
                                 <router-link :to="`/admin/user/${user.id}`">{{ formatUserEmail(user) }}</router-link>
                             </td>
-                            <td>{{ user.store === 'auth0' ? 'Registered' : 'Guest' }}</td>
+                            <td>{{ formatStoreLabel(user.store) }}</td>
                             <td>{{ formatNumber(user.poolsOwned) }}</td>
                             <td>{{ formatNumber(user.poolsJoined) }}</td>
                             <td>{{ formatDate(user.created) }}</td>
@@ -324,21 +404,25 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                         <thead>
                         <tr>
                             <th class="expand-col"></th>
-                            <th class="sortable" @click="sortEvents('eventDate')">
-                                Date
-                                <span class="sort-icon" v-if="eventsSortColumn === 'eventDate'">
-                                    {{ eventsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
-                                </span>
+<th class="sortable" :aria-sort="ariaSort(eventsSortColumn === 'eventDate', eventsSortDirection)">
+                                <button type="button" class="sort-btn" @click="sortEvents('eventDate')">
+                                    Date
+                                    <span class="sort-icon" v-if="eventsSortColumn === 'eventDate'">
+                                        {{ eventsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                    </span>
+                                </button>
                             </th>
                             <th>League</th>
                             <th>Event</th>
                             <th>Score</th>
                             <th>Status</th>
-                            <th class="sortable" @click="sortEvents('gridCount')">
-                                Grids
-                                <span class="sort-icon" v-if="eventsSortColumn === 'gridCount'">
-                                    {{ eventsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
-                                </span>
+<th class="sortable" :aria-sort="ariaSort(eventsSortColumn === 'gridCount', eventsSortDirection)">
+                                <button type="button" class="sort-btn" @click="sortEvents('gridCount')">
+                                    Grids
+                                    <span class="sort-icon" v-if="eventsSortColumn === 'gridCount'">
+                                        {{ eventsSortDirection === 'asc' ? '&#9650;' : '&#9660;' }}
+                                    </span>
+                                </button>
                             </th>
                         </tr>
                         </thead>
@@ -356,11 +440,53 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                     <span :class="['status', eventStatusClass(event.status)]">
                                         {{ formatEventStatus(event) }}
                                     </span>
+                                    <span v-if="event.manualOverride" class="status warning" title="Scores are manually overridden">
+                                        Override
+                                    </span>
                                 </td>
                                 <td>{{ formatNumber(event.gridCount) }}</td>
                             </tr>
                             <tr v-if="expandedEvents[event.id]" class="expanded-row">
                                 <td :colspan="7">
+                                    <div class="event-details">
+                                        <div class="event-meta">
+                                            <span><strong>Last synced:</strong> {{ formatDate(event.lastSynced) }}</span>
+                                            <span v-if="event.manualOverride" class="status warning">Manual override active</span>
+                                        </div>
+                                        <div class="event-actions">
+                                            <button
+                                                type="button"
+                                                class="secondary sm"
+                                                :disabled="eventActionBusy[event.id]"
+                                                @click="refreshEvent(event)"
+                                            >
+                                                <i class="fas fa-sync"></i>
+                                                {{ eventActionBusy[event.id] === 'refresh' ? 'Refreshing...' : 'Refresh from ESPN' }}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="secondary sm"
+                                                :disabled="eventActionBusy[event.id]"
+                                                @click="openOverride(event)"
+                                            >
+                                                <i class="fas fa-edit"></i>
+                                                Override score
+                                            </button>
+                                            <button
+                                                v-if="event.manualOverride"
+                                                type="button"
+                                                class="destructive sm"
+                                                :disabled="eventActionBusy[event.id]"
+                                                @click="confirmClearOverride(event)"
+                                            >
+                                                <i class="fas fa-undo"></i>
+                                                {{ eventActionBusy[event.id] === 'clear' ? 'Clearing...' : 'Clear override' }}
+                                            </button>
+                                        </div>
+                                        <div v-if="eventActionError[event.id]" class="error inline-message">{{ eventActionError[event.id] }}</div>
+                                        <div v-if="eventActionNote[event.id]" class="success-note inline-message">{{ eventActionNote[event.id] }}</div>
+                                    </div>
+
                                     <div v-if="eventGridsLoading[event.id]" class="loading">Loading grids...</div>
                                     <div v-else-if="eventGrids[event.id] && eventGrids[event.id].grids && eventGrids[event.id].grids.length > 0">
                                         <table class="sub-table">
@@ -382,7 +508,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                                     </router-link>
                                                 </td>
                                                 <td>
-                                                    <router-link :to="`/pool/${grid.poolToken}`">{{ grid.poolName }}</router-link>
+                                                    <router-link :to="`/admin/pool/${grid.poolToken}`">{{ grid.poolName }}</router-link>
                                                 </td>
                                                 <td>
                                                     <router-link v-if="grid.creatorId" :to="`/admin/user/${grid.creatorId}`">
@@ -424,6 +550,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     {{ eventsFiltersActive ? 'No events match the selected filters.' : 'No events with linked grids found.' }}
                 </div>
             </div>
+
+            <admin-analytics v-if="activeTab === 'analytics'" class="tab-content"/>
+            <admin-sports v-if="activeTab === 'sports'" class="tab-content"/>
+            <admin-audit v-if="activeTab === 'audit'" class="tab-content"/>
         </div>
     </section>
 </template>
@@ -432,12 +562,44 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 import sqmgrClient from "@/models/sqmgrClient"
 import Pagination from "@/components/ui/Pagination"
 import ModalController from "@/controllers/ModalController"
-import ResponseError from "@/models/ResponseError"
-import Common from "@/common"
+import AdminAnalytics from "@/components/admin/AdminAnalytics"
+import AdminSports from "@/components/admin/AdminSports"
+import AdminAudit from "@/components/admin/AdminAudit"
+import EventOverrideForm from "@/components/admin/EventOverrideForm"
+import { formatDate, formatNumber, formatPercent, formatUserLabel, formatStoreLabel, formatEventStatus, eventStatusClass, getErrorMessage, isISODate } from "@/utils/adminFormat"
+import adminJoinPoolMixin from "@/components/admin/adminJoinPoolMixin"
+import { pushQuery, pageFromQuery } from "@/utils/routeQuery"
+import { debounce } from "@/utils/debounce"
+import { LEAGUES, GRID_TYPES } from "@/constants/admin"
+
+const TABS = ['pools', 'users', 'events', 'analytics', 'sports', 'audit']
+const POOL_SORTS = ['created', 'name', 'member_count', 'grid_count', 'total_squares', 'claimed_squares', 'fill_percent']
+
+// fields copied from the event JSON returned by refresh/override into the list row
+const EVENT_UPDATE_FIELDS = [
+    'status', 'statusDetail', 'homeScore', 'awayScore',
+    'homeQ1', 'homeQ2', 'homeQ3', 'homeQ4', 'homeOT',
+    'awayQ1', 'awayQ2', 'awayQ3', 'awayQ4', 'awayOT',
+    'lastSynced', 'manualOverride',
+]
+
+// query keys whose default value is left out of the URL
+function isDefaultQueryValue(key, value) {
+    return (key === 'page' && value === 1) ||
+        (key === 'tab' && value === 'pools') ||
+        (key === 'sort' && value === 'created') ||
+        (key === 'dir' && value === 'desc')
+}
+
+// a valid YYYY-MM-DD query value, or '' when missing or malformed
+function dateParam(value) {
+    return isISODate(value) ? value : ''
+}
 
 export default {
     name: "Admin",
-    components: {Pagination},
+    mixins: [adminJoinPoolMixin],
+    components: {Pagination, AdminAnalytics, AdminSports, AdminAudit},
     data() {
         return {
             stats: null,
@@ -457,18 +619,38 @@ export default {
             customEnd: '',
             customRangeError: null,
 
+            tabs: [
+                {value: 'pools', label: 'Pools', icon: 'fa-th-large'},
+                {value: 'users', label: 'Users', icon: 'fa-users'},
+                {value: 'events', label: 'Events', icon: 'fa-calendar-alt'},
+                {value: 'analytics', label: 'Analytics', icon: 'fa-chart-line'},
+                {value: 'sports', label: 'Sports', icon: 'fa-football-ball'},
+                {value: 'audit', label: 'Audit Log', icon: 'fa-clipboard-list'},
+            ],
+
             pools: null,
             poolsLoading: true,
             poolsError: null,
             poolsPerPage: 25,
-
-            joiningPool: null,
+            gridTypes: GRID_TYPES,
+            poolColumns: [
+                {key: 'name', label: 'Name', sort: 'name'},
+                {key: 'owner', label: 'Created By'},
+                {key: 'created', label: 'Created', sort: 'created'},
+                {key: 'type', label: 'Type'},
+                {key: 'numberSet', label: 'Number Set'},
+                {key: 'grids', label: 'Grids', sort: 'grid_count', numeric: true},
+                {key: 'members', label: 'Members', sort: 'member_count', numeric: true},
+                {key: 'claimed', label: 'Claimed', sort: 'claimed_squares', numeric: true},
+                {key: 'fill', label: 'Fill', sort: 'fill_percent', numeric: true},
+                {key: 'status', label: 'Status'},
+                {key: 'actions', label: 'Actions'},
+            ],
 
             users: null,
             usersLoading: false,
             usersError: null,
             usersPerPage: 25,
-            usersFetched: false,
 
             events: null,
             eventsLoading: false,
@@ -479,13 +661,10 @@ export default {
             eventGridsLoading: {},
             eventGridsPage: {},
             eventGridsPerPage: 25,
-            eventLeagues: [
-                {value: 'nfl', label: 'NFL'},
-                {value: 'nba', label: 'NBA'},
-                {value: 'wnba', label: 'WNBA'},
-                {value: 'ncaab', label: 'NCAAB'},
-                {value: 'ncaaf', label: 'NCAAF'},
-            ],
+            eventActionBusy: {},
+            eventActionError: {},
+            eventActionNote: {},
+            eventLeagues: LEAGUES,
             eventStatuses: [
                 {value: 'scheduled', label: 'Scheduled'},
                 {value: 'in_progress', label: 'In Progress'},
@@ -494,24 +673,63 @@ export default {
 
             // Local input state for responsive typing
             searchInput: '',
+            ownerInput: '',
             usersSearchInput: '',
-            searchTimeout: null,
-            usersSearchTimeout: null,
         }
     },
     computed: {
         activeTab() {
             const tab = this.$route.query.tab
-            if (tab === 'users') return 'users'
-            if (tab === 'events') return 'events'
-            return 'pools'
+            return TABS.includes(tab) ? tab : 'pools'
         },
         currentPage() {
-            const page = parseInt(this.$route.query.page, 10)
-            return (isNaN(page) || page < 1) ? 1 : page
+            return pageFromQuery(this.$route.query)
         },
         searchQuery() {
             return this.$route.query.search || ''
+        },
+        poolsOwner() {
+            return this.$route.query.owner || ''
+        },
+        poolsGridType() {
+            const type = this.$route.query.gridType
+            return GRID_TYPES.includes(type) ? type : ''
+        },
+        poolsStatus() {
+            const status = this.$route.query.status
+            return ['active', 'archived'].includes(status) ? status : ''
+        },
+        poolsStart() {
+            return dateParam(this.$route.query.start)
+        },
+        poolsEnd() {
+            return dateParam(this.$route.query.end)
+        },
+        poolsMinFill() {
+            return this.fillPercentOrEmpty(this.$route.query.minFill)
+        },
+        poolsMaxFill() {
+            return this.fillPercentOrEmpty(this.$route.query.maxFill)
+        },
+        poolsSortColumn() {
+            const col = this.$route.query.sort
+            return POOL_SORTS.includes(col) ? col : 'created'
+        },
+        poolsSortDirection() {
+            return this.$route.query.dir === 'asc' ? 'asc' : 'desc'
+        },
+        poolsFiltersActive() {
+            return !!(this.searchQuery || this.poolsOwner || this.poolsGridType || this.poolsStatus ||
+                this.poolsStart || this.poolsEnd || this.poolsMinFill !== '' || this.poolsMaxFill !== '')
+        },
+        poolsFilterError() {
+            if (this.poolsStart && this.poolsEnd && this.poolsStart > this.poolsEnd) {
+                return 'The Created From date must be on or before the Created To date.'
+            }
+            if (this.poolsMinFill !== '' && this.poolsMaxFill !== '' && this.poolsMinFill > this.poolsMaxFill) {
+                return 'Min fill % must be less than or equal to max fill %.'
+            }
+            return null
         },
         usersSortColumn() {
             const col = this.$route.query.sort
@@ -536,10 +754,10 @@ export default {
             return this.eventStatuses.some(s => s.value === status) ? status : ''
         },
         eventsStart() {
-            return this.isoDateOrEmpty(this.$route.query.start)
+            return dateParam(this.$route.query.start)
         },
         eventsEnd() {
-            return this.isoDateOrEmpty(this.$route.query.end)
+            return dateParam(this.$route.query.end)
         },
         eventsFiltersActive() {
             return !!(this.eventsLeague || this.eventsStatus || this.eventsStart || this.eventsEnd)
@@ -552,11 +770,22 @@ export default {
             return null
         },
     },
+    created() {
+        // Debounced URL pushes live outside data() so they are not reactive;
+        // they are cancelled on unmount so a pending push cannot hit the next route.
+        this.pushSearch = debounce(() => this.updateUrl({ search: this.searchInput.trim(), page: 1 }, true))
+        this.pushOwner = debounce(() => this.updateUrl({ owner: this.ownerInput.trim(), page: 1 }, true))
+        this.pushUsersSearch = debounce(() => this.updateUrl({ search: this.usersSearchInput.trim(), page: 1 }, true))
+    },
+    beforeUnmount() {
+        this.pushSearch.cancel()
+        this.pushOwner.cancel()
+        this.pushUsersSearch.cancel()
+    },
     async beforeMount() {
         this.fetchStats()
         // Sync local search inputs with URL on mount
-        this.searchInput = this.searchQuery
-        this.usersSearchInput = this.searchQuery
+        this.syncInputsFromUrl()
         // Initial data fetch based on URL state
         this.fetchDataForCurrentTab()
     },
@@ -565,8 +794,7 @@ export default {
             handler(newQuery, oldQuery) {
                 if (this.$route.path !== '/admin') return
                 // Sync search inputs with URL
-                this.searchInput = this.searchQuery
-                this.usersSearchInput = this.searchQuery
+                this.syncInputsFromUrl()
                 // Fetch data if query changed (not on initial load handled by beforeMount)
                 if (oldQuery !== undefined) {
                     this.fetchDataForCurrentTab()
@@ -575,28 +803,26 @@ export default {
         },
     },
     methods: {
+        formatPercent,
+
+        syncInputsFromUrl() {
+            this.searchInput = this.searchQuery
+            this.ownerInput = this.poolsOwner
+            this.usersSearchInput = this.searchQuery
+        },
+
         updateUrl(params, replace = false) {
-            const query = { ...this.$route.query }
-            Object.entries(params).forEach(([key, value]) => {
-                if (value === null || value === undefined || value === '' ||
-                    (key === 'page' && value === 1) ||
-                    (key === 'tab' && value === 'pools') ||
-                    (key === 'sort' && value === 'created') ||
-                    (key === 'dir' && value === 'desc')) {
-                    delete query[key]
-                } else {
-                    query[key] = String(value)
-                }
-            })
-            // Only update if query actually changed
-            const currentQueryStr = JSON.stringify(this.$route.query)
-            const newQueryStr = JSON.stringify(query)
-            if (currentQueryStr !== newQueryStr) {
-                this.$router[replace ? 'replace' : 'push']({ query }).catch(() => {})
-            }
+            pushQuery(this.$router, this.$route, params, isDefaultQueryValue, replace)
+        },
+
+        // value for th[aria-sort]
+        ariaSort(active, direction) {
+            if (!active) return 'none'
+            return direction === 'asc' ? 'ascending' : 'descending'
         },
 
         fetchDataForCurrentTab() {
+            // The analytics, sports and audit tabs manage their own data.
             if (this.activeTab === 'pools') {
                 this.fetchPools()
             } else if (this.activeTab === 'users') {
@@ -608,10 +834,9 @@ export default {
 
         switchTab(tab) {
             if (this.activeTab === tab) return
-            this.updateUrl({
-                tab, page: null, search: null, sort: null, dir: null,
-                league: null, status: null, start: null, end: null,
-            })
+            // Every tab keeps its own state in the query, so start the new tab clean.
+            const query = tab === 'pools' ? {} : { tab }
+            this.$router.push({ query }).catch(() => {})
         },
 
         async fetchStats() {
@@ -662,11 +887,34 @@ export default {
         },
 
         async fetchPools() {
+            if (this.poolsFilterError) {
+                // The API would reject these filters, so surface the problem
+                // inline and wait for the user to fix it.
+                this.pools = null
+                this.poolsError = this.poolsFilterError
+                this.poolsLoading = false
+                return
+            }
+
             this.poolsLoading = true
             this.poolsError = null
             const offset = (this.currentPage - 1) * this.poolsPerPage
+            let archived = ''
+            if (this.poolsStatus === 'archived') archived = 'true'
+            if (this.poolsStatus === 'active') archived = 'false'
             try {
-                this.pools = await sqmgrClient.getAdminPools(this.searchQuery, offset, this.poolsPerPage)
+                this.pools = await sqmgrClient.getAdminPools({
+                    search: this.searchQuery,
+                    ownerEmail: this.poolsOwner,
+                    gridType: this.poolsGridType,
+                    archived,
+                    start: this.poolsStart,
+                    end: this.poolsEnd,
+                    minFill: this.poolsMinFill,
+                    maxFill: this.poolsMaxFill,
+                    sortBy: this.poolsSortColumn,
+                    sortDir: this.poolsSortDirection,
+                }, offset, this.poolsPerPage)
             } catch (err) {
                 this.poolsError = this.getErrorMessage(err)
             } finally {
@@ -675,42 +923,43 @@ export default {
         },
 
         debouncedSearch() {
-            if (this.searchTimeout) {
-                clearTimeout(this.searchTimeout)
+            this.pushSearch()
+        },
+
+        debouncedOwnerSearch() {
+            this.pushOwner()
+        },
+
+        setPoolsFilter(key, value) {
+            this.updateUrl({ [key]: value, page: 1 })
+        },
+
+        clearPoolsFilters() {
+            this.updateUrl({
+                search: null, owner: null, gridType: null, status: null,
+                start: null, end: null, minFill: null, maxFill: null, page: 1,
+            })
+        },
+
+        sortPools(column) {
+            let newDir = 'desc'
+            if (this.poolsSortColumn === column) {
+                newDir = this.poolsSortDirection === 'asc' ? 'desc' : 'asc'
+            } else if (column === 'name') {
+                newDir = 'asc'
             }
-            this.searchTimeout = setTimeout(() => {
-                this.updateUrl({ search: this.searchInput, page: 1 }, true)
-            }, 300)
+            this.updateUrl({ sort: column, dir: newDir, page: 1 })
+        },
+
+        fillPercentOrEmpty(value) {
+            if (value === undefined || value === null || value === '') return ''
+            const num = parseInt(value, 10)
+            if (isNaN(num) || num < 0 || num > 100) return ''
+            return num
         },
 
         goToPage(page) {
             this.updateUrl({ page })
-        },
-
-        confirmJoinPool(pool) {
-            ModalController.showPrompt(
-                'Join Pool',
-                `Are you sure you want to join the pool "${pool.name}"?`,
-                {
-                    actionButton: 'Join Pool',
-                    action: () => {
-                        this.joinPool(pool)
-                        ModalController.hide()
-                    },
-                },
-            )
-        },
-
-        async joinPool(pool) {
-            this.joiningPool = pool.token
-            try {
-                await sqmgrClient.adminJoinPool(pool.token)
-                this.$router.push(`/pool/${pool.token}`)
-            } catch (err) {
-                ModalController.showError(this.getErrorMessage(err))
-            } finally {
-                this.joiningPool = null
-            }
         },
 
         async fetchUsers() {
@@ -725,7 +974,6 @@ export default {
                     this.usersSortColumn,
                     this.usersSortDirection
                 )
-                this.usersFetched = true
             } catch (err) {
                 this.usersError = this.getErrorMessage(err)
             } finally {
@@ -742,12 +990,7 @@ export default {
         },
 
         debouncedUsersSearch() {
-            if (this.usersSearchTimeout) {
-                clearTimeout(this.usersSearchTimeout)
-            }
-            this.usersSearchTimeout = setTimeout(() => {
-                this.updateUrl({ search: this.usersSearchInput, page: 1 }, true)
-            }, 300)
+            this.pushUsersSearch()
         },
 
         async fetchEvents() {
@@ -756,6 +999,7 @@ export default {
                 // inline and wait for the user to fix it.
                 this.events = null
                 this.eventsError = this.eventsDateRangeError
+                this.eventsLoading = false
                 return
             }
 
@@ -788,10 +1032,6 @@ export default {
 
         clearEventsFilters() {
             this.updateUrl({ league: null, status: null, start: null, end: null, page: 1 })
-        },
-
-        isoDateOrEmpty(value) {
-            return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : ''
         },
 
         sortEvents(column) {
@@ -832,6 +1072,75 @@ export default {
             this.fetchEventGrids(eventId, page)
         },
 
+        // applyEventUpdate copies the fields from a refreshed/overridden event
+        // into the list row so the table updates in place.
+        applyEventUpdate(event, updated, overrides = {}) {
+            if (updated && typeof updated === 'object') {
+                EVENT_UPDATE_FIELDS.forEach(key => {
+                    if (updated[key] !== undefined) {
+                        event[key] = updated[key]
+                    }
+                })
+            }
+            Object.assign(event, overrides)
+        },
+
+        setEventAction(event, busy, error = null, note = null) {
+            this.eventActionBusy = { ...this.eventActionBusy, [event.id]: busy }
+            this.eventActionError = { ...this.eventActionError, [event.id]: error }
+            this.eventActionNote = { ...this.eventActionNote, [event.id]: note }
+        },
+
+        async refreshEvent(event) {
+            this.setEventAction(event, 'refresh')
+            try {
+                const updated = await sqmgrClient.adminRefreshEvent(event.id)
+                this.applyEventUpdate(event, updated)
+                this.setEventAction(event, null, null, 'Event refreshed from ESPN.')
+            } catch (err) {
+                // a 409 means the event is overridden; the API explains why
+                this.setEventAction(event, null, this.getErrorMessage(err))
+            }
+        },
+
+        openOverride(event) {
+            ModalController.show('Override Score', EventOverrideForm, {
+                event: { ...event },
+            }, {
+                'saved': updated => {
+                    ModalController.hide()
+                    this.applyEventUpdate(event, updated, { manualOverride: true })
+                    this.setEventAction(event, null, null, 'Score override saved. The sync job will leave this event alone until the override is cleared.')
+                },
+            })
+        },
+
+        confirmClearOverride(event) {
+            ModalController.showPrompt(
+                'Clear Override',
+                `Clear the manual override for "${this.formatEventName(event)}"? The next sync run will overwrite the event with ESPN data again.`,
+                {
+                    actionButton: 'Clear Override',
+                    isDestructive: true,
+                    action: () => {
+                        ModalController.hide()
+                        this.clearOverride(event)
+                    },
+                },
+            )
+        },
+
+        async clearOverride(event) {
+            this.setEventAction(event, 'clear')
+            try {
+                await sqmgrClient.adminClearEventOverride(event.id)
+                this.applyEventUpdate(event, null, { manualOverride: false })
+                this.setEventAction(event, null, null, 'Manual override cleared.')
+            } catch (err) {
+                this.setEventAction(event, null, this.getErrorMessage(err))
+            }
+        },
+
         formatEventName(event) {
             if (event.name) return event.name
             const away = event.awayTeam ? event.awayTeam.abbreviation : event.awayTeamId
@@ -847,58 +1156,21 @@ export default {
         },
 
         formatEventStatus(event) {
-            if (event.statusDetail) return event.statusDetail
-            switch (event.status) {
-                case 'scheduled': return 'Scheduled'
-                case 'in_progress': return 'In Progress'
-                case 'final': return 'Final'
-                default: return event.status
-            }
+            return formatEventStatus(event.status, event.statusDetail)
         },
 
-        eventStatusClass(status) {
-            switch (status) {
-                case 'final': return 'archived'
-                case 'in_progress': return 'active'
-                default: return ''
-            }
-        },
-
-        formatDate(dateStr) {
-            const date = new Date(dateStr)
-            return date.toLocaleString(undefined, Common.DateTimeOptions)
-        },
+        eventStatusClass,
+        formatDate,
+        formatNumber,
+        formatStoreLabel,
+        getErrorMessage,
 
         formatOwner(pool) {
-            if (pool.ownerEmail) {
-                return pool.ownerEmail
-            }
-            if (pool.ownerStore === 'sqmgr') {
-                return `Guest #${pool.ownerId}`
-            }
-            return `User #${pool.ownerId}`
+            return formatUserLabel(pool.ownerId, pool.ownerEmail, pool.ownerStore)
         },
 
         formatUserEmail(user) {
-            if (user.email) {
-                return user.email
-            }
-            if (user.store === 'sqmgr') {
-                return `Guest #${user.id}`
-            }
-            return `User #${user.id}`
-        },
-
-        formatNumber(num) {
-            if (num === undefined || num === null) return '0'
-            return num.toLocaleString()
-        },
-
-        getErrorMessage(err) {
-            if (err instanceof ResponseError) {
-                return err.message
-            }
-            return 'An unexpected error occurred. Please try again.'
+            return formatUserLabel(user.id, user.email, user.store)
         },
     },
 }
@@ -906,9 +1178,11 @@ export default {
 
 <style scoped lang="scss">
 @use '../../variables' as *;
+@use './admin' as *;
 
 .admin {
     padding: var(--spacing);
+    @include admin-messages;
 }
 
 h1 {
@@ -924,6 +1198,10 @@ h2 {
     h2 {
         margin-top: var(--spacing);
     }
+}
+
+.tabs {
+    flex-wrap: wrap;
 }
 
 .status-muted {
@@ -955,35 +1233,7 @@ h2 {
         }
 
         .options {
-            display:   flex;
-            gap:       8px;
-            flex-wrap: wrap;
-        }
-
-        .period-btn {
-            background:    transparent;
-            border:        1px solid #e0e0e0;
-            border-radius: $radius-md;
-            padding:       6px 14px;
-            font-size:     0.9rem;
-            color:         #666;
-            cursor:        pointer;
-            transition:    all 0.2s;
-            font-family:   inherit;
-
-            &:hover {
-                background:   #f8f9fa;
-                border-color: #d0d0d0;
-                color:        #333;
-            }
-
-            &.active {
-                background:   var(--primary);
-                border-color: var(--primary);
-                color:        white;
-                font-weight:  500;
-                box-shadow:   0 2px 4px rgba(0, 0, 0, 0.1);
-            }
+            @include admin-period-buttons;
         }
 
         .custom-range {
@@ -1078,132 +1328,45 @@ h2 {
     }
 }
 
+.pools-filters,
 .events-filters {
-    display:       flex;
-    align-items:   flex-end;
-    gap:           $space-3;
-    flex-wrap:     wrap;
-    margin-bottom: var(--spacing);
+    @include admin-filter-bar;
+}
 
-    .filter-field {
-        display:        flex;
-        flex-direction: column;
-        gap:            $minimal-spacing;
-        // Global label styles add a bottom margin that would push the
-        // controls above the row's baseline.
-        margin-bottom:  0;
-
-        .filter-label {
-            font-weight:    600;
-            color:          var(--gray);
-            font-size:      0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        select,
-        input[type="date"] {
-            border:        1px solid #e0e0e0;
-            border-radius: $radius-md;
-            padding:       5px 10px;
-            font-size:     0.9rem;
-            font-family:   inherit;
-            color:         $text-color;
-            background:    white;
-
-            &:focus {
-                outline:      none;
-                border-color: var(--primary);
-            }
-        }
-    }
-
-    // Match the height of the controls so the button sits on the same line
-    button {
-        min-height: 44px;
-    }
+.table-wrap {
+    overflow-x: auto;
 }
 
 .pools-table {
-    width:           100%;
-    border-collapse: collapse;
-    margin-bottom:   var(--spacing);
+    @include admin-table;
 
-    th, td {
-        padding:       12px;
-        text-align:    left;
-        border-bottom: 1px solid #e0e0e0;
-    }
+    .fill-cell {
+        white-space: nowrap;
 
-    th {
-        background:  #f8f9fa;
-        color:       $text-color;
-        font-weight: 600;
-
-        &.sortable {
-            cursor:      pointer;
-            user-select: none;
-
-            &:hover {
-                background: #eee;
-            }
-
-            .sort-icon {
-                margin-left: 4px;
-                font-size:   0.75em;
-                color:       var(--primary);
-            }
+        .fill-count {
+            display: block;
         }
-    }
 
-    tbody tr:hover {
-        background: #f8f9fa;
-    }
-
-    a {
-        color:           var(--primary);
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
+        .fill-percent {
+            display:   block;
+            font-size: 0.8em;
+            color:     $text-secondary;
         }
     }
 }
 
 .status {
-    display:       inline-block;
-    padding:       4px 8px;
-    border-radius: $radius-sm;
-    font-size:     0.85em;
-    font-weight:   500;
-
-    &.active {
-        background: $alert-success-bg;
-        color:      $alert-success-text;
-    }
-
-    &.archived {
-        background: $alert-error-bg;
-        color:      $alert-error-text;
-    }
+    @include admin-status;
 }
 
 button.small {
-    padding:   6px 12px;
-    font-size: 0.9em;
-}
-
-.loading, .error, .no-pools, .stats-placeholder {
-    padding:    var(--spacing);
-    text-align: center;
-}
-
-.error {
-    @include alert-error;
+    @include admin-small-button;
 }
 
 .stats-placeholder {
-    color: var(--gray);
+    padding:    var(--spacing);
+    text-align: center;
+    color:      var(--gray);
 }
 
 .clickable-row {
@@ -1218,6 +1381,36 @@ button.small {
 .expanded-row > td {
     background: #f8f9fa;
     padding:    0 12px 12px 12px;
+}
+
+.event-details {
+    display:        flex;
+    flex-direction: column;
+    gap:            $space-2;
+    padding:        $space-3 0;
+    border-bottom:  1px solid #e8e8e8;
+
+    .event-meta {
+        display:     flex;
+        align-items: center;
+        gap:         $space-3;
+        flex-wrap:   wrap;
+        font-size:   0.9em;
+        color:       $text-secondary;
+    }
+
+    .event-actions {
+        display:   flex;
+        gap:       $space-2;
+        flex-wrap: wrap;
+    }
+
+    .inline-message {
+        padding:   $space-2 $space-3;
+        margin:    0;
+        font-size: 0.9em;
+        text-align: left;
+    }
 }
 
 .sub-table {

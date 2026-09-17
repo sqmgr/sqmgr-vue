@@ -56,6 +56,7 @@ const PoolGrid = () => import("@/components/pool/PoolGrid")
 const PoolGridAll = () => import("@/components/pool/PoolGridAll")
 const Admin = () => import("@/components/admin/Admin")
 const AdminUser = () => import("@/components/admin/AdminUser")
+const AdminPool = () => import("@/components/admin/AdminPool")
 const NotFound = () => import("@/components/pages/NotFound")
 
 // Unregister any existing service workers from previous versions
@@ -102,6 +103,7 @@ const routes = [
     {path: '/pool/:token/game/:gridId', component: PoolGrid, props: true, meta: {requirePoolMembership: true}},
     {path: '/admin', component: Admin, meta: {requireSiteAdmin: true, title: 'Admin'}},
     {path: '/admin/user/:userId', component: AdminUser, props: true, meta: {requireSiteAdmin: true, title: 'Admin - User Details'}},
+    {path: '/admin/pool/:token', component: AdminPool, props: true, meta: {requireSiteAdmin: true, title: 'Admin - Pool Details'}},
     {path: '/:pathMatch(.*)*', component: NotFound, meta: {title: 'Page Not Found'}},
 ]
 
