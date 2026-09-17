@@ -23,7 +23,20 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 
         <div v-for="field in fields" :key="field.key" class="field">
             <label :for="`action-${field.key}`" :class="{ required: field.required }">{{ field.label }}</label>
+            <admin-user-picker
+                v-if="field.type === 'user'"
+                :ref="el => setInputRef(field.key, el)"
+                :input-id="`action-${field.key}`"
+                v-model="values[field.key]"
+                :suggestions="field.suggestions || []"
+                :suggestions-label="field.suggestionsLabel"
+                :exclude-ids="field.excludeIds || []"
+                :excluded-note="field.excludedNote"
+                :invalid="!!errors[field.key]"
+                :described-by="describedBy(field)"
+            />
             <input
+                v-else
                 :id="`action-${field.key}`"
                 :ref="el => setInputRef(field.key, el)"
                 :type="field.type || 'text'"
@@ -59,12 +72,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 <script>
 import ModalController from "@/controllers/ModalController"
 import WarningBox from "@/components/ui/WarningBox"
+import AdminUserPicker from "@/components/admin/AdminUserPicker"
 
 // AdminActionPrompt is a confirmation dialog for site-admin actions that
 // records an optional reason and any extra inputs the action requires.
 export default {
     name: "AdminActionPrompt",
-    components: {WarningBox},
+    components: {WarningBox, AdminUserPicker},
     props: {
         description: {
             type: String,
@@ -83,6 +97,9 @@ export default {
             default: '',
         },
         // [{ key, label, type, placeholder, required, minLength, min, helper }]
+        // A field of type 'user' is a search-by-email picker; it also accepts
+        // { suggestions, suggestionsLabel, excludeIds, excludedNote } and its confirmed
+        // value is the chosen user's ID.
         fields: {
             type: Array,
             default: () => [],
@@ -92,7 +109,7 @@ export default {
     data() {
         const values = { reason: '' }
         this.fields.forEach(field => {
-            values[field.key] = ''
+            values[field.key] = field.type === 'user' ? null : ''
         })
         return {
             ModalController,
@@ -131,6 +148,12 @@ export default {
         validate() {
             const errors = {}
             this.fields.forEach(field => {
+                if (field.type === 'user') {
+                    if (field.required && !this.values[field.key]) {
+                        errors[field.key] = 'Search for a user and choose them from the list.'
+                    }
+                    return
+                }
                 const value = String(this.values[field.key] ?? '').trim()
                 if (field.required && value === '') {
                     errors[field.key] = `${field.label} is required.`
@@ -150,7 +173,12 @@ export default {
                 return
             }
             const result = {}
+            const userKeys = this.fields.filter(field => field.type === 'user').map(field => field.key)
             Object.entries(this.values).forEach(([key, value]) => {
+                if (userKeys.includes(key)) {
+                    result[key] = value ? value.id : null
+                    return
+                }
                 result[key] = typeof value === 'string' ? value.trim() : value
             })
             this.$emit('confirm', result)

@@ -195,6 +195,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div class="panel">
                     <div class="section-header">
                         <h2>Members</h2>
+                        <button type="button" class="secondary sm" :disabled="!!busyAction" @click="confirmAddManager()">
+                            <i class="fas fa-user-plus" aria-hidden="true"></i>
+                            Add Manager
+                        </button>
                     </div>
                     <div v-if="membersLoading" class="loading">Loading members...</div>
                     <div v-else-if="membersError" class="error">{{ membersError }}</div>
@@ -206,6 +210,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                 <th>Role</th>
                                 <th>Joined</th>
                                 <th class="numeric">Squares Claimed</th>
+                                <th><span class="sr-only">Actions</span></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -220,6 +225,26 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                 </td>
                                 <td>{{ formatDate(member.joined) }}</td>
                                 <td class="numeric">{{ formatNumber(member.squaresClaimed) }}</td>
+                                <td class="member-actions">
+                                    <button
+                                        v-if="member.isManager && !member.isOwner"
+                                        type="button"
+                                        class="destructive sm"
+                                        :disabled="!!busyAction"
+                                        @click="confirmRemoveManager(member)"
+                                    >
+                                        Remove Manager
+                                    </button>
+                                    <button
+                                        v-else-if="!member.isOwner"
+                                        type="button"
+                                        class="secondary sm"
+                                        :disabled="!!busyAction"
+                                        @click="confirmAddManager(member)"
+                                    >
+                                        Make Manager
+                                    </button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -388,6 +413,15 @@ export default {
     computed: {
         // Guest accounts are transient, so the members table only lists
         // registered users.
+        ownerIds() {
+            return (this.members || []).filter(member => member.isOwner).map(member => member.userId)
+        },
+
+        // owners count: they always have manager access
+        managerIds() {
+            return (this.members || []).filter(member => member.isOwner || member.isManager).map(member => member.userId)
+        },
+
         registeredMembers() {
             return (this.members || []).filter(member => member.store === 'auth0')
         },
@@ -506,7 +540,7 @@ export default {
                 await sqmgrClient.adminPoolAction(this.token, action, values)
                 this.showNote(successNote)
                 await this.refreshPool()
-                if (action === 'transferOwnership' || action === 'resetPassword') {
+                if (['transferOwnership', 'resetPassword', 'addManager', 'removeManager'].includes(action)) {
                     this.fetchMembers()
                 }
             } catch (err) {
@@ -562,9 +596,60 @@ export default {
                 actionButton: 'Transfer Ownership',
                 isDestructive: true,
                 fields: [
-                    {key: 'userId', label: 'New owner user ID', type: 'number', required: true, min: 1, helper: 'The numeric ID shown on the admin user page.'},
+                    {
+                        key: 'userId', label: 'New owner', type: 'user', required: true,
+                        suggestions: this.memberSuggestions(), suggestionsLabel: 'Current members',
+                        excludeIds: this.ownerIds, excludedNote: 'Current owner',
+                        helper: 'Pick a current member, or search for any registered user by email.',
+                    },
                 ],
             }, values => this.runAction('transferOwnership', values, 'Ownership has been transferred.'))
+        },
+
+        // With a member, confirms promoting them. Without one, asks who to add.
+        confirmAddManager(member = null) {
+            if (member) {
+                const label = formatUserLabel(member.userId, member.email, member.store)
+                this.showActionPrompt('Make Manager', {
+                    description: `Make ${label} a manager of "${this.pool.name}"? Managers can change the pool's settings, grids, and squares.`,
+                    actionButton: 'Make Manager',
+                }, values => this.runAction('addManager', {...values, userId: member.userId}, `${label} is now a manager.`))
+                return
+            }
+
+            this.showActionPrompt('Add Manager', {
+                description: `Choose who should help manage "${this.pool.name}". Managers can change the pool's settings, grids, and squares.`,
+                actionButton: 'Add Manager',
+                fields: [
+                    {
+                        key: 'userId', label: 'New manager', type: 'user', required: true,
+                        suggestions: this.memberSuggestions(member => !member.isManager), suggestionsLabel: 'Current members',
+                        excludeIds: this.managerIds, excludedNote: 'Already a manager',
+                        helper: 'Pick a current member, or search for any registered user by email. Someone who has not joined yet is added to the pool.',
+                    },
+                ],
+            }, values => this.runAction('addManager', values, 'The manager has been added.'))
+        },
+
+        confirmRemoveManager(member) {
+            const label = formatUserLabel(member.userId, member.email, member.store)
+            this.showActionPrompt('Remove Manager', {
+                description: `Remove ${label} as a manager of "${this.pool.name}"? They stay in the pool as a regular member.`,
+                actionButton: 'Remove Manager',
+                isDestructive: true,
+            }, values => this.runAction('removeManager', {...values, userId: member.userId}, `${label} is no longer a manager.`))
+        },
+
+        // Registered members in the shape AdminUserPicker suggests users in
+        memberSuggestions(filter = () => true) {
+            return this.registeredMembers
+                .filter(member => !member.isOwner && filter(member))
+                .map(member => ({
+                    id: member.userId,
+                    email: member.email,
+                    store: member.store,
+                    note: this.memberRole(member),
+                }))
         },
 
         confirmRevokeInvites() {
@@ -641,6 +726,22 @@ export default {
 .admin-pool-container {
     max-width: 1200px;
     margin:    0 auto;
+}
+
+.sr-only {
+    position: absolute;
+    width:    1px;
+    height:   1px;
+    margin:   -1px;
+    padding:  0;
+    overflow: hidden;
+    clip:     rect(0, 0, 0, 0);
+    border:   0;
+}
+
+.member-actions {
+    text-align:  right;
+    white-space: nowrap;
 }
 
 .back-link {

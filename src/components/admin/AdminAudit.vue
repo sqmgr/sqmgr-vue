@@ -125,6 +125,7 @@ import { debounce } from "@/utils/debounce"
 const ACTIONS = [
     'pool.join', 'pool.archive', 'pool.unarchive', 'pool.lock', 'pool.unlock',
     'pool.resetPassword', 'pool.transferOwnership', 'pool.revokeInvites',
+    'pool.addManager', 'pool.removeManager',
     'event.refresh', 'event.override', 'event.clearOverride', 'sports.sync',
 ]
 
