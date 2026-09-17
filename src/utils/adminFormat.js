@@ -66,6 +66,21 @@ export function formatStoreLabel(store) {
     return store === 'auth0' ? 'Registered' : 'Guest'
 }
 
+// "just now", "12 minutes ago", "3 hours ago", "2 days ago"; falls back to
+// the full date past a week so old runs are not described vaguely.
+export function formatRelative(value, now = new Date()) {
+    if (!isValidDate(value)) return '-'
+    const seconds = Math.round((now - new Date(value)) / 1000)
+    if (seconds < 45) return 'just now'
+    const minutes = Math.round(seconds / 60)
+    if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
+    const hours = Math.round(minutes / 60)
+    if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`
+    const days = Math.round(hours / 24)
+    if (days < 7) return `${days} day${days === 1 ? '' : 's'} ago`
+    return formatDate(value)
+}
+
 export function formatUserLabel(id, email, store) {
     if (email) return email
     if (!id) return '-'

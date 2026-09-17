@@ -56,45 +56,21 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                 <div v-if="runError" class="error">{{ runError }}</div>
             </section>
 
-            <!-- (a) last runs -->
+            <!-- (a) sync health: the latest run of each sync type, folded across leagues -->
             <section class="panel">
                 <div class="section-header">
-                    <h3>Last Runs</h3>
+                    <h3>Sync Health</h3>
                     <button type="button" class="secondary sm" :disabled="statusLoading" @click="fetchStatus">
                         {{ statusLoading ? 'Refreshing...' : 'Refresh' }}
                     </button>
                 </div>
-                <div v-if="status.lastRuns && status.lastRuns.length > 0" class="table-wrap">
-                    <table class="pools-table">
-                        <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>League</th>
-                            <th>Started</th>
-                            <th>Duration</th>
-                            <th class="numeric">Records</th>
-                            <th>Result</th>
-                            <th>Error</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="run in status.lastRuns" :key="run.id">
-                            <td>{{ formatSyncType(run.syncType) }}</td>
-                            <td>{{ formatLeague(run.league) }}</td>
-                            <td>{{ formatDate(run.startedAt) }}</td>
-                            <td>{{ formatDuration(run.startedAt, run.completedAt) }}</td>
-                            <td class="numeric">{{ formatNumber(run.recordsProcessed) }}</td>
-                            <td>
-                                <span :class="['status', run.success ? 'success' : 'failed']">
-                                    {{ run.success ? 'Success' : 'Failed' }}
-                                </span>
-                            </td>
-                            <td class="error-message">{{ run.errorMessage || '-' }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div v-else class="no-data">No sync runs have been recorded yet.</div>
+                <ul class="health-list">
+                    <li v-for="item in syncHealth" :key="item.type" class="health-row">
+                        <span class="health-type">{{ item.label }}</span>
+                        <span :class="['status', item.statusClass]">{{ item.summary }}</span>
+                        <span class="health-detail">{{ item.detail }}</span>
+                    </li>
+                </ul>
             </section>
 
             <!-- (c) stale events -->
@@ -148,7 +124,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
         <!-- (d) recent runs -->
         <section class="panel">
             <div class="section-header">
-                <h3>Recent Runs</h3>
+                <h3>Run History</h3>
                 <div class="controls">
                     <label class="filter-field">
                         <span class="filter-label">Sync Type</span>
@@ -213,7 +189,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
 <script>
 import sqmgrClient from "@/models/sqmgrClient"
 import timedNoteMixin from "@/components/admin/timedNoteMixin"
-import { formatDate, formatDuration, formatNumber, formatEventStatus, eventStatusClass, getErrorMessage } from "@/utils/adminFormat"
+import { formatDate, formatDuration, formatNumber, formatRelative, formatEventStatus, eventStatusClass, getErrorMessage } from "@/utils/adminFormat"
 import { LEAGUES } from "@/constants/admin"
 
 const POLL_INTERVAL_MS = 10000
@@ -248,6 +224,40 @@ export default {
             runsSyncType: '',
             runsLimit: 50,
         }
+    },
+    computed: {
+        // One line per sync type. Teams and schedule syncs run per league,
+        // so a type is "failing" when any league's latest run failed.
+        syncHealth() {
+            const lastRuns = (this.status && this.status.lastRuns) || []
+            return this.syncTypes.map(type => {
+                const runs = lastRuns.filter(run => run.syncType === type.value)
+                if (runs.length === 0) {
+                    return {type: type.value, label: type.label, statusClass: 'neutral', summary: 'No runs yet', detail: ''}
+                }
+
+                const latest = runs.reduce((a, b) => (b.id > a.id ? b : a))
+                const failing = runs.filter(run => run.success === false)
+                const running = runs.filter(run => run.success === null || run.success === undefined)
+                const lastRun = `Last run ${formatRelative(latest.startedAt)}`
+
+                if (running.length > 0) {
+                    return {type: type.value, label: type.label, statusClass: 'neutral', summary: 'Running', detail: `Started ${formatRelative(running[0].startedAt)}`}
+                }
+                if (failing.length > 0) {
+                    const leagues = failing.map(run => this.formatLeague(run.league)).join(', ')
+                    const error = failing.length === 1 && failing[0].errorMessage ? ` — ${failing[0].errorMessage}` : ''
+                    return {type: type.value, label: type.label, statusClass: 'failed', summary: `Failing: ${leagues}`, detail: `${lastRun}${error}`}
+                }
+                return {
+                    type: type.value,
+                    label: type.label,
+                    statusClass: 'success',
+                    summary: 'Healthy',
+                    detail: `${lastRun}, ${formatNumber(latest.recordsProcessed)} records in ${formatDuration(latest.startedAt, latest.completedAt)}`,
+                }
+            })
+        },
     },
     watch: {
         runsSyncType() {
@@ -396,6 +406,34 @@ export default {
         border-left:   4px solid #e6a700;
         border-radius: 0 $radius-lg $radius-lg 0;
         font-weight:   500;
+    }
+
+    .health-list {
+        list-style: none;
+        margin:     0;
+        padding:    0;
+
+        .health-row {
+            display:     flex;
+            align-items: center;
+            gap:         $space-3;
+            padding:     $space-2 0;
+            flex-wrap:   wrap;
+
+            & + .health-row {
+                border-top: 1px solid var(--border-color);
+            }
+        }
+
+        .health-type {
+            font-weight: 600;
+            min-width:   6rem;
+        }
+
+        .health-detail {
+            color:     $text-secondary;
+            font-size: 0.9em;
+        }
     }
 
     .panel {
