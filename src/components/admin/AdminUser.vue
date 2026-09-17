@@ -89,7 +89,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <tr v-for="pool in pools.pools" :key="pool.token">
                                 <td>
                                     <router-link :to="`/admin/pool/${pool.token}`">{{ pool.name }}</router-link>
-                                    <router-link :to="`/pool/${pool.token}`" class="secondary-link">Open</router-link>
                                 </td>
                                 <td>{{ formatDate(pool.created) }}</td>
                                 <td>{{ pool.gridType }}</td>
@@ -157,7 +156,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <tr v-for="pool in joinedPools.pools" :key="pool.token">
                                 <td>
                                     <router-link :to="`/admin/pool/${pool.token}`">{{ pool.name }}</router-link>
-                                    <router-link :to="`/pool/${pool.token}`" class="secondary-link">Open</router-link>
                                 </td>
                                 <td>
                                     <router-link :to="`/admin/user/${pool.ownerId}`">{{ pool.ownerEmail || `User ${pool.ownerId}` }}</router-link>
@@ -459,12 +457,6 @@ export default {
         &:hover {
             text-decoration: underline;
         }
-    }
-
-    .secondary-link {
-        margin-left: $space-2;
-        font-size:   0.8em;
-        color:       $dark-gray;
     }
 }
 

@@ -198,25 +198,23 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                     </div>
                     <div v-if="membersLoading" class="loading">Loading members...</div>
                     <div v-else-if="membersError" class="error">{{ membersError }}</div>
-                    <div v-else-if="members && members.length > 0" class="table-wrap">
+                    <div v-else-if="registeredMembers.length > 0" class="table-wrap">
                         <table class="pools-table">
                             <thead>
                             <tr>
                                 <th>User</th>
-                                <th>Type</th>
                                 <th>Role</th>
                                 <th>Joined</th>
                                 <th class="numeric">Squares Claimed</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="member in members" :key="member.userId">
+                            <tr v-for="member in registeredMembers" :key="member.userId">
                                 <td>
                                     <router-link :to="`/admin/user/${member.userId}`">
                                         {{ formatUserLabel(member.userId, member.email, member.store) }}
                                     </router-link>
                                 </td>
-                                <td>{{ formatStoreLabel(member.store) }}</td>
                                 <td>
                                     <span v-if="member.isOwner" class="status active">Owner</span>
                                     <span v-if="member.isManager && !member.isOwner" class="status neutral">Manager</span>
@@ -228,7 +226,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             </tbody>
                         </table>
                     </div>
-                    <div v-else class="no-data">This pool has no members.</div>
+                    <div v-else class="no-data">This pool has no registered members.</div>
                 </div>
 
                 <!-- Squares -->
@@ -340,7 +338,7 @@ import AdminActionPrompt from "@/components/admin/AdminActionPrompt"
 import adminJoinPoolMixin from "@/components/admin/adminJoinPoolMixin"
 import timedNoteMixin from "@/components/admin/timedNoteMixin"
 import { usePaginatedFetch } from "@/composables/usePaginatedFetch"
-import { formatDate, formatNumber, formatPercent, formatUserLabel, formatStoreLabel, getErrorMessage } from "@/utils/adminFormat"
+import { formatDate, formatNumber, formatPercent, formatUserLabel, getErrorMessage } from "@/utils/adminFormat"
 
 export default {
     name: "AdminPool",
@@ -390,6 +388,11 @@ export default {
         }
     },
     computed: {
+        // Guest accounts are transient, so the members table only lists
+        // registered users.
+        registeredMembers() {
+            return (this.members || []).filter(member => member.store === 'auth0')
+        },
         locksAt() {
             if (!this.pool || !this.pool.locks) return null
             const locks = new Date(this.pool.locks)
@@ -425,7 +428,6 @@ export default {
         formatNumber,
         formatPercent,
         formatUserLabel,
-        formatStoreLabel,
 
         async loadAll() {
             this.clearNote()

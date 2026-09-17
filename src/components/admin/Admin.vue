@@ -220,7 +220,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                             <tr v-for="pool in pools.pools" :key="pool.token">
                                 <td>
                                     <router-link :to="`/admin/pool/${pool.token}`">{{ pool.name }}</router-link>
-                                    <router-link :to="`/pool/${pool.token}`" class="secondary-link">Open</router-link>
                                 </td>
                                 <td>
                                     <router-link :to="`/admin/user/${pool.ownerId}`">{{ formatOwner(pool) }}</router-link>
@@ -230,11 +229,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
                                 <td>{{ pool.numberSetConfig }}</td>
                                 <td class="numeric">{{ formatNumber(pool.gridCount) }}</td>
                                 <td class="numeric">{{ formatNumber(pool.memberCount) }}</td>
-                                <td class="numeric">{{ formatNumber(pool.claimedSquares) }}</td>
-                                <td class="numeric fill-cell">
-                                    <span class="fill-count">{{ formatNumber(pool.claimedSquares) }}/{{ formatNumber(pool.totalSquares) }}</span>
-                                    <span class="fill-percent">{{ formatPercent(pool.fillPercent, 0) }}</span>
-                                </td>
+                                <td class="numeric">{{ formatNumber(pool.claimedSquares) }}/{{ formatNumber(pool.totalSquares) }}</td>
                                 <td>
                                     <span :class="['status', pool.archived ? 'archived' : 'active']">
                                         {{ pool.archived ? 'Archived' : 'Active' }}
@@ -566,7 +561,7 @@ import AdminAnalytics from "@/components/admin/AdminAnalytics"
 import AdminSports from "@/components/admin/AdminSports"
 import AdminAudit from "@/components/admin/AdminAudit"
 import EventOverrideForm from "@/components/admin/EventOverrideForm"
-import { formatDate, formatNumber, formatPercent, formatUserLabel, formatStoreLabel, formatEventStatus, eventStatusClass, getErrorMessage, isISODate } from "@/utils/adminFormat"
+import { formatDate, formatNumber, formatUserLabel, formatStoreLabel, formatEventStatus, eventStatusClass, getErrorMessage, isISODate } from "@/utils/adminFormat"
 import adminJoinPoolMixin from "@/components/admin/adminJoinPoolMixin"
 import { pushQuery, pageFromQuery } from "@/utils/routeQuery"
 import { debounce } from "@/utils/debounce"
@@ -641,7 +636,6 @@ export default {
                 {key: 'numberSet', label: 'Number Set'},
                 {key: 'grids', label: 'Grids', sort: 'grid_count', numeric: true},
                 {key: 'members', label: 'Members', sort: 'member_count', numeric: true},
-                {key: 'claimed', label: 'Claimed', sort: 'claimed_squares', numeric: true},
                 {key: 'fill', label: 'Fill', sort: 'fill_percent', numeric: true},
                 {key: 'status', label: 'Status'},
                 {key: 'actions', label: 'Actions'},
@@ -803,7 +797,6 @@ export default {
         },
     },
     methods: {
-        formatPercent,
 
         syncInputsFromUrl() {
             this.searchInput = this.searchQuery
@@ -1339,20 +1332,6 @@ h2 {
 
 .pools-table {
     @include admin-table;
-
-    .fill-cell {
-        white-space: nowrap;
-
-        .fill-count {
-            display: block;
-        }
-
-        .fill-percent {
-            display:   block;
-            font-size: 0.8em;
-            color:     $text-secondary;
-        }
-    }
 }
 
 .status {
