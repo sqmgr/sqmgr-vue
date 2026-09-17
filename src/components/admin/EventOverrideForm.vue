@@ -79,7 +79,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
             </tr>
             </tbody>
         </table>
-        <p class="note">Quarter and overtime scores are optional; leave them blank to keep them unset.</p>
+        <p class="note">
+            The boxes show the event's current scores. Quarter and overtime scores are optional;
+            emptying a box removes that score from the event.
+        </p>
+        <p v-if="clearedScores.length" class="note warning" role="status">
+            Saving will remove: {{ clearedScores.join(', ') }}. Pools that pay out on those periods will lose that score.
+        </p>
 
         <div class="field">
             <label for="override-reason" class="optional">Reason</label>
@@ -153,6 +159,26 @@ export default {
             },
         }
     },
+    computed: {
+        // period scores the event has now that the form would remove
+        clearedScores() {
+            const cleared = []
+            this.sides.forEach(side => {
+                const current = [
+                    ...[1, 2, 3, 4].map(q => this.event[`${side.key}Q${q}`]),
+                    this.event[`${side.key}OT`],
+                ]
+                const entered = [...this.form[side.key].quarters, this.form[side.key].ot]
+                const labels = ['Q1', 'Q2', 'Q3', 'Q4', 'OT']
+                current.forEach((value, i) => {
+                    if (numberOrNull(value) !== null && numberOrNull(entered[i]) === null) {
+                        cleared.push(`${side.label} ${labels[i]}`)
+                    }
+                })
+            })
+            return cleared
+        },
+    },
     methods: {
         teamName(team, fallback) {
             if (!team) return fallback
@@ -160,19 +186,17 @@ export default {
         },
 
         buildBody() {
+            // The API keeps any score that is omitted and clears any sent as
+            // null. The form shows every score, so send them all: an emptied
+            // box is the admin asking for that score to be removed.
             const body = {
                 status: this.form.status,
                 homeScore: numberOrNull(this.form.home.score) ?? 0,
                 awayScore: numberOrNull(this.form.away.score) ?? 0,
+                homeQuarters: this.form.home.quarters.map(numberOrNull),
+                awayQuarters: this.form.away.quarters.map(numberOrNull),
                 homeOT: numberOrNull(this.form.home.ot),
                 awayOT: numberOrNull(this.form.away.ot),
-            }
-            const homeQuarters = this.form.home.quarters.map(numberOrNull)
-            const awayQuarters = this.form.away.quarters.map(numberOrNull)
-            const anyQuarter = [...homeQuarters, ...awayQuarters].some(q => q !== null)
-            if (anyQuarter) {
-                body.homeQuarters = homeQuarters
-                body.awayQuarters = awayQuarters
             }
             if (this.form.reason.trim()) {
                 body.reason = this.form.reason.trim()
@@ -257,6 +281,10 @@ export default {
 
     .note {
         margin-bottom: var(--spacing);
+
+        &.warning {
+            @include alert-error;
+        }
     }
 }
 </style>
